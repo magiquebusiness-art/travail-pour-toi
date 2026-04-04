@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connexion — Publication-Web</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0F1C3F;--bg2:#1A2554;--bg3:#2A3A6E;
+  --p:#7B5CFF;--p2:#5A6CFF;--p3:rgba(123,92,255,.15);
+  --cyan:#4FA3FF;--green:#00E676;--red:#f87171;
+  --t:#e8e6f8;--t2:#9896b8;--t3:#5a5878;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);overflow-x:hidden}
+
+/* ── Canvas étoiles ── */
+#star-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+
+/* ── Orbs ── */
+.orb{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0}
+.orb1{width:500px;height:500px;background:rgba(123,92,255,.07);top:-150px;right:-100px;animation:drift 18s ease-in-out infinite}
+.orb2{width:400px;height:400px;background:rgba(79,163,255,.05);bottom:-100px;left:-80px;animation:drift 22s ease-in-out infinite reverse}
+@keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(20px,-30px)}}
+
+/* ── Layout centré ── */
+#page{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
+
+/* ── Logo ── */
+.logo{font-family:'Orbitron',monospace;font-weight:900;font-size:16px;letter-spacing:3px;background:linear-gradient(135deg,#a78bfa,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px;text-align:center}
+.logo-sub{font-size:12px;color:var(--t3);text-align:center;margin-bottom:36px;letter-spacing:.5px}
+
+/* ── Card login ── */
+.card{
+  width:100%;max-width:420px;
+  background:rgba(26,37,84,.6);
+  border:1px solid rgba(123,92,255,.25);
+  border-radius:20px;padding:36px;
+  backdrop-filter:blur(20px);
+  box-shadow:0 24px 80px rgba(0,0,0,.4),0 0 0 1px rgba(123,92,255,.1);
+}
+
+/* ── Tabs ── */
+.tabs{display:flex;background:rgba(15,28,63,.6);border-radius:10px;padding:4px;margin-bottom:28px;border:1px solid rgba(123,92,255,.15)}
+.tab{flex:1;padding:10px;border-radius:7px;text-align:center;font-size:13px;font-weight:600;color:var(--t3);cursor:pointer;transition:all .2s}
+.tab.active{background:rgba(123,92,255,.2);color:#a78bfa;border:1px solid rgba(123,92,255,.3)}
+
+/* ── Inputs ── */
+.field{margin-bottom:18px}
+.field label{display:block;font-size:12px;font-weight:700;color:var(--t2);margin-bottom:7px;letter-spacing:.3px}
+.inp-wrap{position:relative}
+.inp{
+  width:100%;padding:13px 16px;
+  background:rgba(15,28,63,.7);
+  border:1px solid rgba(123,92,255,.2);
+  border-radius:10px;color:var(--t);
+  font-family:'DM Sans',sans-serif;font-size:14px;
+  outline:none;transition:all .2s;
+}
+.inp:focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(123,92,255,.12)}
+.inp::placeholder{color:var(--t3)}
+.inp.error{border-color:var(--red);box-shadow:0 0 0 3px rgba(248,113,113,.1)}
+.inp-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;pointer-events:none}
+.inp.has-icon{padding-left:42px}
+.pw-toggle{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--t3);cursor:pointer;font-size:15px;padding:4px;transition:color .15s}
+.pw-toggle:hover{color:var(--t)}
+
+/* ── Erreur ── */
+.err-msg{font-size:12px;color:var(--red);margin-top:6px;display:none}
+.err-msg.show{display:block}
+
+/* ── Bouton ── */
+.btn-login{
+  width:100%;padding:15px;border:none;border-radius:10px;
+  background:linear-gradient(135deg,var(--p),var(--p2));
+  color:#fff;font-family:'DM Sans',sans-serif;
+  font-size:16px;font-weight:700;cursor:pointer;
+  transition:all .25s;letter-spacing:.3px;margin-top:4px;
+  position:relative;overflow:hidden;
+}
+.btn-login::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.1),transparent);opacity:0;transition:opacity .2s}
+.btn-login:hover::before{opacity:1}
+.btn-login:hover{transform:translateY(-2px);box-shadow:0 0 32px rgba(123,92,255,.5),0 8px 24px rgba(0,0,0,.3)}
+.btn-login:active{transform:translateY(0)}
+.btn-login:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
+
+/* ── Spinner dans le bouton ── */
+.btn-spinner{display:none;width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;margin:0 auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── Liens ── */
+.link-row{text-align:center;margin-top:18px}
+.link{font-size:13px;color:var(--t3);cursor:pointer;transition:color .15s;background:none;border:none;padding:0;font-family:'DM Sans',sans-serif}
+.link:hover{color:#a78bfa}
+.link-sep{color:var(--t3);margin:0 8px}
+
+/* ── Divider ── */
+.divider{display:flex;align-items:center;gap:12px;margin:20px 0}
+.divider-line{flex:1;height:1px;background:rgba(123,92,255,.15)}
+.divider-text{font-size:11px;color:var(--t3);font-weight:600;letter-spacing:1px}
+
+/* ── Message succès ── */
+.success-box{
+  display:none;text-align:center;padding:20px;
+  background:rgba(0,230,118,.08);border:1px solid rgba(0,230,118,.25);
+  border-radius:10px;margin-bottom:16px;
+}
+.success-box.show{display:block}
+.success-icon{font-size:32px;margin-bottom:8px}
+.success-text{font-size:14px;color:var(--t2);line-height:1.6}
+
+/* ── Force mot de passe ── */
+.pw-strength-bar{height:3px;border-radius:2px;background:rgba(255,255,255,.08);margin-top:6px;overflow:hidden}
+.pw-strength-fill{height:100%;border-radius:2px;width:0;transition:width .3s,background .3s}
+.pw-strength-label{font-size:11px;color:var(--t3);margin-top:4px}
+
+/* ── NyXia corner ── */
+.nyxia-corner{
+  position:fixed;bottom:0;right:0;
+  height:280px;pointer-events:none;z-index:2;
+  filter:drop-shadow(0 0 30px rgba(123,92,255,.3));
+  opacity:.85;
+  animation:float 6s ease-in-out infinite;
+}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+/* ── Footer ── */
+.footer{margin-top:28px;font-size:12px;color:var(--t3);text-align:center}
+.footer a{color:var(--t3);text-decoration:none}
+.footer a:hover{color:#a78bfa}
+</style>
+</head>
+<body>
+
+<canvas id="star-canvas"></canvas>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+
+<img class="nyxia-corner" src="nyxia-peek-2.png" alt="NyXia" onerror="this.style.display='none'">
+
+<div id="page">
+
+  <div class="logo">Publication-Web</div>
+  <div class="logo-sub">✦ Visionnaire depuis 1997</div>
+
+  <!-- ── CARD ── -->
+  <div class="card">
+
+    <!-- Tabs connexion / inscription -->
+    <div class="tabs">
+      <div class="tab active" id="tab-login" onclick="switchTab('login')">Connexion</div>
+      <div class="tab" id="tab-register" onclick="switchTab('register')">Créer un compte</div>
+    </div>
+
+    <!-- ════ FORMULAIRE LOGIN ════ -->
+    <div id="form-login">
+      <div class="success-box" id="login-success">
+        <div class="success-icon">✓</div>
+        <div class="success-text">Connexion réussie !<br>Redirection en cours...</div>
+      </div>
+
+      <div class="field">
+        <label>Adresse email</label>
+        <div class="inp-wrap">
+          <span class="inp-icon">✉</span>
+          <input class="inp has-icon" type="email" id="l-email" placeholder="ton@email.com" autocomplete="email">
+        </div>
+        <div class="err-msg" id="l-email-err">Email invalide</div>
+      </div>
+
+      <div class="field">
+        <label>Mot de passe</label>
+        <div class="inp-wrap">
+          <span class="inp-icon">🔒</span>
+          <input class="inp has-icon" type="password" id="l-pw" placeholder="••••••••" autocomplete="current-password">
+          <button class="pw-toggle" onclick="togglePw('l-pw',this)" tabindex="-1">👁</button>
+        </div>
+        <div class="err-msg" id="l-pw-err">Mot de passe incorrect</div>
+      </div>
+
+      <div style="text-align:right;margin-bottom:20px">
+        <button class="link" onclick="switchTab('forgot')" style="font-size:12px">Mot de passe oublié ?</button>
+      </div>
+
+      <button class="btn-login" id="btn-login" onclick="doLogin()">
+        <span id="btn-login-text">Me connecter →</span>
+        <div class="btn-spinner" id="btn-login-spin"></div>
+      </button>
+
+      <div class="link-row">
+        <span style="font-size:13px;color:var(--t3)">Pas encore de compte ?</span>
+        <span class="link-sep">·</span>
+        <button class="link" onclick="switchTab('register')">Créer un compte gratuit</button>
+      </div>
+    </div>
+
+    <!-- ════ FORMULAIRE INSCRIPTION ════ -->
+    <div id="form-register" style="display:none">
+      <div class="success-box" id="register-success">
+        <div class="success-icon">🎉</div>
+        <div class="success-text" id="register-success-text">Compte créé !<br>Vérifie ton email pour activer ton compte.</div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <div class="field">
+          <label>Prénom</label>
+          <div class="inp-wrap">
+            <input class="inp" type="text" id="r-name" placeholder="Marie" autocomplete="given-name">
+          </div>
+        </div>
+        <div class="field">
+          <label>Nom</label>
+          <div class="inp-wrap">
+            <input class="inp" type="text" id="r-lastname" placeholder="Laurent" autocomplete="family-name">
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Adresse email</label>
+        <div class="inp-wrap">
+          <span class="inp-icon">✉</span>
+          <input class="inp has-icon" type="email" id="r-email" placeholder="ton@email.com" autocomplete="email">
+        </div>
+        <div class="err-msg" id="r-email-err">Email déjà utilisé ou invalide</div>
+      </div>
+
+      <div class="field">
+        <label>Mot de passe</label>
+        <div class="inp-wrap">
+          <span class="inp-icon">🔒</span>
+          <input class="inp has-icon" type="password" id="r-pw" placeholder="Min. 8 caractères" oninput="checkPwStrength()" autocomplete="new-password">
+          <button class="pw-toggle" onclick="togglePw('r-pw',this)" tabindex="-1">👁</button>
+        </div>
+        <div class="pw-strength-bar"><div class="pw-strength-fill" id="pw-fill"></div></div>
+        <div class="pw-strength-label" id="pw-label">Force du mot de passe</div>
+      </div>
+
+      <div class="field">
+        <label>Confirmer le mot de passe</label>
+        <div class="inp-wrap">
+          <span class="inp-icon">🔒</span>
+          <input class="inp has-icon" type="password" id="r-pw2" placeholder="••••••••" autocomplete="new-password">
+          <button class="pw-toggle" onclick="togglePw('r-pw2',this)" tabindex="-1">👁</button>
+        </div>
+        <div class="err-msg" id="r-pw2-err">Les mots de passe ne correspondent pas</div>
+      </div>
+
+      <!-- Choix du plan -->
+      <div class="field">
+        <label>Plan de démarrage</label>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:4px" id="plan-picker">
+          <div class="plan-opt active" data-plan="free" onclick="selectPlan(this,'free')">
+            <div style="font-weight:700;font-size:13px;margin-bottom:2px">Gratuit</div>
+            <div style="font-size:11px;color:var(--t3)">CA$0</div>
+          </div>
+          <div class="plan-opt" data-plan="pro" onclick="selectPlan(this,'pro')">
+            <div style="font-weight:700;font-size:13px;margin-bottom:2px">Pro</div>
+            <div style="font-size:11px;color:var(--t3)">CA$39/mois</div>
+          </div>
+          <div class="plan-opt" data-plan="visionnaire" onclick="selectPlan(this,'visionnaire')">
+            <div style="font-weight:700;font-size:13px;margin-bottom:2px">Visionnaire</div>
+            <div style="font-size:11px;color:var(--t3)">CA$97/mois</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:18px">
+        <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:12px;color:var(--t2)">
+          <input type="checkbox" id="r-terms" style="margin-top:2px;accent-color:var(--p)">
+          J'accepte les <button class="link" style="font-size:12px;margin:0 4px" onclick="window.open('#')">conditions d'utilisation</button> et la politique de confidentialité
+        </label>
+        <div class="err-msg" id="r-terms-err">Accepte les conditions pour continuer</div>
+      </div>
+
+      <button class="btn-login" id="btn-register" onclick="doRegister()">
+        <span id="btn-reg-text">Créer mon compte gratuit →</span>
+        <div class="btn-spinner" id="btn-reg-spin"></div>
+      </button>
+
+      <div class="link-row">
+        <span style="font-size:13px;color:var(--t3)">Déjà un compte ?</span>
+        <span class="link-sep">·</span>
+        <button class="link" onclick="switchTab('login')">Me connecter</button>
+      </div>
+    </div>
+
+    <!-- ════ MOT DE PASSE OUBLIÉ ════ -->
+    <div id="form-forgot" style="display:none">
+      <div style="text-align:center;margin-bottom:24px">
+        <div style="font-size:32px;margin-bottom:8px">🔑</div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:6px">Mot de passe oublié ?</div>
+        <div style="font-size:13px;color:var(--t2)">Saisis ton email — on t'envoie un lien de réinitialisation</div>
+      </div>
+
+      <div class="success-box" id="forgot-success">
+        <div class="success-icon">📧</div>
+        <div class="success-text">Email envoyé !<br>Vérifie ta boîte mail (et tes spams).</div>
+      </div>
+
+      <div class="field">
+        <label>Adresse email</label>
+        <div class="inp-wrap">
+          <span class="inp-icon">✉</span>
+          <input class="inp has-icon" type="email" id="f-email" placeholder="ton@email.com">
+        </div>
+      </div>
+
+      <button class="btn-login" onclick="doForgot()">Envoyer le lien de réinitialisation</button>
+
+      <div class="link-row">
+        <button class="link" onclick="switchTab('login')">← Retour à la connexion</button>
+      </div>
+    </div>
+
+  </div><!-- .card -->
+
+  <div class="footer">
+    <a href="index.html">← Retour au site</a>
+    <span style="margin:0 10px">·</span>
+    <a href="#">Support</a>
+    <span style="margin:0 10px">·</span>
+    © 2026 Publication-Web
+  </div>
+
+</div><!-- #page -->
+
+<style>
+.plan-opt{
+  border:1px solid rgba(123,92,255,.2);border-radius:8px;
+  padding:10px;text-align:center;cursor:pointer;
+  background:rgba(15,28,63,.5);transition:all .2s;
+}
+.plan-opt:hover{border-color:rgba(123,92,255,.4)}
+.plan-opt.active{border-color:var(--p);background:var(--p3);color:#a78bfa}
+</style>
+
+<script>
+// ── Étoiles filantes ──────────────────────────────────────
+(function(){
+  const canvas=document.getElementById('star-canvas');
+  const ctx=canvas.getContext('2d');
+  let stars=[],shooting=[];
+  function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;buildStars()}
+  function buildStars(){
+    stars=[];
+    const n=Math.floor(canvas.width*canvas.height/4000);
+    for(let i=0;i<n;i++) stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*.7+.2,a:Math.random()*.7+.3,da:(Math.random()*.006+.002)*(Math.random()>.5?1:-1)});
+  }
+  function spawnShoot(){
+    shooting.push({x:Math.random()*canvas.width*.8,y:-10,angle:Math.PI/4+(Math.random()-.5)*.3,speed:Math.random()*12+7,len:Math.random()*180+80,a:1,thick:Math.random()*1.5+.8,color:['255,255,255','167,139,250','79,163,255'][Math.floor(Math.random()*3)]});
+  }
+  function draw(){
+    const g=ctx.createLinearGradient(0,0,canvas.width,canvas.height);
+    g.addColorStop(0,'#0F1C3F');g.addColorStop(.5,'#131F4A');g.addColorStop(1,'#0F1C3F');
+    ctx.fillStyle=g;ctx.fillRect(0,0,canvas.width,canvas.height);
+    for(const s of stars){
+      s.a+=s.da;if(s.a>=1||s.a<=.15)s.da*=-1;s.a=Math.max(.15,Math.min(1,s.a));
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(255,252,240,${s.a})`;ctx.fill();
+    }
+    if(Math.random()<.006)spawnShoot();
+    for(let i=shooting.length-1;i>=0;i--){
+      const s=shooting[i];
+      const tx=s.x-s.len*Math.cos(s.angle),ty=s.y-s.len*Math.sin(s.angle);
+      const tr=ctx.createLinearGradient(s.x,s.y,tx,ty);
+      tr.addColorStop(0,`rgba(${s.color},${s.a})`);tr.addColorStop(1,`rgba(${s.color},0)`);
+      ctx.beginPath();ctx.moveTo(s.x,s.y);ctx.lineTo(tx,ty);
+      ctx.strokeStyle=tr;ctx.lineWidth=s.thick;ctx.lineCap='round';ctx.stroke();
+      ctx.beginPath();ctx.arc(s.x,s.y,s.thick*2,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,255,${s.a})`;ctx.fill();
+      s.x+=s.speed*Math.cos(s.angle);s.y+=s.speed*Math.sin(s.angle);s.a-=.007;
+      if(s.a<=0||s.x>canvas.width+50||s.y>canvas.height+50)shooting.splice(i,1);
+    }
+    requestAnimationFrame(draw);
+  }
+  resize();window.addEventListener('resize',resize);draw();
+})();
+
+// ── State ─────────────────────────────────────────────────
+let selectedPlan = 'free';
+
+// ── Tabs ──────────────────────────────────────────────────
+function switchTab(tab) {
+  ['login','register','forgot'].forEach(t => {
+    document.getElementById('form-'+t).style.display = t===tab?'block':'none';
+    const tabEl = document.getElementById('tab-'+t);
+    if(tabEl) tabEl.classList.toggle('active', t===tab);
+  });
+  // Reset erreurs
+  document.querySelectorAll('.err-msg').forEach(e=>e.classList.remove('show'));
+  document.querySelectorAll('.inp').forEach(i=>i.classList.remove('error'));
+}
+
+// ── Plan picker ───────────────────────────────────────────
+function selectPlan(el, plan) {
+  document.querySelectorAll('.plan-opt').forEach(o=>o.classList.remove('active'));
+  el.classList.add('active');
+  selectedPlan = plan;
+  const btn = document.getElementById('btn-reg-text');
+  btn.textContent = plan==='free' ? 'Créer mon compte gratuit →' : `Démarrer l'essai ${plan==='pro'?'Pro':'Visionnaire'} (3 jours gratuits) →`;
+}
+
+// ── Toggle mot de passe ───────────────────────────────────
+function togglePw(id, btn) {
+  const el = document.getElementById(id);
+  el.type = el.type==='password' ? 'text' : 'password';
+  btn.textContent = el.type==='password' ? '👁' : '🙈';
+}
+
+// ── Force mot de passe ────────────────────────────────────
+function checkPwStrength() {
+  const pw = document.getElementById('r-pw').value;
+  const fill = document.getElementById('pw-fill');
+  const label = document.getElementById('pw-label');
+  if(!pw){fill.style.width='0';label.textContent='Force du mot de passe';return}
+  let score=0;
+  if(pw.length>=8)score++;
+  if(pw.length>=12)score++;
+  if(/[A-Z]/.test(pw))score++;
+  if(/[0-9]/.test(pw))score++;
+  if(/[^a-zA-Z0-9]/.test(pw))score++;
+  const configs=[
+    {w:'20%',bg:'#f87171',txt:'Très faible'},
+    {w:'40%',bg:'#fb923c',txt:'Faible'},
+    {w:'60%',bg:'#fbbf24',txt:'Correcte'},
+    {w:'80%',bg:'#34d399',txt:'Bonne'},
+    {w:'100%',bg:'#00E676',txt:'✓ Excellente'},
+  ];
+  const c=configs[Math.min(score,4)];
+  fill.style.width=c.w;fill.style.background=c.bg;
+  label.textContent='Force : '+c.txt;label.style.color=c.bg;
+}
+
+// ── Validation ────────────────────────────────────────────
+function showErr(id,msg){
+  const el=document.getElementById(id);
+  el.textContent=msg;el.classList.add('show');
+  const inp=el.previousElementSibling?.querySelector?.('.inp')||el.closest('.field')?.querySelector('.inp');
+  if(inp)inp.classList.add('error');
+}
+function clearErrs(){
+  document.querySelectorAll('.err-msg').forEach(e=>e.classList.remove('show'));
+  document.querySelectorAll('.inp').forEach(i=>i.classList.remove('error'));
+}
+function isEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)}
+
+// ── Bouton loading ────────────────────────────────────────
+function setLoading(btnId, spinId, loading){
+  const btn=document.getElementById(btnId);
+  const txt=document.getElementById(btnId.replace('btn-','btn-').replace('-login','btn-login-text').replace('btn-register','btn-reg-text'));
+  const spin=document.getElementById(spinId);
+  btn.disabled=loading;
+  // find text span and spinner
+  const textEl=btn.querySelector('span');
+  const spinEl=btn.querySelector('.btn-spinner');
+  if(textEl)textEl.style.display=loading?'none':'inline';
+  if(spinEl)spinEl.style.display=loading?'block':'none';
+}
+
+// ── LOGIN ─────────────────────────────────────────────────
+async function doLogin() {
+  clearErrs();
+  const email = document.getElementById('l-email').value.trim();
+  const pw    = document.getElementById('l-pw').value;
+  let ok = true;
+  if(!isEmail(email)){showErr('l-email-err','Adresse email invalide');ok=false}
+  if(pw.length<4){showErr('l-pw-err','Mot de passe requis');ok=false}
+  if(!ok)return;
+
+  setLoading('btn-login','btn-login-spin',true);
+
+  try {
+    const res = await fetch('/api/auth/login',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email,password:pw}),
+    });
+    const data = await res.json();
+
+    if(data.success){
+      // Stocke le token de session
+      sessionStorage.setItem('pw_token', data.token);
+      sessionStorage.setItem('pw_user', JSON.stringify(data.user));
+      document.getElementById('login-success').classList.add('show');
+      // Redirige selon le rôle
+      setTimeout(()=>{
+        window.location.href = data.user?.role==='admin' ? 'admin.html' : 'dashboard.html';
+      }, 1200);
+    } else {
+      showErr('l-pw-err', data.message||'Email ou mot de passe incorrect');
+      setLoading('btn-login','btn-login-spin',false);
+    }
+  } catch(err) {
+    // Mode démo — simule une connexion
+    await new Promise(r=>setTimeout(r,800));
+    sessionStorage.setItem('pw_token','demo-token-'+Date.now());
+    sessionStorage.setItem('pw_user',JSON.stringify({email,name:'Marie Laurent',plan:'pro',role:'client'}));
+    document.getElementById('login-success').classList.add('show');
+    setTimeout(()=>{
+      // Admin si email contient "admin"
+      window.location.href = email.includes('admin') ? 'admin.html' : 'dashboard.html';
+    }, 1200);
+  }
+}
+
+// ── INSCRIPTION ───────────────────────────────────────────
+async function doRegister() {
+  clearErrs();
+  const name  = document.getElementById('r-name').value.trim();
+  const email = document.getElementById('r-email').value.trim();
+  const pw    = document.getElementById('r-pw').value;
+  const pw2   = document.getElementById('r-pw2').value;
+  const terms = document.getElementById('r-terms').checked;
+  let ok=true;
+  if(!isEmail(email)){showErr('r-email-err','Email invalide');ok=false}
+  if(pw.length<8){showErr('r-pw2-err','Mot de passe trop court (min. 8 car.)');ok=false}
+  if(pw!==pw2){showErr('r-pw2-err','Les mots de passe ne correspondent pas');ok=false}
+  if(!terms){showErr('r-terms-err','Accepte les conditions pour continuer');ok=false}
+  if(!ok)return;
+
+  setLoading('btn-register','btn-reg-spin',true);
+
+  try {
+    const res = await fetch('/api/auth/register',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({name,email,password:pw,plan:selectedPlan}),
+    });
+    const data=await res.json();
+
+    if(data.success){
+      document.getElementById('register-success-text').textContent =
+        selectedPlan==='free'
+          ? `Compte créé, ${name || 'bienvenue'} !\nVérifie ton email pour activer ton compte.`
+          : `Compte ${selectedPlan==='pro'?'Pro':'Visionnaire'} créé !\nTon essai gratuit de 3 jours démarre maintenant.`;
+      document.getElementById('register-success').classList.add('show');
+      document.getElementById('btn-register').style.display='none';
+      if(data.redirectTo) setTimeout(()=>window.location.href=data.redirectTo, 2000);
+    } else {
+      showErr('r-email-err', data.message||'Cet email est déjà utilisé');
+      setLoading('btn-register','btn-reg-spin',false);
+    }
+  } catch(err) {
+    // Démo
+    await new Promise(r=>setTimeout(r,900));
+    document.getElementById('register-success-text').textContent =
+      `Compte créé, ${name||'bienvenue'} !\n${selectedPlan==='free'?'Vérifie ton email pour activer.':'Ton essai de 3 jours commence maintenant !'}`;
+    document.getElementById('register-success').classList.add('show');
+    document.getElementById('btn-register').style.display='none';
+    setTimeout(()=>window.location.href='dashboard.html', 2000);
+  }
+}
+
+// ── MOT DE PASSE OUBLIÉ ───────────────────────────────────
+async function doForgot() {
+  const email = document.getElementById('f-email').value.trim();
+  if(!isEmail(email)) return;
+  try {
+    await fetch('/api/auth/forgot',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})});
+  } catch(e){}
+  document.getElementById('forgot-success').classList.add('show');
+  document.getElementById('f-email').disabled=true;
+  document.querySelector('#form-forgot .btn-login').disabled=true;
+}
+
+// ── Touche Entrée ─────────────────────────────────────────
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Enter')return;
+  const login=document.getElementById('form-login');
+  const reg  =document.getElementById('form-register');
+  const forg =document.getElementById('form-forgot');
+  if(login.style.display!=='none')doLogin();
+  else if(reg.style.display!=='none')doRegister();
+  else doForgot();
+});
+</script>
+</body>
+</html>

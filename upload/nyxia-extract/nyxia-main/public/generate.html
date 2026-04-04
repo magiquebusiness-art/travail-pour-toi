@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Créez votre site en 60 secondes — Publication-Web</title>
+<link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:    #0a0a12;
+  --paper:  #fafaf7;
+  --muted:  #6b6b7a;
+  --line:   #e8e8e2;
+  --p:      #5b21b6;
+  --p2:     #7c3aed;
+  --p3:     #ede9fe;
+  --cyan:   #0891b2;
+  --green:  #059669;
+  --amber:  #d97706;
+  --red:    #dc2626;
+  --radius: 14px;
+  --shadow: 0 2px 12px rgba(10,10,18,.08);
+}
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'Instrument Sans',sans-serif;
+  background:var(--paper);
+  color:var(--ink);
+  min-height:100vh;
+  line-height:1.6;
+}
+
+/* ── Grain overlay ── */
+body::before {
+  content:'';
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  opacity:.018;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:200px 200px;
+}
+
+/* ── Layout ── */
+#app { position:relative; z-index:1; }
+
+/* ── Header ── */
+header {
+  padding:20px 40px;
+  display:flex; align-items:center; justify-content:space-between;
+  border-bottom:1px solid var(--line);
+  background:rgba(250,250,247,.92);
+  backdrop-filter:blur(12px);
+  position:sticky; top:0; z-index:100;
+}
+.logo {
+  font-family:'Cabinet Grotesk',sans-serif;
+  font-weight:900; font-size:20px; color:var(--ink);
+  display:flex; align-items:center; gap:10px;
+}
+.logo-dot {
+  width:10px; height:10px; border-radius:50%;
+  background:var(--p2);
+  box-shadow:0 0 0 3px var(--p3);
+}
+.header-badge {
+  font-size:12px; color:var(--p2); font-weight:600;
+  background:var(--p3); padding:6px 14px; border-radius:50px;
+  letter-spacing:.3px;
+}
+
+/* ── Hero ── */
+.hero {
+  padding:80px 40px 60px;
+  max-width:860px; margin:0 auto; text-align:center;
+}
+.hero-label {
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:12px; font-weight:600; letter-spacing:1.5px;
+  text-transform:uppercase; color:var(--p2);
+  background:var(--p3); padding:7px 16px; border-radius:50px;
+  margin-bottom:28px;
+}
+.hero-label::before {
+  content:''; width:6px; height:6px; border-radius:50%;
+  background:var(--p2); animation:blink 1.8s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+h1 {
+  font-family:'Cabinet Grotesk',sans-serif;
+  font-size:clamp(36px,6vw,72px);
+  font-weight:900; line-height:1.05; letter-spacing:-2px;
+  color:var(--ink); margin-bottom:20px;
+}
+h1 em { font-style:normal; color:var(--p2); }
+.hero p {
+  font-size:18px; color:var(--muted); max-width:560px;
+  margin:0 auto 40px; line-height:1.7;
+}
+
+/* ── Stepper ── */
+.stepper {
+  display:flex; justify-content:center; gap:0;
+  margin-bottom:48px; background:var(--paper);
+  border:1px solid var(--line); border-radius:50px;
+  padding:6px; max-width:440px; margin:0 auto 48px;
+}
+.step-btn {
+  flex:1; padding:10px 20px; border-radius:44px;
+  border:none; background:transparent; cursor:pointer;
+  font-family:'Instrument Sans',sans-serif;
+  font-size:13px; font-weight:600; color:var(--muted);
+  transition:all .2s; display:flex; align-items:center;
+  justify-content:center; gap:8px; white-space:nowrap;
+}
+.step-btn.active {
+  background:var(--ink); color:#fff;
+  box-shadow:var(--shadow);
+}
+.step-num {
+  width:20px; height:20px; border-radius:50%;
+  background:rgba(255,255,255,.15);
+  font-size:11px; display:flex; align-items:center; justify-content:center;
+  font-weight:700;
+}
+.step-btn:not(.active) .step-num { background:var(--line); color:var(--muted); }
+
+/* ── Panels ── */
+.panels { max-width:780px; margin:0 auto; padding:0 24px 80px; }
+.panel { display:none; animation:fadeUp .35s cubic-bezier(.16,1,.3,1) both; }
+.panel.active { display:block; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
+
+/* ── Cartes de sélection ── */
+.cards-grid {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:14px; margin-bottom:32px;
+}
+.select-card {
+  border:2px solid var(--line); border-radius:var(--radius);
+  padding:22px 18px; cursor:pointer; transition:all .18s;
+  background:#fff; position:relative; overflow:hidden;
+}
+.select-card::before {
+  content:''; position:absolute; inset:0;
+  background:var(--p3); opacity:0; transition:opacity .2s;
+}
+.select-card:hover { border-color:var(--p2); transform:translateY(-2px); box-shadow:var(--shadow); }
+.select-card:hover::before { opacity:1; }
+.select-card.selected { border-color:var(--p2); background:var(--p3); }
+.select-card.selected::after {
+  content:'✓'; position:absolute; top:10px; right:12px;
+  width:22px; height:22px; border-radius:50%;
+  background:var(--p2); color:#fff;
+  font-size:12px; font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+}
+.card-icon { font-size:28px; margin-bottom:10px; position:relative; z-index:1; }
+.card-title { font-family:'Cabinet Grotesk',sans-serif; font-weight:800; font-size:15px; margin-bottom:4px; position:relative; z-index:1; }
+.card-desc  { font-size:12px; color:var(--muted); line-height:1.5; position:relative; z-index:1; }
+
+/* ── Palettes ── */
+.palettes-grid {
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(96px,1fr));
+  gap:10px; margin-bottom:32px;
+}
+.palette-card {
+  border:2px solid var(--line); border-radius:10px;
+  padding:14px 10px; cursor:pointer; transition:all .18s;
+  text-align:center; background:#fff;
+}
+.palette-card:hover { transform:translateY(-2px); box-shadow:var(--shadow); }
+.palette-card.selected { border-width:3px; }
+.palette-swatch {
+  width:36px; height:36px; border-radius:50%;
+  margin:0 auto 8px;
+  box-shadow:inset 0 0 0 3px rgba(255,255,255,.4);
+}
+.palette-name { font-size:11px; font-weight:600; color:var(--muted); }
+
+/* ── Inputs ── */
+.field { margin-bottom:20px; }
+.field label {
+  display:block; font-size:13px; font-weight:600;
+  color:var(--ink); margin-bottom:8px; letter-spacing:.2px;
+}
+.field label span { color:var(--muted); font-weight:400; }
+input[type=text], input[type=email], textarea, select {
+  width:100%; padding:14px 18px;
+  border:1.5px solid var(--line); border-radius:10px;
+  font-family:'Instrument Sans',sans-serif; font-size:15px;
+  color:var(--ink); background:#fff;
+  transition:border-color .15s, box-shadow .15s;
+  outline:none; resize:vertical;
+}
+input:focus, textarea:focus, select:focus {
+  border-color:var(--p2);
+  box-shadow:0 0 0 4px rgba(124,58,237,.1);
+}
+textarea { min-height:120px; line-height:1.6; }
+.input-hint { font-size:12px; color:var(--muted); margin-top:6px; }
+
+.fields-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+@media(max-width:600px){ .fields-row { grid-template-columns:1fr; } }
+
+/* ── Domain choice ── */
+.domain-toggle {
+  display:flex; gap:10px; margin-bottom:20px;
+}
+.domain-opt {
+  flex:1; padding:14px; border:1.5px solid var(--line);
+  border-radius:10px; cursor:pointer; text-align:center;
+  transition:all .18s; background:#fff;
+}
+.domain-opt.selected { border-color:var(--p2); background:var(--p3); }
+.domain-opt-title { font-weight:700; font-size:14px; margin-bottom:3px; }
+.domain-opt-sub   { font-size:11px; color:var(--muted); }
+
+/* ── Aperçu domaine ── */
+.domain-preview {
+  background:var(--ink); color:#fff;
+  border-radius:10px; padding:14px 18px;
+  font-family:'Instrument Sans',sans-serif;
+  font-size:14px; margin-top:12px;
+  display:none;
+}
+.domain-preview.show { display:block; }
+.domain-url { color:#a78bfa; font-weight:600; word-break:break-all; }
+
+/* ── Section title ── */
+.section-title {
+  font-family:'Cabinet Grotesk',sans-serif;
+  font-weight:800; font-size:22px;
+  margin-bottom:6px; color:var(--ink);
+}
+.section-sub { font-size:14px; color:var(--muted); margin-bottom:28px; }
+
+/* ── Navigation boutons ── */
+.nav-btns {
+  display:flex; gap:12px; justify-content:space-between;
+  margin-top:32px; padding-top:24px;
+  border-top:1px solid var(--line);
+}
+.btn-back {
+  padding:14px 28px; border:1.5px solid var(--line);
+  border-radius:50px; background:#fff; color:var(--ink);
+  font-family:'Instrument Sans',sans-serif; font-weight:600;
+  font-size:15px; cursor:pointer; transition:all .15s;
+}
+.btn-back:hover { border-color:var(--ink); }
+.btn-next {
+  padding:14px 36px; border:none; border-radius:50px;
+  background:var(--ink); color:#fff;
+  font-family:'Cabinet Grotesk',sans-serif; font-weight:700;
+  font-size:16px; cursor:pointer; transition:all .2s;
+  display:flex; align-items:center; gap:10px; margin-left:auto;
+}
+.btn-next:hover { background:var(--p2); transform:translateY(-1px); box-shadow:0 8px 24px rgba(124,58,237,.3); }
+.btn-next:disabled { opacity:.4; cursor:not-allowed; transform:none; box-shadow:none; }
+
+/* ── Generate button ── */
+.btn-generate {
+  width:100%; padding:22px; border:none; border-radius:var(--radius);
+  background:linear-gradient(135deg,var(--p),var(--p2));
+  color:#fff; font-family:'Cabinet Grotesk',sans-serif;
+  font-weight:900; font-size:20px; cursor:pointer;
+  transition:all .2s; letter-spacing:-.3px;
+  position:relative; overflow:hidden; margin-top:8px;
+}
+.btn-generate::before {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.12),transparent);
+  opacity:0; transition:opacity .2s;
+}
+.btn-generate:hover::before { opacity:1; }
+.btn-generate:hover { transform:translateY(-2px); box-shadow:0 16px 48px rgba(91,33,182,.4); }
+.btn-generate:disabled { opacity:.5; cursor:not-allowed; transform:none; box-shadow:none; }
+
+/* ── Résumé panel 3 ── */
+.summary-card {
+  background:#fff; border:1.5px solid var(--line);
+  border-radius:var(--radius); padding:28px; margin-bottom:20px;
+}
+.summary-row { display:flex; justify-content:space-between; align-items:flex-start; padding:10px 0; border-bottom:1px solid var(--line); }
+.summary-row:last-child { border-bottom:none; }
+.summary-label { font-size:13px; color:var(--muted); font-weight:500; }
+.summary-value { font-size:14px; font-weight:700; color:var(--ink); text-align:right; max-width:60%; }
+.summary-badge {
+  display:inline-block; padding:4px 12px; border-radius:50px;
+  font-size:12px; font-weight:700;
+}
+
+/* ── Loading ── */
+#loading {
+  display:none; text-align:center; padding:60px 20px;
+}
+#loading.show { display:block; }
+.spinner {
+  width:56px; height:56px; border-radius:50%;
+  border:3px solid var(--p3); border-top-color:var(--p2);
+  animation:spin 1s linear infinite; margin:0 auto 24px;
+}
+@keyframes spin { to{transform:rotate(360deg)} }
+.loading-steps { list-style:none; max-width:300px; margin:24px auto 0; text-align:left; }
+.loading-steps li {
+  padding:8px 0; font-size:14px; color:var(--muted);
+  display:flex; align-items:center; gap:10px;
+  border-bottom:1px solid var(--line);
+}
+.loading-steps li:last-child { border:none; }
+.loading-steps li.done { color:var(--green); }
+.loading-steps li.active { color:var(--ink); font-weight:600; }
+.ls-icon { width:18px; height:18px; flex-shrink:0; font-size:14px; }
+
+/* ── Résultat ── */
+#result { display:none; }
+#result.show { display:block; }
+.result-hero {
+  text-align:center; padding:48px 20px 36px;
+  background:linear-gradient(135deg,#f5f3ff,#ede9fe);
+  border-radius:var(--radius); margin-bottom:28px;
+}
+.result-icon { font-size:52px; margin-bottom:16px; }
+.result-hero h2 {
+  font-family:'Cabinet Grotesk',sans-serif;
+  font-weight:900; font-size:28px; margin-bottom:8px;
+}
+.result-hero p { color:var(--muted); font-size:16px; }
+
+.result-cards { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px; }
+@media(max-width:600px){ .result-cards { grid-template-columns:1fr; } }
+
+.result-card {
+  background:#fff; border:1.5px solid var(--line);
+  border-radius:12px; padding:20px;
+}
+.rc-label { font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+.rc-value { font-weight:700; font-size:15px; color:var(--ink); word-break:break-all; }
+.rc-value a { color:var(--p2); }
+
+.result-actions { display:flex; gap:12px; flex-wrap:wrap; }
+.btn-action {
+  flex:1; min-width:140px; padding:14px 20px;
+  border-radius:10px; font-family:'Instrument Sans',sans-serif;
+  font-weight:700; font-size:14px; cursor:pointer;
+  transition:all .15s; text-align:center; border:none;
+}
+.btn-action.primary { background:var(--p2); color:#fff; }
+.btn-action.primary:hover { background:var(--p); }
+.btn-action.secondary { background:var(--ink); color:#fff; }
+.btn-action.secondary:hover { background:#333; }
+.btn-action.outline { background:#fff; color:var(--ink); border:1.5px solid var(--line); }
+.btn-action.outline:hover { border-color:var(--ink); }
+
+/* ── DNS instructions ── */
+.dns-box {
+  background:#fff; border:1.5px solid var(--amber);
+  border-radius:12px; padding:20px; margin-top:16px;
+}
+.dns-box h4 { font-weight:700; font-size:15px; color:var(--amber); margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+.dns-steps { list-style:none; }
+.dns-steps li { padding:8px 0; font-size:13px; color:var(--muted); border-bottom:1px solid var(--line); display:flex; gap:12px; }
+.dns-steps li:last-child { border:none; }
+.dns-num { background:var(--amber); color:#fff; width:22px; height:22px; border-radius:50%; font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
+
+/* ── Progress bar ── */
+.progress-bar {
+  height:3px; background:var(--line); border-radius:2px;
+  margin:0 40px; overflow:hidden;
+}
+.progress-fill {
+  height:100%; background:var(--p2);
+  border-radius:2px; transition:width .4s ease;
+  width:33%;
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+<header>
+  <div class="logo">
+    <div class="logo-dot"></div>
+    Publication-Web
+  </div>
+  <div class="header-badge">✦ Générateur IA</div>
+</header>
+
+<div class="progress-bar">
+  <div class="progress-fill" id="progress"></div>
+</div>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-label">Propulsé par l'IA</div>
+  <h1>Ton site web<br><em>en 60 secondes</em></h1>
+  <p>Décris ton activité, choisis ton style — NyXia génère et déploie ton site affilié automatiquement.</p>
+
+  <!-- Stepper -->
+  <div class="stepper">
+    <button class="step-btn active" onclick="goTo(1)" id="s1">
+      <span class="step-num">1</span> Type
+    </button>
+    <button class="step-btn" onclick="goTo(2)" id="s2">
+      <span class="step-num">2</span> Infos
+    </button>
+    <button class="step-btn" onclick="goTo(3)" id="s3">
+      <span class="step-num">3</span> Générer
+    </button>
+  </div>
+</div>
+
+<!-- ── PANELS ── -->
+<div class="panels">
+
+  <!-- Panel 1 : Type + Palette -->
+  <div class="panel active" id="panel-1">
+    <div class="section-title">Quel type de site ?</div>
+    <div class="section-sub">Choisis le gabarit qui correspond le mieux à ton activité.</div>
+
+    <div class="cards-grid">
+      <div class="select-card" data-val="landing" onclick="selectType(this)">
+        <div class="card-icon">🎯</div>
+        <div class="card-title">Page de vente</div>
+        <div class="card-desc">1 page, 1 produit, maximise les conversions</div>
+      </div>
+      <div class="select-card" data-val="minisite" onclick="selectType(this)">
+        <div class="card-icon">🌐</div>
+        <div class="card-title">Mini-site affiliation</div>
+        <div class="card-desc">Plusieurs pages, catalogue de produits affiliés</div>
+      </div>
+      <div class="select-card" data-val="systemeio" onclick="selectType(this)">
+        <div class="card-icon">⚡</div>
+        <div class="card-title">Page Systeme.io</div>
+        <div class="card-desc">Tunnel de vente, capture d'emails, squeeze page</div>
+      </div>
+      <div class="select-card" data-val="coach" onclick="selectType(this)">
+        <div class="card-icon">💫</div>
+        <div class="card-title">Coach / Thérapeute</div>
+        <div class="card-desc">Site personnel, services, prise de rendez-vous</div>
+      </div>
+      <div class="select-card" data-val="ecommerce" onclick="selectType(this)">
+        <div class="card-icon">🛒</div>
+        <div class="card-title">Boutique en ligne</div>
+        <div class="card-desc">Catalogue produits, panier, look professionnel</div>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:36px">Quelle palette de couleurs ?</div>
+    <div class="section-sub">Choisis l'ambiance visuelle de ton site.</div>
+
+    <div class="palettes-grid">
+      <div class="palette-card selected" data-val="violet" onclick="selectPalette(this)">
+        <div class="palette-swatch" style="background:#7c3aed"></div>
+        <div class="palette-name">Violet</div>
+      </div>
+      <div class="palette-card" data-val="emeraude" onclick="selectPalette(this)">
+        <div class="palette-swatch" style="background:#059669"></div>
+        <div class="palette-name">Émeraude</div>
+      </div>
+      <div class="palette-card" data-val="corail" onclick="selectPalette(this)">
+        <div class="palette-swatch" style="background:#f97316"></div>
+        <div class="palette-name">Corail</div>
+      </div>
+      <div class="palette-card" data-val="ardoise" onclick="selectPalette(this)">
+        <div class="palette-swatch" style="background:#334155"></div>
+        <div class="palette-name">Ardoise</div>
+      </div>
+      <div class="palette-card" data-val="rose" onclick="selectPalette(this)">
+        <div class="palette-swatch" style="background:#e11d48"></div>
+        <div class="palette-name">Rose</div>
+      </div>
+      <div class="palette-card" data-val="ocean" onclick="selectPalette(this)">
+        <div class="palette-swatch" style="background:#0ea5e9"></div>
+        <div class="palette-name">Océan</div>
+      </div>
+      <div class="palette-card" data-val="sombre" onclick="selectPalette(this)">
+        <div class="palette-swatch" style="background:#0f0f1a;border:2px solid #a78bfa"></div>
+        <div class="palette-name">Sombre</div>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <span></span>
+      <button class="btn-next" id="btn1" onclick="goTo(2)" disabled>
+        Continuer <span>→</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Panel 2 : Infos -->
+  <div class="panel" id="panel-2">
+    <div class="section-title">Parle-moi de toi</div>
+    <div class="section-sub">Plus tu es précis, plus le site sera personnalisé.</div>
+
+    <div class="fields-row">
+      <div class="field">
+        <label>Ton prénom / nom de marque</label>
+        <input type="text" id="owner_name" placeholder="Marie Caron" oninput="updatePreview()">
+      </div>
+      <div class="field">
+        <label>Ton email <span>(pour ton dashboard affilié)</span></label>
+        <input type="email" id="client_email" placeholder="marie@exemple.com" oninput="updatePreview()">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Nom de ton produit / service</label>
+      <input type="text" id="product_name" placeholder="ex: Réveil Intérieur, Formation Liberté, Boutique Bien-être...">
+    </div>
+
+    <div class="fields-row">
+      <div class="field">
+        <label>Prix <span>(optionnel)</span></label>
+        <input type="text" id="price" placeholder="ex: 97€, Gratuit, Sur devis">
+      </div>
+      <div class="field">
+        <label>Langue du site</label>
+        <select id="language">
+          <option value="fr">🇫🇷 Français</option>
+          <option value="en">🇬🇧 Anglais</option>
+          <option value="es">🇪🇸 Espagnol</option>
+          <option value="pt">🇧🇷 Portugais</option>
+          <option value="de">🇩🇪 Allemand</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Décris ton activité / produit</label>
+      <textarea id="prompt" placeholder="Ex: Je suis coach en développement personnel spécialisée pour les femmes entrepreneurs. Mon programme Réveil Intérieur aide à retrouver confiance et clarté en 8 semaines. Public cible : femmes 30-50 ans qui se sentent perdues professionnellement..."></textarea>
+      <div class="input-hint">Plus tu détailles, plus le site sera percutant. Minimum 2-3 phrases.</div>
+    </div>
+
+    <div class="field">
+      <label>Ton lien affilié <span>(optionnel — Systeme.io ou autre)</span></label>
+      <input type="text" id="affiliate_url" placeholder="https://ton-lien-systemeio.com">
+    </div>
+
+    <!-- Sous-domaine -->
+    <div class="section-title" style="margin-top:32px;font-size:18px">Hébergement de ton site</div>
+    <div class="section-sub">Comment veux-tu accéder à ton site ?</div>
+
+    <div class="domain-toggle">
+      <div class="domain-opt selected" id="opt-own" onclick="selectDomain('own')">
+        <div class="domain-opt-title">🌐 Mon propre domaine</div>
+        <div class="domain-opt-sub">affiliation.monsite.com</div>
+      </div>
+      <div class="domain-opt" id="opt-shared" onclick="selectDomain('shared')">
+        <div class="domain-opt-title">⚡ Hébergement inclus</div>
+        <div class="domain-opt-sub">prenom.market.nyxiapublicationweb.com</div>
+      </div>
+    </div>
+
+    <div id="domain-own-fields">
+      <div class="field">
+        <label>Ton nom de domaine existant</label>
+        <input type="text" id="client_domain" placeholder="monsite.com" oninput="updatePreview()">
+        <div class="input-hint">On créera affiliation.monsite.com — tu devras ajouter un CNAME (on t'explique tout)</div>
+      </div>
+    </div>
+
+    <div id="domain-shared-fields" style="display:none">
+      <div class="field">
+        <label>Choisis ton identifiant</label>
+        <input type="text" id="client_slug" placeholder="mariecaron" oninput="updatePreview()">
+        <div class="input-hint">Uniquement lettres minuscules et chiffres, sans espaces</div>
+      </div>
+    </div>
+
+    <div class="domain-preview" id="domain-preview">
+      Ton site sera accessible sur : <span class="domain-url" id="preview-url"></span>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-back" onclick="goTo(1)">← Retour</button>
+      <button class="btn-next" id="btn2" onclick="goTo(3)">
+        Voir le résumé <span>→</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Panel 3 : Résumé + Génération -->
+  <div class="panel" id="panel-3">
+    <div class="section-title">Tout est prêt !</div>
+    <div class="section-sub">Vérifie les infos et lance la génération de ton site.</div>
+
+    <div class="summary-card" id="summary">
+      <!-- Rempli dynamiquement -->
+    </div>
+
+    <button class="btn-generate" id="btn-generate" onclick="startGeneration()">
+      ✦ Générer mon site maintenant — 60 secondes
+    </button>
+
+    <div class="nav-btns">
+      <button class="btn-back" onclick="goTo(2)">← Modifier</button>
+      <span></span>
+    </div>
+  </div>
+
+  <!-- Loading -->
+  <div id="loading">
+    <div class="spinner"></div>
+    <div class="section-title" style="font-size:22px" id="loading-title">NyXia génère ton site...</div>
+    <p style="color:var(--muted);margin:8px 0 0;font-size:15px">Ça prend environ 30-60 secondes</p>
+    <ul class="loading-steps" id="loading-steps">
+      <li id="ls-1" class="active"><span class="ls-icon">⟳</span> Génération du contenu IA</li>
+      <li id="ls-2"><span class="ls-icon">○</span> Optimisation du design</li>
+      <li id="ls-3"><span class="ls-icon">○</span> Déploiement Cloudflare Pages</li>
+      <li id="ls-4"><span class="ls-icon">○</span> Configuration du sous-domaine</li>
+      <li id="ls-5"><span class="ls-icon">○</span> Activation compte affilié</li>
+    </ul>
+  </div>
+
+  <!-- Résultat -->
+  <div id="result">
+    <div class="result-hero">
+      <div class="result-icon">🎉</div>
+      <h2>Ton site est en ligne !</h2>
+      <p id="result-subtitle">Il est accessible en quelques secondes.</p>
+    </div>
+
+    <div class="result-cards" id="result-cards">
+      <!-- Rempli dynamiquement -->
+    </div>
+
+    <div id="dns-instructions"></div>
+
+    <div class="result-actions">
+      <button class="btn-action primary" id="btn-visit">Voir mon site →</button>
+      <button class="btn-action secondary" id="btn-dashboard">Mon dashboard affilié</button>
+      <button class="btn-action outline" onclick="resetForm()">Créer un autre site</button>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+// ── État ──────────────────────────────────────────────────
+const state = {
+  step:        1,
+  type:        null,
+  palette:     "violet",
+  ownerName:   "",
+  email:       "",
+  productName: "",
+  price:       "",
+  language:    "fr",
+  prompt:      "",
+  affiliateUrl:"",
+  domainType:  "own",
+  clientDomain:"",
+  clientSlug:  "",
+  result:      null,
+};
+
+const TYPE_LABELS = {
+  landing:"Page de vente", minisite:"Mini-site affiliation",
+  systemeio:"Page Systeme.io", coach:"Site Coach/Thérapeute", ecommerce:"Boutique e-commerce"
+};
+
+const PALETTE_LABELS = {
+  violet:"Violet", emeraude:"Émeraude", corail:"Corail",
+  ardoise:"Ardoise", rose:"Rose", ocean:"Océan", sombre:"Sombre"
+};
+
+const PALETTE_COLORS = {
+  violet:"#7c3aed", emeraude:"#059669", corail:"#f97316",
+  ardoise:"#334155", rose:"#e11d48", ocean:"#0ea5e9", sombre:"#a78bfa"
+};
+
+// ── Navigation ────────────────────────────────────────────
+function goTo(n) {
+  document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".step-btn").forEach((b,i) => b.classList.toggle("active", i+1===n));
+  document.getElementById("loading").classList.remove("show");
+  document.getElementById("result").classList.remove("show");
+
+  const panel = document.getElementById(`panel-${n}`);
+  if (panel) panel.classList.add("active");
+
+  state.step = n;
+  document.getElementById("progress").style.width = `${n * 33.3}%`;
+
+  if (n === 3) buildSummary();
+  window.scrollTo(0, 0);
+}
+
+// ── Sélections ────────────────────────────────────────────
+function selectType(el) {
+  document.querySelectorAll(".select-card").forEach(c => c.classList.remove("selected"));
+  el.classList.add("selected");
+  state.type = el.dataset.val;
+  document.getElementById("btn1").disabled = false;
+}
+
+function selectPalette(el) {
+  document.querySelectorAll(".palette-card").forEach(c => c.classList.remove("selected"));
+  el.classList.add("selected");
+  el.style.borderColor = PALETTE_COLORS[el.dataset.val] || "#7c3aed";
+  state.palette = el.dataset.val;
+}
+
+function selectDomain(type) {
+  state.domainType = type;
+  document.getElementById("opt-own").classList.toggle("selected", type==="own");
+  document.getElementById("opt-shared").classList.toggle("selected", type==="shared");
+  document.getElementById("domain-own-fields").style.display    = type==="own"    ? "block":"none";
+  document.getElementById("domain-shared-fields").style.display = type==="shared" ? "block":"none";
+  updatePreview();
+}
+
+// ── Preview domaine ───────────────────────────────────────
+function updatePreview() {
+  state.ownerName   = document.getElementById("owner_name").value.trim();
+  state.email       = document.getElementById("client_email").value.trim();
+  state.clientDomain= document.getElementById("client_domain").value.trim().replace(/^https?:\/\//,"").replace(/^www\./,"");
+  state.clientSlug  = document.getElementById("client_slug").value.trim().toLowerCase().replace(/[^a-z0-9]/g,"-").replace(/-+/g,"-");
+
+  let url = "";
+  if (state.domainType === "own" && state.clientDomain) {
+    url = `https://affiliation.${state.clientDomain}`;
+  } else if (state.domainType === "shared") {
+    const slug = state.clientSlug || state.ownerName.toLowerCase().replace(/\s+/g,"-").replace(/[^a-z0-9-]/g,"") || "monsite";
+    url = `https://${slug}.market.nyxiapublicationweb.com`;
+  }
+
+  const preview = document.getElementById("domain-preview");
+  if (url) {
+    preview.classList.add("show");
+    document.getElementById("preview-url").textContent = url;
+  } else {
+    preview.classList.remove("show");
+  }
+}
+
+// ── Résumé ────────────────────────────────────────────────
+function buildSummary() {
+  state.ownerName   = document.getElementById("owner_name").value.trim();
+  state.email       = document.getElementById("client_email").value.trim();
+  state.productName = document.getElementById("product_name").value.trim();
+  state.price       = document.getElementById("price").value.trim();
+  state.language    = document.getElementById("language").value;
+  state.prompt      = document.getElementById("prompt").value.trim();
+  state.affiliateUrl= document.getElementById("affiliate_url").value.trim();
+  state.clientDomain= document.getElementById("client_domain").value.trim().replace(/^https?:\/\//,"").replace(/^www\./,"");
+  state.clientSlug  = document.getElementById("client_slug").value.trim();
+
+  const col = PALETTE_COLORS[state.palette] || "#7c3aed";
+
+  let domainVal = "";
+  if (state.domainType === "own" && state.clientDomain) {
+    domainVal = `affiliation.${state.clientDomain}`;
+  } else {
+    const slug = state.clientSlug || state.ownerName.toLowerCase().replace(/\s+/g,"-").replace(/[^a-z0-9-]/g,"") || "monsite";
+    domainVal = `${slug}.market.nyxiapublicationweb.com`;
+  }
+
+  const rows = [
+    ["Type de site",  `<span class="summary-badge" style="background:#f3f0ff;color:${col}">${TYPE_LABELS[state.type]||"—"}</span>`],
+    ["Palette",       `<span class="summary-badge" style="background:${col}22;color:${col}">● ${PALETTE_LABELS[state.palette]}</span>`],
+    ["Propriétaire",  state.ownerName || "—"],
+    ["Email",         state.email     || "—"],
+    ["Produit",       state.productName || "—"],
+    ["Prix",          state.price     || "Non précisé"],
+    ["Langue",        {fr:"🇫🇷 Français",en:"🇬🇧 Anglais",es:"🇪🇸 Espagnol",pt:"🇧🇷 Portugais",de:"🇩🇪 Allemand"}[state.language]],
+    ["Lien affilié",  state.affiliateUrl ? `<span style="color:#059669;font-size:13px">✓ Fourni</span>` : "Auto-généré"],
+    ["URL du site",   `<span style="color:#7c3aed;word-break:break-all">${domainVal}</span>`],
+  ];
+
+  document.getElementById("summary").innerHTML = rows.map(([l,v]) =>
+    `<div class="summary-row"><span class="summary-label">${l}</span><span class="summary-value">${v}</span></div>`
+  ).join("");
+}
+
+// ── Génération ────────────────────────────────────────────
+async function startGeneration() {
+  // ── Vérifie que l'email est renseigné (obligatoire plan gratuit) ──
+  state.email = document.getElementById("client_email").value.trim();
+  if (!state.email) {
+    // Scroll vers le champ email et le mettre en évidence
+    const emailField = document.getElementById("client_email");
+    emailField.focus();
+    emailField.style.borderColor = "var(--danger)";
+    emailField.style.boxShadow = "0 0 0 4px rgba(248,113,113,0.15)";
+    emailField.placeholder = "Ton email est requis pour voir le résultat !";
+    setTimeout(() => {
+      emailField.style.borderColor = "";
+      emailField.style.boxShadow = "";
+      emailField.placeholder = "marie@exemple.com";
+    }, 3000);
+    // Retourne au panel 2
+    goTo(2);
+    return;
+  }
+
+  document.getElementById("panel-3").classList.remove("active");
+  document.getElementById("loading").classList.add("show");
+  document.getElementById("btn-generate").disabled = true;
+  document.getElementById("progress").style.width = "66%";
+
+  const steps = [1,2,3,4,5];
+  const delays = [0, 8000, 18000, 28000, 38000];
+
+  steps.forEach((n, i) => {
+    setTimeout(() => {
+      if (i > 0) {
+        const prev = document.getElementById(`ls-${n-1}`);
+        if (prev) { prev.classList.remove("active"); prev.classList.add("done"); prev.querySelector(".ls-icon").textContent = "✓"; }
+      }
+      const curr = document.getElementById(`ls-${n}`);
+      if (curr) { curr.classList.add("active"); curr.querySelector(".ls-icon").textContent = "⟳"; }
+    }, delays[i]);
+  });
+
+  try {
+    const slug = state.clientSlug || state.ownerName.toLowerCase().replace(/\s+/g,"-").replace(/[^a-z0-9-]/g,"") || "monsite";
+
+    const res = await fetch("/api/generate-site", {
+      method:  "POST",
+      headers: { "Content-Type":"application/json" },
+      body: JSON.stringify({
+        plan_id:       state.planId || "free",
+        type:          state.type,
+        prompt:        state.prompt,
+        language:      state.language,
+        palette:       state.palette,
+        owner_name:    state.ownerName,
+        product_name:  state.productName,
+        price:         state.price,
+        affiliate_url: state.affiliateUrl,
+        client_email:  state.email,
+        client_name:   state.ownerName,
+        client_domain: state.domainType === "own" ? state.clientDomain : "",
+        client_slug:   slug,
+      }),
+    });
+
+    const data = await res.json();
+
+    // Gère le cas où l'email était manquant (ne devrait plus arriver)
+    if (data.error === "email_required") {
+      document.getElementById("loading").classList.remove("show");
+      goTo(2);
+      return;
+    }
+
+    showResult(data);
+
+  } catch(err) {
+    // Mode démo
+    await new Promise(r => setTimeout(r, 8000));
+    const isFree = !state.planId || state.planId === "free";
+    showResult({
+      success:       true,
+      plan:          isFree ? "free" : "pro",
+      watermark:     isFree,
+      expires_at:    isFree ? new Date(Date.now() + 7*24*60*60*1000).toISOString() : null,
+      upgrade_cta:   isFree ? "Passe au Pro pour supprimer le filigrane, activer tes commissions et garder ton site pour toujours !" : null,
+      site_url:      `https://${state.clientSlug||"monsite"}.market.nyxiapublicationweb.com`,
+      affiliate_link: isFree ? null : "https://market.nyxiapublicationweb.com/ref/demo123",
+      dashboard:     isFree ? null : "https://affiliationpro.nyxiapublicationweb.com/dashboard/demo",
+      subdomain: {
+        type: "shared",
+        url:  `https://${state.clientSlug||"monsite"}.market.nyxiapublicationweb.com`,
+        instructions: ["Ton site est accessible immédiatement !"],
+      },
+    });
+  }
+}
+
+function showResult(data) {
+  [1,2,3,4,5].forEach(n => {
+    const el = document.getElementById(`ls-${n}`);
+    if (el) { el.classList.remove("active"); el.classList.add("done"); el.querySelector(".ls-icon").textContent = "✓"; }
+  });
+
+  setTimeout(() => {
+    document.getElementById("loading").classList.remove("show");
+    document.getElementById("result").classList.add("show");
+    document.getElementById("progress").style.width = "100%";
+
+    state.result = data;
+
+    const siteUrl    = data.site_url || "#";
+    const isFree     = data.plan === "free" || data.watermark;
+    const hasAff     = !!data.affiliate_link;
+    const expireDate = data.expires_at ? new Date(data.expires_at).toLocaleDateString("fr-CA") : null;
+
+    // ── Cards de résultat selon le plan ──────────────────
+    let cardsHtml = `
+      <div class="result-card">
+        <div class="rc-label">🌐 Ton site</div>
+        <div class="rc-value"><a href="${siteUrl}" target="_blank">${siteUrl}</a></div>
+      </div>`;
+
+    if (hasAff) {
+      cardsHtml += `
+        <div class="result-card">
+          <div class="rc-label">🔗 Ton lien affilié</div>
+          <div class="rc-value"><a href="${data.affiliate_link}" target="_blank">${data.affiliate_link}</a></div>
+        </div>
+        <div class="result-card">
+          <div class="rc-label">📊 Dashboard affilié</div>
+          <div class="rc-value"><a href="${data.dashboard}" target="_blank">Accéder →</a></div>
+        </div>
+        <div class="result-card">
+          <div class="rc-label">💜 Commissions</div>
+          <div class="rc-value">25% Niv.1 · 10% Niv.2 · 5% Niv.3</div>
+        </div>`;
+    } else {
+      // Plan gratuit — montre ce qui est verrouillé
+      cardsHtml += `
+        <div class="result-card" style="opacity:.6;border-style:dashed">
+          <div class="rc-label">🔒 Lien affilié</div>
+          <div class="rc-value" style="color:var(--muted);font-size:13px">Activé avec le plan Pro</div>
+        </div>
+        <div class="result-card" style="opacity:.6;border-style:dashed">
+          <div class="rc-label">🔒 Dashboard affilié</div>
+          <div class="rc-value" style="color:var(--muted);font-size:13px">Activé avec le plan Pro</div>
+        </div>
+        <div class="result-card" style="opacity:.6;border-style:dashed">
+          <div class="rc-label">🔒 Commissions 25/10/5%</div>
+          <div class="rc-value" style="color:var(--muted);font-size:13px">Activées avec le plan Pro</div>
+        </div>`;
+    }
+
+    document.getElementById("result-cards").innerHTML = cardsHtml;
+
+    // ── Bandeau plan gratuit ──────────────────────────────
+    let upgradeHtml = "";
+    if (isFree) {
+      upgradeHtml = `
+        <div style="background:linear-gradient(135deg,rgba(123,92,255,0.12),rgba(79,163,255,0.06));border:1px solid rgba(123,92,255,0.3);border-radius:var(--radius);padding:28px;margin-bottom:20px;text-align:center">
+          <div style="font-size:13px;font-weight:700;color:#a78bfa;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">
+            ${isFree ? "⚠ Restrictions du plan gratuit" : ""}
+          </div>
+          <div style="font-size:14px;color:var(--muted);line-height:1.6;margin-bottom:16px">
+            ${data.watermark ? "✗ Filigrane « Publication-Web » visible sur ton site<br>" : ""}
+            ${expireDate ? `✗ Site supprimé automatiquement le <strong style="color:var(--danger)">${expireDate}</strong><br>` : ""}
+            ✗ Aucun lien affilié actif — pas de commissions<br>
+            ✗ Domaine forcé sur market.nyxiapublicationweb.com
+          </div>
+          <a href="/#tarifs" style="display:inline-block;padding:14px 36px;border-radius:50px;background:linear-gradient(135deg,var(--px),#6d28d9);color:#fff;font-weight:700;font-size:15px;text-decoration:none;box-shadow:0 0 24px rgba(123,92,255,0.4)">
+            ✦ Passer au Pro — 3 jours gratuits →
+          </a>
+          <div style="font-size:12px;color:var(--muted);margin-top:10px">CA$39/mois · Sans engagement · Annulable en 1 clic</div>
+        </div>`;
+    }
+
+    // ── DNS si custom ─────────────────────────────────────
+    let dnsHtml = "";
+    if (data.subdomain?.type === "custom" && data.subdomain?.instructions?.length) {
+      dnsHtml = `
+        <div class="dns-box">
+          <h4>⚠ Configuration DNS requise</h4>
+          <ul class="dns-steps">
+            ${data.subdomain.instructions.map((s,i) => `<li><div class="dns-num">${i+1}</div><span>${s}</span></li>`).join("")}
+          </ul>
+        </div>`;
+    }
+
+    document.getElementById("dns-instructions").innerHTML = upgradeHtml + dnsHtml;
+
+    document.getElementById("btn-visit").onclick = () => window.open(siteUrl, "_blank");
+    document.getElementById("btn-dashboard").onclick = data.dashboard
+      ? () => window.open(data.dashboard, "_blank")
+      : () => window.location.href = "/#tarifs";
+
+    if (!hasAff) {
+      document.getElementById("btn-dashboard").textContent = "Activer mes commissions →";
+      document.getElementById("btn-dashboard").style.background = "linear-gradient(135deg,var(--px),#6d28d9)";
+    }
+
+    window.scrollTo(0, 0);
+  }, 2000);
+}
+
+function resetForm() {
+  state.type = null; state.result = null;
+  document.querySelectorAll(".select-card").forEach(c => c.classList.remove("selected"));
+  document.getElementById("btn1").disabled = true;
+  ["owner_name","client_email","product_name","price","prompt","affiliate_url","client_domain","client_slug"].forEach(id => {
+    const el = document.getElementById(id); if(el) el.value = "";
+  });
+  document.getElementById("result").classList.remove("show");
+  document.getElementById("domain-preview").classList.remove("show");
+  [1,2,3,4,5].forEach(n => {
+    const el = document.getElementById(`ls-${n}`);
+    if (el) { el.className = n===1?"active":""; el.querySelector(".ls-icon").textContent = n===1?"⟳":"○"; }
+  });
+  goTo(1);
+}
+
+// Style palette sélectionnée au load
+document.querySelector('.palette-card[data-val="violet"]').style.borderColor = "#7c3aed";
+</script>
+</body>
+</html>

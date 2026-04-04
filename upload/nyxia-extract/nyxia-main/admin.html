@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Super Admin — Publication-Web</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07080f;--bg2:#0d0f1c;--bg3:#131525;--bg4:#191b2e;
+  --line:rgba(255,255,255,.06);--line2:rgba(255,255,255,.1);
+  --p:#7B5CFF;--p2:#5A6CFF;--p3:rgba(123,92,255,.15);
+  --cyan:#22d3ee;--green:#00E676;--amber:#fbbf24;
+  --red:#f87171;--t:#e8e6f8;--t2:#9896b8;--t3:#5a5878;
+  --r:10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--t);overflow:hidden}
+
+/* ── Layout ── */
+#shell{display:flex;height:100vh}
+
+/* ── Sidebar ── */
+#sidebar{
+  width:220px;flex-shrink:0;
+  background:var(--bg2);
+  border-right:1px solid var(--line);
+  display:flex;flex-direction:column;
+  overflow:hidden;
+}
+.sb-logo{
+  padding:22px 20px 18px;
+  font-family:'Orbitron',monospace;font-weight:900;font-size:13px;
+  background:linear-gradient(135deg,#a78bfa,var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;letter-spacing:2px;border-bottom:1px solid var(--line);
+}
+.sb-label{padding:20px 20px 8px;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--t3)}
+.sb-nav{flex:1;overflow-y:auto;padding-bottom:16px}
+.sb-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 20px;font-size:13px;font-weight:500;
+  color:var(--t2);cursor:pointer;transition:all .15s;
+  border-left:2px solid transparent;
+}
+.sb-item:hover{color:var(--t);background:rgba(123,92,255,.06)}
+.sb-item.active{color:#a78bfa;background:var(--p3);border-left-color:var(--p)}
+.sb-icon{font-size:15px;width:18px;text-align:center}
+
+.sb-user{
+  padding:14px 20px;border-top:1px solid var(--line);
+  display:flex;align-items:center;gap:10px;
+}
+.sb-avatar{
+  width:32px;height:32px;border-radius:8px;
+  background:linear-gradient(135deg,var(--p),var(--p2));
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:13px;flex-shrink:0;
+}
+.sb-uname{font-size:12px;font-weight:600;color:var(--t)}
+.sb-urole{font-size:10px;color:var(--p);font-weight:700;letter-spacing:.5px}
+
+/* ── Main ── */
+#main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+#topbar{
+  padding:14px 28px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--line);background:var(--bg2);flex-shrink:0;
+}
+.tb-title{font-family:'Orbitron',monospace;font-size:14px;font-weight:700;color:var(--t);letter-spacing:1px}
+.tb-right{display:flex;align-items:center;gap:12px}
+.tb-badge{
+  padding:6px 14px;border-radius:6px;font-size:12px;font-weight:700;
+  background:rgba(0,230,118,.1);color:var(--green);
+  border:1px solid rgba(0,230,118,.2);
+}
+.tb-time{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--t3)}
+
+#content{flex:1;overflow-y:auto;padding:28px}
+#content::-webkit-scrollbar{width:4px}
+#content::-webkit-scrollbar-thumb{background:var(--line2);border-radius:2px}
+
+/* ── Sections ── */
+.section{display:none}
+.section.active{display:block}
+
+/* ── Cards stat ── */
+.stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:28px}
+.stat-card{
+  background:var(--bg3);border:1px solid var(--line);border-radius:var(--r);
+  padding:20px;transition:all .2s;
+}
+.stat-card:hover{border-color:rgba(123,92,255,.3);transform:translateY(-2px)}
+.stat-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--t3);margin-bottom:10px}
+.stat-num{font-family:'Orbitron',monospace;font-size:28px;font-weight:900;line-height:1;margin-bottom:6px}
+.stat-num.green{color:var(--green)}
+.stat-num.purple{background:linear-gradient(135deg,#a78bfa,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-num.amber{color:var(--amber)}
+.stat-num.cyan{color:var(--cyan)}
+.stat-delta{font-size:12px;font-weight:600}
+.stat-delta.up{color:var(--green)}
+.stat-delta.down{color:var(--red)}
+
+/* ── Table ── */
+.table-wrap{background:var(--bg3);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-bottom:24px}
+.table-head{padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+.table-title{font-size:14px;font-weight:700;color:var(--t)}
+.table-actions{display:flex;gap:8px}
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{padding:12px 16px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--t3);text-align:left;border-bottom:1px solid var(--line)}
+.tbl td{padding:13px 16px;font-size:13px;color:var(--t2);border-bottom:1px solid var(--line)}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:rgba(123,92,255,.04);color:var(--t)}
+
+/* ── Badges ── */
+.badge{display:inline-block;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:700;letter-spacing:.3px}
+.badge-green{background:rgba(0,230,118,.12);color:var(--green);border:1px solid rgba(0,230,118,.2)}
+.badge-red{background:rgba(248,113,113,.12);color:var(--red);border:1px solid rgba(248,113,113,.2)}
+.badge-amber{background:rgba(251,191,36,.12);color:var(--amber);border:1px solid rgba(251,191,36,.2)}
+.badge-purple{background:var(--p3);color:#a78bfa;border:1px solid rgba(123,92,255,.3)}
+.badge-cyan{background:rgba(34,211,238,.1);color:var(--cyan);border:1px solid rgba(34,211,238,.2)}
+
+/* ── Boutons ── */
+.btn{padding:8px 16px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .15s;border:none}
+.btn-primary{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff}
+.btn-primary:hover{box-shadow:0 0 16px rgba(123,92,255,.4);transform:translateY(-1px)}
+.btn-outline{background:transparent;color:var(--t2);border:1px solid var(--line2)}
+.btn-outline:hover{border-color:var(--p);color:var(--t)}
+.btn-danger{background:rgba(248,113,113,.15);color:var(--red);border:1px solid rgba(248,113,113,.25)}
+.btn-danger:hover{background:rgba(248,113,113,.25)}
+.btn-sm{padding:5px 10px;font-size:11px}
+.btn-icon{width:30px;height:30px;padding:0;display:inline-flex;align-items:center;justify-content:center;font-size:14px}
+
+/* ── Inputs ── */
+.inp{
+  width:100%;padding:10px 14px;border-radius:8px;
+  background:var(--bg4);border:1px solid var(--line2);
+  color:var(--t);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;
+  transition:border-color .15s;
+}
+.inp:focus{border-color:var(--p);box-shadow:0 0 0 3px rgba(123,92,255,.1)}
+.inp::placeholder{color:var(--t3)}
+select.inp{cursor:pointer}
+
+/* ── Formulaire ── */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{margin-bottom:16px}
+.form-label{font-size:12px;font-weight:700;color:var(--t2);margin-bottom:6px;display:block;letter-spacing:.3px}
+.form-hint{font-size:11px;color:var(--t3);margin-top:4px}
+
+/* ── Modal ── */
+.modal-bg{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);
+  backdrop-filter:blur(6px);z-index:200;
+  align-items:center;justify-content:center;
+}
+.modal-bg.open{display:flex}
+.modal{
+  background:var(--bg3);border:1px solid var(--line2);border-radius:16px;
+  width:100%;max-width:520px;max-height:90vh;overflow-y:auto;
+}
+.modal-hdr{padding:22px 24px 0;display:flex;align-items:center;justify-content:space-between}
+.modal-title{font-size:16px;font-weight:700;color:var(--t)}
+.modal-body{padding:20px 24px 24px}
+.modal-close{background:var(--bg4);border:1px solid var(--line2);color:var(--t2);width:28px;height:28px;border-radius:6px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center}
+
+/* ── Chart simple ── */
+.chart-bar-wrap{display:flex;align-items:flex-end;gap:6px;height:80px;padding:0 4px}
+.chart-bar{flex:1;border-radius:4px 4px 0 0;background:linear-gradient(0deg,var(--p),#a78bfa);opacity:.7;transition:opacity .2s;cursor:pointer;min-width:8px}
+.chart-bar:hover{opacity:1}
+
+/* ── Broadcast ── */
+.msg-area{width:100%;min-height:120px;padding:12px 14px;border-radius:8px;background:var(--bg4);border:1px solid var(--line2);color:var(--t);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;resize:vertical;transition:border-color .15s}
+.msg-area:focus{border-color:var(--p)}
+
+/* ── Password reveal ── */
+.pw-wrap{position:relative}
+.pw-wrap .inp{padding-right:40px;font-family:'JetBrains Mono',monospace;letter-spacing:1px}
+.pw-toggle{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--t3);cursor:pointer;font-size:15px;padding:4px}
+
+/* ── Toast ── */
+.toast{
+  position:fixed;bottom:24px;right:24px;z-index:300;
+  background:var(--green);color:#000;padding:12px 20px;
+  border-radius:10px;font-weight:700;font-size:13px;
+  transform:translateY(80px);opacity:0;transition:all .3s;
+}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* ── Tabs ── */
+.tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--bg3);padding:4px;border-radius:10px;border:1px solid var(--line);width:fit-content}
+.tab{padding:8px 18px;border-radius:7px;font-size:13px;font-weight:600;color:var(--t3);cursor:pointer;transition:all .15s}
+.tab.active{background:var(--bg4);color:var(--t);box-shadow:0 1px 4px rgba(0,0,0,.3)}
+
+/* ── Responsif sidebar collapse ── */
+@media(max-width:800px){#sidebar{width:56px}.sb-item span,.sb-label,.sb-uname,.sb-urole,.sb-logo-text{display:none}.sb-logo{padding:18px;font-size:18px}.stat-grid{grid-template-columns:1fr 1fr}.form-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div id="shell">
+
+<!-- ── SIDEBAR ── -->
+<div id="sidebar">
+  <div class="sb-logo">PW · Admin</div>
+  <div class="sb-nav">
+    <div class="sb-label">Navigation</div>
+    <div class="sb-item active" onclick="nav('overview')"><span class="sb-icon">⬡</span><span>Vue d'ensemble</span></div>
+    <div class="sb-item" onclick="nav('leads')"><span class="sb-icon">📥</span><span>Leads gratuits</span></div>
+    <div class="sb-item" onclick="nav('affiliates')"><span class="sb-icon">🔗</span><span>Affiliés</span></div>
+    <div class="sb-item" onclick="nav('clients')"><span class="sb-icon">👥</span><span>Clients</span></div>
+    <div class="sb-item" onclick="nav('sites')"><span class="sb-icon">🌐</span><span>Sites générés</span></div>
+    <div class="sb-item" onclick="nav('marketplace')"><span class="sb-icon">🛒</span><span>Marketplace</span></div>
+    <div class="sb-item" onclick="nav('broadcast')"><span class="sb-icon">📢</span><span>Messages</span></div>
+    <div class="sb-item" onclick="nav('stats')"><span class="sb-icon">📊</span><span>Statistiques</span></div>
+    <div class="sb-label">Admin</div>
+    <div class="sb-item" onclick="nav('security')"><span class="sb-icon">🔐</span><span>Sécurité</span></div>
+  </div>
+  <div class="sb-user">
+    <div class="sb-avatar">SA</div>
+    <div><div class="sb-uname">Super Admin</div><div class="sb-urole">✦ VISIONNAIRE</div></div>
+  </div>
+</div>
+
+<!-- ── MAIN ── -->
+<div id="main">
+  <div id="topbar">
+    <div class="tb-title" id="page-title">Vue d'ensemble</div>
+    <div class="tb-right">
+      <div class="tb-badge">● Système en ligne</div>
+      <div class="tb-time" id="clock"></div>
+    </div>
+  </div>
+
+  <div id="content">
+
+    <!-- ══ OVERVIEW ══ -->
+    <div class="section active" id="s-overview">
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-label">Revenus ce mois</div>
+          <div class="stat-num green" id="stat-revenue">CA$0</div>
+          <div class="stat-delta up" id="stat-revenue-delta">↑ chargement...</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Sites générés</div>
+          <div class="stat-num purple" id="stat-sites">0</div>
+          <div class="stat-delta up">↑ ce mois</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Affiliés actifs</div>
+          <div class="stat-num cyan" id="stat-affiliates">0</div>
+          <div class="stat-delta up">↑ nouveaux</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Taux conversion</div>
+          <div class="stat-num amber" id="stat-conv">0%</div>
+          <div class="stat-delta" id="stat-conv-delta">gratuit → payant</div>
+        </div>
+      </div>
+
+      <!-- Mini graphique revenus -->
+      <div class="table-wrap" style="margin-bottom:24px">
+        <div class="table-head">
+          <div class="table-title">Revenus — 30 derniers jours</div>
+          <span class="badge badge-green">CA$ total</span>
+        </div>
+        <div style="padding:20px">
+          <div class="chart-bar-wrap" id="rev-chart"></div>
+          <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:10px;color:var(--t3)" id="rev-labels"></div>
+        </div>
+      </div>
+
+      <!-- Activité récente -->
+      <div class="table-wrap">
+        <div class="table-head"><div class="table-title">Activité récente</div></div>
+        <table class="tbl">
+          <thead><tr><th>Événement</th><th>Client</th><th>Plan</th><th>Montant</th><th>Il y a</th></tr></thead>
+          <tbody id="activity-feed"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ LEADS ══ -->
+    <div class="section" id="s-leads">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <div>
+          <div style="font-size:18px;font-weight:700">Leads gratuits</div>
+          <div style="font-size:13px;color:var(--t3);margin-top:4px">Emails capturés avant génération · Séquence relance active</div>
+        </div>
+        <button class="btn btn-primary" onclick="exportLeads()">↓ Exporter CSV</button>
+      </div>
+      <div class="stat-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="stat-card"><div class="stat-label">Total leads</div><div class="stat-num purple" id="l-total">0</div></div>
+        <div class="stat-card"><div class="stat-label">Convertis (Pro+)</div><div class="stat-num green" id="l-conv">0</div></div>
+        <div class="stat-card"><div class="stat-label">Expirent dans 48h</div><div class="stat-num amber" id="l-expiring">0</div></div>
+      </div>
+      <div class="table-wrap">
+        <div class="table-head">
+          <div class="table-title">Liste des leads</div>
+          <div class="table-actions">
+            <input class="inp" style="width:220px;padding:7px 12px;font-size:12px" placeholder="Rechercher..." oninput="filterTable('leads-tbl',this.value)">
+          </div>
+        </div>
+        <table class="tbl" id="leads-tbl">
+          <thead><tr><th>Email</th><th>Nom</th><th>Type site</th><th>Créé le</th><th>Expire le</th><th>Statut</th><th>Actions</th></tr></thead>
+          <tbody id="leads-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ AFFILIÉS ══ -->
+    <div class="section" id="s-affiliates">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <div style="font-size:18px;font-weight:700">Gestion des affiliés</div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-outline" onclick="exportAff()">↓ CSV</button>
+          <button class="btn btn-primary" onclick="openModal('modal-aff-pay')">Payer les commissions</button>
+        </div>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-label">Total affiliés</div><div class="stat-num purple" id="a-total">0</div></div>
+        <div class="stat-card"><div class="stat-label">Commissions dues</div><div class="stat-num amber" id="a-due">CA$0</div></div>
+        <div class="stat-card"><div class="stat-label">Payées ce mois</div><div class="stat-num green" id="a-paid">CA$0</div></div>
+        <div class="stat-card"><div class="stat-label">Niv. 1 / 2 / 3</div><div class="stat-num cyan" id="a-levels">0/0/0</div></div>
+      </div>
+      <div class="table-wrap">
+        <div class="table-head">
+          <div class="table-title">Affiliés</div>
+          <input class="inp" style="width:220px;padding:7px 12px;font-size:12px" placeholder="Rechercher..." oninput="filterTable('aff-tbl',this.value)">
+        </div>
+        <table class="tbl" id="aff-tbl">
+          <thead><tr><th>Nom</th><th>Email</th><th>Niveau</th><th>Ventes</th><th>Comm. due</th><th>Statut</th><th>Actions</th></tr></thead>
+          <tbody id="aff-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ CLIENTS ══ -->
+    <div class="section" id="s-clients">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <div style="font-size:18px;font-weight:700">Gestion des clients</div>
+        <button class="btn btn-primary" onclick="openModal('modal-add-client')">+ Ajouter un client</button>
+      </div>
+      <div class="table-wrap">
+        <div class="table-head">
+          <div class="table-title">Tous les comptes</div>
+          <input class="inp" style="width:220px;padding:7px 12px;font-size:12px" placeholder="Rechercher..." oninput="filterTable('clients-tbl',this.value)">
+        </div>
+        <table class="tbl" id="clients-tbl">
+          <thead><tr><th>Nom</th><th>Email / Login</th><th>Plan</th><th>Mot de passe</th><th>Inscrit le</th><th>Statut</th><th>Actions</th></tr></thead>
+          <tbody id="clients-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ SITES ══ -->
+    <div class="section" id="s-sites">
+      <div style="font-size:18px;font-weight:700;margin-bottom:20px">Sites générés</div>
+      <div class="stat-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="stat-card"><div class="stat-label">Total sites</div><div class="stat-num purple" id="si-total">0</div></div>
+        <div class="stat-card"><div class="stat-label">Plan gratuit (filigrane)</div><div class="stat-num amber" id="si-free">0</div></div>
+        <div class="stat-card"><div class="stat-label">Expirent bientôt</div><div class="stat-num red" id="si-exp">0</div></div>
+      </div>
+      <div class="table-wrap">
+        <div class="table-head">
+          <div class="table-title">Liste des sites</div>
+          <input class="inp" style="width:220px;padding:7px 12px;font-size:12px" placeholder="Rechercher..." oninput="filterTable('sites-tbl',this.value)">
+        </div>
+        <table class="tbl" id="sites-tbl">
+          <thead><tr><th>URL</th><th>Client</th><th>Type</th><th>Plan</th><th>Filigrane</th><th>Créé le</th><th>Expire le</th></tr></thead>
+          <tbody id="sites-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ MARKETPLACE ══ -->
+    <div class="section" id="s-marketplace">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
+        <div style="font-size:18px;font-weight:700">Gestion du Marketplace</div>
+        <button class="btn btn-primary" onclick="openModal('modal-add-product')">+ Ajouter un produit</button>
+      </div>
+      <div class="table-wrap">
+        <div class="table-head"><div class="table-title">Produits</div></div>
+        <table class="tbl" id="products-tbl">
+          <thead><tr><th>Produit</th><th>Créateur</th><th>Catégorie</th><th>Prix</th><th>Commission</th><th>Ventes</th><th>Statut</th><th>Actions</th></tr></thead>
+          <tbody id="products-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ══ BROADCAST ══ -->
+    <div class="section" id="s-broadcast">
+      <div style="font-size:18px;font-weight:700;margin-bottom:6px">Messagerie</div>
+      <div style="font-size:13px;color:var(--t3);margin-bottom:24px">Envoie des messages à tous tes clients ou à un individu spécifique</div>
+
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab(this,'tab-broadcast')">📢 Broadcast</div>
+        <div class="tab" onclick="switchTab(this,'tab-individual')">✉️ Individuel</div>
+        <div class="tab" onclick="switchTab(this,'tab-history')">📋 Historique</div>
+      </div>
+
+      <!-- Broadcast -->
+      <div id="tab-broadcast">
+        <div class="table-wrap">
+          <div class="table-head"><div class="table-title">Message à tous les clients</div></div>
+          <div style="padding:20px">
+            <div class="form-group">
+              <label class="form-label">Destinataires</label>
+              <select class="inp">
+                <option>Tous les clients (Pro + Visionnaire)</option>
+                <option>Plan Gratuit uniquement</option>
+                <option>Plan Pro uniquement</option>
+                <option>Plan Visionnaire uniquement</option>
+                <option>Tous les affiliés</option>
+                <option>Leads non convertis</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Sujet</label>
+              <input class="inp" placeholder="ex: Nouvelle fonctionnalité disponible !">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Message</label>
+              <textarea class="msg-area" placeholder="Rédige ton message ici...&#10;&#10;Tu peux utiliser {prenom} {email} pour personnaliser."></textarea>
+              <div class="form-hint">Variables disponibles : {prenom} {email} {plan} {lien_affilié}</div>
+            </div>
+            <div style="display:flex;gap:10px;justify-content:flex-end">
+              <button class="btn btn-outline">Prévisualiser</button>
+              <button class="btn btn-primary" onclick="sendBroadcast()">📢 Envoyer à tous</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Individuel -->
+      <div id="tab-individual" style="display:none">
+        <div class="table-wrap">
+          <div class="table-head"><div class="table-title">Message individuel</div></div>
+          <div style="padding:20px">
+            <div class="form-group">
+              <label class="form-label">Destinataire</label>
+              <input class="inp" id="indiv-to" placeholder="Email ou nom du client..." list="client-datalist">
+              <datalist id="client-datalist"></datalist>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Sujet</label>
+              <input class="inp" id="indiv-subject" placeholder="Sujet du message">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Message</label>
+              <textarea class="msg-area" id="indiv-body" placeholder="Ton message personnalisé..."></textarea>
+            </div>
+            <div style="display:flex;justify-content:flex-end">
+              <button class="btn btn-primary" onclick="sendIndividual()">✉️ Envoyer</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Historique -->
+      <div id="tab-history" style="display:none">
+        <div class="table-wrap">
+          <div class="table-head"><div class="table-title">Historique des messages</div></div>
+          <table class="tbl">
+            <thead><tr><th>Date</th><th>Type</th><th>Destinataires</th><th>Sujet</th><th>Ouverts</th></tr></thead>
+            <tbody id="msg-history"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ STATS ══ -->
+    <div class="section" id="s-stats">
+      <div style="font-size:18px;font-weight:700;margin-bottom:20px">Statistiques & Croissance</div>
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-label">MRR (Revenus récurrents)</div><div class="stat-num green" id="mrr">CA$0</div></div>
+        <div class="stat-card"><div class="stat-label">ARR (Annualisé)</div><div class="stat-num purple" id="arr">CA$0</div></div>
+        <div class="stat-card"><div class="stat-label">Churn ce mois</div><div class="stat-num red" id="churn">0%</div></div>
+        <div class="stat-card"><div class="stat-label">LTV moyen</div><div class="stat-num amber" id="ltv">CA$0</div></div>
+      </div>
+      <div class="table-wrap">
+        <div class="table-head"><div class="table-title">Conversion Gratuit → Payant par jour</div></div>
+        <div style="padding:20px">
+          <div class="chart-bar-wrap" id="conv-chart" style="height:100px"></div>
+          <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:10px;color:var(--t3)" id="conv-labels"></div>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <div class="table-head"><div class="table-title">Répartition des plans</div></div>
+        <div style="padding:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+          <div style="text-align:center">
+            <div style="font-size:36px;font-weight:900;color:var(--t3)" id="pct-free">0%</div>
+            <div style="font-size:12px;color:var(--t3);margin-top:4px">Gratuit</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-size:36px;font-weight:900;" id="pct-pro" style="color:#a78bfa">0%</div>
+            <div style="font-size:12px;color:var(--t3);margin-top:4px">Pro</div>
+          </div>
+          <div style="text-align:center">
+            <div style="font-size:36px;font-weight:900;color:var(--cyan)" id="pct-vis">0%</div>
+            <div style="font-size:12px;color:var(--t3);margin-top:4px">Visionnaire</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SÉCURITÉ ══ -->
+    <div class="section" id="s-security">
+      <div style="font-size:18px;font-weight:700;margin-bottom:6px">Sécurité & Accès Super Admin</div>
+      <div style="font-size:13px;color:var(--t3);margin-bottom:24px">Gère ton mot de passe Super Admin et les accès sensibles</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:800px">
+        <!-- Changer mot de passe admin -->
+        <div class="table-wrap">
+          <div class="table-head"><div class="table-title">🔐 Changer mon mot de passe</div></div>
+          <div style="padding:20px">
+            <div class="form-group">
+              <label class="form-label">Mot de passe actuel</label>
+              <div class="pw-wrap">
+                <input class="inp" type="password" id="pw-current" placeholder="••••••••">
+                <button class="pw-toggle" onclick="togglePw('pw-current')">👁</button>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Nouveau mot de passe</label>
+              <div class="pw-wrap">
+                <input class="inp" type="password" id="pw-new" placeholder="Min. 12 caractères" oninput="checkPwStrength()">
+                <button class="pw-toggle" onclick="togglePw('pw-new')">👁</button>
+              </div>
+              <div id="pw-strength" style="margin-top:6px;font-size:11px;color:var(--t3)">Force : —</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Confirmer</label>
+              <div class="pw-wrap">
+                <input class="inp" type="password" id="pw-confirm" placeholder="••••••••">
+                <button class="pw-toggle" onclick="togglePw('pw-confirm')">👁</button>
+              </div>
+            </div>
+            <button class="btn btn-primary" style="width:100%" onclick="changeAdminPw()">Mettre à jour le mot de passe</button>
+          </div>
+        </div>
+
+        <!-- Logs d'accès -->
+        <div class="table-wrap">
+          <div class="table-head"><div class="table-title">📋 Dernières connexions</div></div>
+          <div style="padding:16px">
+            <table class="tbl" style="font-size:12px">
+              <thead><tr><th>Date</th><th>IP</th><th>Statut</th></tr></thead>
+              <tbody id="login-logs"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Clés API -->
+      <div class="table-wrap" style="max-width:800px;margin-top:20px">
+        <div class="table-head">
+          <div class="table-title">🔑 Clés API & Secrets</div>
+          <span style="font-size:11px;color:var(--t3)">Configurés via NyXia · Stockés chiffrés dans KV</span>
+        </div>
+        <div style="padding:16px">
+          <table class="tbl" style="font-size:12px">
+            <thead><tr><th>Service</th><th>Statut</th><th>Configuré le</th></tr></thead>
+            <tbody>
+              <tr><td>GROQ_API_KEY</td><td><span class="badge badge-green">✓ Actif</span></td><td style="font-family:'JetBrains Mono',monospace">via NyXia</td></tr>
+              <tr><td>GITHUB_TOKEN</td><td><span class="badge badge-green">✓ Actif</span></td><td style="font-family:'JetBrains Mono',monospace">via NyXia</td></tr>
+              <tr><td>CF_API_TOKEN</td><td><span class="badge badge-green">✓ Actif</span></td><td style="font-family:'JetBrains Mono',monospace">via NyXia</td></tr>
+              <tr><td>VAULT_SECRET</td><td><span class="badge badge-green">✓ Actif</span></td><td style="font-family:'JetBrains Mono',monospace">via wrangler</td></tr>
+              <tr><td>SYSTEMEIO_SECRET</td><td><span class="badge badge-amber">⚠ Non configuré</span></td><td style="font-family:'JetBrains Mono',monospace">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- #content -->
+</div><!-- #main -->
+</div><!-- #shell -->
+
+<!-- ══ MODALS ══ -->
+
+<!-- Payer commissions -->
+<div class="modal-bg" id="modal-aff-pay">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div class="modal-title">Payer les commissions</div>
+      <button class="modal-close" onclick="closeModal('modal-aff-pay')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="background:var(--bg4);border-radius:8px;padding:16px;margin-bottom:16px">
+        <div style="font-size:13px;color:var(--t2)">Total à payer</div>
+        <div style="font-size:32px;font-weight:900;color:var(--green);font-family:'Orbitron',monospace" id="pay-total">CA$0</div>
+      </div>
+      <div class="form-group"><label class="form-label">Méthode de paiement</label>
+        <select class="inp"><option>PayPal</option><option>Virement bancaire</option><option>Stripe</option><option>Crypto</option></select>
+      </div>
+      <div class="form-group"><label class="form-label">Notes (optionnel)</label>
+        <input class="inp" placeholder="ex: Paiement décembre 2026">
+      </div>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-outline" style="flex:1" onclick="closeModal('modal-aff-pay')">Annuler</button>
+        <button class="btn btn-primary" style="flex:1" onclick="processPayment()">Confirmer le paiement</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Reset mot de passe client -->
+<div class="modal-bg" id="modal-reset-pw">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div class="modal-title">Réinitialiser le mot de passe</div>
+      <button class="modal-close" onclick="closeModal('modal-reset-pw')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="font-size:13px;color:var(--t2);margin-bottom:16px">Client : <strong id="reset-client-name" style="color:var(--t)">—</strong></div>
+      <div class="form-group">
+        <label class="form-label">Nouveau mot de passe</label>
+        <div class="pw-wrap">
+          <input class="inp" type="password" id="reset-pw-val" placeholder="Min. 8 caractères">
+          <button class="pw-toggle" onclick="togglePw('reset-pw-val')">👁</button>
+        </div>
+      </div>
+      <button class="btn btn-outline btn-sm" onclick="genPw()" style="margin-bottom:16px">⟳ Générer automatiquement</button>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-outline" style="flex:1" onclick="closeModal('modal-reset-pw')">Annuler</button>
+        <button class="btn btn-primary" style="flex:1" onclick="applyResetPw()">Appliquer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Ajouter produit marketplace -->
+<div class="modal-bg" id="modal-add-product">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div class="modal-title">Ajouter un produit</div>
+      <button class="modal-close" onclick="closeModal('modal-add-product')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group" style="grid-column:1/-1"><label class="form-label">Nom du produit</label><input class="inp" id="prod-name" placeholder="ex: Formation Affiliation Pro"></div>
+        <div class="form-group"><label class="form-label">Créateur</label><input class="inp" id="prod-creator" placeholder="Nom du créateur"></div>
+        <div class="form-group"><label class="form-label">Catégorie</label>
+          <select class="inp" id="prod-cat"><option>formation</option><option>coaching</option><option>logiciel</option><option>ebook</option><option>template</option></select>
+        </div>
+        <div class="form-group"><label class="form-label">Prix (CA$)</label><input class="inp" type="number" id="prod-price" placeholder="97"></div>
+        <div class="form-group"><label class="form-label">Commission niv. 1 (%)</label><input class="inp" type="number" id="prod-comm" value="25"></div>
+        <div class="form-group" style="grid-column:1/-1"><label class="form-label">Description</label><textarea class="msg-area" id="prod-desc" style="min-height:80px" placeholder="Description du produit..."></textarea></div>
+        <div class="form-group" style="grid-column:1/-1"><label class="form-label">URL de vente</label><input class="inp" id="prod-url" placeholder="https://..."></div>
+      </div>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-outline" style="flex:1" onclick="closeModal('modal-add-product')">Annuler</button>
+        <button class="btn btn-primary" style="flex:1" onclick="addProduct()">Ajouter au marketplace</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Ajouter client -->
+<div class="modal-bg" id="modal-add-client">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div class="modal-title">Ajouter un client manuellement</div>
+      <button class="modal-close" onclick="closeModal('modal-add-client')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label">Prénom</label><input class="inp" id="nc-name" placeholder="Marie"></div>
+        <div class="form-group"><label class="form-label">Email / Login</label><input class="inp" id="nc-email" type="email" placeholder="marie@exemple.com"></div>
+        <div class="form-group"><label class="form-label">Mot de passe</label>
+          <div class="pw-wrap"><input class="inp" type="password" id="nc-pw" placeholder="••••••••"><button class="pw-toggle" onclick="togglePw('nc-pw')">👁</button></div>
+        </div>
+        <div class="form-group"><label class="form-label">Plan</label>
+          <select class="inp" id="nc-plan"><option value="free">Gratuit</option><option value="pro">Pro — CA$39/mois</option><option value="visionnaire">Visionnaire — CA$97/mois</option></select>
+        </div>
+      </div>
+      <button class="btn btn-outline btn-sm" onclick="genPwFor('nc-pw')" style="margin-bottom:16px">⟳ Générer un mot de passe</button>
+      <div style="display:flex;gap:10px">
+        <button class="btn btn-outline" style="flex:1" onclick="closeModal('modal-add-client')">Annuler</button>
+        <button class="btn btn-primary" style="flex:1" onclick="addClient()">Créer le compte</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════════════════
+//  DONNÉES DEMO
+// ══════════════════════════════════════════════════════════
+const DEMO = {
+  revenue: [420,380,510,290,640,720,580,810,490,730,660,840,920,780,630,710,850,960,790,880,1020,940,810,970,1100,980,860,1050,1190,1240],
+  clients: [
+    {id:1,name:"Marie Laurent",email:"marie@coaching.com",plan:"pro",pw:"••••••••",joined:"2026-01-15",status:"active",sites:3},
+    {id:2,name:"Pierre Dupont",email:"pierre@formation.fr",plan:"visionnaire",pw:"••••••••",joined:"2026-02-03",status:"active",sites:12},
+    {id:3,name:"Sophie Caron",email:"sophie@bienetre.ca",plan:"free",pw:"••••••••",joined:"2026-03-20",status:"trial",sites:1},
+    {id:4,name:"Jean Martin",email:"jean@entrepreneur.com",plan:"pro",pw:"••••••••",joined:"2026-01-28",status:"active",sites:5},
+    {id:5,name:"Alice Beaulieu",email:"alice@coaching.ca",plan:"visionnaire",pw:"••••••••",joined:"2025-12-10",status:"active",sites:18},
+  ],
+  leads: [
+    {email:"prospect1@gmail.com",name:"Lucie B.",type:"landing",created:"2026-03-25",expires:"2026-04-01",status:"active"},
+    {email:"contact@freelance.fr",name:"Marc T.",type:"coach",created:"2026-03-24",expires:"2026-03-31",status:"expiring"},
+    {email:"info@boutique.ca",name:"Nadia K.",type:"ecommerce",created:"2026-03-22",expires:"2026-03-29",status:"converted"},
+    {email:"hello@coach.com",name:"Thomas R.",type:"minisite",created:"2026-03-21",expires:"2026-03-28",status:"expiring"},
+  ],
+  affiliates: [
+    {name:"Marie Laurent",email:"marie@coaching.com",level:1,sales:14,due:847,status:"active"},
+    {name:"Pierre Dupont",email:"pierre@formation.fr",level:1,sales:38,due:2340,status:"active"},
+    {name:"Alice Beaulieu",email:"alice@coaching.ca",level:2,sales:22,due:1120,status:"active"},
+    {name:"Jean Martin",email:"jean@entrepreneur.com",level:1,sales:8,due:412,status:"pending"},
+  ],
+  sites: [
+    {url:"mariecoach.market.nyxiapublicationweb.com",client:"Marie Laurent",type:"coach",plan:"pro",watermark:false,created:"2026-01-20",expires:"—"},
+    {url:"boutique-nadia.market.nyxiapublicationweb.com",client:"Nadia K.",type:"ecommerce",plan:"free",watermark:true,created:"2026-03-22",expires:"2026-03-29"},
+    {url:"formation-pierre.affiliationpro.com",client:"Pierre Dupont",type:"landing",plan:"visionnaire",watermark:false,created:"2026-02-05",expires:"—"},
+    {url:"lucie-bien-etre.market.nyxiapublicationweb.com",client:"Lucie B.",type:"landing",plan:"free",watermark:true,created:"2026-03-25",expires:"2026-04-01"},
+  ],
+  products: [
+    {name:"Liberté par l'Affiliation",creator:"Marc Dupont",cat:"formation",price:297,comm:25,sales:214,status:"active"},
+    {name:"Publication CashFlow",creator:"Publication-Web",cat:"logiciel",price:39,comm:25,sales:312,status:"active"},
+    {name:"100 Scripts Email",creator:"Sophie Martin",cat:"ebook",price:47,comm:25,sales:531,status:"active"},
+    {name:"Pack Templates Systeme.io",creator:"Alex Fontaine",cat:"template",price:127,comm:25,sales:178,status:"paused"},
+  ],
+  msgHistory: [
+    {date:"2026-03-25",type:"Broadcast",recipients:"Tous (Pro+Vis)",subject:"Nouvelle feature NyXia disponible",opens:"68%"},
+    {date:"2026-03-15",type:"Individuel",recipients:"pierre@formation.fr",subject:"Votre paiement de commission",opens:"100%"},
+    {date:"2026-03-01",type:"Broadcast",recipients:"Leads non convertis",subject:"Ton site expire bientôt !",opens:"42%"},
+  ],
+  loginLogs: [
+    {date:"2026-03-28 15:42",ip:"66.123.45.78",status:"success"},
+    {date:"2026-03-27 09:15",ip:"66.123.45.78",status:"success"},
+    {date:"2026-03-26 22:03",ip:"192.168.1.1",status:"failed"},
+    {date:"2026-03-25 14:30",ip:"66.123.45.78",status:"success"},
+  ],
+};
+
+// ══════════════════════════════════════════════════════════
+//  NAVIGATION
+// ══════════════════════════════════════════════════════════
+const TITLES = {overview:"Vue d'ensemble",leads:"Leads gratuits",affiliates:"Affiliés",clients:"Clients",sites:"Sites générés",marketplace:"Marketplace",broadcast:"Messagerie",stats:"Statistiques",security:"Sécurité"};
+
+function nav(id) {
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  document.querySelectorAll(".sb-item").forEach(i=>i.classList.remove("active"));
+  document.getElementById("s-"+id).classList.add("active");
+  document.querySelector(`[onclick="nav('${id}')"]`).classList.add("active");
+  document.getElementById("page-title").textContent = TITLES[id]||id;
+}
+
+// ══════════════════════════════════════════════════════════
+//  INIT DATA
+// ══════════════════════════════════════════════════════════
+function initDashboard() {
+  // Stats overview
+  const totalRev = DEMO.revenue.reduce((a,b)=>a+b,0);
+  document.getElementById("stat-revenue").textContent = "CA$"+totalRev.toLocaleString("fr-CA");
+  document.getElementById("stat-revenue-delta").textContent = "↑ +12% vs mois dernier";
+  document.getElementById("stat-sites").textContent = DEMO.sites.length;
+  document.getElementById("stat-affiliates").textContent = DEMO.affiliates.length;
+  document.getElementById("stat-conv").textContent = "18.4%";
+
+  // Chart revenus
+  const max = Math.max(...DEMO.revenue);
+  const chart = document.getElementById("rev-chart");
+  const labels = document.getElementById("rev-labels");
+  DEMO.revenue.forEach((v,i) => {
+    const bar = document.createElement("div");
+    bar.className = "chart-bar";
+    bar.style.height = (v/max*100)+"%";
+    bar.title = "CA$"+v+" · Jour "+(i+1);
+    chart.appendChild(bar);
+  });
+  [1,7,14,21,28,30].forEach(d => {
+    const sp = document.createElement("span");
+    sp.textContent = "J"+d;
+    labels.appendChild(sp);
+  });
+
+  // Activité récente
+  const acts = [
+    ["🚀 Nouveau site","Sophie Caron","Gratuit","—","5 min"],
+    ["💰 Commission payée","Pierre Dupont","Visionnaire","CA$284","1h"],
+    ["✦ Upgrade Pro","Jean Martin","Pro","CA$39","3h"],
+    ["📥 Nouveau lead","prospect@mail.com","—","—","5h"],
+    ["🛒 Vente marketplace","Marie Laurent","Pro","CA$74","8h"],
+  ];
+  document.getElementById("activity-feed").innerHTML = acts.map(([evt,client,plan,amount,time])=>`
+    <tr><td style="font-weight:600;color:var(--t)">${evt}</td><td>${client}</td>
+    <td><span class="badge ${plan==="Pro"?"badge-purple":plan==="Visionnaire"?"badge-cyan":"badge-amber"}">${plan}</span></td>
+    <td style="color:var(--green);font-weight:700">${amount}</td><td style="color:var(--t3)">${time}</td></tr>`).join("");
+
+  // Leads
+  document.getElementById("l-total").textContent = DEMO.leads.length;
+  document.getElementById("l-conv").textContent = DEMO.leads.filter(l=>l.status==="converted").length;
+  document.getElementById("l-expiring").textContent = DEMO.leads.filter(l=>l.status==="expiring").length;
+  document.getElementById("leads-body").innerHTML = DEMO.leads.map(l=>`
+    <tr>
+      <td style="font-family:'JetBrains Mono',monospace;font-size:12px">${l.email}</td>
+      <td>${l.name}</td><td>${l.type}</td><td>${l.created}</td><td>${l.expires}</td>
+      <td><span class="badge ${l.status==="converted"?"badge-green":l.status==="expiring"?"badge-amber":"badge-purple"}">${l.status==="converted"?"✓ Converti":l.status==="expiring"?"⚠ Expire bientôt":"Actif"}</span></td>
+      <td><button class="btn btn-outline btn-sm" onclick="sendMsg('${l.email}')">✉</button></td>
+    </tr>`).join("");
+
+  // Affiliés
+  const totalDue = DEMO.affiliates.reduce((a,b)=>a+b.due,0);
+  document.getElementById("a-total").textContent = DEMO.affiliates.length;
+  document.getElementById("a-due").textContent = "CA$"+totalDue.toLocaleString();
+  document.getElementById("a-paid").textContent = "CA$1,840";
+  document.getElementById("a-levels").textContent = `${DEMO.affiliates.filter(a=>a.level===1).length}/${DEMO.affiliates.filter(a=>a.level===2).length}/${DEMO.affiliates.filter(a=>a.level===3).length}`;
+  document.getElementById("pay-total").textContent = "CA$"+totalDue.toLocaleString();
+  document.getElementById("aff-body").innerHTML = DEMO.affiliates.map(a=>`
+    <tr>
+      <td style="font-weight:600;color:var(--t)">${a.name}</td>
+      <td style="font-family:'JetBrains Mono',monospace;font-size:12px">${a.email}</td>
+      <td><span class="badge badge-purple">Niv. ${a.level}</span></td>
+      <td>${a.sales}</td>
+      <td style="color:var(--amber);font-weight:700">CA$${a.due}</td>
+      <td><span class="badge ${a.status==="active"?"badge-green":"badge-amber"}">${a.status==="active"?"Actif":"En attente"}</span></td>
+      <td><button class="btn btn-outline btn-sm" onclick="payOne('${a.email}',${a.due})">Payer</button></td>
+    </tr>`).join("");
+
+  // Clients
+  document.getElementById("clients-body").innerHTML = DEMO.clients.map(c=>`
+    <tr>
+      <td style="font-weight:600;color:var(--t)">${c.name}</td>
+      <td style="font-family:'JetBrains Mono',monospace;font-size:12px">${c.email}</td>
+      <td><span class="badge ${c.plan==="pro"?"badge-purple":c.plan==="visionnaire"?"badge-cyan":"badge-amber"}">${c.plan==="visionnaire"?"Visionnaire":c.plan==="pro"?"Pro":"Gratuit"}</span></td>
+      <td><span style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:1px">${c.pw}</span></td>
+      <td>${c.joined}</td>
+      <td><span class="badge ${c.status==="active"?"badge-green":"badge-amber"}">${c.status==="active"?"Actif":"Essai"}</span></td>
+      <td style="display:flex;gap:6px">
+        <button class="btn btn-outline btn-sm btn-icon" onclick="resetPw(${c.id},'${c.name}')" title="Réinitialiser MDP">🔑</button>
+        <button class="btn btn-outline btn-sm btn-icon" onclick="sendMsg('${c.email}')" title="Message">✉</button>
+        <button class="btn btn-danger btn-sm btn-icon" onclick="suspendClient(${c.id})" title="Suspendre">⊗</button>
+      </td>
+    </tr>`).join("");
+
+  // Datalist pour messages individuels
+  document.getElementById("client-datalist").innerHTML = DEMO.clients.map(c=>`<option value="${c.email}">${c.name} — ${c.email}</option>`).join("");
+
+  // Sites
+  document.getElementById("si-total").textContent = DEMO.sites.length;
+  document.getElementById("si-free").textContent = DEMO.sites.filter(s=>s.plan==="free").length;
+  document.getElementById("si-exp").textContent = DEMO.sites.filter(s=>s.expires!=="—").length;
+  document.getElementById("sites-body").innerHTML = DEMO.sites.map(s=>`
+    <tr>
+      <td style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--cyan)">${s.url}</td>
+      <td>${s.client}</td><td>${s.type}</td>
+      <td><span class="badge ${s.plan==="pro"?"badge-purple":s.plan==="visionnaire"?"badge-cyan":"badge-amber"}">${s.plan==="visionnaire"?"Visionnaire":s.plan==="pro"?"Pro":"Gratuit"}</span></td>
+      <td>${s.watermark?'<span class="badge badge-amber">✓ Filigrane</span>':'<span class="badge badge-green">Non</span>'}</td>
+      <td>${s.created}</td>
+      <td style="${s.expires!=="—"?"color:var(--red);font-weight:700":"color:var(--t3)"}">${s.expires}</td>
+    </tr>`).join("");
+
+  // Produits
+  document.getElementById("products-body").innerHTML = DEMO.products.map(p=>`
+    <tr>
+      <td style="font-weight:600;color:var(--t)">${p.name}</td>
+      <td>${p.creator}</td><td>${p.cat}</td>
+      <td style="font-weight:700">CA$${p.price}</td>
+      <td style="color:var(--green);font-weight:700">${p.comm}%</td>
+      <td>${p.sales}</td>
+      <td><span class="badge ${p.status==="active"?"badge-green":"badge-amber"}">${p.status==="active"?"Actif":"Pausé"}</span></td>
+      <td style="display:flex;gap:6px">
+        <button class="btn btn-outline btn-sm" onclick="toggleProduct(this)">${p.status==="active"?"Pause":"Activer"}</button>
+        <button class="btn btn-danger btn-sm btn-icon">✕</button>
+      </td>
+    </tr>`).join("");
+
+  // Historique messages
+  document.getElementById("msg-history").innerHTML = DEMO.msgHistory.map(m=>`
+    <tr><td style="font-family:'JetBrains Mono',monospace;font-size:11px">${m.date}</td>
+    <td><span class="badge ${m.type==="Broadcast"?"badge-purple":"badge-cyan"}">${m.type}</span></td>
+    <td style="font-size:12px">${m.recipients}</td><td>${m.subject}</td>
+    <td style="color:var(--green);font-weight:700">${m.opens}</td></tr>`).join("");
+
+  // Logs connexion
+  document.getElementById("login-logs").innerHTML = DEMO.loginLogs.map(l=>`
+    <tr><td style="font-family:'JetBrains Mono',monospace">${l.date}</td>
+    <td style="font-family:'JetBrains Mono',monospace">${l.ip}</td>
+    <td><span class="badge ${l.status==="success"?"badge-green":"badge-red"}">${l.status==="success"?"✓":"✗ Échec"}</span></td></tr>`).join("");
+
+  // Stats
+  const pro = DEMO.clients.filter(c=>c.plan==="pro").length;
+  const vis = DEMO.clients.filter(c=>c.plan==="visionnaire").length;
+  const free = DEMO.clients.filter(c=>c.plan==="free").length;
+  const total = DEMO.clients.length;
+  document.getElementById("pct-free").textContent = Math.round(free/total*100)+"%";
+  document.getElementById("pct-pro").textContent = Math.round(pro/total*100)+"%";
+  document.getElementById("pct-vis").textContent = Math.round(vis/total*100)+"%";
+  const mrr = pro*39 + vis*97;
+  document.getElementById("mrr").textContent = "CA$"+mrr.toLocaleString();
+  document.getElementById("arr").textContent = "CA$"+(mrr*12).toLocaleString();
+  document.getElementById("churn").textContent = "2.3%";
+  document.getElementById("ltv").textContent = "CA$486";
+
+  // Conv chart
+  const convData = [2,0,3,1,4,2,5,3,2,4,6,3,1,5,4,3,7,2,4,6,5,3,4,8,6,5,3,7,9,6];
+  const convMax = Math.max(...convData);
+  const convChart = document.getElementById("conv-chart");
+  convData.forEach((v,i)=>{
+    const bar=document.createElement("div");
+    bar.className="chart-bar";
+    bar.style.height=(v/convMax*100)+"%";
+    bar.style.background="linear-gradient(0deg,var(--cyan),#22d3ee88)";
+    bar.title=v+" conversion(s) · Jour "+(i+1);
+    convChart.appendChild(bar);
+  });
+}
+
+// ══════════════════════════════════════════════════════════
+//  ACTIONS
+// ══════════════════════════════════════════════════════════
+function filterTable(id, q) {
+  const tbl = document.getElementById(id);
+  if (!tbl) return;
+  q = q.toLowerCase();
+  tbl.querySelectorAll("tbody tr").forEach(tr=>{
+    tr.style.display = tr.textContent.toLowerCase().includes(q) ? "" : "none";
+  });
+}
+
+function switchTab(el, id) {
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+  el.classList.add("active");
+  ["tab-broadcast","tab-individual","tab-history"].forEach(t=>{
+    const el=document.getElementById(t);
+    if(el) el.style.display = t===id?"block":"none";
+  });
+}
+
+function openModal(id){ document.getElementById(id).classList.add("open") }
+function closeModal(id){ document.getElementById(id).classList.remove("open") }
+
+function toast(msg, ok=true) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.style.background = ok ? "var(--green)" : "var(--red)";
+  t.style.color = ok ? "#000" : "#fff";
+  t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"), 3000);
+}
+
+function resetPw(id, name) {
+  document.getElementById("reset-client-name").textContent = name;
+  document.getElementById("reset-pw-val").value = "";
+  openModal("modal-reset-pw");
+}
+function applyResetPw() {
+  const pw = document.getElementById("reset-pw-val").value;
+  if (pw.length < 8) { toast("Mot de passe trop court (min. 8 car.)", false); return; }
+  closeModal("modal-reset-pw");
+  toast("✓ Mot de passe réinitialisé");
+}
+
+function genPw() {
+  const chars = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789!@#$%";
+  const pw = Array.from({length:14}, ()=>chars[Math.floor(Math.random()*chars.length)]).join("");
+  const el = document.getElementById("reset-pw-val");
+  el.value = pw;
+  el.type = "text";
+}
+function genPwFor(id) {
+  const chars = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789!@#$%";
+  document.getElementById(id).value = Array.from({length:14},()=>chars[Math.floor(Math.random()*chars.length)]).join("");
+  document.getElementById(id).type = "text";
+}
+
+function togglePw(id) {
+  const el = document.getElementById(id);
+  el.type = el.type === "password" ? "text" : "password";
+}
+
+function checkPwStrength() {
+  const pw = document.getElementById("pw-new").value;
+  const el = document.getElementById("pw-strength");
+  if (pw.length < 6) { el.textContent = "Force : Très faible"; el.style.color = "var(--red)"; return; }
+  if (pw.length < 10) { el.textContent = "Force : Faible"; el.style.color = "var(--amber)"; return; }
+  const score = [/[A-Z]/, /[0-9]/, /[^a-zA-Z0-9]/].filter(r=>r.test(pw)).length;
+  if (score >= 2 && pw.length >= 12) { el.textContent = "Force : ✓ Forte"; el.style.color = "var(--green)"; }
+  else { el.textContent = "Force : Moyenne"; el.style.color = "var(--amber)"; }
+}
+
+function changeAdminPw() {
+  const cur = document.getElementById("pw-current").value;
+  const nw  = document.getElementById("pw-new").value;
+  const cf  = document.getElementById("pw-confirm").value;
+  if (!cur) { toast("Mot de passe actuel requis", false); return; }
+  if (nw.length < 8) { toast("Nouveau mot de passe trop court", false); return; }
+  if (nw !== cf) { toast("Les mots de passe ne correspondent pas", false); return; }
+  ["pw-current","pw-new","pw-confirm"].forEach(id=>{document.getElementById(id).value=""});
+  document.getElementById("pw-strength").textContent = "Force : —";
+  toast("✓ Mot de passe Super Admin mis à jour");
+}
+
+function sendBroadcast() { toast("📢 Message broadcast envoyé !"); }
+function sendIndividual() {
+  const to = document.getElementById("indiv-to").value;
+  if (!to) { toast("Destinataire requis", false); return; }
+  toast("✉️ Message envoyé à "+to);
+}
+function sendMsg(email) {
+  nav("broadcast");
+  switchTab(document.querySelector(".tab:nth-child(2)"), "tab-individual");
+  document.getElementById("indiv-to").value = email;
+}
+
+function processPayment() { closeModal("modal-aff-pay"); toast("✓ Paiements envoyés !"); }
+function payOne(email, amount) { toast("✓ CA$"+amount+" envoyé à "+email); }
+
+function addProduct() {
+  const name = document.getElementById("prod-name").value;
+  if (!name) { toast("Nom du produit requis", false); return; }
+  closeModal("modal-add-product");
+  toast("✓ Produit ajouté au marketplace !");
+}
+
+function addClient() {
+  const email = document.getElementById("nc-email").value;
+  if (!email) { toast("Email requis", false); return; }
+  closeModal("modal-add-client");
+  toast("✓ Compte créé pour "+email);
+}
+
+function toggleProduct(btn) {
+  btn.textContent = btn.textContent === "Pause" ? "Activer" : "Pause";
+  toast("✓ Statut du produit mis à jour");
+}
+
+function suspendClient(id) {
+  if (confirm("Suspendre ce client ?")) toast("✓ Compte suspendu");
+}
+
+function exportLeads() { toast("↓ Export CSV en cours..."); }
+function exportAff()   { toast("↓ Export CSV affiliés..."); }
+
+// ── Horloge ──
+function updateClock() {
+  document.getElementById("clock").textContent = new Date().toLocaleTimeString("fr-CA");
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// ── Init ──
+initDashboard();
+
+// ── Fermer modal au clic extérieur ──
+document.querySelectorAll(".modal-bg").forEach(m=>{
+  m.addEventListener("click", e=>{ if(e.target===m) m.classList.remove("open"); });
+});
+document.addEventListener("keydown", e=>{ if(e.key==="Escape") document.querySelectorAll(".modal-bg.open").forEach(m=>m.classList.remove("open")); });
+</script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "vercel-build": "next build"
+  },
+  "dependencies": {
+    "@opennextjs/cloudflare": "^1.18.0"
+  }
+}

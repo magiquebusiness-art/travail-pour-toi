@@ -1,0 +1,9 @@
+node_modules/
+.wrangler/
+.env
+.dev.vars
+*.log
+
+# Keep config but ignore secrets
+wrangler.toml
+!wrangler.toml.bak

@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://github.com/manychat/manychat-api-php/blob/master/docs/source-class-ManyChat.Structure.Fb.Subscriber.html",
+    "name": "source-class-ManyChat.Structure.Fb.Subscriber.html - GitHub",
+    "snippet": "Manychat API PHP library. Contribute to manychat/manychat-api-php development by creating an account on GitHub. Missing: list subscribers endpoint\nManychat API PHP library . Contribute to manychat/manychat-api-php development by creating an account on GitHub.\nManychat API PHP library. Contribute to manychat/manychat-api-php development by creating an account on GitHub. Missing: list | Show results with: list",
+    "host_name": "github.com",
+    "rank": 0,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://community.manychat.com/general-q-a-43/subscription-lists-8044",
+    "name": "Subscription Lists - Manychat Community",
+    "snippet": "I have a subscription lists, so for a new contact who subscribes to the list, how long am I allowed to message that new subscriber? Missing: API endpoint",
+    "host_name": "community.manychat.com",
+    "rank": 1,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://api.manychat.com",
+    "name": "Manychat API",
+    "snippet": "Subscriber. GET/fb/subscriber/getInfo. GET/fb/subscriber/findByName . GET ... POST/fb/subscriber/createSubscriber. Create a Unified subscriber. POST/fb ... Read more",
+    "host_name": "api.manychat.com",
+    "rank": 2,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://community.manychat.com/general-q-a-43/get-subscriber-id-by-api-2594",
+    "name": "Get subscriber id by API",
+    "snippet": "19 Jul 2024 — I can create the user with the endpoint: /fb/ subscriber / createSubscriber , but if the contact is already in my manychat contacts base i can't get a response. Read more",
+    "host_name": "community.manychat.com",
+    "rank": 3,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://community.manychat.com/general-q-a-43/api-subscribers-list-2130",
+    "name": "API Subscribers list",
+    "snippet": "17 Jun 2024 — It's not possible to get a list of all subscribers via the API . My suggestion is to export the IDs using Google Sheets and then you can maintain ... Read more",
+    "host_name": "community.manychat.com",
+    "rank": 4,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://manychat.github.io/manychat-api-php/class-ManyChat.Structure.Fb.Subscriber.html",
+    "name": "Class ManyChat\\Structure\\Fb\\Subscriber",
+    "snippet": "Gets information about the subscriber by its ID see Documentation of /fb/subscriber/getInfo method at manychat.com. Read more",
+    "host_name": "manychat.github.io",
+    "rank": 5,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://community.manychat.com/general-q-a-43/subscriber-id-942",
+    "name": "Subscriber ID",
+    "snippet": "25 Mar 2024 — There's a System field called Contact ID that you can access on your automations in Manychat . If you're using the API , it's usually just called 'id'. Read more",
+    "host_name": "community.manychat.com",
+    "rank": 6,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://community.manychat.com/general-q-a-43/subscriber-id-custom-field-5815",
+    "name": "Subscriber ID / Custom field",
+    "snippet": "20 Apr 2025 — My current idea is to search with phone number in custom field to get the subscriber ID first. However I can't seem to set user field with the phone number. Read more",
+    "host_name": "community.manychat.com",
+    "rank": 7,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://stackoverflow.com/questions/73433879/how-to-get-list-of-all-subscribers-in-manychat-api",
+    "name": "How to get list of all subscribers in ManyChat API",
+    "snippet": "I want to start using ManyChat API . I see on their help page here https://api.manychat.com/swagger many functions to find users by name or ... Read more",
+    "host_name": "stackoverflow.com",
+    "rank": 8,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://community.manychat.com/general-q-a-43/how-to-get-subscriber-info-id-1866",
+    "name": "How to get subscriber info (ID)",
+    "snippet": "28 May 2024 — I am encountering an issue with finding existing contacts using the API . My contacts are registered with their WhatsApp phone numbers, and I ... Read more",
+    "host_name": "community.manychat.com",
+    "rank": 9,
+    "date": "",
+    "favicon": ""
+  }
+]

@@ -1,0 +1,167 @@
+{
+  "result": {
+    "deployments": [
+      {
+        "id": "60a5f7c9-7e4d-40df-afaf-9813fd46e089",
+        "source": "dash",
+        "strategy": "percentage",
+        "author_email": "cashflowecosysteme@gmail.com",
+        "annotations": {
+          "workers/message": "Rollback to previous version",
+          "workers/triggered_by": "deployment"
+        },
+        "versions": [
+          {
+            "version_id": "a1095691-3a56-451d-8651-b260eece6be6",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-03-31T15:45:21.63055Z"
+      },
+      {
+        "id": "359d05b9-d72d-4222-a007-d878a35d9fd9",
+        "source": "api",
+        "strategy": "percentage",
+        "annotations": {
+          "workers/message": "Automatic deployment on upload.",
+          "workers/triggered_by": "upload"
+        },
+        "versions": [
+          {
+            "version_id": "8beeb95e-9235-4ab3-8aec-19381b9f3fac",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-03-31T15:44:46.575864Z"
+      },
+      {
+        "id": "232da864-21e2-4615-a5bc-aca5aeb3eb86",
+        "source": "dash",
+        "strategy": "percentage",
+        "author_email": "cashflowecosysteme@gmail.com",
+        "annotations": {
+          "workers/message": "",
+          "workers/triggered_by": "deployment"
+        },
+        "versions": [
+          {
+            "version_id": "a1095691-3a56-451d-8651-b260eece6be6",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-03-31T15:44:44.691835Z"
+      },
+      {
+        "id": "b8e85ae9-63ec-4f37-a4a8-fb2709b1e707",
+        "source": "api",
+        "strategy": "percentage",
+        "annotations": {
+          "workers/message": "Automatic deployment on upload.",
+          "workers/triggered_by": "upload"
+        },
+        "versions": [
+          {
+            "version_id": "56b5be4e-f7de-4ab1-80d9-a5ba8cbd3495",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-03-31T15:43:15.094434Z"
+      },
+      {
+        "id": "4ca4181b-136c-4f3e-a998-6123bb5ebb72",
+        "source": "dash",
+        "strategy": "percentage",
+        "author_email": "cashflowecosysteme@gmail.com",
+        "annotations": {
+          "workers/message": "",
+          "workers/triggered_by": "deployment"
+        },
+        "versions": [
+          {
+            "version_id": "a1095691-3a56-451d-8651-b260eece6be6",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-03-31T15:25:55.793459Z"
+      },
+      {
+        "id": "65d32a94-d97e-40c7-a1b1-596d27a4a2f4",
+        "source": "wrangler",
+        "strategy": "percentage",
+        "annotations": {
+          "workers/triggered_by": "deployment"
+        },
+        "versions": [
+          {
+            "version_id": "288f8b56-ad9a-4bc8-b0a0-2a8f6577a18d",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-03-31T15:25:01.738334Z"
+      },
+      {
+        "id": "ec2e8ded-a7b1-4629-9068-307f5e3f5502",
+        "source": "wrangler",
+        "strategy": "percentage",
+        "annotations": {
+          "workers/triggered_by": "deployment"
+        },
+        "versions": [
+          {
+            "version_id": "0d080c45-9c3e-4b0f-b333-47f8bca538b4",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-03-31T15:20:53.083521Z"
+      },
+      {
+        "id": "43174b2a-8c3b-426f-854e-c63620ca46c7",
+        "source": "wrangler",
+        "strategy": "percentage",
+        "annotations": {
+          "workers/triggered_by": "deployment"
+        },
+        "versions": [
+          {
+            "version_id": "a1095691-3a56-451d-8651-b260eece6be6",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-03-30T22:51:52.424198Z"
+      },
+      {
+        "id": "de0ff389-7727-4b3d-9728-7c582658e16d",
+        "source": "wrangler",
+        "strategy": "percentage",
+        "annotations": {
+          "workers/triggered_by": "deployment"
+        },
+        "versions": [
+          {
+            "version_id": "4dadd04a-85b2-40a3-92fb-93c727834c17",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-03-30T22:51:31.023362Z"
+      },
+      {
+        "id": "80bab8cd-8618-496a-9ead-8450ede5501f",
+        "source": "wrangler",
+        "strategy": "percentage",
+        "annotations": {
+          "workers/triggered_by": "deployment"
+        },
+        "versions": [
+          {
+            "version_id": "4dd38f71-9a3b-4aa8-8159-964688ea5545",
+            "percentage": 100
+          }
+        ],
+        "created_on": "2026-03-30T22:51:10.351274Z"
+      }
+    ]
+  },
+  "success": true,
+  "errors": [],
+  "messages": []
+}

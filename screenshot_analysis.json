@@ -1,0 +1,28 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "message": {
+        "content": "Cette capture d'écran montre une interface d'intégration d'applications dans un outil nommé NyXia, avec un fond sombre et trois sections d'intégrations :  \n\n### 1. **Google Workspace**  \n- **État** : *Non connecté* (en rouge)  \n- **Description** : Permet de connecter Google Drive, Sheets, Docs et Forms pour que NyXia puisse lire, créer et modifier des fichiers directement depuis le chat.  \n- **Bouton** : *Connecter Google* (bleu) avec une icône de lien.  \n- **Note** : *« Une fenêtre Google va s’ouvrir – clique juste ‘Autoriser’ »* (en dessous du bouton).  \n\n\n### 2. **ManyChat**  \n- **État** : *Bientôt* (en rouge)  \n- **Description** : Permet de connecter ManyChat pour envoyer des messages automatiques à des contacts via NyXia.  \n\n\n### 3. **Systeme.io**  \n- **État** : *Connecté* (en vert)  \n- **Description** : Permet de gérer les contacts, campagnes email, commandes et tunnels de vente directement depuis le chat avec NyXia.  \n- **Accès actif** (liste à puces) :  \n  - Contacts (1793+ – créer, lire, modifier, taguer)  \n  - Email Séquences (lire, inscrire des contacts)  \n  - Commandes (lire les ventes)  \n  - Tags (lister, créer, appliquer)  \n  - Actions rapides (contact + tag + séquence en 1 clic)  \n- **Exemples de commandes** : *« montre mes contacts », « cherche marie@email.com », « ajoute un contact », « liste mes tags »…*  \n- **Avertissement** : *« Tunnels et formations ne sont pas disponibles via l’API Systeme.io »* (avec icône de triangle jaune).  \n\n\n### Textes à mettre à jour :  \n- L'état de **Google Workspace** (passer de *« Non connecté »* à *« Connecté »* une fois l'intégration réussie).  \n- L'état de **ManyChat** (passer de *« Bientôt »* à *« Connecté »* ou *« Non connecté »* selon l'avancement).  \n- Les exemples de commandes Systeme.io pourraient être actualisés pour refléter les fonctionnalités exactes.  \n- L'avertissement Systeme.io pourrait être clarifié si les tunnels/formations deviennent disponibles via l'API.",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1774994113,
+  "id": "20260401055454a5c91903e67a4639",
+  "model": "glm-4.6v",
+  "object": "chat.completion",
+  "request_id": "20260401055454a5c91903e67a4639",
+  "usage": {
+    "completion_tokens": 577,
+    "completion_tokens_details": {
+      "reasoning_tokens": 0
+    },
+    "prompt_tokens": 2325,
+    "prompt_tokens_details": {
+      "cached_tokens": 4
+    },
+    "total_tokens": 2902
+  }
+}

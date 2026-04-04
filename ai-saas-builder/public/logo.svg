@@ -1,0 +1,54 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7c3aed"/>
+      <stop offset="100%" style="stop-color:#3b82f6"/>
+    </linearGradient>
+    <linearGradient id="starGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24"/>
+      <stop offset="100%" style="stop-color:#f59e0b"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Main circle background -->
+  <circle cx="256" cy="256" r="240" fill="url(#bgGradient)"/>
+  
+  <!-- Inner dark circle -->
+  <circle cx="256" cy="256" r="200" fill="#0B1F3A"/>
+  
+  <!-- Stars - Big central star -->
+  <g filter="url(#glow)">
+    <!-- Star 1 - Central big -->
+    <polygon points="256,120 268,200 350,200 285,250 310,330 256,280 202,330 227,250 162,200 244,200" fill="url(#starGradient)"/>
+  </g>
+  
+  <!-- Small stars around -->
+  <g fill="#fff" opacity="0.9">
+    <!-- Top left -->
+    <polygon points="120,150 123,158 132,158 125,163 128,172 120,167 112,172 115,163 108,158 117,158" transform="scale(0.8) translate(50,50)"/>
+    <!-- Top right -->
+    <polygon points="400,150 403,158 412,158 405,163 408,172 400,167 392,172 395,163 388,158 397,158" transform="scale(0.8) translate(50,50)"/>
+    <!-- Bottom left -->
+    <polygon points="120,380 123,388 132,388 125,393 128,402 120,397 112,402 115,393 108,388 117,388" transform="scale(0.7) translate(100,80)"/>
+    <!-- Bottom right -->
+    <polygon points="420,400 423,408 432,408 425,413 428,422 420,417 412,422 415,413 408,408 417,408" transform="scale(0.6) translate(80,100)"/>
+  </g>
+  
+  <!-- Tiny sparkle dots -->
+  <g fill="#d8b15a" opacity="0.6">
+    <circle cx="150" cy="180" r="2"/>
+    <circle cx="360" cy="160" r="2"/>
+    <circle cx="380" cy="320" r="2"/>
+    <circle cx="130" cy="340" r="2"/>
+    <circle cx="200" cy="400" r="1.5"/>
+    <circle cx="310" cy="410" r="1.5"/>
+  </g>
+</svg>

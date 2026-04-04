@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://community.manychat.com/general-q-a-43/api-issue-sendcontent-returns-status-success-but-instagram-image-message-is-not-delivered-7083",
+    "name": "success, but Instagram Image Message Is Not Delivered",
+    "snippet": "15 Aug 2025 — Without \" type \": \" instagram \" inside the content block, Manychat won't know which channel to send the message to. I tested the payload below ... Read more\nHi ManyChat Community,I'm facing a strange issue with the /fb/sending/sendContent API endpoint for my Instagram account, and I'm hoping ...",
+    "host_name": "community.manychat.com",
+    "rank": 0,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://community.manychat.com/general-q-a-43/index35.html",
+    "name": "General Q&A",
+    "snippet": "I have done this succesfully with https:// api . manychat .com/fb/ sending / sendContent for Instagram notifications, but I can't seem to make it work for WhatsApp ... Read more",
+    "host_name": "community.manychat.com",
+    "rank": 1,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://community.make.com/t/send-message-in-dm-from-manychat/75589",
+    "name": "Send message in dm from manychat - Questions",
+    "snippet": "18 Mar 2025 — I'm trying to set up a chatbot system where messages are processed in Make (Integromat) and then sent back to the user in Instagram DMs via ManyChat. Read more",
+    "host_name": "community.make.com",
+    "rank": 2,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://community.manychat.com/general-q-a-43/manychat-api-fb-sending-sendcontent-multiple-buttons-5665",
+    "name": "Manychat API /fb/sending/SendContent Multiple Buttons",
+    "snippet": "5 Apr 2025 — I've been trying to send a message with 2 buttons and their actions, but it only sends the message with a single button. Read more",
+    "host_name": "community.manychat.com",
+    "rank": 3,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://community.manychat.com/general-q-a-43/urgent-instagram-sending-messages-via-api-broken-9040",
+    "name": "URGENT: Instagram sending messages via API broken",
+    "snippet": "9 Feb 2026 — Since about 1 hour messages via API no longer send with existing parameters. Nothing was changed and suddenly it's breaking.",
+    "host_name": "community.manychat.com",
+    "rank": 4,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://developers.facebook.com/community/threads/4393999674219932",
+    "name": "How is ManyChat sending automatic Direct Messages right",
+    "snippet": "We have verified that ManyChat is currently sending automatic Instagram Direct Messages immediately when a user follows a Business account, even if the user ... Read more",
+    "host_name": "developers.facebook.com",
+    "rank": 5,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://community.manychat.com/general-q-a-43/manychat-api-2348",
+    "name": "ManyChat API",
+    "snippet": "4 Jul 2024 — How to use /fb/ sending / sendContent ? For now it looks like this: { \"subscriber_id\": 1713298109, \"data\": {{ \"version\": \" v2 \", \" content \":{ Read more\nHow to use /fb/sending/sendContent? For now it looks like this: { \"subscriber_id\": 1713298109, \"data\": {{ \"version\": \"v2\", \"content\":{",
+    "host_name": "community.manychat.com",
+    "rank": 6,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://developers.facebook.com/docs/messenger-platform/instagram/features/send-message",
+    "name": "Send a Message - Instagram Messaging - Meta for Developers",
+    "snippet": "This document contains the requirements for sending freeform messages from your Instagram Professional account to your customers or people interested in your ... Read more",
+    "host_name": "developers.facebook.com",
+    "rank": 7,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://api.manychat.com",
+    "name": "Manychat API",
+    "snippet": "Sending. POST/fb/sending/sendContent. Send content to subscriber. POST/fb/sending/sendContentByUserRef. Send content to user ref. POST/fb/sending/sendFlow. Missing: v2 facebook",
+    "host_name": "api.manychat.com",
+    "rank": 8,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://community.manychat.com/general-q-a-43/instagram-api-issue-getting-unsupported-message-tag-for-human-agent-and-silent-delivery-failure-with-other-tags-any-ideas-6434",
+    "name": "Getting \"Unsupported message tag\" for HUMAN_AGENT, and silent",
+    "snippet": "Instagram API Issue: Getting \"Unsupported message tag\" for HUMAN_AGENT, and silent delivery failure with other tags. Any ideas? 9 months ago. Missing: v2 | Show results with: v2",
+    "host_name": "community.manychat.com",
+    "rank": 9,
+    "date": "",
+    "favicon": ""
+  }
+]

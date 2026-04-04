@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://help.systeme.io/article/2329-how-to-use-systeme-io-public-api",
+    "name": "How to use systeme.io's public API",
+    "snippet": "1. Contact and tag management: Create and update contacts : for creating new contacts or updating existing ones.",
+    "host_name": "help.systeme.io",
+    "rank": 0,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.facebook.com/groups/251145835476950/posts/864536514137876",
+    "name": "Where can I find Systeme.io API documentation?",
+    "snippet": "Looking for someone to help me get contacts that fill out a form in HL into systeme.io . they only have a public api . I want to avoid zapier ...",
+    "host_name": "www.facebook.com",
+    "rank": 1,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.facebook.com/groups/251145835476950/posts/1784413042150214",
+    "name": "you'll soon manage systeme.io with AI! 🤖✨We're working",
+    "snippet": "✨ We're working on a powerful new feature: MCP (Model Context Protocol) This will let you control your systeme.io account directly through AI ...",
+    "host_name": "www.facebook.com",
+    "rank": 2,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.facebook.com/groups/251145835476950/posts/1717684305489755",
+    "name": "# Subaccounts are here for everyone! 🚀 All users can now",
+    "snippet": "With systeme.io you can also: Build sales funnels with our drag-and-drop interface Generate sales with the ecommerce features Create a blog, ...",
+    "host_name": "www.facebook.com",
+    "rank": 3,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.facebook.com/groups/251145835476950/posts/1480506572540864",
+    "name": "For our developer friends, we now have a webhook service",
+    "snippet": "For now, we support the following events (with more on the way): 1. Contact created 2. Contact tag added 3. Contact tag removed When any of ...",
+    "host_name": "www.facebook.com",
+    "rank": 4,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.facebook.com/groups/251145835476950/posts/1504265863498268",
+    "name": "# For our developer friends, we now have a Webhook",
+    "snippet": "✍️ ✨We've added a school endpoint to our API This new endpoint allows API users to easily fetch lists of courses and students (and even to ...",
+    "host_name": "www.facebook.com",
+    "rank": 5,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.linkedin.com/posts/martyenglander_systemeio-salesfunnels-marketingautomation-activity-7435972553434656769-sJaW",
+    "name": "Streamline Your Sales Funnel with Systeme.io",
+    "snippet": "Building a high-converting sales funnel is hard enough without fighting your software every step of the way. The secret to moving fast in ...",
+    "host_name": "www.linkedin.com",
+    "rank": 6,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.theancientmarketer.com/tutorial",
+    "name": "Systeme.io Tutorial",
+    "snippet": "The platform allows you to easily create sales funnels, generate email lists, and sell your courses or products. Additionally, it offers options for ...",
+    "host_name": "www.theancientmarketer.com",
+    "rank": 7,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.facebook.com/groups/systemeiotechtutorials/posts/982725513026170",
+    "name": "Can I integrate Systeme.io with WordPress for email",
+    "snippet": "Does Systeme io allow you to create a snapshot of your website, funnels , blog, courses etc and then Share that Snapshot with your subaccounts?",
+    "host_name": "www.facebook.com",
+    "rank": 8,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.facebook.com/groups/251145835476950/posts/1171716353419889",
+    "name": "Can we use webhooks with Systeme.io?",
+    "snippet": "Hello! It is possible to send webhooks from systeme.io to other platforms via automation rules and workflows, but it is not possible to ...",
+    "host_name": "www.facebook.com",
+    "rank": 9,
+    "date": "",
+    "favicon": ""
+  }
+]

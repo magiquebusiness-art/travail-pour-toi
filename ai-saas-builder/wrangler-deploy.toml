@@ -1,0 +1,16 @@
+name = "app-name"
+compatibility_date = "2024-12-01"
+compatibility_flags = ["nodejs_compat"]
+main = ".open-next/worker.js"
+
+[assets]
+directory = ".open-next/assets"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "affiliation-pro-db"
+database_id = "0b22a4ba-4d5f-404d-b2e0-4838de6b1822"
+
+[vars]
+NEXT_PUBLIC_SITE_URL = "https://affiliationpro.cashflowecosysteme.com"
+JWT_SECRET = "affiliation-pro-jwt-secret-2026-secure"

@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://help.systeme.io/article/2329-how-to-use-systeme-io-public-api",
+    "name": "How to use systeme.io's public API - Help pages",
+    "snippet": "Our API exposes a carefully selected set of features, enabling developers to interact with our platform transparently and efficiently. Missing: swagger openapi school",
+    "host_name": "help.systeme.io",
+    "rank": 0,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://swagger.io",
+    "name": "Swagger: API Documentation & Design Tools for Teams",
+    "snippet": "Swagger enables design, governance, and testing across the full AI-enabled API lifecycle, ensuring quality at every step. Build APIs ready for humans, LLMs, ... Missing: systeme.",
+    "host_name": "swagger.io",
+    "rank": 1,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://swagger.io/specification",
+    "name": "OpenAPI Specification - Version 3.1.0 - Swagger",
+    "snippet": "The OpenAPI Specification defines a standard interface to RESTful APIs which allows both humans and computers to understand service capabilities without ...",
+    "host_name": "swagger.io",
+    "rank": 2,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://medium.com/@yasiffkhan/openapi-and-swagger-for-api-documention-481ae4b2b3d2",
+    "name": "OpenApi and Swagger for Api documention | by Yasif khan - Medium",
+    "snippet": "OpenAPI (formerly Swagger) is a specification for documenting REST APIs. Swagger refers to the tools that implement the OpenAPI specification.",
+    "host_name": "medium.com",
+    "rank": 3,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://api-platform.com/docs/core/openapi",
+    "name": "OpenAPI Specification Support (formerly Swagger) - API Platform",
+    "snippet": "The specification of the API is available at the /docs.jsonopenapi path. By default, OpenAPI v3 is used. You can also get an OpenAPI v3-compliant version ...",
+    "host_name": "api-platform.com",
+    "rank": 4,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=r9CUU5uEXE4",
+    "name": "Systeme.io Integration API ❇️ Connect Systeme.io to Anything!",
+    "snippet": "Systeme.io Integration API ✓ Use Pabbly Connect https://get.funnelscene.com/pabbly Don't forget to subscribe for more marketing tutorials ... Missing: documentation swagger openapi endpoints school",
+    "host_name": "www.youtube.com",
+    "rank": 5,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://spec.openapis.org/oas/v3.0.1.html",
+    "name": "OpenAPI Specification v3.0.1",
+    "snippet": "The OpenAPI Specification (OAS) defines a standard, programming language-agnostic interface description for HTTP APIs.",
+    "host_name": "spec.openapis.org",
+    "rank": 6,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://swagger.io/resources/articles/documenting-apis-with-swagger",
+    "name": "API Documentation Made Easy with OpenAPI & Swagger",
+    "snippet": "SwaggerHub is an integrated API design and documentation platform, built for teams to drive consistency and discipline across the API development workflow.",
+    "host_name": "swagger.io",
+    "rank": 7,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://apix-drive.com/en/systeme-io-api",
+    "name": "Systeme.io API | 400+ ready-made API integrations available",
+    "snippet": "Rating 4.9 (424) Systeme.io API. We already have a connector api with service Systeme.io! You can connect to our system without wasting time on writing code. Missing: documentation swagger openapi endpoints school",
+    "host_name": "apix-drive.com",
+    "rank": 8,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.facebook.com/groups/251145835476950/posts/864536514137876",
+    "name": "Where can I find Systeme.io API documentation? - Facebook",
+    "snippet": "Unfortunately, we don't have any API documentation atm. We recommend using Zapier for integration.|I'm also using Integrately, hopefully we ... Missing: swagger openapi school",
+    "host_name": "www.facebook.com",
+    "rank": 9,
+    "date": "",
+    "favicon": ""
+  }
+]

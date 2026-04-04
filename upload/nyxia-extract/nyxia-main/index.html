@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Publication-Web — NyXia · Ton agente IA qui ne dort jamais</title>
+<meta name="description" content="NyXia génère ton site en 60 secondes, gère tes affiliés sur 3 niveaux et automatise ta présence en ligne 24h/24. Visionnaire depuis 1997.">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#0F1C3F;--bg2:#1A2554;--bg3:#2A3A6E;--p:#7B5CFF;--p2:#5A6CFF;--p3:#4FA3FF;--g1:#3E2D7A;--g2:#2B245C;--glow:rgba(123,92,255,0.4);--t:#FFFFFF;--t2:#D6D9F0;--t3:#8891B8;--green:#00E676;--r:14px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:var(--bg1);color:var(--t);overflow-x:hidden;line-height:1.65}
+#star-canvas{position:fixed;inset:0;z-index:0;width:100%;height:100%;pointer-events:none}
+.orb{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0;animation:orbDrift 20s ease-in-out infinite}
+.orb1{width:700px;height:700px;background:rgba(91,68,255,0.08);top:-200px;right:-200px;animation-delay:0s}
+.orb2{width:600px;height:600px;background:rgba(79,163,255,0.06);bottom:-150px;left:-150px;animation-delay:-10s}
+.orb3{width:400px;height:400px;background:rgba(123,92,255,0.05);top:40%;left:35%;animation-delay:-5s}
+@keyframes orbDrift{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-40px)}}
+#page{position:relative;z-index:1}
+
+nav{padding:18px 48px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(123,92,255,0.15);background:rgba(15,28,63,0.7);backdrop-filter:blur(20px);position:sticky;top:0;z-index:100}
+.nav-logo{font-family:'Orbitron',monospace;font-weight:900;font-size:18px;background:linear-gradient(135deg,#a78bfa,var(--p3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:2px}
+.nav-links{display:flex;gap:8px;align-items:center}
+.nav-a{padding:9px 18px;border-radius:8px;font-size:13px;font-weight:500;color:var(--t3);text-decoration:none;transition:all .2s}
+.nav-a:hover{color:var(--t);background:rgba(123,92,255,0.1)}
+.nav-cta{padding:10px 24px;border-radius:50px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;font-weight:700;font-size:14px;text-decoration:none;border:1px solid rgba(123,92,255,0.4);box-shadow:0 0 20px rgba(123,92,255,0.3);transition:all .2s}
+.nav-cta:hover{box-shadow:0 0 36px rgba(123,92,255,0.6);transform:translateY(-1px)}
+
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:0 80px;gap:40px;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--p),var(--p3),var(--p),transparent);opacity:.5}
+.hero-left{max-width:620px}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;padding:8px 20px;border-radius:50px;border:1px solid rgba(123,92,255,0.35);background:rgba(123,92,255,0.1);backdrop-filter:blur(10px);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#a78bfa;margin-bottom:32px}
+.hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+h1{font-family:'Orbitron',monospace;font-size:clamp(28px,4vw,56px);font-weight:900;line-height:1.08;letter-spacing:-1px;margin-bottom:24px}
+.h1-glow{background:linear-gradient(135deg,#a78bfa,var(--p3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 20px rgba(123,92,255,0.5))}
+.hero-sub{font-size:18px;color:var(--t2);max-width:520px;line-height:1.75;margin-bottom:40px}
+.hero-sub strong{color:var(--t);font-weight:600}
+.hero-ctas{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:48px}
+.btn-primary{padding:18px 40px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 0 32px rgba(123,92,255,0.45),0 4px 20px rgba(0,0,0,0.3);transition:all .25s;text-decoration:none;display:inline-block}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 0 52px rgba(123,92,255,0.7),0 8px 32px rgba(0,0,0,0.4)}
+.btn-secondary{padding:17px 36px;border-radius:50px;border:1px solid rgba(123,92,255,0.4);background:rgba(123,92,255,0.08);color:var(--t2);font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:600;cursor:pointer;backdrop-filter:blur(10px);transition:all .2s;text-decoration:none;display:inline-block}
+.btn-secondary:hover{border-color:var(--p);color:var(--t)}
+.hero-stats{display:flex;gap:36px;padding-top:36px;border-top:1px solid rgba(123,92,255,0.15)}
+.hstat-num{font-family:'Orbitron',monospace;font-size:28px;font-weight:900;background:linear-gradient(135deg,#a78bfa,var(--p3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hstat-label{font-size:12px;color:var(--t3);margin-top:3px;font-weight:500}
+.hero-right{display:flex;justify-content:center;align-items:flex-end;position:relative;height:90vh}
+.hero-nyxia{position:absolute;bottom:0;right:-20px;height:92%;object-fit:contain;filter:drop-shadow(0 0 60px rgba(123,92,255,0.4));animation:float 6s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+.hero-glow{position:absolute;bottom:10%;right:5%;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(123,92,255,0.15) 0%,transparent 70%);animation:glowPulse 4s ease-in-out infinite}
+@keyframes glowPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.08)}}
+
+section{padding:100px 80px}
+.section-label{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#a78bfa;margin-bottom:16px}
+.section-label::before{content:'✦';font-size:14px}
+.section-title{font-family:'Orbitron',monospace;font-size:clamp(24px,4vw,44px);font-weight:900;line-height:1.1;letter-spacing:-1px;margin-bottom:16px}
+.section-sub{font-size:17px;color:var(--t2);max-width:600px;line-height:1.75;margin-bottom:60px}
+.text-center{text-align:center}
+.text-center .section-sub{margin:0 auto 60px}
+
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1100px;margin:0 auto}
+.how-card{background:rgba(26,37,84,0.6);border:1px solid rgba(123,92,255,0.2);border-radius:20px;padding:36px;backdrop-filter:blur(12px);position:relative;overflow:hidden;transition:all .3s}
+.how-card:hover{border-color:rgba(123,92,255,0.5);transform:translateY(-6px);box-shadow:0 16px 60px rgba(123,92,255,0.15)}
+.how-num{font-family:'Orbitron',monospace;font-size:48px;font-weight:900;color:rgba(123,92,255,0.15);position:absolute;top:20px;right:24px}
+.how-icon{font-size:36px;margin-bottom:20px;position:relative;z-index:1}
+.how-title{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;margin-bottom:10px}
+.how-desc{font-size:14px;color:var(--t2);line-height:1.65}
+
+.nyxia-section{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;max-width:1200px;margin:0 auto}
+.nyxia-img-wrap{position:relative;display:flex;justify-content:center}
+.nyxia-section-img{max-height:600px;object-fit:contain;filter:drop-shadow(0 0 40px rgba(123,92,255,0.35))}
+.nyxia-ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:400px;height:400px;border-radius:50%;border:1px solid rgba(123,92,255,0.15);animation:ring-spin 20s linear infinite}
+.nyxia-ring2{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:320px;height:320px;border-radius:50%;border:1px solid rgba(79,163,255,0.1);animation:ring-spin 14s linear infinite reverse}
+@keyframes ring-spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.feature-list{list-style:none;margin-bottom:40px}
+.feature-list li{padding:14px 0;border-bottom:1px solid rgba(123,92,255,0.1);display:flex;gap:14px;align-items:flex-start;font-size:15px;color:var(--t2)}
+.feature-list li:last-child{border:none}
+.f-icon{width:28px;height:28px;border-radius:8px;background:rgba(123,92,255,0.15);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;margin-top:1px;border:1px solid rgba(123,92,255,0.25)}
+.f-text strong{color:var(--t);display:block;font-weight:600;margin-bottom:2px}
+
+.commissions-section{background:rgba(26,37,84,0.3);border-top:1px solid rgba(123,92,255,0.12);border-bottom:1px solid rgba(123,92,255,0.12)}
+.comm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:900px;margin:0 auto}
+.comm-card{border-radius:20px;padding:40px 32px;text-align:center;position:relative;overflow:hidden;border:1px solid rgba(123,92,255,0.25);transition:all .3s}
+.comm-card.lvl1{background:linear-gradient(135deg,rgba(123,92,255,0.2),rgba(90,108,255,0.1))}
+.comm-card.lvl2{background:linear-gradient(135deg,rgba(90,108,255,0.15),rgba(79,163,255,0.08))}
+.comm-card.lvl3{background:linear-gradient(135deg,rgba(79,163,255,0.1),rgba(42,58,110,0.2))}
+.comm-card:hover{transform:translateY(-8px);box-shadow:0 20px 60px rgba(123,92,255,0.2)}
+.comm-level{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--t3);margin-bottom:16px}
+.comm-pct{font-family:'Orbitron',monospace;font-size:64px;font-weight:900;line-height:1;background:linear-gradient(135deg,#a78bfa,var(--p3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 20px rgba(123,92,255,0.5));margin-bottom:8px}
+.comm-desc{font-size:14px;color:var(--t2);line-height:1.6}
+.comm-green{color:var(--green);font-weight:700;font-size:16px;margin-top:12px}
+
+.dash-section{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;max-width:1200px;margin:0 auto}
+.dash-img{position:relative}
+.dash-img img{width:100%;object-fit:contain;filter:drop-shadow(0 0 50px rgba(123,92,255,0.4));border-radius:16px}
+.dash-badge{position:absolute;bottom:-20px;right:-20px;background:rgba(15,28,63,0.9);border:1px solid rgba(0,230,118,0.4);border-radius:14px;padding:16px 20px;backdrop-filter:blur(10px);box-shadow:0 0 24px rgba(0,230,118,0.2)}
+.db-num{font-family:'Orbitron',monospace;font-size:24px;font-weight:900;color:var(--green)}
+.db-label{font-size:11px;color:var(--t3);font-weight:600;margin-top:2px}
+
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:1100px;margin:0 auto}
+.testi-card{background:rgba(26,37,84,0.5);border:1px solid rgba(123,92,255,0.18);border-radius:16px;padding:28px;backdrop-filter:blur(10px);transition:all .25s}
+.testi-card:hover{border-color:rgba(123,92,255,0.4);transform:translateY(-4px)}
+.testi-stars{color:#FFD700;font-size:14px;margin-bottom:14px;letter-spacing:2px}
+.testi-text{font-size:14px;color:var(--t2);line-height:1.7;margin-bottom:20px;font-style:italic}
+.testi-author{display:flex;align-items:center;gap:12px}
+.testi-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--p3));display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#fff;flex-shrink:0}
+.testi-name{font-weight:700;font-size:14px}
+.testi-role{font-size:12px;color:var(--t3)}
+
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1000px;margin:0 auto}
+.price-card{border-radius:24px;padding:40px 32px;border:1px solid rgba(123,92,255,0.2);background:rgba(26,37,84,0.4);backdrop-filter:blur(12px);position:relative;transition:all .3s}
+.price-card.featured{border-color:rgba(123,92,255,0.6);background:linear-gradient(135deg,rgba(123,92,255,0.15),rgba(90,108,255,0.08));box-shadow:0 0 60px rgba(123,92,255,0.2),0 0 0 1px rgba(123,92,255,0.3);transform:scale(1.04)}
+.price-badge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);padding:6px 20px;border-radius:50px;background:linear-gradient(135deg,var(--p),var(--p2));font-size:12px;font-weight:800;color:#fff;letter-spacing:.5px;text-transform:uppercase;box-shadow:0 0 20px rgba(123,92,255,0.5);white-space:nowrap}
+.price-name{font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;color:var(--t3);margin-bottom:20px;letter-spacing:1px;text-transform:uppercase}
+.price-amount{font-family:'Orbitron',monospace;font-size:52px;font-weight:900;line-height:1;margin-bottom:6px}
+.price-amount .cur{font-size:24px;vertical-align:top;margin-top:8px;display:inline-block;color:var(--t3)}
+.price-period{font-size:13px;color:var(--t3);margin-bottom:28px}
+.price-features{list-style:none;margin-bottom:32px}
+.price-features li{padding:10px 0;font-size:14px;color:var(--t2);border-bottom:1px solid rgba(123,92,255,0.08);display:flex;gap:10px;align-items:flex-start}
+.price-features li:last-child{border:none}
+.price-features li::before{content:'✓';color:var(--green);font-weight:900;margin-top:1px}
+.price-btn{width:100%;padding:16px;border-radius:50px;border:1px solid rgba(123,92,255,0.4);background:transparent;color:var(--t);font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all .2s}
+.price-btn.featured-btn{background:linear-gradient(135deg,var(--p),var(--p2));border-color:transparent;box-shadow:0 0 24px rgba(123,92,255,0.4)}
+.price-btn:hover{box-shadow:0 0 32px rgba(123,92,255,0.5);transform:translateY(-2px)}
+
+.cta-final{text-align:center;padding:120px 80px;position:relative;overflow:hidden}
+.cta-final::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(123,92,255,0.12) 0%,transparent 70%)}
+.cta-nyxia-l{position:absolute;bottom:0;left:2%;height:420px;object-fit:contain;filter:drop-shadow(0 0 40px rgba(123,92,255,0.4));opacity:.9}
+.cta-nyxia-r{position:absolute;bottom:0;right:2%;height:420px;object-fit:contain;filter:drop-shadow(0 0 40px rgba(79,163,255,0.4));opacity:.85;transform:scaleX(-1)}
+.cta-content{position:relative;z-index:1}
+.cta-final h2{font-family:'Orbitron',monospace;font-size:clamp(28px,5vw,56px);font-weight:900;letter-spacing:-1px;line-height:1.1;margin-bottom:20px}
+.cta-final p{font-size:18px;color:var(--t2);max-width:540px;margin:0 auto 40px;line-height:1.7}
+
+footer{padding:40px 80px;border-top:1px solid rgba(123,92,255,0.12);background:rgba(10,15,35,0.8);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.footer-logo{font-family:'Orbitron',monospace;font-weight:900;font-size:16px;background:linear-gradient(135deg,#a78bfa,var(--p3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.footer-links{display:flex;gap:24px}
+.footer-links a{font-size:13px;color:var(--t3);text-decoration:none;transition:color .15s}
+.footer-links a:hover{color:var(--t)}
+.footer-copy{font-size:12px;color:var(--t3)}
+
+@media(max-width:900px){
+  nav{padding:16px 24px}
+  .nav-links .nav-a{display:none}
+  .hero{grid-template-columns:1fr;padding:80px 24px 40px;min-height:auto}
+  .hero-right{height:350px}
+  .hero-nyxia{height:100%}
+  section{padding:60px 24px}
+  .how-grid,.comm-grid,.testi-grid,.pricing-grid{grid-template-columns:1fr}
+  .nyxia-section,.dash-section{grid-template-columns:1fr}
+  .price-card.featured{transform:none}
+  .cta-final{padding:80px 24px}
+  .cta-nyxia-l,.cta-nyxia-r{display:none}
+  footer{padding:32px 24px}
+}
+</style>
+</head>
+<body>
+<canvas id="star-canvas"></canvas>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+<div id="page">
+
+<nav>
+  <div class="nav-logo">Publication-Web</div>
+  <div class="nav-links">
+    <a class="nav-a" href="#comment">Comment ça marche</a>
+    <a class="nav-a" href="#commissions">Commissions</a>
+    <a class="nav-a" href="#tarifs">Tarifs</a>
+    <a class="nav-a" href="marketplace.html">Marketplace</a>
+    <a class="nav-cta" href="generate.html">Créer mon site →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Visionnaire depuis 1997 · IA · Affiliation</div>
+    <h1>
+      Rencontre NyXia,<br>
+      <span class="h1-glow">ton agente IA<br>qui ne dort jamais</span>
+    </h1>
+    <p class="hero-sub">NyXia génère ton site en <strong>60 secondes</strong>, gère tes affiliés sur <strong>3 niveaux</strong> et publie du contenu <strong>24h/24</strong>. Pendant que tu vis ta vie.</p>
+    <div class="hero-ctas">
+      <a class="btn-primary" href="generate.html">✦ Générer mon site gratuitement</a>
+      <a class="btn-secondary" href="#comment">Voir comment ça marche</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-num">60s</div><div class="hstat-label">Site généré</div></div>
+      <div class="hstat"><div class="hstat-num">25%</div><div class="hstat-label">Commission niv. 1</div></div>
+      <div class="hstat"><div class="hstat-num">24/7</div><div class="hstat-label">NyXia travaille</div></div>
+      <div class="hstat"><div class="hstat-num">3</div><div class="hstat-label">Niveaux affiliés</div></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-glow"></div>
+    <img class="hero-nyxia" src="nyxia-full-2.png" alt="NyXia">
+  </div>
+</section>
+
+<!-- COMMENT -->
+<section id="comment">
+  <div class="text-center">
+    <div class="section-label">Aussi simple que 1 · 2 · 3</div>
+    <h2 class="section-title">Tu paies. Tu cliques.<br>NyXia fait le reste.</h2>
+    <p class="section-sub">Zéro compétence technique. Zéro effort. Zéro stress.</p>
+  </div>
+  <div class="how-grid">
+    <div class="how-card"><div class="how-num">01</div><div class="how-icon">💬</div><div class="how-title">Tu décris ton projet</div><div class="how-desc">Dis à NyXia ton activité, ton produit, tes couleurs. En français, en langage naturel — comme parler à quelqu'un.</div></div>
+    <div class="how-card"><div class="how-num">02</div><div class="how-icon">⚡</div><div class="how-title">NyXia génère et déploie</div><div class="how-desc">Site complet, contenu écrit, design professionnel, mis en ligne sur ton domaine. En moins de 60 secondes.</div></div>
+    <div class="how-card"><div class="how-num">03</div><div class="how-icon">💰</div><div class="how-title">Les commissions tombent</div><div class="how-desc">Ton lien affilié est actif. Chaque vente générée par toi ou ton équipe te rapporte des commissions sur 3 niveaux.</div></div>
+  </div>
+</section>
+
+<!-- NYXIA QUI EST-ELLE -->
+<section>
+  <div class="nyxia-section">
+    <div class="nyxia-img-wrap">
+      <div class="nyxia-ring"></div><div class="nyxia-ring2"></div>
+      <img class="nyxia-section-img" src="nyxia-orb.png" alt="NyXia">
+    </div>
+    <div>
+      <div class="section-label">Ton employée numérique</div>
+      <h2 class="section-title">NyXia ne prend<br>pas de congés</h2>
+      <p class="section-sub">Elle code, déploie, publie, analyse et notifie — pendant que toi tu profites de ta vie.</p>
+      <ul class="feature-list">
+        <li><div class="f-icon">🌐</div><div class="f-text"><strong>Crée des sites qui convertissent</strong>Landing pages, mini-sites, pages Systeme.io, sites coach — générés par IA en 60 secondes.</div></li>
+        <li><div class="f-icon">📱</div><div class="f-text"><strong>Publie sur Facebook automatiquement</strong>30 jours de contenu planifié, sur plusieurs pages simultanément, sans que tu touches à rien.</div></li>
+        <li><div class="f-icon">🔗</div><div class="f-text"><strong>Gère tes webhooks Systeme.io</strong>Chaque vente trackée, chaque commission calculée, chaque affilié notifié en temps réel.</div></li>
+        <li><div class="f-icon">🧠</div><div class="f-text"><strong>Se souvient de tout</strong>Historique, préférences, décisions — NyXia apprend et s'améliore à chaque session.</div></li>
+        <li><div class="f-icon">🔔</div><div class="f-text"><strong>Te notifie sur Discord et par email</strong>Chaque déploiement, chaque vente — tu sais toujours ce qui se passe.</div></li>
+      </ul>
+      <a class="btn-primary" href="generate.html">Commencer avec NyXia →</a>
+    </div>
+  </div>
+</section>
+
+<!-- COMMISSIONS -->
+<section id="commissions" class="commissions-section">
+  <div class="text-center">
+    <div class="section-label">Programme d'affiliation</div>
+    <h2 class="section-title">3 Niveaux de<br>Commissions</h2>
+    <p class="section-sub">Le système qui remplace le marketplace Systeme.io — avec encore plus de générosité.</p>
+  </div>
+  <div class="comm-grid">
+    <div class="comm-card lvl1"><div class="comm-level">Niveau 1 — Tes ventes directes</div><div class="comm-pct">25%</div><div class="comm-desc">Sur chaque vente que tu génères directement avec ton lien affilié personnalisé.</div><div class="comm-green">+25% immédiat</div></div>
+    <div class="comm-card lvl2"><div class="comm-level">Niveau 2 — Ton équipe</div><div class="comm-pct">10%</div><div class="comm-desc">Sur toutes les ventes réalisées par les affiliés que tu as recrutés dans ton équipe.</div><div class="comm-green">Revenu passif</div></div>
+    <div class="comm-card lvl3"><div class="comm-level">Niveau 3 — L'équipe de ton équipe</div><div class="comm-pct">5%</div><div class="comm-desc">Ton réseau grandit et travaille pour toi. Chaque vente du niveau 3 te rapporte aussi.</div><div class="comm-green">Sans effort</div></div>
+  </div>
+</section>
+
+<!-- DASHBOARD -->
+<section>
+  <div class="dash-section">
+    <div>
+      <div class="section-label">Dashboard holographique</div>
+      <h2 class="section-title">NyXia te présente<br>tes résultats en direct</h2>
+      <p class="section-sub">Ventes, commissions, taux de conversion, activité de tes affiliés — tout visible en temps réel.</p>
+      <ul class="feature-list">
+        <li><div class="f-icon">📊</div><div class="f-text"><strong>Stats en temps réel</strong>Revenus, conversions, trafic — mis à jour en continu.</div></li>
+        <li><div class="f-icon">👥</div><div class="f-text"><strong>Gestion des affiliés</strong>Voir ton équipe, leurs performances, leurs commissions dues.</div></li>
+        <li><div class="f-icon">💳</div><div class="f-text"><strong>Paiements en quelques clics</strong>Exporter les données, payer tes affiliés, générer les rapports.</div></li>
+      </ul>
+    </div>
+    <div class="dash-img">
+      <img src="nyxia-dashboard-2.png" alt="NyXia Dashboard">
+      <div class="dash-badge"><div class="db-num">+25.6%</div><div class="db-label">Croissance 30 jours</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TEMOIGNAGES -->
+<section>
+  <div class="text-center">
+    <div class="section-label">Ils nous font confiance</div>
+    <h2 class="section-title">Ce qu'ils disent</h2>
+    <p class="section-sub">Des entrepreneurs qui ont laissé NyXia travailler pour eux.</p>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-text">"J'ai lancé mon programme de coaching avec NyXia. Mon site était en ligne en 45 secondes, mes affiliés ont commencé à s'inscrire le soir même. Je n'ai rien touché à la technique."</div><div class="testi-author"><div class="testi-avatar">ML</div><div><div class="testi-name">Marie L.</div><div class="testi-role">Coach en développement personnel</div></div></div></div>
+    <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-text">"Le système de commissions sur 3 niveaux, c'est exactement ce qui manquait depuis que Systeme.io a fermé son marketplace. Et NyXia gère tout automatiquement."</div><div class="testi-author"><div class="testi-avatar">PD</div><div><div class="testi-name">Pierre D.</div><div class="testi-role">Formateur en marketing digital</div></div></div></div>
+    <div class="testi-card"><div class="testi-stars">★★★★★</div><div class="testi-text">"NyXia publie sur mes 4 pages Facebook chaque jour, génère des leads et me notifie sur Discord à chaque vente. Je me réveille avec des commissions."</div><div class="testi-author"><div class="testi-avatar">SM</div><div><div class="testi-name">Sophie M.</div><div class="testi-role">Affiliée niveau expert</div></div></div></div>
+  </div>
+</section>
+
+<!-- TARIFS -->
+<section id="tarifs">
+  <div class="text-center">
+    <div class="section-label">Tarification simple</div>
+    <h2 class="section-title">Choisis ton accès<br>à NyXia</h2>
+    <p class="section-sub">Commence gratuitement. Scale quand tu es prêt.</p>
+  </div>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-name">Starter</div>
+      <div class="price-amount"><span class="cur">CA$</span>0</div>
+      <div class="price-period">Pour toujours</div>
+      <ul class="price-features"><li>1 site généré par mois</li><li>Hébergement inclus</li><li>Programme affilié 3 niveaux</li><li>Dashboard affilié</li><li>Support communauté</li></ul>
+      <button class="price-btn">Commencer gratuitement</button>
+    </div>
+    <div class="price-card featured">
+      <div class="price-badge">⭐ Le plus populaire</div>
+      <div class="price-name">Pro</div>
+      <div class="price-amount"><span class="cur">CA$</span>39</div>
+      <div class="price-period">par mois · Sans engagement</div>
+      <ul class="price-features"><li>Sites illimités</li><li>Community manager IA 30 jours</li><li>Publication Facebook multi-pages</li><li>Webhooks Systeme.io</li><li>Notifications Discord + Email</li><li>NyXia — accès complet</li><li>Support prioritaire</li></ul>
+      <button class="price-btn featured-btn">Démarrer avec NyXia →</button>
+    </div>
+    <div class="price-card">
+      <div class="price-name">Agence</div>
+      <div class="price-amount"><span class="cur">CA$</span>97</div>
+      <div class="price-period">par mois · Multi-comptes</div>
+      <ul class="price-features"><li>Tout le plan Pro</li><li>Jusqu'à 20 clients</li><li>Marque blanche</li><li>API complète</li><li>Gestionnaire de compte dédié</li><li>NyXia — instance dédiée</li></ul>
+      <button class="price-btn">Nous contacter</button>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <img class="cta-nyxia-l" src="nyxia-peek-1.png" alt="NyXia">
+  <img class="cta-nyxia-r" src="nyxia-peek-4.png" alt="NyXia">
+  <div class="cta-content">
+    <div class="section-label" style="justify-content:center">Prêt à commencer ?</div>
+    <h2>NyXia t'attend.<br><span style="background:linear-gradient(135deg,#a78bfa,#4FA3FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Ton site en 60 secondes.</span></h2>
+    <p>Rejoins les entrepreneurs qui ont confié leur présence en ligne à NyXia. Essai gratuit — aucune carte de crédit.</p>
+    <a class="btn-primary" style="font-size:18px;padding:20px 52px" href="generate.html">✦ Générer mon site gratuitement</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Publication-Web</div>
+  <div class="footer-links"><a href="#">Mentions légales</a><a href="#">Confidentialité</a><a href="#">CGU</a><a href="#">Contact</a><a href="marketplace.html">Marketplace</a></div>
+  <div class="footer-copy">© 2026 Publication-Web · Visionnaire depuis 1997 ✦</div>
+</footer>
+</div>
+
+<script>
+(function(){
+  const canvas=document.getElementById('star-canvas');
+  const ctx=canvas.getContext('2d');
+  let stars=[],shooting=[];
+  function resize(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;createStars()}
+  function createStars(){
+    stars=[];
+    const n=Math.floor((canvas.width*canvas.height)/3000);
+    for(let i=0;i<n;i++){stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*0.8+0.2,alpha:Math.random()*0.7+0.3,dAlpha:(Math.random()*0.008+0.003)*(Math.random()>0.5?1:-1)})}
+  }
+  function spawnShooting(){
+    const edge=Math.random();
+    let x,y,angle;
+    if(edge<0.5){x=Math.random()*canvas.width;y=-20;angle=Math.PI/4+(Math.random()-0.5)*0.4}
+    else{x=-20;y=Math.random()*canvas.height*0.6;angle=Math.random()*0.3+0.1}
+    const colors=['255,255,255','167,139,250','79,163,255','0,230,118'];
+    shooting.push({x,y,angle,speed:Math.random()*14+8,length:Math.random()*200+80,alpha:1,thick:Math.random()*2+1,color:colors[Math.floor(Math.random()*colors.length)]})
+  }
+  function draw(){
+    const grad=ctx.createLinearGradient(0,0,canvas.width,canvas.height);
+    grad.addColorStop(0,'#0F1C3F');grad.addColorStop(0.5,'#131F4A');grad.addColorStop(1,'#0F1C3F');
+    ctx.fillStyle=grad;ctx.fillRect(0,0,canvas.width,canvas.height);
+    const cg=ctx.createRadialGradient(canvas.width*0.6,canvas.height*0.3,0,canvas.width*0.6,canvas.height*0.3,canvas.width*0.5);
+    cg.addColorStop(0,'rgba(62,45,122,0.18)');cg.addColorStop(1,'rgba(62,45,122,0)');
+    ctx.fillStyle=cg;ctx.fillRect(0,0,canvas.width,canvas.height);
+    for(const s of stars){
+      s.alpha+=s.dAlpha;if(s.alpha>=1||s.alpha<=0.15)s.dAlpha*=-1;s.alpha=Math.max(0.15,Math.min(1,s.alpha));
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r*3,0,Math.PI*2);ctx.fillStyle=`rgba(167,139,250,${s.alpha*0.05})`;ctx.fill();
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(255,252,240,${s.alpha})`;ctx.fill();
+    }
+    if(Math.random()<0.008)spawnShooting();
+    for(let i=shooting.length-1;i>=0;i--){
+      const s=shooting[i];
+      const tx=s.x-s.length*Math.cos(s.angle),ty=s.y-s.length*Math.sin(s.angle);
+      const tr=ctx.createLinearGradient(s.x,s.y,tx,ty);
+      tr.addColorStop(0,`rgba(${s.color},${s.alpha})`);tr.addColorStop(0.3,`rgba(${s.color},${s.alpha*0.5})`);tr.addColorStop(1,`rgba(${s.color},0)`);
+      ctx.beginPath();ctx.moveTo(s.x,s.y);ctx.lineTo(tx,ty);ctx.strokeStyle=tr;ctx.lineWidth=s.thick;ctx.lineCap='round';ctx.stroke();
+      ctx.beginPath();ctx.moveTo(s.x,s.y);ctx.lineTo(tx,ty);ctx.strokeStyle=`rgba(${s.color},${s.alpha*0.12})`;ctx.lineWidth=s.thick*5;ctx.stroke();
+      ctx.beginPath();ctx.arc(s.x,s.y,s.thick*2,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,255,${s.alpha})`;ctx.fill();
+      ctx.beginPath();ctx.arc(s.x,s.y,s.thick*6,0,Math.PI*2);ctx.fillStyle=`rgba(${s.color},${s.alpha*0.2})`;ctx.fill();
+      s.x+=s.speed*Math.cos(s.angle);s.y+=s.speed*Math.sin(s.angle);s.alpha-=0.006;
+      if(s.alpha<=0||s.x>canvas.width+100||s.y>canvas.height+100)shooting.splice(i,1);
+    }
+    requestAnimationFrame(draw);
+  }
+  resize();window.addEventListener('resize',resize);draw();
+})();
+</script>
+</body>
+</html>
