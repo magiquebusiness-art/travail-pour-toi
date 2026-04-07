@@ -90,9 +90,9 @@ const GrapesJSEditor = dynamic(
   { ssr: false, loading: () => <EditorLoading /> }
 )
 
-// Dynamic import for GrapesJS Lesson Editor (SSR disabled)
-const GrapesJSLessonEditor = dynamic(
-  () => import('@/components/formation/grapesjs-lesson-editor'),
+// Dynamic import for Simple Lesson Editor (SSR disabled)
+const SimpleLessonEditor = dynamic(
+  () => import('@/components/formation/simple-lesson-editor'),
   { ssr: false, loading: () => <div className="flex items-center justify-center h-[500px]"><Loader2 className="w-8 h-8 text-purple-500 animate-spin" /></div> }
 )
 
@@ -341,6 +341,7 @@ export default function StudioPage() {
   const [showEditor, setShowEditor] = useState(false)
   const [showLessonEditor, setShowLessonEditor] = useState(false)
   const [activeLessonForEditor, setActiveLessonForEditor] = useState<{ moduleId: string; lesson: Lesson } | null>(null)
+  const [lessonEditorHtml, setLessonEditorHtml] = useState('')
   const [editingModule, setEditingModule] = useState<Module | null>(null)
   const [editingLesson, setEditingLesson] = useState<Lesson | null>(null)
   const [activeTargetModule, setActiveTargetModule] = useState<string>('')
@@ -1780,34 +1781,57 @@ export default function StudioPage() {
               </div>
             )}
 
+            {lessonForm.content_type === 'audio' && (
+              <div className="space-y-2 animate-fade-in">
+                <Label className="text-zinc-300 text-sm flex items-center gap-1.5">
+                  <Headphones className="w-3.5 h-3.5 text-amber-400" />
+                  URL de l'audio (MP3, WAV, M4A...)
+                </Label>
+                <Input
+                  type="url"
+                  placeholder="https://exemple.com/mon-audio.mp3"
+                  value={lessonForm.video_url}
+                  onChange={(e) => setLessonForm({ ...lessonForm, video_url: e.target.value })}
+                  className="bg-white/5 border-purple-500/20 text-white placeholder:text-zinc-600"
+                />
+                {lessonForm.video_url && (
+                  <div className="rounded-xl overflow-hidden border border-purple-500/10 bg-black/30 p-3">
+                    <audio controls className="w-full" src={lessonForm.video_url}>
+                      Votre navigateur ne supporte pas l'audio.
+                    </audio>
+                  </div>
+                )}
+                <p className="text-zinc-600 text-xs">Colle le lien direct vers ton fichier audio. Tu peux aussi utiliser l'éditeur de contenu pour ajouter un audio n'importe où dans ta leçon.</p>
+              </div>
+            )}
+
             {lessonForm.content_type === 'text' && (
               <div className="space-y-2 animate-fade-in">
                 <Label className="text-zinc-300 text-sm flex items-center gap-1.5">
                   <FileText className="w-3.5 h-3.5 text-blue-400" />
-                  Contenu HTML
+                  Contenu de la leçon
                 </Label>
                 <div className="flex gap-2 items-start">
                   <Textarea
-                    placeholder="<h2>Mon titre</h2><p>Mon contenu...</p>"
-                    value={lessonForm.content_html}
-                    onChange={(e) => setLessonForm({ ...lessonForm, content_html: e.target.value })}
-                    rows={8}
-                    className="flex-1 bg-white/5 border-purple-500/20 text-white placeholder:text-zinc-600 resize-y font-mono text-xs"
+                    placeholder="Résumé rapide de la leçon (optionnel)..."
+                    value={lessonForm.description}
+                    onChange={(e) => setLessonForm({ ...lessonForm, description: e.target.value })}
+                    rows={3}
+                    className="flex-1 bg-white/5 border-purple-500/20 text-white placeholder:text-zinc-600 resize-y text-sm"
                   />
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    className="border-purple-500/30 text-purple-300 hover:bg-purple-500/10 shrink-0 mt-0"
-                    onClick={() => {
-                      setActiveLessonForEditor({ moduleId: activeTargetModule, lesson: editingLesson! })
-                      setShowLessonEditor(true)
-                    }}
-                  >
-                    <Wand2 className="w-4 h-4 mr-2" />
-                    Éditeur visuel
-                  </Button>
                 </div>
+                <Button
+                  type="button"
+                  className="w-full bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 border border-purple-500/20 rounded-xl py-3"
+                  onClick={() => {
+                    setActiveLessonForEditor({ moduleId: activeTargetModule, lesson: editingLesson || { id: '', module_id: activeTargetModule, formation_id: selectedFormation.id, title: lessonForm.title, description: '', content_type: 'text', video_url: '', content_html: lessonForm.content_html || '', duration_minutes: 0, sort_order: 0, is_free: 0, created_at: '' } })
+                    setLessonEditorHtml(lessonForm.content_html || '')
+                    setShowLessonEditor(true)
+                  }}
+                >
+                  <Sparkles className="w-4 h-4 mr-2" />
+                  Ouvrir l'éditeur de contenu
+                </Button>
               </div>
             )}
 
@@ -1866,11 +1890,10 @@ export default function StudioPage() {
 
       {/* ===== LESSON VISUAL EDITOR DIALOG ===== */}
       <Dialog open={showLessonEditor} onOpenChange={setShowLessonEditor}>
-        <DialogContent className="max-w-6xl w-[95vw] p-0 overflow-hidden glass-card border-0">
+        <DialogContent className="max-w-5xl w-[95vw] p-0 overflow-hidden glass-card border-0">
           {activeLessonForEditor && (
-            <GrapesJSLessonEditor
-              initialHtml={activeLessonForEditor.lesson?.content_html || ''}
-              initialCss=""
+            <SimpleLessonEditor
+              initialHtml={lessonEditorHtml || activeLessonForEditor.lesson?.content_html || ''}
               onSave={(data) => {
                 setLessonForm(prev => ({ ...prev, content_html: data.html_content }))
                 setShowLessonEditor(false)

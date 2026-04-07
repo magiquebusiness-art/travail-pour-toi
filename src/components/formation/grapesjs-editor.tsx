@@ -171,6 +171,16 @@ const NYXIA_UI_CSS = `
 [class*="gjs-block"] { font-size: 9px !important; }
 [class*="gjs-pn"] { font-size: 9px !important; }
 [class*="gjs-field"] { font-size: 9px !important; }
+
+/* ---- REMOVE ALL GRAPESJS BRANDING ---- */
+.gjs-cv-canvas__frame { pointer-events: auto !important; }
+.gjs-logo, .gjs-logo-content, [title*="GrapesJS"], [title*="grapesjs"] { display: none !important; }
+.gjs-brand { display: none !important; }
+.gjs-panel__switcher { font-size: 9px !important; }
+.gjs-off-prv, .gjs-no-ph { display: none !important; }
+/* Hide "GrapesJS" in any title/aria-label attributes */
+[aria-label*="GrapesJS"], [aria-label*="grapesjs"], [title*="GrapesJS"], [title*="grapesjs"],
+[data-tooltip*="GrapesJS"], [data-tooltip*="grapesjs"] { display: none !important; }
 `
 
 export default function GrapesJSEditorComponent({
@@ -241,6 +251,13 @@ export default function GrapesJSEditorComponent({
         themeEl = document.createElement('style')
         themeEl.textContent = NYXIA_UI_CSS
         document.head.appendChild(themeEl)
+
+        // Remove GrapesJS branding after DOM is ready
+        setTimeout(() => {
+          document.querySelectorAll('[title*="GrapesJS"], [title*="grapesjs"], [aria-label*="GrapesJS"], .gjs-logo, .gjs-brand, [class*="gjs-logo"]').forEach(el => {
+            (el as HTMLElement).style.display = 'none'
+          })
+        }, 500)
 
         if (isMounted) setIsLoading(false)
       } catch (error) {

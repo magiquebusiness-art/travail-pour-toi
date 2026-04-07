@@ -432,3 +432,24 @@ Stage Summary:
 - Homepage — ✅ "Prochainement" supprimé, CTA vers /studio
 - GrapesJS — ✅ Intégré pour pages de vente ET contenu des leçons
 - Build — ✅ Succès
+
+---
+Task ID: 1
+Agent: Super Z (main)
+Task: Refactor Studio de Création - Replace GrapesJS lesson editor with simple friendly editor
+
+Work Log:
+- Created `/home/z/my-project/src/components/formation/simple-lesson-editor.tsx` — A complete WYSIWYG content editor
+- Updated `/home/z/my-project/src/app/studio/page.tsx` to use SimpleLessonEditor instead of GrapesJSLessonEditor
+- Added audio URL field for lesson content type "audio" with preview player
+- Replaced raw HTML textarea with "Ouvrir l'éditeur de contenu" button
+- Added GrapesJS branding removal CSS + JS to sales page editor
+- Built and deployed to Cloudflare Pages
+
+Stage Summary:
+- New simple editor has: Bold, Italic, Underline, Strikethrough, H1, H2, Lists, Alignment, Text Color, Links, Image Upload, YouTube Video Embed, Audio Embed
+- Editor uses contentEditable with document.execCommand — no external dependencies
+- Design matches NyXia theme (dark, purple accents, Outfit font)
+- Audio support added for lesson creation (URL input + preview player)
+- All GrapesJS branding hidden via CSS + JS DOM removal
+- Deployed to: https://travail-pour-toi.com/studio
