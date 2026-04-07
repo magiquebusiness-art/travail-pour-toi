@@ -6,6 +6,24 @@
   "compatibility_flags": [
     "nodejs_compat"
   ],
+  "routes": [
+    {
+      "pattern": "travail-pour-toi.com",
+      "zone_id": "d545b4ca9730294849690d25b4997233"
+    },
+    {
+      "pattern": "travail-pour-toi.com/*",
+      "zone_id": "d545b4ca9730294849690d25b4997233"
+    },
+    {
+      "pattern": "www.travail-pour-toi.com/*",
+      "zone_id": "d545b4ca9730294849690d25b4997233"
+    },
+    {
+      "pattern": "*.travail-pour-toi.com/*",
+      "zone_id": "d545b4ca9730294849690d25b4997233"
+    }
+  ],
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS",
