@@ -18,242 +18,389 @@ interface GrapesJSEditorProps {
 type GrapesJSEditor = any
 
 /* ================================================================
-   NYXIA GRAPESJS THEME — Panel RIGHT, blocks ENORMOUS, premium look
+   NYXIA PREMIUM GRAPESJS THEME
+   - Panel with blocks on the RIGHT side (DOM move approach)
+   - Blocks in 2-column grid, LARGE premium cards
+   - Dark luxury theme with purple accents
    ================================================================ */
-const NYXIA_UI_CSS = `
-/* ===== FORCE PANEL TO RIGHT ===== */
+const NYXIA_PREMIUM_CSS = `
+/* ===== OVERRIDE GRAPESJS EDITOR LAYOUT ===== */
+.gjs-editor,
 #gjs {
   display: flex !important;
-  flex-direction: row-reverse !important;
+  flex-direction: row !important;
 }
 
-/* ===== GLOBAL ===== */
+/* ===== KILL FLOATING TOOLBAR ===== */
+.gjs-toolbar { display: none !important; }
+
+/* ===== GLOBAL FONT ===== */
 .gjs-one-bg,
 .gjs-two-bg,
 .gjs-three-bg,
 .gjs-four-bg {
   font-family: 'Outfit', ui-sans-serif, system-ui, sans-serif !important;
-  font-size: 16px !important;
+  font-size: 15px !important;
 }
 
-/* Kill floating toolbar */
-.gjs-toolbar { display: none !important; }
-
-/* ===== PANEL — WIDE, ON RIGHT ===== */
+/* ===== PANEL — RIGHT SIDE, WIDE, PREMIUM ===== */
 .gjs-pn {
-  width: 340px !important;
-  min-width: 340px !important;
-  max-width: 340px !important;
+  width: 400px !important;
+  min-width: 400px !important;
+  max-width: 400px !important;
+  height: 100% !important;
   padding: 0 !important;
+  margin: 0 !important;
   border-left: 1px solid rgba(123, 92, 255, 0.2) !important;
   border-right: none !important;
-  background: #0c1a2e !important;
+  background: linear-gradient(180deg, #0d1b33 0%, #0a1428 100%) !important;
+  box-shadow: -4px 0 30px rgba(0, 0, 0, 0.3) !important;
+  order: 10 !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
+
 .gjs-pn-left,
 .gjs-pn-panel {
-  width: 340px !important;
-  min-width: 340px !important;
-  max-width: 340px !important;
+  width: 400px !important;
+  min-width: 400px !important;
+  max-width: 400px !important;
   padding: 0 !important;
+  background: transparent !important;
+}
+
+/* Panel header buttons (view switcher) */
+.gjs-pn-commands,
+.gjs-pn-buttons {
+  padding: 10px 12px !important;
+  gap: 8px !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
 }
 .gjs-pn-btn {
-  width: 40px !important;
-  height: 40px !important;
-  font-size: 15px !important;
+  width: 44px !important;
+  height: 44px !important;
+  font-size: 18px !important;
   margin: 0 !important;
   padding: 0 !important;
-  line-height: 40px !important;
-  border-radius: 10px !important;
-}
-.gjs-pn-btn svg { width: 20px !important; height: 20px !important; }
-.gjs-pn-label { font-size: 14px !important; padding: 0 !important; }
-.gjs-pn-title {
-  font-size: 15px !important;
-  padding: 12px 14px !important;
-  margin: 0 !important;
-  font-weight: 600 !important;
-  color: #e2d9f3 !important;
-}
-.gjs-pn-commands, .gjs-pn-buttons { padding: 8px 10px !important; gap: 6px !important; }
-
-/* ===== BLOCKS — EXTREMELY LARGE ===== */
-.gjs-block {
-  padding: 20px 14px !important;
-  margin: 6px 8px !important;
-  border-radius: 14px !important;
-  border: 1px solid rgba(123, 92, 255, 0.15) !important;
-  background: linear-gradient(135deg, rgba(123, 92, 255, 0.08) 0%, rgba(123, 92, 255, 0.03) 100%) !important;
-  cursor: grab !important;
+  line-height: 44px !important;
+  border-radius: 12px !important;
+  background: rgba(123, 92, 255, 0.08) !important;
+  border: 1px solid rgba(123, 92, 255, 0.12) !important;
+  color: #c4b5fd !important;
   transition: all 0.2s ease !important;
-  min-height: 80px !important;
+}
+.gjs-pn-btn:hover {
+  background: rgba(123, 92, 255, 0.2) !important;
+  color: #fff !important;
+  transform: translateY(-1px) !important;
+}
+.gjs-pn-btn.active,
+.gjs-pn-btn.gjs-pn-active {
+  background: rgba(123, 92, 255, 0.25) !important;
+  border-color: #7B5CFF !important;
+  color: #fff !important;
+}
+.gjs-pn-btn svg { width: 22px !important; height: 22px !important; }
+.gjs-pn-label {
+  font-size: 13px !important;
+  padding: 2px 6px !important;
+  color: #a78bfa !important;
+}
+.gjs-pn-title {
+  font-size: 16px !important;
+  padding: 14px 16px !important;
+  margin: 0 !important;
+  font-weight: 700 !important;
+  color: #e2d9f3 !important;
+  letter-spacing: 0.02em !important;
+  text-transform: uppercase !important;
+}
+
+/* ===== BLOCKS — 2-COLUMN GRID, ENORMOUS PREMIUM CARDS ===== */
+.gjs-blocks {
+  padding: 8px 10px !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+.gjs-blocks-header {
+  padding: 14px 16px 10px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #a78bfa !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+}
+.gjs-block-container {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 10px !important;
+  padding: 4px 6px !important;
+  width: 100% !important;
+}
+.gjs-block-box {
+  width: 100% !important;
+}
+.gjs-block {
+  width: 100% !important;
+  padding: 18px 10px 14px !important;
+  margin: 0 !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(123, 92, 255, 0.12) !important;
+  background: linear-gradient(145deg, rgba(123, 92, 255, 0.06) 0%, rgba(15, 23, 42, 0.6) 100%) !important;
+  cursor: grab !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  min-height: 100px !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 8px !important;
+  gap: 10px !important;
+  box-sizing: border-box !important;
 }
 .gjs-block:hover {
-  background: linear-gradient(135deg, rgba(123, 92, 255, 0.2) 0%, rgba(123, 92, 255, 0.08) 100%) !important;
+  background: linear-gradient(145deg, rgba(123, 92, 255, 0.18) 0%, rgba(15, 23, 42, 0.8) 100%) !important;
   border-color: rgba(123, 92, 255, 0.4) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 8px 25px rgba(123, 92, 255, 0.15) !important;
+  transform: translateY(-3px) scale(1.02) !important;
+  box-shadow:
+    0 12px 35px rgba(123, 92, 255, 0.18),
+    0 0 0 1px rgba(123, 92, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
 }
 .gjs-block:active {
   transform: scale(0.97) !important;
+  box-shadow: 0 4px 15px rgba(123, 92, 255, 0.12) !important;
 }
+
+/* Block icons — VERY LARGE */
 .gjs-block__media {
-  font-size: 44px !important;
+  font-size: 42px !important;
   margin-bottom: 0 !important;
   width: 100% !important;
-  height: 44px !important;
-  line-height: 44px !important;
+  height: 48px !important;
+  line-height: 48px !important;
   text-align: center !important;
+  color: #7B5CFF !important;
 }
+.gjs-block__media-svg {
+  width: 48px !important;
+  height: 48px !important;
+  color: #7B5CFF !important;
+}
+.gjs-block__media-inner {
+  width: 100% !important;
+  height: 48px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.gjs-block svg {
+  width: 48px !important;
+  height: 48px !important;
+  color: #7B5CFF !important;
+}
+.gjs-block-icon {
+  width: 48px !important;
+  height: 48px !important;
+  font-size: 36px !important;
+}
+
+/* Block labels — clear and readable */
 .gjs-block__label {
-  font-size: 15px !important;
+  font-size: 13px !important;
   font-weight: 600 !important;
   text-align: center !important;
   width: 100% !important;
   color: #d4d0e0 !important;
   letter-spacing: 0.01em !important;
+  line-height: 1.3 !important;
 }
-.gjs-blocks-header {
-  padding: 12px 14px !important;
-  font-size: 15px !important;
+
+/* Category titles */
+.gjs-category-title,
+.gjs-category-label {
+  font-size: 13px !important;
+  padding: 14px 16px 8px !important;
   font-weight: 700 !important;
-  color: #e2d9f3 !important;
+  color: #a78bfa !important;
   text-transform: uppercase !important;
-  letter-spacing: 0.05em !important;
+  letter-spacing: 0.06em !important;
 }
-.gjs-category-title {
-  font-size: 14px !important;
-  padding: 12px 14px !important;
-  font-weight: 600 !important;
-  color: #c4b5fd !important;
+.gjs-category { padding: 0 !important; }
+
+/* ===== CANVAS — TAKE FULL REMAINING SPACE ===== */
+.gjs-cv {
+  flex: 1 !important;
+  min-width: 0 !important;
+  order: 1 !important;
+  background: #080e1c !important;
 }
-.gjs-category { font-size: 15px !important; }
-.gjs-block-container { width: 100% !important; }
-.gjs-block-box { width: 100% !important; }
-.gjs-block .gjs-block__media-inner { width: 100% !important; }
-.gjs-block svg { width: 50px !important; height: 50px !important; }
-.gjs-block__media-svg { width: 50px !important; height: 50px !important; }
-.gjs-block-icon { width: 50px !important; height: 50px !important; font-size: 36px !important; }
+.gjs-cv-canvas {
+  background-color: #080e1c !important;
+  min-height: 100% !important;
+}
+.gjs-canvas {
+  background-color: #080e1c !important;
+}
 
 /* ===== LAYERS ===== */
-.gjs-layers { font-size: 15px !important; }
-.gjs-layer { padding: 10px 12px !important; min-height: 42px !important; font-size: 15px !important; }
-.gjs-layer-name { font-size: 15px !important; }
-.gjs-layer-cv { font-size: 15px !important; }
-.gjs-layer-count { font-size: 13px !important; }
-.gjs-layers-header { padding: 12px 14px !important; font-size: 15px !important; }
+.gjs-layers { font-size: 14px !important; padding: 8px 10px !important; }
+.gjs-layer {
+  padding: 12px 14px !important;
+  min-height: 44px !important;
+  font-size: 14px !important;
+  border-radius: 8px !important;
+  margin: 2px 0 !important;
+  transition: background 0.15s ease !important;
+}
+.gjs-layer:hover { background: rgba(123, 92, 255, 0.08) !important; }
+.gjs-layer-name { font-size: 14px !important; }
+.gjs-layer-cv { font-size: 14px !important; }
+.gjs-layer-count { font-size: 12px !important; }
+.gjs-layers-header {
+  padding: 14px 16px 10px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  color: #a78bfa !important;
+  text-transform: uppercase !important;
+}
 .gjs-layer-item { padding: 0 6px !important; }
-.gjs-layer-vis { width: 28px !important; height: 28px !important; font-size: 14px !important; }
-.gjs-layer-move { width: 20px !important; height: 20px !important; }
+.gjs-layer-vis { width: 30px !important; height: 30px !important; font-size: 15px !important; }
+.gjs-layer-move { width: 22px !important; height: 22px !important; }
 .gjs-layer-caret { font-size: 14px !important; }
 
 /* ===== STYLE MANAGER ===== */
-.gjs-sm { font-size: 15px !important; }
-.gjs-sm-label { font-size: 14px !important; }
-.gjs-sm-title { font-size: 15px !important; padding: 12px 14px !important; }
-.gjs-sm-section-title { font-size: 15px !important; padding: 12px 14px !important; }
-.gjs-sm-sector-title { font-size: 15px !important; padding: 12px 14px !important; }
-.gjs-sm-property { font-size: 15px !important; padding: 10px 14px !important; }
-.gjs-sm-input { height: 40px !important; font-size: 15px !important; padding: 0 12px !important; }
-.gjs-sm-range { height: 40px !important; }
-.gjs-sm-unit { font-size: 14px !important; padding: 4px 8px !important; }
-.gjs-sm-composite { font-size: 15px !important; }
-.gjs-sm-undo, .gjs-sm-redo { width: 34px !important; height: 34px !important; font-size: 14px !important; }
-.gjs-sm-switch { font-size: 15px !important; }
-.gjs-sm-integer { font-size: 15px !important; }
-.gjs-sm-select { font-size: 15px !important; }
+.gjs-sm { font-size: 14px !important; padding: 8px 10px !important; }
+.gjs-sm-label { font-size: 13px !important; }
+.gjs-sm-title {
+  font-size: 13px !important;
+  padding: 14px 16px 10px !important;
+  font-weight: 700 !important;
+  color: #a78bfa !important;
+  text-transform: uppercase !important;
+}
+.gjs-sm-section-title { font-size: 14px !important; padding: 12px 14px !important; }
+.gjs-sm-sector-title { font-size: 14px !important; padding: 10px 14px !important; }
+.gjs-sm-property { font-size: 14px !important; padding: 10px 14px !important; }
+.gjs-sm-input { height: 42px !important; font-size: 14px !important; padding: 0 14px !important; border-radius: 10px !important; }
+.gjs-sm-range { height: 42px !important; }
+.gjs-sm-unit { font-size: 13px !important; padding: 4px 10px !important; }
+.gjs-sm-composite { font-size: 14px !important; }
+.gjs-sm-undo, .gjs-sm-redo { width: 36px !important; height: 36px !important; font-size: 15px !important; }
+.gjs-sm-switch { font-size: 14px !important; }
+.gjs-sm-integer { font-size: 14px !important; }
+.gjs-sm-select { font-size: 14px !important; height: 42px !important; }
 
 /* ===== TRAIT MANAGER ===== */
-.gjs-trt-traits { font-size: 15px !important; }
+.gjs-trt-traits { font-size: 14px !important; padding: 8px 10px !important; }
 .gjs-trt-trait { padding: 10px 14px !important; }
-.gjs-trt-label { font-size: 14px !important; }
-.gjs-tr { height: 40px !important; font-size: 15px !important; }
-.gjs-tr-select { font-size: 15px !important; height: 40px !important; }
-.gjs-tr-input { font-size: 15px !important; height: 40px !important; }
+.gjs-trt-label { font-size: 13px !important; }
+.gjs-tr { height: 42px !important; font-size: 14px !important; border-radius: 10px !important; }
+.gjs-tr-select { font-size: 14px !important; height: 42px !important; }
+.gjs-tr-input { font-size: 14px !important; height: 42px !important; }
 
 /* ===== INPUTS ===== */
-.gjs-field { font-size: 15px !important; }
-.gjs-field input, .gjs-field select, .gjs-field textarea {
-  font-size: 15px !important; padding: 8px 12px !important; height: 40px !important;
+.gjs-field { font-size: 14px !important; }
+.gjs-field input,
+.gjs-field select,
+.gjs-field textarea {
+  font-size: 14px !important;
+  padding: 8px 14px !important;
+  height: 42px !important;
   border-radius: 10px !important;
+  background: rgba(15, 23, 42, 0.6) !important;
+  border: 1px solid rgba(123, 92, 255, 0.15) !important;
+  color: #e2d9f3 !important;
 }
 
 /* ===== DEVICE MANAGER ===== */
-.gjs-devices-c { gap: 6px !important; }
-.gjs-devices-c .gjs-devices-btn { padding: 6px 14px !important; font-size: 15px !important; margin: 0 !important; }
-
-/* ===== CANVAS ===== */
-.gjs-cv-canvas { background-color: #0a0f1e !important; }
-.gjs-canvas { background-color: #0a0f1e !important; }
+.gjs-devices-c { gap: 8px !important; padding: 8px 0 !important; }
+.gjs-devices-c .gjs-devices-btn {
+  padding: 8px 16px !important;
+  font-size: 14px !important;
+  margin: 0 !important;
+  border-radius: 10px !important;
+}
 
 /* ===== MODALS ===== */
-.gjs-modal { font-size: 16px !important; }
-.gjs-modal-title { font-size: 18px !important; padding: 16px 20px !important; }
-.gjs-modal-content { padding: 16px 20px !important; }
+.gjs-modal { font-size: 15px !important; }
+.gjs-modal-title { font-size: 18px !important; padding: 18px 24px !important; }
+.gjs-modal-content { padding: 18px 24px !important; }
 
 /* ===== CONTEXT MENU ===== */
-.gjs-context { font-size: 15px !important; }
-.gjs-context-item { padding: 10px 16px !important; font-size: 15px !important; }
+.gjs-context { font-size: 14px !important; }
+.gjs-context-item { padding: 12px 18px !important; font-size: 14px !important; }
 
 /* ===== TOAST ===== */
-.gjs-toast { font-size: 15px !important; padding: 12px 16px !important; }
+.gjs-toast { font-size: 14px !important; padding: 14px 18px !important; }
 
 /* ===== BADGE ===== */
-.gjs-badge { font-size: 11px !important; padding: 0 5px !important; }
+.gjs-badge { font-size: 11px !important; padding: 2px 8px !important; border-radius: 6px !important; }
 
 /* ===== COLOR PICKER ===== */
-.gjs-field-color-picker { height: 36px !important; }
+.gjs-field-color-picker { height: 42px !important; }
 
 /* ===== HIGHLIGHT ===== */
-.gjs-selected { outline-width: 2px !important; }
+.gjs-selected { outline-width: 2px !important; outline-color: #7B5CFF !important; }
 
-/* ===== SCROLLBARS ===== */
+/* ===== SCROLLBARS — PREMIUM ===== */
 .gjs-pn-panel::-webkit-scrollbar,
 .gjs-sm-scroll::-webkit-scrollbar,
 .gjs-layers::-webkit-scrollbar,
 .gjs-blocks::-webkit-scrollbar,
 .gjs-cv-canvas::-webkit-scrollbar,
-.gjs-am-assets::-webkit-scrollbar { width: 8px !important; }
+.gjs-am-assets::-webkit-scrollbar { width: 6px !important; }
 .gjs-pn-panel::-webkit-scrollbar-thumb,
 .gjs-sm-scroll::-webkit-scrollbar-thumb,
 .gjs-layers::-webkit-scrollbar-thumb,
 .gjs-blocks::-webkit-scrollbar-thumb,
-.gjs-cv-canvas::-webkit-scrollbar-thumb { background: #7B5CFF44 !important; border-radius: 4px !important; }
+.gjs-cv-canvas::-webkit-scrollbar-thumb {
+  background: rgba(123, 92, 255, 0.3) !important;
+  border-radius: 3px !important;
+}
+.gjs-pn-panel::-webkit-scrollbar-thumb:hover,
+.gjs-sm-scroll::-webkit-scrollbar-thumb:hover,
+.gjs-layers::-webkit-scrollbar-thumb:hover,
+.gjs-blocks::-webkit-scrollbar-thumb:hover {
+  background: rgba(123, 92, 255, 0.5) !important;
+}
 .gjs-pn-panel::-webkit-scrollbar-track,
 .gjs-sm-scroll::-webkit-scrollbar-track,
 .gjs-layers::-webkit-scrollbar-track,
 .gjs-blocks::-webkit-scrollbar-track,
 .gjs-cv-canvas::-webkit-scrollbar-track { background: transparent !important; }
 
-/* ===== NYXIA COLORS ===== */
-.gjs-one-bg { background-color: #0c1a2e !important; }
+/* ===== NYXIA THEME COLORS ===== */
+.gjs-one-bg { background-color: #0d1b33 !important; }
 .gjs-two-color { color: #d4d0e0 !important; }
 .gjs-three-bg { background-color: #111b30 !important; }
 .gjs-four-color, .gjs-four-color-h:hover { color: #7B5CFF !important; }
 
-/* ===== CATCH-ALL — FORCE LARGE FONTS ===== */
-[class*="gjs-sm-"] { font-size: 15px !important; }
-[class*="gjs-layer"] { font-size: 15px !important; }
-[class*="gjs-block"] { font-size: 15px !important; }
-[class*="gjs-pn"] { font-size: 15px !important; }
-[class*="gjs-field"] { font-size: 15px !important; }
-
 /* ===== REMOVE ALL GRAPESJS BRANDING ===== */
 .gjs-cv-canvas__frame { pointer-events: auto !important; }
-.gjs-logo, .gjs-logo-content, [title*="GrapesJS"], [title*="grapesjs"] { display: none !important; }
-.gjs-brand { display: none !important; }
-.gjs-panel__switcher { font-size: 15px !important; }
+.gjs-logo,
+.gjs-logo-content,
+.gjs-brand,
+[title*="GrapesJS"],
+[title*="grapesjs"],
+[aria-label*="GrapesJS"],
+[aria-label*="grapesjs"],
+[data-tooltip*="GrapesJS"],
+[data-tooltip*="grapesjs"] { display: none !important; }
 .gjs-off-prv, .gjs-no-ph { display: none !important; }
-[aria-label*="GrapesJS"], [aria-label*="grapesjs"], [title*="GrapesJS"], [title*="grapesjs"],
-[data-tooltip*="GrapesJS"], [data-tooltip*="grapesjs"] { display: none !important; }
+.gjs-panel__switcher { font-size: 14px !important; }
 
-/* ===== FIX WHITE BLOCK IN TOP-LEFT ===== */
+/* ===== FIX WHITE BLOCK / ARTIFACTS ===== */
 .gjs-canvas-frame { position: relative !important; }
 .gjs-canvas__frames { position: relative !important; }
+
+/* ===== ASSETS MANAGER ===== */
+.gjs-am { font-size: 14px !important; }
+.gjs-am-assets { font-size: 14px !important; }
+.gjs-am-header { font-size: 14px !important; padding: 12px 14px !important; }
+
+/* ===== UNDO/REDO in top bar ===== */
+.gjs-undo, .gjs-redo { font-size: 16px !important; }
 `
 
 export default function GrapesJSEditorComponent({
@@ -291,8 +438,8 @@ export default function GrapesJSEditorComponent({
         let parsedStyles
         try { parsedStyles = JSON.parse(initialStyles) } catch { parsedStyles = undefined }
 
-        // Set the container ID for targeted CSS
-        editorRef.current.id = 'gjs'
+        // Set the container ID
+        editorRef.current.id = 'nyxia-gjs-editor'
 
         const editor = grapesjs.init({
           container: editorRef.current,
@@ -313,59 +460,105 @@ export default function GrapesJSEditorComponent({
               modalImportContent: '',
             },
             [grapesjsCustomCode as unknown as string]: {
-              modalTitle: 'Code',
+              modalTitle: 'Code personnalisé',
             },
           },
           canvas: { styles: initialCss || undefined },
-          components: parsedComponents || initialHtml || '<h1 style="color:#fff;text-align:center;padding:40px;">Commencez à construire votre page...</h1>',
+          components: parsedComponents || initialHtml || `
+            <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#06101f;">
+              <div style="text-align:center;max-width:600px;padding:40px;">
+                <h1 style="font-family:'Cormorant Garamond',serif;font-size:42px;color:#fff;margin-bottom:16px;font-weight:300;">
+                  Votre Page de Vente
+                </h1>
+                <p style="font-family:'Outfit',sans-serif;font-size:16px;color:rgba(255,255,255,0.6);line-height:1.7;">
+                  Commencez à construire votre page en glissant des blocs depuis le panneau de droite.
+                </p>
+              </div>
+            </div>
+          `,
           style: parsedStyles || undefined,
         })
 
         editorInstance.current = editor
 
-        // Inject theme CSS directly into the editor container's head
+        // Inject premium theme CSS
         themeEl = document.createElement('style')
-        themeEl.textContent = NYXIA_UI_CSS
+        themeEl.textContent = NYXIA_PREMIUM_CSS
         document.head.appendChild(themeEl)
 
-        // Aggressively move panel to RIGHT after DOM is ready
+        // ===== CRITICAL: Move panel to RIGHT side by physically moving DOM nodes =====
         const movePanelToRight = () => {
-          const container = editorRef.current
-          if (!container) return
+          if (!editorRef.current) return
 
-          const pn = container.querySelector('.gjs-pn') as HTMLElement
-          const cv = container.querySelector('.gjs-cv') as HTMLElement
+          // Find the GrapesJS editor root element
+          const gjsEditor = editorRef.current.querySelector('.gjs-editor') || editorRef.current
 
-          if (pn && cv && pn.nextElementSibling !== null) {
-            // Force panel after canvas using CSS
-            pn.style.order = '2'
-            cv.style.order = '1'
-            pn.style.marginLeft = 'auto'
+          // Find the panel and canvas elements
+          const panel = gjsEditor.querySelector('.gjs-pn') as HTMLElement
+          const canvas = gjsEditor.querySelector('.gjs-cv') as HTMLElement
 
-            // Also force the parent to use flex with row-reverse
-            const parent = pn.parentElement
-            if (parent) {
-              parent.style.display = 'flex'
-              parent.style.flexDirection = 'row'
-            }
+          if (!panel || !canvas) return
+
+          const parent = panel.parentElement
+          if (!parent) return
+
+          // PHYSICALLY move the panel AFTER the canvas in the DOM
+          // This is the ONLY reliable way to move it to the right side
+          if (panel.nextElementSibling !== null || parent.lastChild !== panel) {
+            // Remove panel from current position
+            parent.removeChild(panel)
+            // Re-append it (it goes to the end, after canvas)
+            parent.appendChild(panel)
           }
 
-          // Remove any white blocks
-          container.querySelectorAll('.gjs-off-prv, .gjs-no-ph, [class*="gjs-logo"], .gjs-brand').forEach(el => {
+          // Ensure parent is flex with row direction
+          parent.style.display = 'flex'
+          parent.style.flexDirection = 'row'
+          parent.style.width = '100%'
+          parent.style.height = '100%'
+
+          // Make sure canvas takes remaining space
+          canvas.style.flex = '1'
+          canvas.style.minWidth = '0'
+
+          // Make sure panel has fixed width on right
+          panel.style.width = '400px'
+          panel.style.minWidth = '400px'
+          panel.style.maxWidth = '400px'
+          panel.style.flexShrink = '0'
+
+          // Remove any white blocks / branding
+          gjsEditor.querySelectorAll('.gjs-off-prv, .gjs-no-ph, [class*="gjs-logo"], .gjs-brand, .gjs-logo, .gjs-logo-content').forEach(el => {
+            (el as HTMLElement).style.display = 'none'
+          })
+          gjsEditor.querySelectorAll('[title*="GrapesJS"], [title*="grapesjs"], [aria-label*="GrapesJS"], [aria-label*="grapesjs"]').forEach(el => {
             (el as HTMLElement).style.display = 'none'
           })
 
-          // Remove branding text
-          container.querySelectorAll('[title*="GrapesJS"], [title*="grapesjs"], [aria-label*="GrapesJS"]').forEach(el => {
-            (el as HTMLElement).style.display = 'none'
+          // Force block containers into 2-column grid
+          gjsEditor.querySelectorAll('.gjs-block-container').forEach((container) => {
+            (container as HTMLElement).style.display = 'grid'
+            ;(container as HTMLElement).style.gridTemplateColumns = '1fr 1fr'
+            ;(container as HTMLElement).style.gap = '10px'
+            ;(container as HTMLElement).style.padding = '4px 6px'
           })
         }
 
-        // Try multiple times with increasing delays
-        setTimeout(movePanelToRight, 200)
-        setTimeout(movePanelToRight, 500)
+        // Run multiple times with delays to ensure DOM is fully built
+        // GrapesJS loads plugins async so we need to keep trying
+        setTimeout(movePanelToRight, 100)
+        setTimeout(movePanelToRight, 300)
+        setTimeout(movePanelToRight, 600)
         setTimeout(movePanelToRight, 1000)
         setTimeout(movePanelToRight, 2000)
+        setTimeout(movePanelToRight, 3000)
+
+        // Also run on load event as some plugins load late
+        const onLoad = () => {
+          setTimeout(movePanelToRight, 100)
+          setTimeout(movePanelToRight, 500)
+        }
+        editor.on('load', onLoad)
 
         if (isMounted) setIsLoading(false)
       } catch (error) {
@@ -406,9 +599,9 @@ export default function GrapesJSEditorComponent({
       const result = await response.json()
       if (!response.ok) throw new Error(result.error)
       if (onSave) onSave({ html_content: html, css_content: css, components_json: components, style_json: styles })
-      toast.success('Page sauvegardée !')
+      toast.success('Page sauvegardée avec succès !')
     } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Erreur')
+      toast.error(error instanceof Error ? error.message : 'Erreur de sauvegarde')
     } finally {
       setIsSaving(false)
     }
@@ -420,37 +613,53 @@ export default function GrapesJSEditorComponent({
     const css = editorInstance.current.getCss()
     const w = window.open('', '_blank')
     if (w) {
-      w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>${css}</style><style>body{margin:0;padding:20px;background:#06101f;}</style></head><body>${html}</body></html>`)
+      w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>${css}</style><style>*{margin:0;padding:0;box-sizing:border-box;}body{background:#06101f;}</style></head><body>${html}</body></html>`)
       w.document.close()
     }
   }, [])
 
   return (
     <div className="fixed inset-0 z-[100] bg-[#06101f] flex flex-col">
-      {/* Top bar */}
-      <div className="flex items-center justify-between px-6 h-14 border-b border-purple-500/25 bg-gradient-to-r from-[#0c1a2e] to-[#111b30] shrink-0">
-        <span className="text-zinc-200 font-semibold text-base tracking-wide">Éditeur de Page de Vente</span>
+      {/* ===== TOP BAR — Premium ===== */}
+      <div className="flex items-center justify-between px-6 h-[60px] border-b border-purple-500/20 bg-[#0d1b33] shrink-0">
+        <div className="flex items-center gap-4">
+          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#7B5CFF] to-[#5a3dd6] flex items-center justify-center shadow-lg shadow-purple-500/20">
+            <span className="text-white font-bold text-sm">N</span>
+          </div>
+          <span className="text-zinc-100 font-semibold text-[15px] tracking-wide">Éditeur de Page</span>
+        </div>
         <div className="flex items-center gap-3">
-          <button onClick={handlePreview} className="flex items-center gap-2 px-5 h-11 rounded-xl text-sm text-zinc-300 hover:text-white hover:bg-white/5 border border-purple-500/20 transition-colors">
+          <button
+            onClick={handlePreview}
+            className="flex items-center gap-2 px-5 h-10 rounded-xl text-[14px] text-zinc-300 hover:text-white hover:bg-white/5 border border-white/10 transition-all"
+          >
             <Eye className="w-4 h-4" /> Aperçu
           </button>
-          <button onClick={handleSave} disabled={isSaving} className="flex items-center gap-2 px-6 h-11 rounded-xl bg-gradient-to-r from-[#7B5CFF] to-[#6a4ce8] hover:from-[#6a4ce8] hover:to-[#5a3dd6] text-white text-sm font-semibold shadow-lg shadow-purple-500/20 transition-all disabled:opacity-50">
+          <button
+            onClick={handleSave}
+            disabled={isSaving}
+            className="flex items-center gap-2 px-6 h-10 rounded-xl bg-gradient-to-r from-[#7B5CFF] to-[#6a4ce8] hover:from-[#8b6cff] hover:to-[#7a5cf8] text-white text-[14px] font-semibold shadow-lg shadow-purple-500/25 transition-all disabled:opacity-50"
+          >
             {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
             Sauvegarder
           </button>
           {onClose && (
-            <button onClick={onClose} className="flex items-center justify-center w-11 h-11 rounded-xl text-zinc-500 hover:text-white hover:bg-white/5 transition-colors">
+            <button
+              onClick={onClose}
+              className="flex items-center justify-center w-10 h-10 rounded-xl text-zinc-500 hover:text-white hover:bg-white/5 transition-colors"
+            >
               <X className="w-5 h-5" />
             </button>
           )}
         </div>
       </div>
-      {/* Editor canvas */}
-      <div className="flex-1 relative">
+
+      {/* ===== EDITOR AREA ===== */}
+      <div className="flex-1 relative overflow-hidden">
         {isLoading && (
           <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#06101f]">
             <div className="text-center">
-              <Loader2 className="w-6 h-6 text-purple-500 animate-spin mx-auto mb-2" />
+              <div className="w-10 h-10 rounded-full border-2 border-purple-500/30 border-t-purple-500 animate-spin mx-auto mb-3" />
               <p className="text-zinc-400 text-sm">Chargement de l&apos;éditeur...</p>
             </div>
           </div>
