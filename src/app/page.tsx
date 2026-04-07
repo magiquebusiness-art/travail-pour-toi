@@ -129,46 +129,81 @@ function AnimatedCounter({ target, suffix = '' }: { target: number; suffix?: str
 /* ===== CATEGORY DATA ===== */
 const categories = [
   {
+    icon: Sparkles,
+    title: 'Auteur',
+    emoji: '✍️',
+    desc: 'Tu écris, transmets ou canalises du contenu… et tu veux en vivre.',
+    color: 'from-amber-500 to-orange-600',
+  },
+  {
+    icon: Sparkles,
+    title: 'Spiritualité',
+    emoji: '🔮',
+    desc: 'Tu guides, ressens, interprètes… et tu veux structurer ton don.',
+    color: 'from-purple-500 to-indigo-600',
+  },
+  {
+    icon: Sparkles,
+    title: 'Soin Holistique',
+    emoji: '🌿',
+    desc: 'Tu accompagnes le corps et l\'énergie… et tu veux élargir ton impact.',
+    color: 'from-emerald-500 to-green-600',
+  },
+  {
+    icon: Sparkles,
+    title: 'Nutrition',
+    emoji: '🥗',
+    desc: 'Tu aides à mieux manger, mieux vivre… et tu veux monétiser ton expertise.',
+    color: 'from-lime-500 to-emerald-600',
+  },
+  {
     icon: Palette,
     title: 'Design & Création',
-    count: 156,
-    color: 'from-violet-500 to-purple-600',
     emoji: '🎨',
+    desc: 'Tu crées du visuel, du beau, du branding… et tu veux vendre ton talent.',
+    color: 'from-pink-500 to-rose-600',
   },
   {
     icon: Monitor,
     title: 'Marketing Digital',
-    count: 243,
-    color: 'from-indigo-500 to-blue-600',
-    emoji: '💻',
+    emoji: '📈',
+    desc: 'Tu sais attirer, convertir, vendre… et tu veux scaler ton système.',
+    color: 'from-blue-500 to-cyan-600',
   },
   {
-    icon: TrendingUp,
+    icon: GraduationCap,
     title: 'Formation & Coaching',
-    count: 189,
-    color: 'from-purple-500 to-pink-600',
-    emoji: '📈',
+    emoji: '🎓',
+    desc: 'Tu transmets un savoir… et tu veux créer des revenus avec.',
+    color: 'from-violet-500 to-purple-600',
   },
   {
     icon: Store,
     title: 'E-commerce',
-    count: 127,
-    color: 'from-blue-500 to-cyan-600',
-    emoji: '🏪',
+    emoji: '🛒',
+    desc: 'Tu vends des produits… et tu veux automatiser et amplifier tes ventes.',
+    color: 'from-cyan-500 to-blue-600',
   },
   {
     icon: Briefcase,
     title: 'Services B2B',
-    count: 98,
+    emoji: '🤝',
+    desc: 'Tu aides des entreprises à performer… et tu veux plus de clients.',
     color: 'from-fuchsia-500 to-violet-600',
-    emoji: '💼',
   },
   {
-    icon: Sparkles,
+    icon: Heart,
     title: 'Santé & Bien-être',
-    count: 187,
-    color: 'from-emerald-500 to-teal-600',
-    emoji: '🌟',
+    emoji: '💆‍♀️',
+    desc: 'Tu accompagnes le mieux-être… et tu veux toucher plus de personnes.',
+    color: 'from-teal-500 to-emerald-600',
+  },
+  {
+    icon: Store,
+    title: 'Commerce Local',
+    emoji: '🏪',
+    desc: 'Tu as une boutique, un restaurant ou un lieu physique… et tu veux attirer plus de clients.',
+    color: 'from-orange-500 to-amber-600',
   },
 ]
 
@@ -229,6 +264,7 @@ const ambassadorBenefits = [
 const navLinks = [
   { label: 'Boutique', href: '#boutique' },
   { label: 'Commissions', href: '#commissions' },
+  { label: 'Formation', href: '#formation' },
   { label: 'Devenir Collaborateur', href: '#collaborateur' },
   { label: 'Ambassadeur', href: '#ambassadeur' },
 ]
@@ -435,7 +471,7 @@ export default function Home() {
               Explorez nos <span className="gradient-text-violet">Catégories</span>
             </h2>
             <p className="text-[#a5b4fc] max-w-xl mx-auto text-lg">
-              Des produits et services sélectionnés pour booster votre business.
+              Des univers pensés pour transformer ton savoir en revenu.
             </p>
             <div className="section-divider mt-6" />
           </div>
@@ -445,25 +481,26 @@ export default function Home() {
             {categories.map((cat) => (
               <div key={cat.title} className="gradient-border group cursor-pointer">
                 <div className="relative p-6 sm:p-7">
-                  {/* Icon + Title */}
-                  <div className="flex items-start gap-4">
-                    <div
-                      className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${cat.color} flex items-center justify-center shadow-lg flex-shrink-0 group-hover:scale-110 transition-transform duration-300`}
-                    >
-                      <span className="text-2xl">{cat.emoji}</span>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-lg font-semibold text-white mb-1 group-hover:text-[#F4C842] transition-colors">
-                        {cat.title}
-                      </h3>
-                      <p className="text-[#a5b4fc] text-sm">
-                        {cat.count} produits
-                      </p>
-                    </div>
-                    <ChevronRight className="h-5 w-5 text-[#6b7280] group-hover:text-[#7B5CFF] group-hover:translate-x-1 transition-all flex-shrink-0 mt-1" />
+                  {/* Emoji Icon */}
+                  <div
+                    className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${cat.color} flex items-center justify-center shadow-lg flex-shrink-0 mb-4 group-hover:scale-110 transition-transform duration-300`}
+                  >
+                    <span className="text-2xl">{cat.emoji}</span>
                   </div>
-
-                  {/* Bottom shimmer on hover */}
+                  {/* Title */}
+                  <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-[#F4C842] transition-colors">
+                    {cat.title}
+                  </h3>
+                  {/* Description */}
+                  <p className="text-[#a5b4fc] text-sm leading-relaxed">
+                    {cat.desc}
+                  </p>
+                  {/* Arrow */}
+                  <div className="mt-4 flex items-center gap-1 text-xs text-[#6b7280] group-hover:text-[#7B5CFF] transition-colors">
+                    <span>Explorer</span>
+                    <ChevronRight className="h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                  </div>
+                  {/* Bottom shimmer */}
                   <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#7B5CFF]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
               </div>
@@ -548,6 +585,73 @@ export default function Home() {
                 </div>
               )
             })}
+          </div>
+        </div>
+      </Section>
+
+      {/* ============================================ */}
+      {/* SECTION F-2: CRÉER TA FORMATION               */}
+      {/* ============================================ */}
+      <Section id="formation" className="py-20 sm:py-28">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="glass-card-gold p-8 sm:p-12 lg:p-16 reveal relative overflow-hidden">
+            {/* Decorative orb */}
+            <div className="absolute -top-20 -left-20 w-60 h-60 rounded-full bg-[#F4C842]/5 blur-[80px] pointer-events-none" />
+
+            <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center relative z-10">
+              {/* Left - Visual */}
+              <div className="order-2 lg:order-1 flex items-center justify-center">
+                <div className="relative">
+                  <div className="absolute inset-0 -m-6 rounded-3xl border border-[#F4C842]/10 animate-[spin_30s_linear_infinite]" />
+                  <div className="absolute inset-0 -m-12 rounded-3xl border border-[#7B5CFF]/5" />
+                  <div className="glass-card p-8 text-center max-w-xs mx-auto">
+                    <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-[#7B5CFF] to-[#3b1f8e] flex items-center justify-center mb-5 shadow-lg shadow-[#7B5CFF]/20">
+                      <GraduationCap className="h-10 w-10 text-white" />
+                    </div>
+                    <h3 className="font-[var(--font-heading)] text-2xl font-bold text-white mb-2">
+                      Crée ta Formation
+                    </h3>
+                    <p className="text-[#a5b4fc] text-sm mb-4">
+                      Transforme ton savoir en revenu automatisé.
+                    </p>
+                    <div className="space-y-2 text-left">
+                      {['Modules & leçons', 'Paiement intégré', 'Suivi des élèves', 'Certificat auto'].map((item) => (
+                        <div key={item} className="flex items-center gap-2 text-sm text-[#a5b4fc]">
+                          <Check className="h-4 w-4 text-[#F4C842] flex-shrink-0" />
+                          <span>{item}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right - Text */}
+              <div className="order-1 lg:order-2">
+                <Badge className="mb-4 bg-[#F4C842]/10 text-[#F4C842] border-[#F4C842]/20 text-sm px-4 py-1.5">
+                  <GraduationCap className="h-3.5 w-3.5 mr-1.5" />
+                  Prochainement
+                </Badge>
+                <h2 className="font-[var(--font-heading)] text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-5 leading-tight">
+                  Crée ta <span className="gradient-text-gold">Formation</span>{' '}
+                  en quelques clics
+                </h2>
+                <p className="text-[#a5b4fc] text-lg leading-relaxed mb-6">
+                  Tu as un savoir, une expertise, une méthode ? Transforme-la en formation
+                  et vends-la directement sur NyXia MarketPlace. Aucune compétence technique requise —
+                  notre plateforme s&apos;occupe de tout, de l&apos;hébergement au paiement.
+                </p>
+                <p className="text-[#a5b4fc] text-base leading-relaxed mb-8">
+                  Que tu sois coach, thérapeute, consultant ou créateur de contenu, ton savoir
+                  a de la valeur. NyXia te donne les outils pour le transformer en expérience
+                  premium que tes clients vont adorer — et pour laquelle ils seront heureux de payer.
+                </p>
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
+                  <span className="text-sm">🚀</span>
+                  <span className="text-sm text-[#a5b4fc]">Bientôt disponible — Inscris-toi pour être parmi les premiers</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </Section>
@@ -689,6 +793,47 @@ export default function Home() {
                   💜 Les ambassadeurs sont chouchoutés car ils font le gros du travail
                 </p>
               </div>
+            </div>
+          </div>
+        </div>
+      </Section>
+
+      {/* ============================================ */}
+      {/* SECTION I: BANNIÈRE AMBASSADEUR              */}
+      {/* ============================================ */}
+      <Section className="py-16 sm:py-20">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+          <div className="relative rounded-3xl overflow-hidden reveal">
+            {/* Background gradient */}
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-600/30 via-[#7B5CFF]/20 to-pink-500/30 backdrop-blur-xl" />
+            <div className="absolute inset-0 border border-purple-400/20 rounded-3xl" />
+            
+            {/* Decorative orbs */}
+            <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-[#F4C842]/10 blur-[60px] pointer-events-none" />
+            <div className="absolute -bottom-10 -left-10 w-40 h-40 rounded-full bg-[#7B5CFF]/10 blur-[60px] pointer-events-none" />
+
+            <div className="relative z-10 p-8 sm:p-12 lg:p-16 text-center">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-400/30">
+                <span className="text-sm">💎</span>
+                <span className="text-sm font-semibold text-[#F4C842]">Offre Exclusive</span>
+              </div>
+
+              <h2 className="font-[var(--font-heading)] text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-5 leading-tight">
+                Deviens un <span className="gradient-text-violet">Ambassadeur</span>
+              </h2>
+              <p className="text-[#a5b4fc] text-lg max-w-xl mx-auto mb-8 leading-relaxed">
+                Rembourse rapidement ton investissement en partageant NyXia MarketPlace autour de toi.
+                Gagne des commissions sur chaque vente !
+              </p>
+
+              <a href="/ambassadeur">
+                <Button className="btn-primary text-base px-10 py-4 border-0">
+                  <Crown className="mr-2 h-5 w-5" />
+                  Devenir Ambassadeur
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </a>
             </div>
           </div>
         </div>
