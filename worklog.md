@@ -193,3 +193,27 @@ Stage Summary:
 - Ambassadeur Dashboard: ✅ Full 4-tab dashboard
 - NyXia Chat: ✅ Global floating widget on all pages
 - Deployment: ✅ All routes return 200, deployed successfully
+
+---
+Task ID: 5
+Agent: Main Agent
+Task: Upload photo produit + Séparation 2 chats NyXia (pastille helpdesk vs closer privé)
+
+Work Log:
+- Added product image upload to admin product creation form (drag & drop, preview, base64, validation 5MB)
+- Added product image display in product list (thumbnail 80x80)
+- Read Diane's nyxia-closer.js config file (uploaded to /home/z/my-project/upload/nyxia-closer.js)
+- Created /api/nyxia-closer API route (z-ai/glm-5v-turbo via OpenRouter, full Psychologie du Clic prompt with lexique)
+- Modified NyXiaWidget to use /api/nyxia-closer for mode="chat" and /api/nyxia-chat for mode="pastille"
+- Created NyXiaPastilleWrapper component to hide floating pastille on private pages (dashboard, admin, ambassadeur, super-admin)
+- Updated layout.tsx to use NyXiaPastilleWrapper instead of NyXiaChatWidget directly
+- Added NyXiaWidget mode="chat" to admin page (dashboard tab)
+- Added NyXiaWidget mode="chat" to ambassadeur dashboard tab
+- Build succeeded — 42 edge routes including /api/nyxia-closer
+
+Stage Summary:
+- 2 chats séparés :
+  - Pastille publique (llama-3.1-8b-instant via Groq) → helpdesk inscription/promotion
+  - Chat privé intégré (z-ai/glm-5v-turbo via OpenRouter) → closer avec livre + lexique Psychologie du Clic
+- Pastille masquée automatiquement sur /dashboard, /admin, /super-admin, /ambassadeur
+- Upload photo produit : drag & drop + preview + base64 dans /api/marketplace/products

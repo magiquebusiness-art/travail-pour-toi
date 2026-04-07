@@ -80,10 +80,14 @@ export function NyXiaWidget({ mode = 'pastille', userName = '' }: NyXiaWidgetPro
         content: m.content
       }))
 
-      const response = await fetch('/api/nyxia-chat', {
+      // Mode chat (zones privées) → closer z-ai/glm-5v-turbo
+      // Mode pastille (public) → helpdesk llama-3.1-8b-instant
+      const chatEndpoint = mode === 'chat' ? '/api/nyxia-closer' : '/api/nyxia-chat'
+
+      const response = await fetch(chatEndpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: userMessage.content, history })
+        body: JSON.stringify({ message: userMessage.content, history, userName })
       })
 
       if (response.ok) {

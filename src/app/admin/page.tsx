@@ -49,6 +49,7 @@ import {
 } from 'lucide-react'
 import { toast } from 'sonner'
 import { useAuth } from '@/hooks/useAuth'
+import { NyXiaWidget } from '@/components/nyxia-widget'
 
 type TabType = 'dashboard' | 'affiliates' | 'products' | 'payouts' | 'settings'
 
@@ -641,6 +642,9 @@ export default function AdminDashboardPage() {
           {/* DASHBOARD TAB */}
           {activeTab === 'dashboard' && (
             <>
+              {/* NyXia Chat intégré — closer avec Psychologie du Clic */}
+              <NyXiaWidget mode="chat" userName={data.profile?.full_name?.split(' ')[0] || ''} />
+
               <div className="mb-6">
                 <h1 className="text-2xl font-bold text-white mb-1">
                   Bienvenue, {data.profile?.full_name?.split(' ')[0] || 'Admin'} 👋

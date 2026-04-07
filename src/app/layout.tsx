@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Outfit } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
-import NyXiaChatWidget from '@/components/nyxia-chat';
+import NyXiaPastilleWrapper from '@/components/NyXiaPastilleWrapper';
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-heading",
@@ -65,7 +65,8 @@ export default function RootLayout({
       >
         {children}
         <Toaster />
-        <NyXiaChatWidget />
+        {/* Floating pastille — hidden on pages with integrated chat */}
+        <NyXiaPastilleWrapper />
       </body>
     </html>
   );

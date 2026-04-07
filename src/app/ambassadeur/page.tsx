@@ -497,6 +497,9 @@ function AmbassadeurDashboard({ user }: { user: UserProfile }) {
           {/* ─── TABLEAU DE BORD ─── */}
           {activeTab === 'dashboard' && (
             <>
+              {/* NyXia Chat intégré — closer avec Psychologie du Clic */}
+              <NyXiaWidget mode="chat" userName={user.full_name?.split(' ')[0] || ''} />
+
               <div className="mb-6">
                 <h1 className="text-2xl font-bold text-white mb-1">
                   Bienvenue, {user.full_name?.split(' ')[0] || 'Ambassadeur'} 👋
