@@ -43,6 +43,9 @@ import {
   Trash2,
   Eye,
   EyeOff,
+  ImageIcon,
+  Upload,
+  X,
 } from 'lucide-react'
 import { toast } from 'sonner'
 import { useAuth } from '@/hooks/useAuth'
@@ -63,6 +66,7 @@ interface MarketplaceProduct {
   price: number
   category_id: number | null
   category_name: string | null
+  image_url: string | null
   affiliate_link: string | null
   promo_code: string | null
   commission_n1: number
@@ -185,6 +189,9 @@ export default function AdminDashboardPage() {
   })
   const [isCreatingProduct, setIsCreatingProduct] = useState(false)
   const [copiedProductLinks, setCopiedProductLinks] = useState<Record<string, boolean>>({})
+  const [productImage, setProductImage] = useState<string | null>(null)
+  const [isUploadingImage, setIsUploadingImage] = useState(false)
+  const [imageDragOver, setImageDragOver] = useState(false)
 
   const fetchData = useCallback(async () => {
     try {
@@ -370,6 +377,53 @@ export default function AdminDashboardPage() {
     })
   }
 
+  const handleImageUpload = useCallback((file: File) => {
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      toast.error('Veuillez sélectionner une image (JPG, PNG, WebP, GIF)')
+      return
+    }
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error('L\'image ne doit pas dépasser 5 Mo')
+      return
+    }
+    setIsUploadingImage(true)
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      const result = e.target?.result as string
+      setProductImage(result)
+      setIsUploadingImage(false)
+      toast.success('Image chargée avec succès !')
+    }
+    reader.onerror = () => {
+      toast.error('Erreur lors du chargement de l\'image')
+      setIsUploadingImage(false)
+    }
+    reader.readAsDataURL(file)
+  }, [])
+
+  const handleRemoveImage = useCallback(() => {
+    setProductImage(null)
+  }, [])
+
+  const handleImageDrop = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    setImageDragOver(false)
+    const file = e.dataTransfer.files[0]
+    if (file) handleImageUpload(file)
+  }, [handleImageUpload])
+
+  const handleImageDragOver = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    setImageDragOver(true)
+  }, [])
+
+  const handleImageDragLeave = useCallback((e: React.DragEvent) => {
+    e.preventDefault()
+    setImageDragOver(false)
+  }, [])
+
   const handleCreateProduct = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!productForm.title || !productForm.description_short || !productForm.category_id || !productForm.price) {
@@ -386,6 +440,7 @@ export default function AdminDashboardPage() {
           description_short: productForm.description_short,
           category_id: Number(productForm.category_id),
           price: Number(productForm.price),
+          image_url: productImage || null,
           affiliate_link: productForm.affiliate_link || null,
           promo_code: productForm.promo_code || null,
           commission_n1: Number(productForm.commission_n1),
@@ -409,6 +464,7 @@ export default function AdminDashboardPage() {
         commission_n2: '10',
         commission_n3: '5',
       })
+      setProductImage(null)
       fetchProducts()
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Erreur lors de la création')
@@ -877,6 +933,78 @@ export default function AdminDashboardPage() {
                         </div>
                       </div>
 
+                      {/* Photo du produit */}
+                      <div className="space-y-2">
+                        <Label className="text-zinc-300 flex items-center gap-2">
+                          <ImageIcon className="w-4 h-4 text-cyan-400" />
+                          Photo du produit
+                        </Label>
+                        {productImage ? (
+                          <div className="relative group rounded-xl overflow-hidden border-2 border-cyan-500/30 bg-black/20">
+                            <img
+                              src={productImage}
+                              alt="Aperçu du produit"
+                              className="w-full h-48 object-cover"
+                            />
+                            <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                              <label className="cursor-pointer px-4 py-2 bg-white/20 backdrop-blur-sm rounded-lg text-white text-sm hover:bg-white/30 transition-colors">
+                                <Upload className="w-4 h-4 inline mr-1" />
+                                Changer
+                                <input
+                                  type="file"
+                                  accept="image/jpeg,image/png,image/webp,image/gif"
+                                  className="hidden"
+                                  onChange={(e) => {
+                                    const file = e.target.files?.[0]
+                                    if (file) handleImageUpload(file)
+                                  }}
+                                />
+                              </label>
+                              <button
+                                type="button"
+                                onClick={handleRemoveImage}
+                                className="px-4 py-2 bg-red-500/30 backdrop-blur-sm rounded-lg text-red-300 text-sm hover:bg-red-500/50 transition-colors"
+                              >
+                                <X className="w-4 h-4 inline mr-1" />
+                                Supprimer
+                              </button>
+                            </div>
+                          </div>
+                        ) : (
+                          <div
+                            onDrop={handleImageDrop}
+                            onDragOver={handleImageDragOver}
+                            onDragLeave={handleImageDragLeave}
+                            className={`relative rounded-xl border-2 border-dashed transition-all cursor-pointer ${
+                              imageDragOver
+                                ? 'border-cyan-400 bg-cyan-500/10'
+                                : 'border-purple-500/30 hover:border-purple-500/50 hover:bg-white/[0.02]'
+                            }`}
+                          >
+                            <label className="flex flex-col items-center justify-center py-8 px-4 cursor-pointer">
+                              {isUploadingImage ? (
+                                <Loader2 className="w-8 h-8 text-cyan-400 animate-spin mb-3" />
+                              ) : (
+                                <Upload className={`w-8 h-8 mb-3 ${imageDragOver ? 'text-cyan-400' : 'text-purple-400'}`} />
+                              )}
+                              <p className="text-zinc-300 text-sm font-medium">
+                                {imageDragOver ? 'Déposez votre image ici' : 'Cliquez ou glissez-déposez une image'}
+                              </p>
+                              <p className="text-zinc-500 text-xs mt-1">JPG, PNG, WebP ou GIF — max 5 Mo</p>
+                              <input
+                                type="file"
+                                accept="image/jpeg,image/png,image/webp,image/gif"
+                                className="hidden"
+                                onChange={(e) => {
+                                  const file = e.target.files?.[0]
+                                  if (file) handleImageUpload(file)
+                                }}
+                              />
+                            </label>
+                          </div>
+                        )}
+                      </div>
+
                       <div className="space-y-2">
                         <Label className="text-zinc-300">Description courte *</Label>
                         <Textarea
@@ -994,6 +1122,20 @@ export default function AdminDashboardPage() {
                       {products.map((product) => (
                         <div key={product.id} className="p-4 rounded-lg bg-white/5 border border-purple-500/10 hover:border-purple-500/30 transition-colors">
                           <div className="flex flex-col md:flex-row md:items-center gap-4">
+                            {/* Product Image */}
+                            <div className="shrink-0">
+                              {product.image_url ? (
+                                <img
+                                  src={product.image_url}
+                                  alt={product.title}
+                                  className="w-20 h-20 rounded-lg object-cover border border-purple-500/20"
+                                />
+                              ) : (
+                                <div className="w-20 h-20 rounded-lg bg-gradient-to-br from-purple-500/20 to-cyan-500/20 border border-purple-500/10 flex items-center justify-center">
+                                  <Package className="w-8 h-8 text-purple-400/40" />
+                                </div>
+                              )}
+                            </div>
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center gap-2 mb-1">
                                 <h4 className="text-white font-medium truncate">{product.title}</h4>
