@@ -262,6 +262,7 @@ const ambassadorBenefits = [
 
 /* ===== NAV LINKS ===== */
 const navLinks = [
+  { label: 'Studio', href: '/studio' },
   { label: 'Boutique', href: '#boutique' },
   { label: 'Commissions', href: '#commissions' },
   { label: 'Formations', href: '/formations' },
