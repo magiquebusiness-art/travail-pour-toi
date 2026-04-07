@@ -17,168 +17,211 @@ interface GrapesJSEditorProps {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type GrapesJSEditor = any
 
-/* Balanced UI theme — comfortable sizes, NyXia colors */
+/* ===== NYXIA GRAPESJS THEME ===== */
+/* Panel on RIGHT, blocks ENORMOUS, readable text */
 const NYXIA_UI_CSS = `
-/* ========== NYXIA EDITOR THEME ========== */
+/* ========== MOVE PANEL FROM LEFT TO RIGHT ========== */
+.gjs-editor {
+  display: flex !important;
+  flex-direction: row !important;
+}
+/* The main editor layout row — reverse so panel goes right */
+.gjs-editor > .gjs-pn {
+  order: 2 !important;
+}
 
-/* Global */
-.gjs-editor,
+/* ========== GLOBAL ========== */
 .gjs-one-bg,
 .gjs-two-bg,
 .gjs-three-bg,
 .gjs-four-bg {
   font-family: 'Outfit', ui-sans-serif, system-ui, sans-serif !important;
-  font-size: 14px !important;
+  font-size: 15px !important;
 }
 
 /* Kill floating toolbar */
 .gjs-toolbar { display: none !important; }
 
-/* ---- LEFT PANEL ---- */
-.gjs-pn,
+/* ========== PANEL (NOW ON RIGHT) — WIDE ========== */
+.gjs-pn {
+  width: 320px !important;
+  min-width: 320px !important;
+  max-width: 320px !important;
+  padding: 0 !important;
+}
 .gjs-pn-left,
 .gjs-pn-panel {
-  width: 260px !important;
-  min-width: 260px !important;
-  max-width: 260px !important;
+  width: 320px !important;
+  min-width: 320px !important;
+  max-width: 320px !important;
   padding: 0 !important;
 }
 .gjs-pn-btn {
-  width: 32px !important;
-  height: 32px !important;
-  font-size: 13px !important;
+  width: 36px !important;
+  height: 36px !important;
+  font-size: 14px !important;
   margin: 0 !important;
   padding: 0 !important;
-  line-height: 32px !important;
+  line-height: 36px !important;
   border-radius: 8px !important;
 }
-.gjs-pn-btn svg { width: 16px !important; height: 16px !important; }
-.gjs-pn-label { font-size: 12px !important; padding: 0 !important; }
-.gjs-pn-title { font-size: 13px !important; padding: 8px 10px !important; margin: 0 !important; }
-.gjs-pn-commands, .gjs-pn-buttons { padding: 6px 7px !important; gap: 4px !important; }
+.gjs-pn-btn svg { width: 18px !important; height: 18px !important; }
+.gjs-pn-label { font-size: 13px !important; padding: 0 !important; }
+.gjs-pn-title { font-size: 14px !important; padding: 10px 12px !important; margin: 0 !important; }
+.gjs-pn-commands, .gjs-pn-buttons { padding: 6px 8px !important; gap: 4px !important; }
 
-/* ---- BLOCKS ---- */
-.gjs-block { padding: 10px !important; margin: 3px !important; border-radius: 10px !important; }
-.gjs-block__media { font-size: 26px !important; margin-bottom: 4px !important; }
-.gjs-block__label { font-size: 13px !important; }
-.gjs-blocks-header { padding: 8px 10px !important; font-size: 13px !important; }
-.gjs-category-title { font-size: 13px !important; padding: 8px 10px !important; }
-.gjs-category { font-size: 13px !important; }
+/* ========== BLOCKS — HUGE AND CLEAR ========== */
+.gjs-block {
+  padding: 16px 12px !important;
+  margin: 4px 6px !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(123, 92, 255, 0.12) !important;
+  background: rgba(123, 92, 255, 0.06) !important;
+  transition: all 0.15s ease !important;
+}
+.gjs-block:hover {
+  background: rgba(123, 92, 255, 0.15) !important;
+  border-color: rgba(123, 92, 255, 0.3) !important;
+  transform: scale(1.02) !important;
+}
+.gjs-block__media {
+  font-size: 38px !important;
+  margin-bottom: 6px !important;
+  width: 100% !important;
+  text-align: center !important;
+}
+.gjs-block__label {
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  text-align: center !important;
+  width: 100% !important;
+}
+.gjs-blocks-header {
+  padding: 10px 12px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+}
+.gjs-category-title {
+  font-size: 14px !important;
+  padding: 10px 12px !important;
+  font-weight: 600 !important;
+}
+.gjs-category { font-size: 14px !important; }
 .gjs-block-container { width: 100% !important; }
 .gjs-block-box { width: 100% !important; }
 .gjs-block .gjs-block__media-inner { width: 100% !important; }
-.gjs-block svg { width: 32px !important; height: 32px !important; }
-.gjs-block__media-svg { width: 32px !important; height: 32px !important; }
-.gjs-block-icon { width: 32px !important; height: 32px !important; font-size: 22px !important; }
+.gjs-block svg { width: 44px !important; height: 44px !important; }
+.gjs-block__media-svg { width: 44px !important; height: 44px !important; }
+.gjs-block-icon { width: 44px !important; height: 44px !important; font-size: 30px !important; }
 
-/* ---- LAYERS ---- */
-.gjs-layers { font-size: 13px !important; }
-.gjs-layer { padding: 6px 8px !important; min-height: 34px !important; font-size: 13px !important; }
-.gjs-layer-name { font-size: 13px !important; }
-.gjs-layer-cv { font-size: 13px !important; }
-.gjs-layer-count { font-size: 11px !important; }
-.gjs-layers-header { padding: 8px 10px !important; font-size: 13px !important; }
-.gjs-layer-item { padding: 0 4px !important; }
-.gjs-layer-vis { width: 22px !important; height: 22px !important; font-size: 11px !important; }
-.gjs-layer-move { width: 16px !important; height: 16px !important; }
-.gjs-layer-caret { font-size: 11px !important; }
+/* ========== LAYERS ========== */
+.gjs-layers { font-size: 14px !important; }
+.gjs-layer { padding: 8px 10px !important; min-height: 38px !important; font-size: 14px !important; }
+.gjs-layer-name { font-size: 14px !important; }
+.gjs-layer-cv { font-size: 14px !important; }
+.gjs-layer-count { font-size: 12px !important; }
+.gjs-layers-header { padding: 10px 12px !important; font-size: 14px !important; }
+.gjs-layer-item { padding: 0 5px !important; }
+.gjs-layer-vis { width: 24px !important; height: 24px !important; font-size: 12px !important; }
+.gjs-layer-move { width: 18px !important; height: 18px !important; }
+.gjs-layer-caret { font-size: 12px !important; }
 
-/* ---- STYLE MANAGER ---- */
-.gjs-sm { font-size: 13px !important; }
-.gjs-sm-label { font-size: 12px !important; }
-.gjs-sm-title { font-size: 13px !important; padding: 8px 10px !important; }
-.gjs-sm-section-title { font-size: 13px !important; padding: 8px 10px !important; }
-.gjs-sm-sector-title { font-size: 13px !important; padding: 8px 10px !important; }
-.gjs-sm-property { font-size: 13px !important; padding: 6px 10px !important; }
-.gjs-sm-input { height: 32px !important; font-size: 13px !important; padding: 0 8px !important; }
-.gjs-sm-range { height: 32px !important; }
-.gjs-sm-unit { font-size: 12px !important; padding: 3px 5px !important; }
-.gjs-sm-composite { font-size: 13px !important; }
-.gjs-sm-undo, .gjs-sm-redo { width: 26px !important; height: 26px !important; font-size: 12px !important; }
-.gjs-sm-switch { font-size: 13px !important; }
-.gjs-sm-integer { font-size: 13px !important; }
-.gjs-sm-select { font-size: 13px !important; }
+/* ========== STYLE MANAGER ========== */
+.gjs-sm { font-size: 14px !important; }
+.gjs-sm-label { font-size: 13px !important; }
+.gjs-sm-title { font-size: 14px !important; padding: 10px 12px !important; }
+.gjs-sm-section-title { font-size: 14px !important; padding: 10px 12px !important; }
+.gjs-sm-sector-title { font-size: 14px !important; padding: 10px 12px !important; }
+.gjs-sm-property { font-size: 14px !important; padding: 8px 12px !important; }
+.gjs-sm-input { height: 36px !important; font-size: 14px !important; padding: 0 10px !important; }
+.gjs-sm-range { height: 36px !important; }
+.gjs-sm-unit { font-size: 13px !important; padding: 4px 6px !important; }
+.gjs-sm-composite { font-size: 14px !important; }
+.gjs-sm-undo, .gjs-sm-redo { width: 30px !important; height: 30px !important; font-size: 13px !important; }
+.gjs-sm-switch { font-size: 14px !important; }
+.gjs-sm-integer { font-size: 14px !important; }
+.gjs-sm-select { font-size: 14px !important; }
 
-/* ---- TRAIT MANAGER ---- */
-.gjs-trt-traits { font-size: 13px !important; }
-.gjs-trt-trait { padding: 6px 10px !important; }
-.gjs-trt-label { font-size: 12px !important; }
-.gjs-tr { height: 32px !important; font-size: 13px !important; }
-.gjs-tr-select { font-size: 13px !important; height: 32px !important; }
-.gjs-tr-input { font-size: 13px !important; height: 32px !important; }
+/* ========== TRAIT MANAGER ========== */
+.gjs-trt-traits { font-size: 14px !important; }
+.gjs-trt-trait { padding: 8px 12px !important; }
+.gjs-trt-label { font-size: 13px !important; }
+.gjs-tr { height: 36px !important; font-size: 14px !important; }
+.gjs-tr-select { font-size: 14px !important; height: 36px !important; }
+.gjs-tr-input { font-size: 14px !important; height: 36px !important; }
 
-/* ---- INPUTS ---- */
-.gjs-field { font-size: 13px !important; }
+/* ========== INPUTS ========== */
+.gjs-field { font-size: 14px !important; }
 .gjs-field input, .gjs-field select, .gjs-field textarea {
-  font-size: 13px !important; padding: 4px 8px !important; height: 32px !important;
+  font-size: 14px !important; padding: 6px 10px !important; height: 36px !important;
   border-radius: 8px !important;
 }
 
-/* ---- DEVICE MANAGER ---- */
-.gjs-devices-c { gap: 3px !important; }
-.gjs-devices-c .gjs-devices-btn { padding: 4px 10px !important; font-size: 13px !important; margin: 0 !important; }
+/* ========== DEVICE MANAGER ========== */
+.gjs-devices-c { gap: 4px !important; }
+.gjs-devices-c .gjs-devices-btn { padding: 5px 12px !important; font-size: 14px !important; margin: 0 !important; }
 
-/* ---- CANVAS ---- */
+/* ========== CANVAS ========== */
 .gjs-cv-canvas { background-color: #0a0f1e !important; }
 .gjs-canvas { background-color: #0a0f1e !important; }
 
-/* ---- MODALS ---- */
-.gjs-modal { font-size: 14px !important; }
-.gjs-modal-title { font-size: 16px !important; padding: 12px 16px !important; }
-.gjs-modal-content { padding: 12px 16px !important; }
+/* ========== MODALS ========== */
+.gjs-modal { font-size: 15px !important; }
+.gjs-modal-title { font-size: 17px !important; padding: 14px 18px !important; }
+.gjs-modal-content { padding: 14px 18px !important; }
 
-/* ---- CONTEXT MENU ---- */
-.gjs-context { font-size: 13px !important; }
-.gjs-context-item { padding: 7px 12px !important; font-size: 13px !important; }
+/* ========== CONTEXT MENU ========== */
+.gjs-context { font-size: 14px !important; }
+.gjs-context-item { padding: 8px 14px !important; font-size: 14px !important; }
 
-/* ---- TOAST ---- */
-.gjs-toast { font-size: 13px !important; padding: 8px 12px !important; }
+/* ========== TOAST ========== */
+.gjs-toast { font-size: 14px !important; padding: 10px 14px !important; }
 
-/* ---- BADGE ---- */
-.gjs-badge { font-size: 9px !important; padding: 0 3px !important; }
+/* ========== BADGE ========== */
+.gjs-badge { font-size: 10px !important; padding: 0 4px !important; }
 
-/* ---- COLOR PICKER ---- */
-.gjs-field-color-picker { height: 28px !important; }
+/* ========== COLOR PICKER ========== */
+.gjs-field-color-picker { height: 32px !important; }
 
-/* ---- HIGHLIGHT ---- */
+/* ========== HIGHLIGHT ========== */
 .gjs-selected { outline-width: 2px !important; }
 
-/* ---- SCROLLBARS ---- */
+/* ========== SCROLLBARS ========== */
 .gjs-pn-panel::-webkit-scrollbar,
 .gjs-sm-scroll::-webkit-scrollbar,
 .gjs-layers::-webkit-scrollbar,
 .gjs-blocks::-webkit-scrollbar,
 .gjs-cv-canvas::-webkit-scrollbar,
-.gjs-am-assets::-webkit-scrollbar { width: 6px !important; }
+.gjs-am-assets::-webkit-scrollbar { width: 8px !important; }
 .gjs-pn-panel::-webkit-scrollbar-thumb,
 .gjs-sm-scroll::-webkit-scrollbar-thumb,
 .gjs-layers::-webkit-scrollbar-thumb,
 .gjs-blocks::-webkit-scrollbar-thumb,
-.gjs-cv-canvas::-webkit-scrollbar-thumb { background: #7B5CFF44 !important; border-radius: 3px !important; }
+.gjs-cv-canvas::-webkit-scrollbar-thumb { background: #7B5CFF44 !important; border-radius: 4px !important; }
 .gjs-pn-panel::-webkit-scrollbar-track,
 .gjs-sm-scroll::-webkit-scrollbar-track,
 .gjs-layers::-webkit-scrollbar-track,
 .gjs-blocks::-webkit-scrollbar-track,
 .gjs-cv-canvas::-webkit-scrollbar-track { background: transparent !important; }
 
-/* ---- NYXIA COLORS ---- */
+/* ========== NYXIA COLORS ========== */
 .gjs-one-bg { background-color: #0c1a2e !important; }
 .gjs-two-color { color: #c4c8d4 !important; }
 .gjs-three-bg { background-color: #111b30 !important; }
 .gjs-four-color, .gjs-four-color-h:hover { color: #7B5CFF !important; }
 
-/* ---- CATCH-ALL ---- */
-[class*="gjs-sm-"] { font-size: 13px !important; }
-[class*="gjs-layer"] { font-size: 13px !important; }
-[class*="gjs-block"] { font-size: 13px !important; }
-[class*="gjs-pn"] { font-size: 13px !important; }
-[class*="gjs-field"] { font-size: 13px !important; }
+/* ========== CATCH-ALL ========== */
+[class*="gjs-sm-"] { font-size: 14px !important; }
+[class*="gjs-layer"] { font-size: 14px !important; }
+[class*="gjs-block"] { font-size: 14px !important; }
+[class*="gjs-pn"] { font-size: 14px !important; }
+[class*="gjs-field"] { font-size: 14px !important; }
 
-/* ---- REMOVE ALL GRAPESJS BRANDING ---- */
+/* ========== REMOVE ALL GRAPESJS BRANDING ========== */
 .gjs-cv-canvas__frame { pointer-events: auto !important; }
 .gjs-logo, .gjs-logo-content, [title*="GrapesJS"], [title*="grapesjs"] { display: none !important; }
 .gjs-brand { display: none !important; }
-.gjs-panel__switcher { font-size: 13px !important; }
+.gjs-panel__switcher { font-size: 14px !important; }
 .gjs-off-prv, .gjs-no-ph { display: none !important; }
 [aria-label*="GrapesJS"], [aria-label*="grapesjs"], [title*="GrapesJS"], [title*="grapesjs"],
 [data-tooltip*="GrapesJS"], [data-tooltip*="grapesjs"] { display: none !important; }
@@ -253,12 +296,23 @@ export default function GrapesJSEditorComponent({
         themeEl.textContent = NYXIA_UI_CSS
         document.head.appendChild(themeEl)
 
-        // Remove GrapesJS branding after DOM is ready
+        // Move the panel from left to right using DOM manipulation
         setTimeout(() => {
+          const pn = editorRef.current?.querySelector('.gjs-pn')
+          const cv = editorRef.current?.querySelector('.gjs-cv')
+          if (pn && cv) {
+            // Reorder: canvas first, then panel (panel goes right)
+            const parent = pn.parentNode
+            if (parent) {
+              parent.insertBefore(cv, pn)
+            }
+          }
+
+          // Remove GrapesJS branding
           document.querySelectorAll('[title*="GrapesJS"], [title*="grapesjs"], [aria-label*="GrapesJS"], .gjs-logo, .gjs-brand, [class*="gjs-logo"]').forEach(el => {
             (el as HTMLElement).style.display = 'none'
           })
-        }, 500)
+        }, 300)
 
         if (isMounted) setIsLoading(false)
       } catch (error) {
@@ -341,8 +395,8 @@ export default function GrapesJSEditorComponent({
         {isLoading && (
           <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#06101f]">
             <div className="text-center">
-              <Loader2 className="w-5 h-5 text-purple-500 animate-spin mx-auto mb-1.5" />
-              <p className="text-zinc-500 text-[10px]">Chargement de l&apos;éditeur...</p>
+              <Loader2 className="w-6 h-6 text-purple-500 animate-spin mx-auto mb-2" />
+              <p className="text-zinc-400 text-sm">Chargement de l&apos;éditeur...</p>
             </div>
           </div>
         )}
