@@ -1,27 +1,30 @@
 {
-	"$schema": "node_modules/wrangler/config-schema.json",
-	"main": ".open-next/worker.js",
-	"name": "app-name",
-	"compatibility_date": "2026-04-01",
-	"compatibility_flags": [
-		"nodejs_compat",
-		"global_fetch_strictly_public"
-	],
-	"assets": {
-		"directory": ".open-next/assets",
-		"binding": "ASSETS"
-	},
-	"services": [
-		{
-			// Self-reference service binding, the service name must match the worker name
-			// see https://opennext.js.org/cloudflare/caching
-			"binding": "WORKER_SELF_REFERENCE",
-			"service": "app-name"
-		}
-	],
-	"images": {
-		// Enable image optimization
-		// see https://opennext.js.org/cloudflare/howtos/image
-		"binding": "IMAGES"
-	}
+        "$schema": "node_modules/wrangler/config-schema.json",
+        "main": ".open-next/worker.js",
+        "name": "nyxiamarketplace-formation",
+        "compatibility_date": "2026-04-01",
+        "compatibility_flags": [
+                "nodejs_compat",
+                "global_fetch_strictly_public"
+        ],
+        "assets": {
+                "directory": ".open-next/assets",
+                "binding": "ASSETS"
+        },
+        "d1_databases": [
+                {
+                        "binding": "DB",
+                        "database_name": "travail-pour-toi-db",
+                        "database_id": "b35e5c65-a760-4351-bb7f-63444872753e"
+                }
+        ],
+        "services": [
+                {
+                        "binding": "WORKER_SELF_REFERENCE",
+                        "service": "nyxiamarketplace-formation"
+                }
+        ],
+        "images": {
+                "binding": "IMAGES"
+        }
 }
