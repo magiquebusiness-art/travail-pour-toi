@@ -4,10 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npx opennextjs-cloudflare build",
+    "build": "next build",
     "pages:build": "npx @cloudflare/next-on-pages",
-    "start": "next start",
-    "cf-build": "npx @cloudflare/next-on-pages"
+    "start": "next start"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
