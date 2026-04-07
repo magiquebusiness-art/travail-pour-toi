@@ -1,17 +1,14 @@
 // @ts-nocheck
-import { headers } from 'next/headers'
+import { getCloudflareContext } from '@opennextjs/cloudflare'
 
 export type Database = any
 
 export async function getDB(): Promise<Database> {
-  // OpenNext Cloudflare: access env via process.env or getRequestContext
   try {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const { getRequestContext } = require('@opennextjs/cloudflare')
-    const { env } = getRequestContext()
+    const { env } = await getCloudflareContext({ async: true })
     return env.DB as D1Database
-  } catch {
-    // Fallback for local dev
+  } catch (error) {
+    console.error('getDB error:', error)
     return null
   }
 }

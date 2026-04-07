@@ -14,9 +14,8 @@ export async function GET(request: NextRequest) {
     }
 
     // Get D1 from Cloudflare env (OpenNext Workers)
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const { getRequestContext } = require('@opennextjs/cloudflare')
-    const { env } = getRequestContext()
+    const { getCloudflareContext } = await import('@opennextjs/cloudflare')
+    const { env } = await getCloudflareContext({ async: true })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const db = (env as any).DB
 
