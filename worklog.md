@@ -368,3 +368,67 @@ Full-featured admin page with:
 4. **Public Catalog**: Navigate to `/formations` — search, filter by category
 5. **Landing Page**: Click a formation card to see the landing page
 6. **Learning Interface**: Click "S'inscrire" or navigate to `/formations/[id]/learn`
+
+---
+Task ID: 8
+Agent: Main Agent
+Task: Correction de la vision — Formation = Studio de création type System.io (pas marketplace)
+
+Work Log:
+- Diane a clarifié : la création de formation doit fonctionner comme System.io
+- Ce n'est PAS un catalogue/marketplace de formations, c'est un ESPACE DE CRÉATION
+- Les collaborateurs doivent pouvoir CRÉER leurs formations directement sur la plateforme
+- GrapesJS doit être le cœur de la création (landing pages + contenu des leçons)
+- Référence : https://webstudio.is/ (éditeur drag & drop)
+- Le système existant dans /admin/formations est un bon début MAIS :
+  - Il est caché dans l'admin (pas accessible aux collaborateurs)
+  - Ça ressemble à un CRUD admin (pas un studio de création)
+  - GrapesJS est juste pour la page de vente (pas pour le contenu des leçons)
+  - La homepage dit "Prochainement"
+
+Prochaines étapes :
+1. Exécuter le SQL formation-schema.sql dans D1
+2. Créer /studio — Espace de création dédié (type System.io)
+3. Intégrer GrapesJS partout (page de vente + contenu leçons)
+4. Enlever "Prochainement" de la homepage
+5. Permettre aux collaborateurs de créer des formations
+6. Workflow guidé type wizard
+
+Stage Summary:
+- Vision corrigée : Studio de création type System.io, PAS marketplace
+- Stack : GrapesJS (drag & drop) + React + JSON (choix confirmé depuis début)
+- 3 sites à réunir : affiliationpro, marketplace-affiliationpro, publicationcashflow
+- Tables D1 formation-schema.sql créées mais PAS exécutées
+- /admin/formations existe mais nécessite transformation en /studio
+
+---
+Task ID: 9
+Agent: Main Agent + full-stack-developer subagents
+Task: Construire le Studio de Création type System.io + GrapesJS lesson editor
+
+Work Log:
+- Exécuté formation-schema.sql sur D1 (10 queries, tables creation réussie)
+- Créé /src/app/studio/page.tsx — Espace de création dédié type System.io (1844 lignes)
+  - Sidebar collapsible avec liste de formations
+  - Dashboard avec onboarding 3 étapes (si vide) ou vue formations + stats
+  - Éditeur de formation avec 4 onglets : Contenu, Éditeur de Page, Paramètres, Apprenants
+  - Modules & leçons avec drag & drop (@dnd-kit)
+  - GrapesJS intégré pour la page de vente (onglet Éditeur de Page)
+  - Dialogs de création (formation, module, leçon) avec sélecteur visuel de type de contenu
+  - Design premium glassmorphism, animations, responsive
+- Modifié /src/app/page.tsx — Section "Crée ta Formation" :
+  - Badge "Prochainement" → "Créateur"
+  - "Bientôt disponible" → Bouton CTA doré "Accéder au Studio" → /studio
+- Créé /src/components/formation/grapesjs-lesson-editor.tsx — Éditeur GrapesJS léger pour le contenu des leçons
+  - 500px hauteur, embeddable dans Dialog
+  - Plugins minimaux (blocks-basic, preset-webpage)
+  - Même thème sombre NyXia
+- Intégré l'éditeur de leçons dans /studio avec bouton "Éditeur visuel"
+- Build final : ✅ succès (7.21s, 135 static assets, /studio route active)
+
+Stage Summary:
+- /studio — Espace de création type System.io ✅ OPÉRATIONNEL
+- Tables D1 formations — ✅ EXÉCUTÉES
+- Homepage — ✅ "Prochainement" supprimé, CTA vers /studio
+- GrapesJS — ✅ Intégré pour pages de vente ET contenu des leçons
+- Build — ✅ Succès

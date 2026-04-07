@@ -630,7 +630,7 @@ export default function Home() {
               <div className="order-1 lg:order-2">
                 <Badge className="mb-4 bg-[#F4C842]/10 text-[#F4C842] border-[#F4C842]/20 text-sm px-4 py-1.5">
                   <GraduationCap className="h-3.5 w-3.5 mr-1.5" />
-                  Prochainement
+                  Créateur
                 </Badge>
                 <h2 className="font-[var(--font-heading)] text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-5 leading-tight">
                   Crée ta <span className="gradient-text-gold">Formation</span>{' '}
@@ -646,10 +646,13 @@ export default function Home() {
                   a de la valeur. NyXia te donne les outils pour le transformer en expérience
                   premium que tes clients vont adorer — et pour laquelle ils seront heureux de payer.
                 </p>
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
-                  <span className="text-sm">🚀</span>
-                  <span className="text-sm text-[#a5b4fc]">Bientôt disponible — Inscris-toi pour être parmi les premiers</span>
-                </div>
+                <a href="/studio">
+                  <Button className="btn-gold text-base px-8 py-4 border-0">
+                    <Sparkles className="mr-2 h-5 w-5" />
+                    Accéder au Studio
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </a>
               </div>
             </div>
           </div>
