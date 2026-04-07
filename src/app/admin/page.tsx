@@ -1344,7 +1344,7 @@ export default function AdminDashboardPage() {
                   <GraduationCap className="w-12 h-12 text-purple-500/30 mx-auto mb-4" />
                   <h3 className="text-white font-medium text-lg mb-2">Gestionnaire de Formations</h3>
                   <p className="text-zinc-400 text-sm mb-6 max-w-md mx-auto">
-                    Créez vos formations avec des modules et leçons, utilisez l&apos;éditeur GrapesJS pour vos pages de vente.
+                    Créez vos formations avec des modules et leçons, utilisez l&apos;éditeur drag &amp; drop pour vos pages de vente.
                   </p>
                   <Link href="/admin/formations">
                     <Button className="bg-[#7B5CFF] hover:bg-[#6a4ce8] text-white px-8">

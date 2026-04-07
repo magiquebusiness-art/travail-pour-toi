@@ -1174,7 +1174,7 @@ export default function StudioPage() {
                     </div>
                     <h2 className="text-white text-xl font-semibold mb-2">Éditeur de Page de Vente</h2>
                     <p className="text-zinc-400 text-sm max-w-md mx-auto mb-8">
-                      Crée une page de vente magnifique avec notre éditeur drag &amp; drop propulsé par GrapesJS.
+                      Crée une page de vente magnifique avec notre éditeur drag &amp; drop.
                       Personnalise chaque détail pour convertir tes visiteurs en élèves.
                     </p>
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
