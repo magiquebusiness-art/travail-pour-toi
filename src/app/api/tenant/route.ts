@@ -1,7 +1,5 @@
-export const runtime = 'edge'
 
 import { NextRequest, NextResponse } from 'next/server'
-import { getRequestContext } from '@cloudflare/next-on-pages'
 
 export const dynamic = 'force-dynamic'
 
@@ -15,7 +13,9 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Slug requis' }, { status: 400 })
     }
 
-    // Get D1 from Cloudflare request context
+    // Get D1 from Cloudflare env (OpenNext Workers)
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { getRequestContext } = require('@opennextjs/cloudflare')
     const { env } = getRequestContext()
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const db = (env as any).DB

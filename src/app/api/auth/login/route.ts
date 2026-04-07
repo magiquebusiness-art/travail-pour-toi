@@ -1,4 +1,3 @@
-export const runtime = 'edge'
 import { NextResponse } from 'next/server'
 import { getDB } from '@/lib/db'
 import { verifyPassword, createToken, createSessionCookie } from '@/lib/auth'

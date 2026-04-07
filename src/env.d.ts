@@ -1,17 +1,17 @@
 // Cloudflare Workers environment type augmentation
-// This extends the CloudflareEnv interface from @cloudflare/next-on-pages
-// with the bindings defined in wrangler.toml
+// For OpenNext Cloudflare Workers
 
 interface CloudflareEnv {
-  DB: {
-    prepare(query: string): {
-      bind(...values: unknown[]): {
-        first<T = unknown>(): Promise<T | null>
-        all<T = unknown>(): Promise<{ results: T[] }>
-        run(): Promise<void>
-      }
-    }
-  }
-  KV: KVNamespace
+  DB: D1Database
   ASSETS: Fetcher
 }
+
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv {
+      DB?: D1Database
+    }
+  }
+}
+
+export {}

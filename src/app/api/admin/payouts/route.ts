@@ -1,4 +1,3 @@
-export const runtime = 'edge'
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextResponse, type NextRequest } from 'next/server'
 import { getDB, generateId } from '@/lib/db'

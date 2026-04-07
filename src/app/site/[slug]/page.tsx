@@ -1,4 +1,3 @@
-export const runtime = 'edge';
 import { db } from '@/lib/db-edge';
 import { notFound } from 'next/navigation';
 import { Button } from '@/components/ui/button';
