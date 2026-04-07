@@ -1890,7 +1890,7 @@ export default function StudioPage() {
 
       {/* ===== LESSON VISUAL EDITOR DIALOG ===== */}
       <Dialog open={showLessonEditor} onOpenChange={setShowLessonEditor}>
-        <DialogContent className="max-w-5xl w-[95vw] p-0 overflow-hidden glass-card border-0">
+        <DialogContent className="max-w-6xl w-[96vw] h-[88vh] p-0 overflow-hidden glass-card border-0">
           {activeLessonForEditor && (
             <SimpleLessonEditor
               initialHtml={lessonEditorHtml || activeLessonForEditor.lesson?.content_html || ''}

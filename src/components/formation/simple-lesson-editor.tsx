@@ -126,7 +126,7 @@ function ToolbarButton({
           onClick={onClick}
           disabled={disabled}
           className={cn(
-            'flex items-center justify-center w-11 h-11 rounded-xl transition-all duration-150 shrink-0',
+            'flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-150 shrink-0',
             active
               ? 'bg-purple-500/25 ring-1 ring-purple-500/40 text-purple-200 shadow-md shadow-purple-500/10'
               : 'bg-purple-500/15 hover:bg-purple-500/25 text-purple-200',
@@ -149,7 +149,7 @@ function ToolbarButton({
 
 /** Visual separator between toolbar groups */
 function ToolbarSeparator() {
-  return <div className="w-px h-8 bg-purple-500/25 mx-0.5 shrink-0" />
+  return <div className="w-px h-9 bg-purple-500/25 mx-1 shrink-0" />
 }
 
 /** Inline popover for URL inputs (link / video / audio) */
@@ -170,13 +170,13 @@ function InlineUrlInput({
     <>
       {/* Invisible backdrop to detect outside click */}
       <div className="fixed inset-0 z-[60]" onClick={onCancel} />
-      <div className="absolute top-full left-0 mt-1 z-[70] flex items-center gap-1.5 p-3 rounded-xl bg-[#1a1a2e] border border-purple-500/20 shadow-2xl shadow-black/40 min-w-[380px]">
+      <div className="absolute top-full left-0 mt-1 z-[70] flex items-center gap-2 p-4 rounded-xl bg-[#1a1a2e] border border-purple-500/20 shadow-2xl shadow-black/40 min-w-[440px]">
         <input
           type="url"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="flex-1 h-11 px-3 text-sm text-white bg-[#0a0f1e] border border-purple-500/20 rounded-xl outline-none focus:border-purple-500/50 placeholder:text-zinc-600 font-[Outfit,sans-serif]"
+          className="flex-1 h-12 px-4 text-[15px] text-white bg-[#0a0f1e] border border-purple-500/20 rounded-xl outline-none focus:border-purple-500/50 placeholder:text-zinc-600 font-[Outfit,sans-serif]"
           onKeyDown={(e) => {
             if (e.key === 'Enter') onSubmit()
             if (e.key === 'Escape') onCancel()
@@ -186,7 +186,7 @@ function InlineUrlInput({
         <button
           type="button"
           onClick={onSubmit}
-          className="h-11 px-4 text-sm font-medium text-white bg-[#7B5CFF] hover:bg-[#6a4ce8] rounded-xl transition-colors font-[Outfit,sans-serif]"
+          className="h-12 px-5 text-[15px] font-medium text-white bg-[#7B5CFF] hover:bg-[#6a4ce8] rounded-xl transition-colors font-[Outfit,sans-serif]"
         >
           OK
         </button>
@@ -202,16 +202,16 @@ const EDITOR_STYLES = `
 /* ── Base ── */
 .nyxia-editor {
   font-family: 'Outfit', ui-sans-serif, system-ui, sans-serif;
-  font-size: 18px;
-  line-height: 1.8;
+  font-size: 20px;
+  line-height: 1.9;
   color: #f1f5f9;
-  min-height: 500px;
-  padding: 36px;
+  min-height: 600px;
+  padding: 48px;
   outline: none;
   caret-color: #7B5CFF;
   background-color: #0a0f1e;
   overflow-y: auto;
-  box-shadow: inset 0 1px 0 0 rgba(123, 92, 255, 0.06), inset 0 0 40px rgba(123, 92, 255, 0.03);
+  box-shadow: inset 0 1px 0 0 rgba(123, 92, 255, 0.08), inset 0 0 60px rgba(123, 92, 255, 0.04);
 }
 
 .nyxia-editor:empty::before {
@@ -220,7 +220,7 @@ const EDITOR_STYLES = `
   font-style: italic;
   pointer-events: none;
   position: absolute;
-  font-size: 20px;
+  font-size: 22px;
 }
 
 /* ── Headings ── */
@@ -677,10 +677,10 @@ export default function SimpleLessonEditor({
   // ── Render ──
 
   return (
-    <div className="flex flex-col rounded-xl overflow-hidden border border-purple-500/25 bg-[#0a0f1e] shadow-2xl shadow-purple-900/20">
+    <div className="flex flex-col rounded-2xl overflow-hidden border border-purple-500/30 bg-[#0a0f1e] shadow-2xl shadow-purple-900/30 ring-1 ring-purple-500/10">
       {/* ─── Header bar ─── */}
-      <div className="flex items-center justify-between px-4 py-4 border-b border-purple-500/25 bg-[#0c1a2e] shrink-0">
-        <span className="bg-gradient-to-r from-purple-300 to-purple-100 bg-clip-text text-transparent font-medium text-sm tracking-widest uppercase font-[Outfit,sans-serif] select-none">
+      <div className="flex items-center justify-between px-5 py-5 border-b border-purple-500/25 bg-[#0c1a2e] shrink-0">
+        <span className="bg-gradient-to-r from-purple-300 to-purple-100 bg-clip-text text-transparent font-medium text-base tracking-widest uppercase font-[Outfit,sans-serif] select-none">
           ✏️ Éditeur de Leçon
         </span>
         <div className="flex items-center gap-2">
@@ -688,7 +688,7 @@ export default function SimpleLessonEditor({
             <button
               onClick={handleSave}
               disabled={isSaving || readOnly}
-              className="flex items-center gap-2 px-5 h-10 rounded-xl bg-gradient-to-r from-[#7B5CFF] to-[#6a4ce8] hover:from-[#6a4ce8] hover:to-[#5b3dd6] text-white text-sm font-medium transition-all disabled:opacity-50 font-[Outfit,sans-serif] shadow-lg shadow-purple-500/20"
+              className="flex items-center gap-2.5 px-6 h-11 rounded-xl bg-gradient-to-r from-[#7B5CFF] to-[#6a4ce8] hover:from-[#6a4ce8] hover:to-[#5b3dd6] text-white text-sm font-semibold transition-all disabled:opacity-50 font-[Outfit,sans-serif] shadow-lg shadow-purple-500/25"
             >
               {isSaving ? (
                 <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -712,14 +712,14 @@ export default function SimpleLessonEditor({
 
       {/* ─── Toolbar ─── */}
       {!readOnly && (
-        <div className="flex flex-wrap items-center gap-1.5 px-3 py-3 border-b border-purple-500/25 bg-gradient-to-b from-[#111b30] to-[#0e1425] shrink-0 overflow-x-auto">
+        <div className="flex flex-wrap items-center gap-2 px-4 py-4 border-b border-purple-500/25 bg-gradient-to-b from-[#111b30] to-[#0e1425] shrink-0 overflow-x-auto">
           {/* ── Text formatting ── */}
           <ToolbarButton
             tooltip="Gras (Ctrl+B)"
             active={activeStates.bold}
             onClick={() => execCommand('bold')}
           >
-            <Bold className="w-5 h-5" />
+            <Bold className="w-[22px] h-[22px]" />
           </ToolbarButton>
 
           <ToolbarButton
@@ -727,7 +727,7 @@ export default function SimpleLessonEditor({
             active={activeStates.italic}
             onClick={() => execCommand('italic')}
           >
-            <Italic className="w-5 h-5" />
+            <Italic className="w-[22px] h-[22px]" />
           </ToolbarButton>
 
           <ToolbarButton
@@ -735,7 +735,7 @@ export default function SimpleLessonEditor({
             active={activeStates.underline}
             onClick={() => execCommand('underline')}
           >
-            <Underline className="w-5 h-5" />
+            <Underline className="w-[22px] h-[22px]" />
           </ToolbarButton>
 
           <ToolbarButton
@@ -743,7 +743,7 @@ export default function SimpleLessonEditor({
             active={activeStates.strikethrough}
             onClick={() => execCommand('strikeThrough')}
           >
-            <Strikethrough className="w-5 h-5" />
+            <Strikethrough className="w-[22px] h-[22px]" />
           </ToolbarButton>
 
           <ToolbarSeparator />
@@ -754,7 +754,7 @@ export default function SimpleLessonEditor({
             active={blockType === 'h1'}
             onClick={() => handleBlockType('h1')}
           >
-            <Heading1 className="w-5 h-5" />
+            <Heading1 className="w-[22px] h-[22px]" />
           </ToolbarButton>
 
           <ToolbarButton
@@ -762,7 +762,7 @@ export default function SimpleLessonEditor({
             active={blockType === 'h2'}
             onClick={() => handleBlockType('h2')}
           >
-            <Heading2 className="w-5 h-5" />
+            <Heading2 className="w-[22px] h-[22px]" />
           </ToolbarButton>
 
           <ToolbarButton
@@ -770,7 +770,7 @@ export default function SimpleLessonEditor({
             active={blockType === 'p' || blockType === ''}
             onClick={() => handleBlockType('p')}
           >
-            <Pilcrow className="w-5 h-5" />
+            <Pilcrow className="w-[22px] h-[22px]" />
           </ToolbarButton>
 
           <ToolbarSeparator />
@@ -781,7 +781,7 @@ export default function SimpleLessonEditor({
             active={activeStates.insertUnorderedList}
             onClick={() => execCommand('insertUnorderedList')}
           >
-            <List className="w-5 h-5" />
+            <List className="w-[22px] h-[22px]" />
           </ToolbarButton>
 
           <ToolbarButton
@@ -789,7 +789,7 @@ export default function SimpleLessonEditor({
             active={activeStates.insertOrderedList}
             onClick={() => execCommand('insertOrderedList')}
           >
-            <ListOrdered className="w-5 h-5" />
+            <ListOrdered className="w-[22px] h-[22px]" />
           </ToolbarButton>
 
           <ToolbarSeparator />
@@ -800,7 +800,7 @@ export default function SimpleLessonEditor({
             active={activeStates.justifyLeft}
             onClick={() => execCommand('justifyLeft')}
           >
-            <AlignLeft className="w-5 h-5" />
+            <AlignLeft className="w-[22px] h-[22px]" />
           </ToolbarButton>
 
           <ToolbarButton
@@ -808,7 +808,7 @@ export default function SimpleLessonEditor({
             active={activeStates.justifyCenter}
             onClick={() => execCommand('justifyCenter')}
           >
-            <AlignCenter className="w-5 h-5" />
+            <AlignCenter className="w-[22px] h-[22px]" />
           </ToolbarButton>
 
           <ToolbarButton
@@ -816,7 +816,7 @@ export default function SimpleLessonEditor({
             active={activeStates.justifyRight}
             onClick={() => execCommand('justifyRight')}
           >
-            <AlignRight className="w-5 h-5" />
+            <AlignRight className="w-[22px] h-[22px]" />
           </ToolbarButton>
 
           <ToolbarSeparator />
@@ -830,23 +830,23 @@ export default function SimpleLessonEditor({
                 setShowColorPicker((v) => !v)
               }}
             >
-              <Palette className="w-5 h-5" />
+              <Palette className="w-[22px] h-[22px]" />
             </ToolbarButton>
 
             {showColorPicker && (
               <>
                 <div className="fixed inset-0 z-[60]" onClick={() => setShowColorPicker(false)} />
                 <div className="absolute top-full left-0 mt-1 z-[70] p-3 rounded-xl bg-[#1a1a2e] border border-purple-500/20 shadow-2xl shadow-black/40">
-                  <p className="text-xs text-zinc-500 uppercase tracking-wider mb-2.5 font-[Outfit,sans-serif]">
+                  <p className="text-sm text-zinc-500 uppercase tracking-wider mb-3 font-[Outfit,sans-serif]">
                     Couleur du texte
                   </p>
-                  <div className="grid grid-cols-4 gap-2">
+                  <div className="grid grid-cols-4 gap-2.5">
                     {PRESET_COLORS.map((color) => (
                       <button
                         key={color.value}
                         type="button"
                         onClick={() => handleTextColor(color.value)}
-                        className="w-10 h-10 rounded-xl border-2 border-white/10 hover:border-purple-400 hover:scale-110 transition-all duration-150"
+                        className="w-12 h-12 rounded-xl border-2 border-white/10 hover:border-purple-400 hover:scale-110 transition-all duration-150"
                         style={{ backgroundColor: color.value }}
                         title={color.name}
                       />
@@ -866,7 +866,7 @@ export default function SimpleLessonEditor({
               active={activeStates.createLink}
               onClick={toggleLink}
             >
-              <Link className="w-5 h-5" />
+              <Link className="w-[22px] h-[22px]" />
             </ToolbarButton>
 
             {showLinkInput && (
@@ -885,7 +885,7 @@ export default function SimpleLessonEditor({
             tooltip="Supprimer le lien"
             onClick={handleUnlink}
           >
-            <Unlink className="w-5 h-5" />
+            <Unlink className="w-[22px] h-[22px]" />
           </ToolbarButton>
 
           <ToolbarSeparator />
@@ -895,7 +895,7 @@ export default function SimpleLessonEditor({
             tooltip="Insérer une image"
             onClick={handleImageUpload}
           >
-            <ImageIcon className="w-5 h-5" />
+            <ImageIcon className="w-[22px] h-[22px]" />
           </ToolbarButton>
 
           {/* ── Video ── */}
@@ -904,7 +904,7 @@ export default function SimpleLessonEditor({
               tooltip="Vidéo YouTube"
               onClick={toggleVideo}
             >
-              <Video className="w-5 h-5" />
+              <Video className="w-[22px] h-[22px]" />
             </ToolbarButton>
 
             {showVideoInput && (
@@ -924,7 +924,7 @@ export default function SimpleLessonEditor({
               tooltip="Insérer un audio"
               onClick={toggleAudio}
             >
-              <Music className="w-5 h-5" />
+              <Music className="w-[22px] h-[22px]" />
             </ToolbarButton>
 
             {showAudioInput && (
