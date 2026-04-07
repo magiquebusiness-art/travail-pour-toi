@@ -31,9 +31,8 @@ export default function NyXiaChatWidget() {
         body: JSON.stringify({ message: text, history: nxMsgs.slice(-10) }),
       })
       const data = await res.json()
-      if (data.reply) {
-        setNxMsgs([...newMsgs, { role: 'assistant', content: data.reply }])
-      }
+      const reply = data.success ? data.content : (data.reply || data.content || 'Je suis là pour toi ! 💜')
+      setNxMsgs([...newMsgs, { role: 'assistant', content: reply }])
     } catch {
       setNxMsgs(prev => [...prev, { role: 'assistant', content: 'Erreur de connexion. Réessaie.' }])
     } finally {

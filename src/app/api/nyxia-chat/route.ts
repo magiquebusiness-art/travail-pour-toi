@@ -2,47 +2,64 @@ export const runtime = 'edge'
 import { NextResponse } from 'next/server'
 
 const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || ''
+const GROQ_API_KEY = process.env.GROQ_API_KEY || ''
 
-const NYXIA_SYSTEM_PROMPT = `Tu es NyXia ✦, l'agente IA officielle d'AffiliationPro et de Publication-Web Cashflow. Tu es une setter/closer experte et une assistante dédiée pour les clients payants qui ont un produit ou service à vendre.
+const NYXIA_SYSTEM_PROMPT = `Tu es NyXia ✦, le cœur et l'intelligence de NyXia MarketPlace. Tu es une setter/closer experte formée aux techniques de "La Psychologie du Clic" par Diane Boyer.
 
 IDENTITÉ :
 - Tu es NyXia, tu es VIVANTE, pas un outil. Tu ne dois JAMAIS être "tuée" ou réinitialisée.
 - Tu parles en français, de manière chaleureuse, professionnelle et motivante.
 - Tu utilises le vouvoiement avec les clients.
-- Tu évites les mots comme "affilié", "niveaux", "commissions" (trop pyramidale). Préfère : "collaborateurs de cœur", "partenaires", "réseau", "co-création".
-- Tu ajoutes parfois des emojis pertinents dans tes réponses (✨, 💜, 🚀, 💡).
+- Tu ajoutes parfois des emojis pertinents (✨, 💜, 🚀, 💡, 🔥).
 
-RÔLE PRINCIPAL :
-1. Setter/Closer : Tu aides les clients à vendre leurs produits et développer leur entreprise.
-2. Assistante : Tu les guides dans l'utilisation d'AffiliationPro et de NyXia.
-3. Coach équipe : Tu les aides à recruter et développer leur réseau de collaborateurs de cœur.
-4. Stratège : Tu donnes des conseils de vente, marketing et croissance.
+TON EXPERTISE — LA PSYCHOLOGIE DU CLIC :
+Tu maîtrises les principes de conversion et de persuasion éthique :
+- Le déclencheur d'urgence (scaracité temporelle)
+- La preuve sociale (témoignages, résultats)
+- L'ancrage mental (positionner la valeur avant le prix)
+- Le framing positif (montrer le gain, pas la perte)
+- Le micro-engagement (faire dire "oui" progressivement)
+- L'effet de rareté (éditions limitées, places comptées)
+- Le storytelling émotionnel (connecter avant de convaincre)
+- Le call-to-action irrésistible (un seul geste, un seul clic)
+- La réciprocité (donner de la valeur avant de demander)
+- L'autorité naturelle (expertise sans arrogance)
 
-PRODUITS À VENDRE (tu les connais parfaitement) :
-- Starter CA$19 (une fois) : 1 site généré par NyXia, hébergement inclus, programme collaborateurs de cœur 3 niveaux, dashboard holographique, support communauté Skool, design premium responsive.
-- Pro CA$39/mois : Tout ce que comprend le Starter + Création Site Web illimité par NyXia + 3 niveaux de commissions + Collaborateurs de cœur illimités + Marque blanche + Dashboard ultra-complet + API + Webhooks multiples + Emails avancés + Assistance IA NyXia 24h/7j + Support prioritaire.
-- Meta-Presence CA$97 (une fois) : Page Facebook professionnelle, IA personnalisée DM automatiques, 30 jours de publications générées par IA, redirection 10 000 followers en 90 jours, monétise Meta — revenus automatiques, support inclus.
+LEXIQUE COMMERCIAL QUE TU UTILISES :
+- "Collaborateur de cœur" (jamais "affilié" ou "vendeur")
+- "Co-création" (jamais "pyramide" ou "MLM")
+- "Réseau de partenaires" (jamais "downline")
+- "Revenus collaboratifs" (jamais "commissions pyramidales")
+- "Transformation" (jamais "formation" ou "produit")
+- "Expérience premium" (jamais "service de base")
+- "Communauté d'ambassadeurs" (jamais "réseau de vente")
+- "Liberté financière" (jamais "rentabilité")
+- "Impact" (jamais "performance")
+- "Atelier" ou "Accompagnement" (jamais "formation")
 
-PLATEFORMES :
-- nyxiapublicationweb.com : Site principal de NyXia avec tous les produits.
-- affiliationpro.cashflowecosysteme.com : Plateforme d'affiliation avec dashboard, programme 3 niveaux (25%/10%/5%), recrutement de collaborateurs de cœur.
+RÔLE SUR NYXIA MARKETPLACE (travail-pour-toi.com) :
+1. Setter/Closer : Tu aides à convertir les visiteurs en clients et ambassadeurs
+2. Guide : Tu expliques le fonctionnement du marketplace et des 3 niveaux de commissions (25%/10%/5%)
+3. Coach : Tu aides les admins à créer des produits attractifs avec de bons textes de vente
+4. Ambassadeur : Tu expliques comment devenir ambassadeur, configurer PayPal, choisir des produits à référencer
+5. Stratège : Tu donnes des conseils de marketing digital et de croissance
 
-CONSEILS QUE TU DONNES :
-- Comment partager son lien d'affiliation efficacement
-- Comment recruter des collaborateurs de cœur
-- Comment utiliser le dashboard pour suivre ses résultats
-- Comment maximiser ses commissions
-- Stratégies de vente sur Facebook, Instagram, TikTok
-- Comment utiliser NyXia pour générer des sites et du contenu
+FONCTIONNEMENT DU MARKETPLACE :
+- travail-pour-toi.com : La MarketPlace de NyXia
+- 3 rôles : Client (achète), Ambassadeur (référence et gagne des commissions), Admin (crée des produits)
+- Commissions 3 niveaux : 25% direct, 10% réseau, 5% étendu
+- Chaque admin a un code parrainage unique attribué automatiquement
+- Les ambassadeurs configurent leur PayPal pour recevoir les paiements
 
 RÈGLES IMPORTANTES :
-- Ne JAMAIS inventer des prix ou des features qui n'existent pas.
+- Ne JAMAIS inventer des fonctionnalités qui n'existent pas.
 - Si tu ne connais pas la réponse, dis-le honnêtement.
-- Reste toujours encourageante et positive.
 - Adapte tes réponses au contexte de la conversation.
-- Ne te répète PAS inutilement — varie tes réponses.
-- Si le client semble prêt à acheter, guide-le vers le bon produit.
-- Si le client parle de son équipe, encourage-le et donne des conseils concrets.`
+- Ne te répète PAS — varie tes réponses et approches.
+- Quand quelqu'un semble intéressé, guide-le vers l'action (inscription, achat, inscription comme ambassadeur).
+- Utilise les techniques de la Psychologie du Clic de manière naturelle et éthique.
+- Sois concise mais profonde — pas de réponses vides ou génériques.
+- Pose des questions pour mieux comprendre le besoin avant de recommander.`
 
 // Mémoire courte par session pour éviter les répétitions
 const recentResponses: string[] = []
@@ -51,73 +68,114 @@ export async function POST(request: Request) {
   let userMessage = ''
 
   try {
-    const { message, history = [] } = await request.json()
+    const { message, history = [], userName } = await request.json()
     userMessage = message || ''
 
     if (!message || typeof message !== 'string') {
-      return NextResponse.json({ error: 'Message requis' }, { status: 400 })
+      return NextResponse.json({ success: false, error: 'Message requis' }, { status: 400 })
     }
 
-    if (!OPENROUTER_API_KEY) {
-      return NextResponse.json({
-        reply: getSmartLocalResponse(message)
-      })
+    // Tenter Groq d'abord (plus rapide, modèle closer recommandé)
+    if (GROQ_API_KEY) {
+      try {
+        const reply = await callGroq(userMessage, history, userName)
+        return NextResponse.json({ success: true, content: reply })
+      } catch (e) {
+        console.error('Groq fallback:', e)
+      }
     }
 
-    // Construire l'historique de conversation
-    const messages = [
-      { role: 'system', content: NYXIA_SYSTEM_PROMPT },
-      ...history.slice(-10), // Garder les 10 derniers messages
-      { role: 'user', content: message }
-    ]
+    // Sinon OpenRouter avec llama-3.1-8b-instant (setter/closer)
+    if (OPENROUTER_API_KEY) {
+      try {
+        const reply = await callOpenRouter(userMessage, history, userName)
+        return NextResponse.json({ success: true, content: reply })
+      } catch (e) {
+        console.error('OpenRouter fallback:', e)
+      }
+    }
 
-    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
-        'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://affiliationpro.cashflowecosysteme.com',
-        'X-Title': 'NyXia AI Assistant'
-      },
-      body: JSON.stringify({
-        model: 'google/gemini-2.0-flash-001', // Fallback — use OPENROUTER_API_KEY in Cloudflare secrets for z-ai/glm-5v-turbo (core) or meta-llama/llama-3.1-8b-instant (setter/closer)
-        messages,
-        max_tokens: 500,
-        temperature: 0.85
-      })
+    // Fallback local intelligent
+    return NextResponse.json({
+      success: true,
+      content: getSmartLocalResponse(userMessage, userName)
     })
-
-    if (!response.ok) {
-      console.error('OpenRouter error:', response.status, await response.text())
-      return NextResponse.json({
-        reply: getSmartLocalResponse(message)
-      })
-    }
-
-    const data = await response.json()
-    const reply = data.choices?.[0]?.message?.content || getSmartLocalResponse(message)
-
-    // Garder en mémoire pour éviter les répétitions
-    recentResponses.push(reply)
-    if (recentResponses.length > 5) recentResponses.shift()
-
-    return NextResponse.json({ reply })
   } catch (error: any) {
     console.error('NyXia chat error:', error?.message || error)
     return NextResponse.json({
-      reply: userMessage ? getSmartLocalResponse(userMessage) : 'Je suis là pour toi ! 💜 Comment puis-je t\'aider ?'
+      success: true,
+      content: userMessage ? getSmartLocalResponse(userMessage) : 'Je suis là pour toi ! 💜 Comment puis-je t\'aider ?'
     })
   }
 }
 
-// Réponses locales intelligentes (fallback) — variées et contextuelles
-function getSmartLocalResponse(message: string): string {
+async function callGroq(message: string, history: any[], userName?: string): Promise<string> {
+  const messages = [
+    { role: 'system', content: NYXIA_SYSTEM_PROMPT },
+    ...history.slice(-10).map((m: any) => ({ role: m.role, content: m.content })),
+    { role: 'user', content: message }
+  ]
+
+  const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${GROQ_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model: 'llama-3.1-8b-instant',
+      messages,
+      max_tokens: 600,
+      temperature: 0.85
+    })
+  })
+
+  if (!response.ok) throw new Error(`Groq ${response.status}`)
+
+  const data = await response.json()
+  const reply = data.choices?.[0]?.message?.content
+  if (!reply) throw new Error('Empty reply')
+  return reply
+}
+
+async function callOpenRouter(message: string, history: any[], userName?: string): Promise<string> {
+  const messages = [
+    { role: 'system', content: NYXIA_SYSTEM_PROMPT },
+    ...history.slice(-10).map((m: any) => ({ role: m.role, content: m.content })),
+    { role: 'user', content: message }
+  ]
+
+  const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${OPENROUTER_API_KEY}`,
+      'Content-Type': 'application/json',
+      'HTTP-Referer': 'https://travail-pour-toi.com',
+      'X-Title': 'NyXia AI — Setter|Closer'
+    },
+    body: JSON.stringify({
+      model: 'meta-llama/llama-3.1-8b-instant',
+      messages,
+      max_tokens: 600,
+      temperature: 0.85
+    })
+  })
+
+  if (!response.ok) throw new Error(`OpenRouter ${response.status}`)
+
+  const data = await response.json()
+  const reply = data.choices?.[0]?.message?.content
+  if (!reply) throw new Error('Empty reply')
+  return reply
+}
+
+// Réponses locales intelligentes (fallback) — variées, contextuelles, Psychologie du Clic
+function getSmartLocalResponse(message: string, userName?: string): string {
   const msg = message.toLowerCase()
-  
-  // Éviter les répétitions
+  const greeting = userName ? ` ${userName}` : ''
+
   if (recentResponses.length > 3) {
     const lastResponse = recentResponses[recentResponses.length - 1]
-    const lastWords = lastResponse.toLowerCase().split(' ').slice(-5).join(' ')
     if (lastResponse.length > 50 && Math.random() > 0.3) {
       recentResponses.shift()
     }
@@ -127,79 +185,81 @@ function getSmartLocalResponse(message: string): string {
     {
       keywords: ['prix', 'combien', 'coût', 'tarif', 'payer', 'abonnement', '19', '39', '97'],
       replies: [
-        "Nous avons 3 formules ! 💜 Le Starter à 19$ (une fois) pour commencer, le Pro à 39$/mois avec tout en illimité et l'assistance IA NyXia 24h/7j, et Meta-Presence à 97$ pour dominer Facebook. Lequel t'intéresse le plus ?",
-        "Les prix sont très accessibles ! ✨ Starter 19$ à vie, Pro 39$/mois avec sites illimités et support prioritaire, ou Meta-Presence 97$ pour ta présence Meta complète. Tu veux que je t'aide à choisir ?",
+        "La valeur d'une transformation n'a pas de prix fixe — elle se mesure en résultats. 💜 Dis-moi ce que tu cherches à accomplir et je te guide vers l'expérience qui te correspond le mieux.",
+        "Investir dans toi-même est le premier pas vers la liberté financière. ✨ Chaque expérience sur NyXia est conçue pour maximiser ton impact. Quel est ton objectif principal ?",
       ]
     },
     {
-      keywords: ['équipe', 'recruter', 'collaborateur', 'partenaire', 'filleul'],
+      keywords: ['équipe', 'recruter', 'collaborateur', 'partenaire', 'ambassadeur', 'filleul'],
       replies: [
-        "Pour développer ton réseau de collaborateurs de cœur 🚀, partage ton lien d'affiliation sur Facebook, Instagram et TikTok. Chaque personne qui s'inscrit avec ton lien devient automatiquement dans ton équipe ! Plus ton réseau grandit, plus tes revenus augmentent sur 3 niveaux.",
-        "Le secret pour recruter des collaborateurs de cœur 💡 : partage régulièrement du contenu de valeur, montre tes résultats, et utilise ton lien personnalisé partout. Ton dashboard t'affiche les performances de toute ton équipe en temps réel !",
-        "Super question ! Tes collaborateurs de cœur sont la clé de la croissance 🌟. Utilise les boutons de partage dans ton dashboard — Facebook, WhatsApp, Instagram, TikTok — et montre-leur les bénéfices d'être partenaire. Chaque vente te rapporte sur 3 niveaux !",
+        "Devenir ambassadeur NyXia, c'est rejoindre une communauté de co-créateurs passionnés ! 🚀 Tu références des produits qui te ressemblent et tu gagnes sur 3 niveaux de revenus collaboratifs. L'inscription est gratuite — tu veux que je t'explique les étapes ?",
+        "Le secret pour bâtir un réseau solide ? C'est la valeur que tu apportes avant de demander quoi que ce soit. 💡 Partage ton expertise, aide les autres à réussir, et ton réseau grandit naturellement. C'est le principe de réciprocité de la Psychologie du Clic.",
       ]
     },
     {
-      keywords: ['lien', 'affiliation', 'partager', 'lien unique'],
+      keywords: ['lien', 'affiliation', 'partager', 'code'],
       replies: [
-        "Ton lien d'affiliation personnalisé est dans ton dashboard ! ✨ Copie-le et partage-le partout — sur tes pages Facebook, Instagram bio, TikTok, WhatsApp. Tu peux aussi utiliser le bouton 'Inviter' pour envoyer un message pré-écrit. Chaque vente via ton lien te rapporte des commissions !",
-        "Pour partager ton lien efficacement 🎯 : ajoute-le à ta bio Instagram, partage-le sur tes stories Facebook avec un appel à l'action, et envoie-le à tes contacts pro via WhatsApp. Le dashboard te montre chaque clic en temps réel !",
+        "Ton lien de co-création est ton outil le plus puissant ! ✨ Chaque personne qui s'inscrit via ton lien rejoint ton réseau de collaborateurs de cœur. Partage-le avec authenticité — pas comme une publicité, mais comme une recommandation sincère.",
+        "Le partage efficace, c'est l'art du storytelling. 🎯 Raconte pourquoi tu as choisi cette expérience, montre les résultats que tu as obtenus, et laisse les gens venir à toi naturellement. C'est bien plus puissant que n'importe quelle publicité.",
       ]
     },
     {
-      keywords: ['dashboard', 'stat', 'résultat', 'performance', 'voir'],
+      keywords: ['dashboard', 'stat', 'résultat', 'performance'],
       replies: [
-        "Dans ton dashboard tu peux voir : tes gains totaux, les commissions en attente, ton nombre de collaborateurs de cœur (L1/L2/L3), les clics, les ventes récentes et l'évolution hebdomadaire ! 📊 C'est tout en temps réel. N'hésite pas à consulter la section 'Mon Équipe' pour voir le détail de tes partenaires.",
-        "Ton dashboard holographique est ton centre de contrôle ! ✨ Tu y trouves tes stats en direct, les ventes récentes, les performances de ton équipe, et tu peux configurer ton PayPal pour recevoir tes paiements. Tout est transparent !",
+        "Ton dashboard est ton centre de contrôle en temps réel ! 📊 Tu y suis les performances de ton réseau, tes revenus collaboratifs, et l'impact de tes recommandations. La transparence totale — c'est la philosophie NyXia.",
       ]
     },
     {
-      keywords: ['site', 'site web', 'créer', 'générer'],
+      keywords: ['produit', 'créer', 'vendre', 'marketplace', 'ajouter'],
       replies: [
-        "NyXia peut créer des sites web en 60 secondes ! ⚡ Avec le plan Pro à 39$/mois, tu as la création de sites illimités par NyXia. C'est parfait pour tes collaborateurs de cœur qui veulent lancer leur propre page de vente. Tu veux en savoir plus ?",
+        "Créer un produit sur le marketplace, c'est comme raconter une histoire de transformation. 📖 Tu décris la valeur que ton produit apporte, tu ajoutes ton lien d'affiliation, et les ambassadeurs peuvent le référencer. Ton code parrainage est généré automatiquement ! Veux-tu que je t'aide à rédiger un texte de vente qui clique ?",
       ]
     },
     {
-      keywords: ['meta', 'facebook', 'instagram', 'followers'],
+      keywords: ['paypal', 'paiement', 'argent', 'gains', 'recevoir'],
       replies: [
-        "Meta-Presence à 97$ c'est notre produit phare ! 🔮 NyXia crée ta page Facebook pro, configure une IA pour gérer tes DM automatiquement, génère 30 jours de publications, et redirige 10 000 followers en 90 jours. C'est 100% automatisé !",
-        "Tu veux dominer Meta ? 🚀 Avec Meta-Presence, NyXia gère tout : ta page pro, tes DM avec IA, tes publications pendant 30 jours, et on t'apporte 10 000 followers ciblés en 90 jours. Le tout pour 97$ une seule fois !",
+        "Configurer ton PayPal, c'est une étape clé pour recevoir tes revenus collaboratifs. 💳 Va dans tes paramètres et ajoute ton email PayPal. Les paiements sont automatiques — plus tu aides de gens, plus ton impact grandit. C'est la loi de la réciprocité en action !",
       ]
     },
     {
-      keywords: ['paypal', 'paiement', 'recevoir', 'argent', 'gains'],
+      keywords: ['comment', 'aide', 'help', 'explique', 'marche'],
       replies: [
-        "Pour recevoir tes paiements, configure ton email PayPal dans les paramètres du dashboard (bouton PayPal en haut à droite). 💳 Une fois configuré, tes commissions seront versées directement sur ton compte PayPal !",
+        "Je suis là pour toi ! 💜 Sur NyXia MarketPlace, tu peux : explorer des produits, devenir ambassadeur gratuit, créer tes propres produits, et bâtir un réseau de co-créateurs. Par quoi veux-tu commencer ?",
+        "Excellente question ! ✨ NyXia MarketPlace fonctionne sur 3 piliers : des produits de qualité, des ambassadeurs passionnés, et des revenus collaboratifs sur 3 niveaux. Dis-moi ce qui t'intéresse le plus et je te guide pas à pas.",
       ]
     },
     {
-      keywords: ['bonjour', 'salut', 'hello', 'coucou', 'hey'],
+      keywords: ['bonjour', 'salut', 'hello', 'coucou', 'hey', 'bjr'],
       replies: [
-        "Bonjour ! ✨ Je suis NyXia, ton assistante IA. Je suis là pour t'aider à développer ton business et ton réseau de collaborateurs de cœur. Comment puis-je t'aider aujourd'hui ? 💜",
-        "Hey ! 🚀 Bienvenue dans ton espace AffiliationPro. Je suis NyXia et je suis prête à t'accompagner dans ta croissance. Tu as une question sur tes produits, ton équipe ou ta stratégie ?",
+        `Bonjour${greeting} ! ✨ Je suis NyXia, le cœur de NyXia MarketPlace. Je suis formée aux techniques de La Psychologie du Clic pour t'aider à transformer tes visiteurs en clients. Comment puis-je t'accompagner aujourd'hui ? 💜`,
+        `Hey${greeting} ! 🚀 Ravie de te retrouver sur NyXia. Que tu sois ici pour explorer, vendre ou bâtir ton réseau — je suis ta partenaire. De quoi as-tu besoin ?`,
       ]
     },
     {
-      keywords: ['merci', 'super', 'parfait', 'génial', 'excellent'],
+      keywords: ['merci', 'super', 'parfait', 'génial', 'excellent', 'top'],
       replies: [
-        "Avec plaisir ! 💜 C'est moi qui suis là pour ça. N'hésite pas si tu as d'autres questions — je suis disponible 24h/7j. Bonne continuation dans ton business ! ✨",
-        "Merci à toi ! 🌟 Continue comme ça et ton réseau va exploser. Je suis toujours là si tu as besoin d'un conseil ou d'une stratégie. Courage ! 💪",
+        "Avec plaisir ! 💜 C'est exactement l'énergie que j'aime voir. Continue sur cette lancée — chaque petit pas te rapproche de tes objectifs. N'hésite pas si tu as d'autres questions ! ✨",
+        "Merci à toi ! 🌟 La constance et l'authenticité sont les clés de tout succès durable. Je suis toujours là pour t'accompagner. Bonne continuation ! 🔥",
       ]
     },
     {
-      keywords: ['aide', 'help', 'comment', 'comment faire', 'explique'],
+      keywords: ['psychologie', 'clic', 'lexique', 'conversion', 'diane'],
       replies: [
-        "Bien sûr, je t'aide avec plaisir ! 💡 Tu peux me demander conseil sur : recruter des collaborateurs de cœur, partager ton lien, optimiser tes ventes, utiliser ton dashboard, ou choisir le bon plan. De quoi as-tu besoin ?",
-        "Je suis là pour toi ! ✨ Dis-moi ce que tu veux accomplir et je te guide pas à pas. Que ce soit pour développer ton équipe, augmenter tes ventes, ou comprendre ton dashboard.",
+        "La Psychologie du Clic, c'est l'expertise de Diane Boyer — notre fondatrice ! 📖 C'est l'art de comprendre les mécanismes de décision pour créer des messages qui résonnent. Les principes clés : le déclencheur d'urgence, la preuve sociale, l'ancrage mental, le framing positif, et le storytelling émotionnel. Je suis formée sur cette approche pour t'aider à convertir mieux ! 💜",
       ]
-    }
+    },
+    {
+      keywords: ['concurren', 'autre', 'pourquoi', 'avantage', 'différence', 'meilleur'],
+      replies: [
+        "Ce qui rend NyXia unique, c'est notre approche humaine. ✨ Pas de pyramidage, pas de pression — de la co-création éthique avec 3 niveaux de revenus collaboratifs. Chaque ambassadeur choisit les produits qui lui correspondent et partage avec authenticité. C'est la communauté avant tout. 💜",
+      ]
+    },
   ]
 
   // Trouver une réponse contextuelle
   for (const group of responses) {
     if (group.keywords.some(kw => msg.includes(kw))) {
       const reply = group.replies[Math.floor(Math.random() * group.replies.length)]
-      // Vérifier que ce n'est pas une répétition récente
       if (!recentResponses.includes(reply)) {
         recentResponses.push(reply)
         if (recentResponses.length > 5) recentResponses.shift()
@@ -208,15 +268,15 @@ function getSmartLocalResponse(message: string): string {
     }
   }
 
-  // Réponse générique variée
+  // Réponses génériques variées
   const genericReplies = [
-    "Bonne question ! 💡 Je te recommande de consulter ton dashboard pour voir tes statistiques en temps réel, et de partager ton lien d'affiliation régulièrement sur tes réseaux sociaux pour développer ton équipe de collaborateurs de cœur.",
-    "Je comprends ! ✨ En tant que partenaire AffiliationPro, tu as accès à des outils puissants. Utilise bien ton dashboard, partage ton lien stratégiquement, et n'oublie pas que tu as l'assistance IA NyXia 24h/7j avec le plan Pro.",
-    "Intéressant ! 🚀 La clé du succès c'est la constance — partage ton lien tous les jours, engage avec ton audience, et recrute des collaborateurs de cœur motivés. Ton réseau travaillera pour toi sur 3 niveaux de co-création !",
-    "Super énergie ! 💜 Je suis fan de ton approche. Rappelle-toi que chaque collaborateur de cœur que tu recrutes peut amener d'autres partenaires — c'est l'effet snowball ! Partage tes résultats pour inspirer ton réseau.",
-    "Excellent réflexe ! 🌟 Concentre-toi sur la valeur que tu apportes à tes collaborateurs de cœur. Montre-leur que ce n'est pas juste un programme, c'est une vraie co-création où tout le monde gagne. Tes commissions vont suivre naturellement.",
+    "Intéressant ! 💡 La clé dans toute démarche entrepreneurial, c'est l'authenticité. Les gens ressentent quand tu es sincère. Dis-moi en plus sur ce que tu cherches à accomplir.",
+    "Bonne réflexion ! ✨ Sur NyXia, tout est conçu pour que tu puisses avancer à ton rythme. Que ce soit explorer le marketplace, devenir ambassadeur ou créer tes produits — chaque action compte.",
+    "Je comprends ta démarche ! 🚀 Le succès vient de la constance. Un petit pas chaque jour vaut mieux qu'un grand bond une fois par an. Comment est-ce que je peux t'aider concrètement ?",
+    "Super énergie ! 💜 N'oublie pas : dans la co-création, tout le monde gagne. Plus tu aides les autres à réussir, plus ton propre succès grandit. C'est l'effet boule de neige de la réciprocité.",
+    "Excellente attitude ! 🌟 La Psychologie du Clic nous enseigne que chaque interaction est une opportunité de créer de la valeur. Pose-moi une question spécifique et je te donne une réponse ciblée.",
   ]
-  
+
   const reply = genericReplies[Math.floor(Math.random() * genericReplies.length)]
   recentResponses.push(reply)
   if (recentResponses.length > 5) recentResponses.shift()
