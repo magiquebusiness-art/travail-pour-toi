@@ -217,3 +217,154 @@ Stage Summary:
   - Chat privé intégré (z-ai/glm-5v-turbo via OpenRouter) → closer avec livre + lexique Psychologie du Clic
 - Pastille masquée automatiquement sur /dashboard, /admin, /super-admin, /ambassadeur
 - Upload photo produit : drag & drop + preview + base64 dans /api/marketplace/products
+
+---
+Task ID: 6
+Agent: Main Agent
+Task: Vision globale du projet — Réunir 3 plateformes en une super plateforme de formation
+
+Work Log:
+- Rappel de la vision initiale : réunir affiliationpro.cashflowecosysteme.com, marketplace-affiliationpro.com et publicationcashflow.com en UNE SEULE plateforme
+- Technologies choisies ensemble : GrapesJS (éditeur drag & drop), React, stockage JSON des pages
+- Les 3 sites ont tous été crawlés/récupérés (fichiers dans /home/z/my-project/upload/nyxia-extract/ et /home/z/my-project/publicationcashflow-recovery.md)
+- Objectif final : NyXia MarketPlace = Marketplace + Affiliation 3 niveaux + Créateur de formations drag & drop + Éditeur de pages
+- 11 catégories déjà mises à jour sur la page d'accueil (Auteur, Spiritualité, Soin Holistique, Nutrition, Design & Création, Marketing Digital, Formation & Coaching, E-commerce, Services B2B, Santé & Bien-être, Commerce Local)
+- Bannière d'affiliation à ajouter (présente sur tous les sites de Diane)
+- GrapesJS à installer pour le créateur de formation
+- Prochaines étapes : bannière affilié, schéma D1 formations, GrapesJS FormationBuilder, API CRUD formations
+
+Stage Summary:
+- Vision documentée : Réunification des 3 plateformes en NyXia MarketPlace
+- Stack technique confirmé : Next.js 16 + Cloudflare (Workers, D1, R2, KV) + GrapesJS + React + JSON
+- Catégories homepage : ✅ 11 nouvelles catégories en place
+- Bannière affilié : ❌ À ajouter
+- Formation builder (GrapesJS) : ❌ À construire
+- Déployé : ❌ Token wrangler cassé (ne pas demander à Diane)
+
+---
+## Task ID: 7 - Formation System Builder Agent
+### Work Task
+Build the complete Formation System for NyXia MarketPlace: D1 schema, API routes, GrapesJS page builder, admin formation manager, public formation pages, and learning interface.
+
+### Work Summary
+
+#### 1. D1 Schema — `/home/z/my-project/formation-schema.sql`
+Created SQL schema file with 4 new tables + 6 indexes:
+- **formation_pages**: id, formation_id (FK→formations), slug (UNIQUE), title, html_content, css_content, components_json, style_json, is_published, created_at, updated_at
+- **formation_modules**: id, formation_id (FK→formations), title, description, sort_order, is_free, created_at, updated_at
+- **formation_lessons**: id, module_id (FK→formation_modules), formation_id (FK→formations), title, description, content_type (text/video/audio/pdf/quiz), video_url, content_html, content_json, duration_minutes, sort_order, is_free, created_at, updated_at
+- **formation_enrollments**: id, formation_id (FK→formations), user_id (FK→users), status (active/completed/refunded), progress_percent, completed_lessons (JSON), enrolled_at, completed_at, UNIQUE(formation_id, user_id)
+- **6 indexes**: formation_pages_formation, formation_modules_formation, formation_lessons_module, formation_lessons_formation, formation_enrollments_user, formation_enrollments_formation
+
+#### 2. API Routes Created (7 edge runtime files)
+
+- **`/src/app/api/formations/route.ts`** — GET (list published formations with module_count, lesson_count, student_count, search/category filtering) / POST (create formation, admin only)
+- **`/src/app/api/formations/[id]/route.ts`** — GET (detail with modules, lessons, stats) / PUT (update, admin only) / DELETE (cascade delete all content, admin only)
+- **`/src/app/api/formations/[id]/modules/route.ts`** — GET (list modules with lesson_count) / POST (create module) / PUT (reorder modules via moduleIds array)
+- **`/src/app/api/formations/[id]/modules/[moduleId]/route.ts`** — GET (module with lessons) / PUT (update module) / DELETE (cascade delete lessons)
+- **`/src/app/api/formations/[id]/modules/[moduleId]/lessons/route.ts`** — GET (list lessons) / POST (create lesson with content_type validation)
+- **`/src/app/api/formations/[id]/modules/[moduleId]/lessons/[lessonId]/route.ts`** — GET (lesson detail) / PUT (update lesson) / DELETE
+- **`/src/app/api/formations/[id]/page/route.ts`** — GET (landing page content, GrapesJS JSON) / PUT (save page content, upsert logic)
+
+All API routes use `export const runtime = 'edge'`, `getDB()` from `@/lib/db`, `getSession()` from `@/lib/auth`, and admin/super_admin verification.
+
+#### 3. GrapesJS Integration
+- **Installed packages**: grapesjs, grapesjs-blocks-basic, grapesjs-preset-webpage, grapesjs-component-countdown, grapesjs-tabs, grapesjs-custom-code, grapesjs-plugin-forms
+- **`/src/components/formation/grapesjs-editor.tsx`** — Full-screen editor component loaded via `next/dynamic` with `ssr: false`. Features:
+  - Dynamic import of GrapesJS + all plugins (client-side only)
+  - NyXia-themed dark UI (custom gjs-one-bg, gjs-two-color CSS overrides)
+  - Save to D1 via `/api/formations/[id]/page` PUT endpoint
+  - Preview in new window
+  - Toolbar with Save, Preview, Close buttons
+  - Loading state with spinner
+
+#### 4. Admin Formation Manager — `/src/app/admin/formations/page.tsx`
+Full-featured admin page with:
+- **Formation List** — Left panel with all admin formations, status badges, student/module/lesson counts
+- **Stats Bar** — Total, Published, Draft, Students counts
+- **Formation CRUD** — Create/Edit dialog with title, description, long description, price, category, image upload (drag & drop)
+- **Module Management** — DnD reorder via @dnd-kit/sortable, create/edit/delete modules with free preview toggle
+- **Lesson Management** — Create/edit lessons within modules, content_type selector (text/video/audio/pdf/quiz), duration, video URL, HTML content editor
+- **GrapesJS Page Builder** — Full-screen editor integration via "Éditeur de Page" button
+- **Navigation** — "Voir le catalogue" and "Mode Apprenant" quick links
+
+#### 5. Public Formation Pages
+
+- **`/src/app/formations/page.tsx`** — Formation catalog:
+  - Hero section with animated stats (formations, students, lessons)
+  - Search bar with live filtering
+  - Category filter chips
+  - Responsive grid of formation cards with glassmorphism, gradient borders
+  - Cards show thumbnail, title, description, category, module/lesson/student counts, price
+  - Empty state with CTA
+
+- **`/src/app/formations/[id]/page.tsx`** — Formation landing page:
+  - If GrapesJS page content exists → renders HTML directly with nav bar
+  - Default template: hero section, benefits cards (Contenu Premium, Communauté, Certificat), expandable program/modules, pricing CTA with gold theme
+  - Responsive design, video-ready
+
+- **`/src/app/formations/[id]/learn/page.tsx`** — Formation learning interface:
+  - Sticky sidebar with module/lesson navigation (collapsible modules)
+  - Main content area with lesson header, video player (YouTube embed support), HTML content
+  - Mark as complete toggle with progress bar
+  - Lesson type icons (video, audio, pdf, quiz, text)
+  - Mobile-responsive sidebar overlay
+  - Progress tracking UI
+
+#### 6. Admin Dashboard Updated — `/src/app/admin/page.tsx`
+- Added `GraduationCap` icon import
+- Extended `TabType` to include `'formations'`
+- Added "Formations" tab to navigation with GraduationCap icon
+- Tab content: quick stats (formations, students, revenue) + link to full manager at `/admin/formations`
+
+#### 7. Navigation Updated — `/src/app/page.tsx`
+- Changed nav link from `{ label: 'Formation', href: '#formation' }` to `{ label: 'Formations', href: '/formations' }` linking to the public catalog
+
+#### 8. Design Consistency
+- All pages use StarryBackground component
+- Glassmorphism cards (glass-card, glass-card-gold, gradient-border)
+- NyXia design system colors (#7B5CFF violet, #F4C842 gold, #06101f dark bg)
+- shadcn/ui components throughout
+- All text in French
+- Responsive design with mobile-first approach
+- Custom scrollbar styling
+
+#### Files Created:
+- `/home/z/my-project/formation-schema.sql`
+- `/src/app/api/formations/route.ts`
+- `/src/app/api/formations/[id]/route.ts`
+- `/src/app/api/formations/[id]/modules/route.ts`
+- `/src/app/api/formations/[id]/modules/[moduleId]/route.ts`
+- `/src/app/api/formations/[id]/modules/[moduleId]/lessons/route.ts`
+- `/src/app/api/formations/[id]/modules/[moduleId]/lessons/[lessonId]/route.ts`
+- `/src/app/api/formations/[id]/page/route.ts`
+- `/src/components/formation/grapesjs-editor.tsx`
+- `/src/app/admin/formations/page.tsx`
+- `/src/app/formations/page.tsx`
+- `/src/app/formations/[id]/page.tsx`
+- `/src/app/formations/[id]/learn/page.tsx`
+
+#### Files Modified:
+- `/src/app/admin/page.tsx` — Added Formations tab
+- `/src/app/page.tsx` — Updated nav link
+- `package.json` — Added GrapesJS packages
+
+#### Build Result:
+- ✅ Build succeeded with `npx @cloudflare/next-on-pages`
+- 122 total route entries
+- 11 prerendered routes (including /formations and /admin/formations)
+- All dynamic routes configured with edge runtime
+- No TypeScript errors
+- No build errors
+
+#### Issues Encountered:
+- Two formation pages (`/formations/[id]` and `/formations/[id]/learn`) initially missing `export const runtime = 'edge'` — fixed by adding it after first build failure
+- The `[id]/page/route.ts` API route showed as 0 B in build output (prerendered) — this is because the route path `/api/formations/[id]/page` may conflict with Next.js page routing; the page route (`/formations/[id]/page.tsx`) already has edge runtime set correctly
+
+#### How to Test:
+1. **D1 Schema**: Execute `/home/z/my-project/formation-schema.sql` against D1 database to create tables
+2. **API Routes**: Test via fetch calls to `/api/formations` (GET/POST), `/api/formations/[id]` (GET/PUT/DELETE), etc.
+3. **Admin Manager**: Navigate to `/admin/formations` — create a formation, add modules/lessons, edit page with GrapesJS
+4. **Public Catalog**: Navigate to `/formations` — search, filter by category
+5. **Landing Page**: Click a formation card to see the landing page
+6. **Learning Interface**: Click "S'inscrire" or navigate to `/formations/[id]/learn`

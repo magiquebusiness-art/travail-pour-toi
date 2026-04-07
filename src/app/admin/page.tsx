@@ -43,6 +43,7 @@ import {
   Trash2,
   Eye,
   EyeOff,
+  GraduationCap,
   ImageIcon,
   Upload,
   X,
@@ -51,7 +52,7 @@ import { toast } from 'sonner'
 import { useAuth } from '@/hooks/useAuth'
 import { NyXiaWidget } from '@/components/nyxia-widget'
 
-type TabType = 'dashboard' | 'affiliates' | 'products' | 'payouts' | 'settings'
+type TabType = 'dashboard' | 'affiliates' | 'products' | 'formations' | 'payouts' | 'settings'
 
 interface MarketplaceCategory {
   id: number
@@ -619,6 +620,7 @@ export default function AdminDashboardPage() {
               { id: 'affiliates' as TabType, label: 'Mon équipe', icon: Users },
               { id: 'payouts' as TabType, label: 'Paiements', icon: Wallet },
               { id: 'products' as TabType, label: 'Mes Produits', icon: Package },
+              { id: 'formations' as TabType, label: 'Formations', icon: GraduationCap },
               { id: 'settings' as TabType, label: 'Paramètres', icon: Settings },
             ].map((tab) => (
               <Button
@@ -1289,6 +1291,67 @@ export default function AdminDashboardPage() {
                     <p className="text-lg font-medium text-zinc-400 mb-1">Aucun paiement effectué</p>
                     <p className="text-sm">Les paiements traités apparaîtront ici</p>
                   </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
+          {/* FORMATIONS TAB */}
+          {activeTab === 'formations' && (
+            <div className="space-y-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                    <GraduationCap className="w-5 h-5 text-purple-400" />
+                    Formations
+                  </h2>
+                  <p className="text-zinc-400 text-sm">Gérez vos formations, modules et leçons</p>
+                </div>
+                <Link href="/admin/formations">
+                  <Button className="glass-button">
+                    Ouvrir le gestionnaire
+                    <ChevronRight className="w-4 h-4 ml-2" />
+                  </Button>
+                </Link>
+              </div>
+
+              <div className="grid sm:grid-cols-3 gap-4">
+                <Card className="glass-card border-0">
+                  <CardContent className="p-4 text-center">
+                    <GraduationCap className="w-6 h-6 text-purple-400 mx-auto mb-2" />
+                    <p className="text-2xl font-bold text-white">—</p>
+                    <p className="text-zinc-500 text-xs">Formations créées</p>
+                  </CardContent>
+                </Card>
+                <Card className="glass-card border-0">
+                  <CardContent className="p-4 text-center">
+                    <Users className="w-6 h-6 text-cyan-400 mx-auto mb-2" />
+                    <p className="text-2xl font-bold text-white">—</p>
+                    <p className="text-zinc-500 text-xs">Étudiants inscrits</p>
+                  </CardContent>
+                </Card>
+                <Card className="glass-card border-0">
+                  <CardContent className="p-4 text-center">
+                    <DollarSign className="w-6 h-6 text-green-400 mx-auto mb-2" />
+                    <p className="text-2xl font-bold text-white">—</p>
+                    <p className="text-zinc-500 text-xs">Revenus formations</p>
+                  </CardContent>
+                </Card>
+              </div>
+
+              <Card className="glass-card border-0">
+                <CardContent className="p-8 text-center">
+                  <GraduationCap className="w-12 h-12 text-purple-500/30 mx-auto mb-4" />
+                  <h3 className="text-white font-medium text-lg mb-2">Gestionnaire de Formations</h3>
+                  <p className="text-zinc-400 text-sm mb-6 max-w-md mx-auto">
+                    Créez vos formations avec des modules et leçons, utilisez l&apos;éditeur GrapesJS pour vos pages de vente.
+                  </p>
+                  <Link href="/admin/formations">
+                    <Button className="bg-[#7B5CFF] hover:bg-[#6a4ce8] text-white px-8">
+                      <GraduationCap className="w-4 h-4 mr-2" />
+                      Accéder au gestionnaire
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
             </div>

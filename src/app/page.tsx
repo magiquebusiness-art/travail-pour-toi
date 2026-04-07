@@ -264,7 +264,7 @@ const ambassadorBenefits = [
 const navLinks = [
   { label: 'Boutique', href: '#boutique' },
   { label: 'Commissions', href: '#commissions' },
-  { label: 'Formation', href: '#formation' },
+  { label: 'Formations', href: '/formations' },
   { label: 'Devenir Collaborateur', href: '#collaborateur' },
   { label: 'Ambassadeur', href: '#ambassadeur' },
 ]
@@ -836,6 +836,52 @@ export default function Home() {
               </a>
             </div>
           </div>
+        </div>
+      </Section>
+
+      {/* ============================================ */}
+      {/* SECTION J: BANNIÈRE AFFILIATION CASHFLOW      */}
+      {/* ============================================ */}
+      <Section className="py-12 sm:py-16">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <a href="https://affiliationpro.cashflowecosysteme.com/" target="_blank" rel="noopener noreferrer" className="block group">
+            <div className="relative rounded-2xl overflow-hidden reveal border border-[#F4C842]/20">
+              {/* Animated gradient background */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#0c1a2e] via-[#1a1040] to-[#0c1a2e]" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#F4C842]/5 via-transparent to-[#7B5CFF]/5" />
+              
+              {/* Animated border glow */}
+              <div className="absolute inset-0 rounded-2xl border border-[#F4C842]/10 group-hover:border-[#F4C842]/30 transition-all duration-500" />
+
+              <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 p-6 sm:p-8 lg:p-10">
+                {/* Left: Logo + Text */}
+                <div className="flex items-center gap-5">
+                  {/* Cashflow Ecosysteme Logo */}
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#F4C842] to-[#c9a23a] flex items-center justify-center shadow-lg shadow-[#F4C842]/20 flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                    <span className="text-2xl font-black text-[#06101f]">C</span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg sm:text-xl font-bold text-white mb-1">
+                      Cashflow Écosystème <span className="text-[#F4C842]">Affiliation Pro</span>
+                    </h3>
+                    <p className="text-sm text-[#a5b4fc] leading-relaxed max-w-md">
+                      Rejoins notre programme d'affiliation et gagne des revenus passifs avec nos produits et formations à forte conversion.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Right: CTA */}
+                <div className="flex items-center gap-3 flex-shrink-0">
+                  <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#F4C842]/10 border border-[#F4C842]/20">
+                    <span className="text-xs font-semibold text-[#F4C842]">25% de commissions</span>
+                  </div>
+                  <div className="w-10 h-10 rounded-full bg-[#F4C842]/10 flex items-center justify-center group-hover:bg-[#F4C842]/20 transition-colors">
+                    <ArrowRight className="h-5 w-5 text-[#F4C842] group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
         </div>
       </Section>
 
