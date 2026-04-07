@@ -19,21 +19,11 @@ type GrapesJSEditor = any
 
 /* ================================================================
    NYXIA PREMIUM GRAPESJS THEME
-   - Panel with blocks on the RIGHT side (DOM move approach)
-   - Blocks in 2-column grid, LARGE premium cards
+   - Panel LEFT side (GrapesJS default — DO NOT move it)
+   - Blocks in 2-column grid, ENORMOUS premium cards
    - Dark luxury theme with purple accents
    ================================================================ */
 const NYXIA_PREMIUM_CSS = `
-/* ===== OVERRIDE GRAPESJS EDITOR LAYOUT ===== */
-.gjs-editor,
-#gjs {
-  display: flex !important;
-  flex-direction: row !important;
-}
-
-/* ===== KILL FLOATING TOOLBAR ===== */
-.gjs-toolbar { display: none !important; }
-
 /* ===== GLOBAL FONT ===== */
 .gjs-one-bg,
 .gjs-two-bg,
@@ -43,28 +33,29 @@ const NYXIA_PREMIUM_CSS = `
   font-size: 15px !important;
 }
 
-/* ===== PANEL — RIGHT SIDE, WIDE, PREMIUM ===== */
+/* ===== KILL FLOATING TOOLBAR ===== */
+.gjs-toolbar { display: none !important; }
+
+/* ===== PANEL — LEFT SIDE, WIDE, PREMIUM ===== */
 .gjs-pn {
-  width: 400px !important;
-  min-width: 400px !important;
-  max-width: 400px !important;
+  width: 420px !important;
+  min-width: 420px !important;
+  max-width: 420px !important;
   height: 100% !important;
   padding: 0 !important;
   margin: 0 !important;
-  border-left: 1px solid rgba(123, 92, 255, 0.2) !important;
-  border-right: none !important;
+  border-right: 1px solid rgba(123, 92, 255, 0.15) !important;
+  border-left: none !important;
   background: linear-gradient(180deg, #0d1b33 0%, #0a1428 100%) !important;
-  box-shadow: -4px 0 30px rgba(0, 0, 0, 0.3) !important;
-  order: 10 !important;
   display: flex !important;
   flex-direction: column !important;
 }
 
 .gjs-pn-left,
 .gjs-pn-panel {
-  width: 400px !important;
-  min-width: 400px !important;
-  max-width: 400px !important;
+  width: 420px !important;
+  min-width: 420px !important;
+  max-width: 420px !important;
   padding: 0 !important;
   background: transparent !important;
 }
@@ -78,12 +69,12 @@ const NYXIA_PREMIUM_CSS = `
   flex-wrap: wrap !important;
 }
 .gjs-pn-btn {
-  width: 44px !important;
-  height: 44px !important;
+  width: 46px !important;
+  height: 46px !important;
   font-size: 18px !important;
   margin: 0 !important;
   padding: 0 !important;
-  line-height: 44px !important;
+  line-height: 46px !important;
   border-radius: 12px !important;
   background: rgba(123, 92, 255, 0.08) !important;
   border: 1px solid rgba(123, 92, 255, 0.12) !important;
@@ -122,6 +113,7 @@ const NYXIA_PREMIUM_CSS = `
   padding: 8px 10px !important;
   display: flex !important;
   flex-direction: column !important;
+  overflow-y: auto !important;
 }
 .gjs-blocks-header {
   padding: 14px 16px 10px !important;
@@ -131,26 +123,30 @@ const NYXIA_PREMIUM_CSS = `
   text-transform: uppercase !important;
   letter-spacing: 0.08em !important;
 }
+
+/* Force 2-column grid for block containers */
 .gjs-block-container {
   display: grid !important;
   grid-template-columns: 1fr 1fr !important;
-  gap: 10px !important;
-  padding: 4px 6px !important;
+  gap: 12px !important;
+  padding: 6px 8px !important;
   width: 100% !important;
 }
 .gjs-block-box {
   width: 100% !important;
 }
+
+/* Individual block — PREMIUM LARGE CARD */
 .gjs-block {
   width: 100% !important;
-  padding: 18px 10px 14px !important;
+  padding: 20px 12px 16px !important;
   margin: 0 !important;
   border-radius: 16px !important;
   border: 1px solid rgba(123, 92, 255, 0.12) !important;
   background: linear-gradient(145deg, rgba(123, 92, 255, 0.06) 0%, rgba(15, 23, 42, 0.6) 100%) !important;
   cursor: grab !important;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  min-height: 100px !important;
+  min-height: 110px !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
@@ -177,32 +173,32 @@ const NYXIA_PREMIUM_CSS = `
   font-size: 42px !important;
   margin-bottom: 0 !important;
   width: 100% !important;
-  height: 48px !important;
-  line-height: 48px !important;
+  height: 52px !important;
+  line-height: 52px !important;
   text-align: center !important;
   color: #7B5CFF !important;
 }
 .gjs-block__media-svg {
-  width: 48px !important;
-  height: 48px !important;
+  width: 52px !important;
+  height: 52px !important;
   color: #7B5CFF !important;
 }
 .gjs-block__media-inner {
   width: 100% !important;
-  height: 48px !important;
+  height: 52px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
 }
 .gjs-block svg {
-  width: 48px !important;
-  height: 48px !important;
+  width: 52px !important;
+  height: 52px !important;
   color: #7B5CFF !important;
 }
 .gjs-block-icon {
-  width: 48px !important;
-  height: 48px !important;
-  font-size: 36px !important;
+  width: 52px !important;
+  height: 52px !important;
+  font-size: 38px !important;
 }
 
 /* Block labels — clear and readable */
@@ -228,13 +224,7 @@ const NYXIA_PREMIUM_CSS = `
 }
 .gjs-category { padding: 0 !important; }
 
-/* ===== CANVAS — TAKE FULL REMAINING SPACE ===== */
-.gjs-cv {
-  flex: 1 !important;
-  min-width: 0 !important;
-  order: 1 !important;
-  background: #080e1c !important;
-}
+/* ===== CANVAS ===== */
 .gjs-cv-canvas {
   background-color: #080e1c !important;
   min-height: 100% !important;
@@ -399,8 +389,14 @@ const NYXIA_PREMIUM_CSS = `
 .gjs-am-assets { font-size: 14px !important; }
 .gjs-am-header { font-size: 14px !important; padding: 12px 14px !important; }
 
-/* ===== UNDO/REDO in top bar ===== */
+/* ===== UNDO/REDO ===== */
 .gjs-undo, .gjs-redo { font-size: 16px !important; }
+
+/* ===== TOP BAR (inside GrapesJS) ===== */
+.gjs-top-bar {
+  background: #0d1b33 !important;
+  border-bottom: 1px solid rgba(123, 92, 255, 0.15) !important;
+}
 `
 
 export default function GrapesJSEditorComponent({
@@ -438,7 +434,6 @@ export default function GrapesJSEditorComponent({
         let parsedStyles
         try { parsedStyles = JSON.parse(initialStyles) } catch { parsedStyles = undefined }
 
-        // Set the container ID
         editorRef.current.id = 'nyxia-gjs-editor'
 
         const editor = grapesjs.init({
@@ -471,7 +466,7 @@ export default function GrapesJSEditorComponent({
                   Votre Page de Vente
                 </h1>
                 <p style="font-family:'Outfit',sans-serif;font-size:16px;color:rgba(255,255,255,0.6);line-height:1.7;">
-                  Commencez à construire votre page en glissant des blocs depuis le panneau de droite.
+                  Glissez des blocs depuis le panneau de gauche pour construire votre page.
                 </p>
               </div>
             </div>
@@ -486,48 +481,12 @@ export default function GrapesJSEditorComponent({
         themeEl.textContent = NYXIA_PREMIUM_CSS
         document.head.appendChild(themeEl)
 
-        // ===== CRITICAL: Move panel to RIGHT side by physically moving DOM nodes =====
-        const movePanelToRight = () => {
+        // Only hide branding and force block grid — DO NOT move panels
+        const setupTheme = () => {
           if (!editorRef.current) return
-
-          // Find the GrapesJS editor root element
           const gjsEditor = editorRef.current.querySelector('.gjs-editor') || editorRef.current
 
-          // Find the panel and canvas elements
-          const panel = gjsEditor.querySelector('.gjs-pn') as HTMLElement
-          const canvas = gjsEditor.querySelector('.gjs-cv') as HTMLElement
-
-          if (!panel || !canvas) return
-
-          const parent = panel.parentElement
-          if (!parent) return
-
-          // PHYSICALLY move the panel AFTER the canvas in the DOM
-          // This is the ONLY reliable way to move it to the right side
-          if (panel.nextElementSibling !== null || parent.lastChild !== panel) {
-            // Remove panel from current position
-            parent.removeChild(panel)
-            // Re-append it (it goes to the end, after canvas)
-            parent.appendChild(panel)
-          }
-
-          // Ensure parent is flex with row direction
-          parent.style.display = 'flex'
-          parent.style.flexDirection = 'row'
-          parent.style.width = '100%'
-          parent.style.height = '100%'
-
-          // Make sure canvas takes remaining space
-          canvas.style.flex = '1'
-          canvas.style.minWidth = '0'
-
-          // Make sure panel has fixed width on right
-          panel.style.width = '400px'
-          panel.style.minWidth = '400px'
-          panel.style.maxWidth = '400px'
-          panel.style.flexShrink = '0'
-
-          // Remove any white blocks / branding
+          // Remove GrapesJS branding
           gjsEditor.querySelectorAll('.gjs-off-prv, .gjs-no-ph, [class*="gjs-logo"], .gjs-brand, .gjs-logo, .gjs-logo-content').forEach(el => {
             (el as HTMLElement).style.display = 'none'
           })
@@ -537,26 +496,26 @@ export default function GrapesJSEditorComponent({
 
           // Force block containers into 2-column grid
           gjsEditor.querySelectorAll('.gjs-block-container').forEach((container) => {
-            (container as HTMLElement).style.display = 'grid'
-            ;(container as HTMLElement).style.gridTemplateColumns = '1fr 1fr'
-            ;(container as HTMLElement).style.gap = '10px'
-            ;(container as HTMLElement).style.padding = '4px 6px'
+            const el = container as HTMLElement
+            el.style.display = 'grid'
+            el.style.gridTemplateColumns = '1fr 1fr'
+            el.style.gap = '12px'
+            el.style.padding = '6px 8px'
+            el.style.width = '100%'
           })
         }
 
-        // Run multiple times with delays to ensure DOM is fully built
-        // GrapesJS loads plugins async so we need to keep trying
-        setTimeout(movePanelToRight, 100)
-        setTimeout(movePanelToRight, 300)
-        setTimeout(movePanelToRight, 600)
-        setTimeout(movePanelToRight, 1000)
-        setTimeout(movePanelToRight, 2000)
-        setTimeout(movePanelToRight, 3000)
+        // Run after plugins load
+        setTimeout(setupTheme, 100)
+        setTimeout(setupTheme, 300)
+        setTimeout(setupTheme, 600)
+        setTimeout(setupTheme, 1000)
+        setTimeout(setupTheme, 2000)
 
-        // Also run on load event as some plugins load late
         const onLoad = () => {
-          setTimeout(movePanelToRight, 100)
-          setTimeout(movePanelToRight, 500)
+          setTimeout(setupTheme, 100)
+          setTimeout(setupTheme, 500)
+          setTimeout(setupTheme, 1000)
         }
         editor.on('load', onLoad)
 
@@ -620,7 +579,7 @@ export default function GrapesJSEditorComponent({
 
   return (
     <div className="fixed inset-0 z-[100] bg-[#06101f] flex flex-col">
-      {/* ===== TOP BAR — Premium ===== */}
+      {/* ===== TOP BAR ===== */}
       <div className="flex items-center justify-between px-6 h-[60px] border-b border-purple-500/20 bg-[#0d1b33] shrink-0">
         <div className="flex items-center gap-4">
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#7B5CFF] to-[#5a3dd6] flex items-center justify-center shadow-lg shadow-purple-500/20">
