@@ -453,3 +453,35 @@ Stage Summary:
 - Audio support added for lesson creation (URL input + preview player)
 - All GrapesJS branding hidden via CSS + JS DOM removal
 - Deployed to: https://travail-pour-toi.com/studio
+
+---
+Task ID: 2
+Agent: Super Z (main)
+Task: Visual redesign of editors - bigger, clearer, more beautiful
+
+Work Log:
+- Rewrote `/home/z/my-project/src/components/formation/simple-lesson-editor.tsx` with dramatically improved visuals
+  - Toolbar buttons: 44x44px (was 32px), icons 20px (was 16px)
+  - Editor font: 18px (was 15px), min-height 500px (was 400px)
+  - Heading 1: 2.25rem with gradient, Heading 2: 1.65rem
+  - Color picker swatches: 40px (was 28px)
+  - URL inputs: text-sm h-11 (was text-xs h-8)
+  - Save button: gradient with shadow
+  - Active button state: ring + shadow
+- Rebalanced `/home/z/my-project/src/components/formation/grapesjs-editor.tsx` CSS
+  - Font size: 13px (was 9px) - sweet spot between too big and too small
+  - Panel width: 230px (was 180px)
+  - Block icons: 28px (was 24px)
+  - Inputs: 28px height, 12px font (was 18px, 9px)
+  - Layer items: 28px min-height (was 18px)
+  - Style manager: 12px fonts (was 9px)
+  - Header bar: h-12 with gradient (was h-8 flat)
+  - Save/Aperçu buttons: h-9, text-sm (was h-6, text-[10px])
+- Built and deployed to Cloudflare Pages
+
+Stage Summary:
+- Both editors now use comfortable 12-13px font sizes (not microscopic)
+- All interactive elements are at least 28-44px (thumb-friendly)
+- Visual design includes gradients, shadows, and ring effects
+- Branding removal still active
+- Deployed to: https://travail-pour-toi.com/studio

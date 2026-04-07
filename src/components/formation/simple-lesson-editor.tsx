@@ -126,10 +126,10 @@ function ToolbarButton({
           onClick={onClick}
           disabled={disabled}
           className={cn(
-            'flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-150 shrink-0',
+            'flex items-center justify-center w-11 h-11 rounded-xl transition-all duration-150 shrink-0',
             active
-              ? 'bg-purple-500/30 text-purple-200 shadow-sm shadow-purple-500/20'
-              : 'bg-purple-500/10 hover:bg-purple-500/20 text-purple-300/80 hover:text-purple-300',
+              ? 'bg-purple-500/25 ring-1 ring-purple-500/40 text-purple-200 shadow-md shadow-purple-500/10'
+              : 'bg-purple-500/15 hover:bg-purple-500/25 text-purple-200',
             disabled && 'opacity-30 pointer-events-none'
           )}
         >
@@ -139,7 +139,7 @@ function ToolbarButton({
       <TooltipContent
         side="bottom"
         sideOffset={4}
-        className="bg-[#1a1a2e] text-zinc-300 text-[11px] border border-purple-500/20 rounded-lg px-2.5 py-1 z-[100]"
+        className="bg-[#1a1a2e] text-zinc-300 text-xs border border-purple-500/20 rounded-lg px-3 py-1.5 z-[100]"
       >
         {tooltip}
       </TooltipContent>
@@ -149,7 +149,7 @@ function ToolbarButton({
 
 /** Visual separator between toolbar groups */
 function ToolbarSeparator() {
-  return <div className="w-px h-6 bg-purple-500/20 mx-0.5 shrink-0" />
+  return <div className="w-px h-8 bg-purple-500/25 mx-0.5 shrink-0" />
 }
 
 /** Inline popover for URL inputs (link / video / audio) */
@@ -170,13 +170,13 @@ function InlineUrlInput({
     <>
       {/* Invisible backdrop to detect outside click */}
       <div className="fixed inset-0 z-[60]" onClick={onCancel} />
-      <div className="absolute top-full left-0 mt-1 z-[70] flex items-center gap-1.5 p-2 rounded-lg bg-[#1a1a2e] border border-purple-500/20 shadow-2xl shadow-black/40 min-w-[300px]">
+      <div className="absolute top-full left-0 mt-1 z-[70] flex items-center gap-1.5 p-3 rounded-xl bg-[#1a1a2e] border border-purple-500/20 shadow-2xl shadow-black/40 min-w-[380px]">
         <input
           type="url"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="flex-1 h-8 px-2.5 text-xs text-white bg-[#0a0f1e] border border-purple-500/20 rounded-lg outline-none focus:border-purple-500/50 placeholder:text-zinc-600 font-[Outfit,sans-serif]"
+          className="flex-1 h-11 px-3 text-sm text-white bg-[#0a0f1e] border border-purple-500/20 rounded-xl outline-none focus:border-purple-500/50 placeholder:text-zinc-600 font-[Outfit,sans-serif]"
           onKeyDown={(e) => {
             if (e.key === 'Enter') onSubmit()
             if (e.key === 'Escape') onCancel()
@@ -186,7 +186,7 @@ function InlineUrlInput({
         <button
           type="button"
           onClick={onSubmit}
-          className="h-8 px-3 text-xs font-medium text-white bg-[#7B5CFF] hover:bg-[#6a4ce8] rounded-lg transition-colors font-[Outfit,sans-serif]"
+          className="h-11 px-4 text-sm font-medium text-white bg-[#7B5CFF] hover:bg-[#6a4ce8] rounded-xl transition-colors font-[Outfit,sans-serif]"
         >
           OK
         </button>
@@ -202,45 +202,50 @@ const EDITOR_STYLES = `
 /* ── Base ── */
 .nyxia-editor {
   font-family: 'Outfit', ui-sans-serif, system-ui, sans-serif;
-  font-size: 15px;
-  line-height: 1.75;
-  color: #e2e8f0;
-  min-height: 400px;
-  padding: 24px;
+  font-size: 18px;
+  line-height: 1.8;
+  color: #f1f5f9;
+  min-height: 500px;
+  padding: 36px;
   outline: none;
   caret-color: #7B5CFF;
   background-color: #0a0f1e;
   overflow-y: auto;
+  box-shadow: inset 0 1px 0 0 rgba(123, 92, 255, 0.06), inset 0 0 40px rgba(123, 92, 255, 0.03);
 }
 
 .nyxia-editor:empty::before {
   content: "Commence à écrire ta leçon ici…";
-  color: #3f3f5c;
+  color: #4a4a6a;
   font-style: italic;
   pointer-events: none;
   position: absolute;
+  font-size: 20px;
 }
 
 /* ── Headings ── */
 .nyxia-editor h1 {
-  font-size: 1.75rem;
+  font-size: 2.25rem;
   font-weight: 700;
-  color: #ffffff;
-  margin: 24px 0 12px;
-  line-height: 1.3;
+  background: linear-gradient(135deg, #e9d5ff 0%, #c4b5fd 50%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 28px 0 14px;
+  line-height: 1.25;
   letter-spacing: -0.01em;
 }
 .nyxia-editor h2 {
-  font-size: 1.35rem;
+  font-size: 1.65rem;
   font-weight: 600;
   color: #f1f5f9;
-  margin: 20px 0 10px;
-  line-height: 1.4;
+  margin: 24px 0 12px;
+  line-height: 1.35;
 }
 
 /* ── Paragraph ── */
 .nyxia-editor p {
-  margin: 0 0 8px;
+  margin: 0 0 12px;
 }
 
 /* ── Links ── */
@@ -271,18 +276,18 @@ const EDITOR_STYLES = `
 .nyxia-editor img {
   max-width: 100%;
   height: auto;
-  border-radius: 10px;
-  margin: 12px 0;
+  border-radius: 12px;
+  margin: 14px 0;
   border: 1px solid rgba(123, 92, 255, 0.15);
 }
 
 /* ── Blockquotes ── */
 .nyxia-editor blockquote {
   border-left: 3px solid #7B5CFF;
-  padding: 8px 16px;
-  margin: 12px 0;
+  padding: 10px 20px;
+  margin: 14px 0;
   background: rgba(123, 92, 255, 0.06);
-  border-radius: 0 8px 8px 0;
+  border-radius: 0 10px 10px 0;
   color: #cbd5e1;
 }
 
@@ -290,42 +295,42 @@ const EDITOR_STYLES = `
 .nyxia-editor code {
   background: rgba(123, 92, 255, 0.12);
   color: #c4b5fd;
-  padding: 2px 6px;
-  border-radius: 4px;
+  padding: 2px 8px;
+  border-radius: 5px;
   font-size: 0.9em;
   font-family: 'Fira Code', monospace;
 }
 .nyxia-editor pre {
   background: #0e1425;
   border: 1px solid rgba(123, 92, 255, 0.15);
-  border-radius: 8px;
-  padding: 16px;
-  margin: 12px 0;
+  border-radius: 10px;
+  padding: 18px;
+  margin: 14px 0;
   overflow-x: auto;
 }
 .nyxia-editor pre code {
   background: none;
   padding: 0;
-  color: #e2e8f0;
+  color: #f1f5f9;
 }
 
 /* ── Horizontal rule ── */
 .nyxia-editor hr {
   border: none;
   border-top: 1px solid rgba(123, 92, 255, 0.2);
-  margin: 20px 0;
+  margin: 24px 0;
 }
 
 /* ── Scrollbar ── */
 .nyxia-editor::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
 }
 .nyxia-editor::-webkit-scrollbar-track {
   background: transparent;
 }
 .nyxia-editor::-webkit-scrollbar-thumb {
   background: rgba(123, 92, 255, 0.2);
-  border-radius: 3px;
+  border-radius: 4px;
 }
 .nyxia-editor::-webkit-scrollbar-thumb:hover {
   background: rgba(123, 92, 255, 0.35);
@@ -343,8 +348,8 @@ const EDITOR_STYLES = `
   padding-bottom: 56.25%;
   height: 0;
   overflow: hidden;
-  border-radius: 10px;
-  margin: 16px 0;
+  border-radius: 12px;
+  margin: 18px 0;
   border: 1px solid rgba(123, 92, 255, 0.2);
 }
 .nyxia-editor div[data-video-wrapper] iframe {
@@ -357,16 +362,16 @@ const EDITOR_STYLES = `
 
 /* ── Audio player ── */
 .nyxia-editor div[data-audio-wrapper] {
-  margin: 12px 0;
-  padding: 14px;
+  margin: 14px 0;
+  padding: 18px;
   background: rgba(123, 92, 255, 0.08);
-  border-radius: 10px;
+  border-radius: 12px;
   border: 1px solid rgba(123, 92, 255, 0.2);
 }
 .nyxia-editor audio {
   width: 100%;
   outline: none;
-  border-radius: 6px;
+  border-radius: 8px;
 }
 `
 
@@ -672,10 +677,10 @@ export default function SimpleLessonEditor({
   // ── Render ──
 
   return (
-    <div className="flex flex-col rounded-xl overflow-hidden border border-purple-500/20 bg-[#0a0f1e] shadow-xl shadow-purple-500/5">
+    <div className="flex flex-col rounded-xl overflow-hidden border border-purple-500/25 bg-[#0a0f1e] shadow-2xl shadow-purple-900/20">
       {/* ─── Header bar ─── */}
-      <div className="flex items-center justify-between px-4 py-2.5 border-b border-purple-500/20 bg-[#0c1a2e] shrink-0">
-        <span className="text-zinc-400 font-medium text-[11px] tracking-widest uppercase font-[Outfit,sans-serif] select-none">
+      <div className="flex items-center justify-between px-4 py-4 border-b border-purple-500/25 bg-[#0c1a2e] shrink-0">
+        <span className="bg-gradient-to-r from-purple-300 to-purple-100 bg-clip-text text-transparent font-medium text-sm tracking-widest uppercase font-[Outfit,sans-serif] select-none">
           ✏️ Éditeur de Leçon
         </span>
         <div className="flex items-center gap-2">
@@ -683,12 +688,12 @@ export default function SimpleLessonEditor({
             <button
               onClick={handleSave}
               disabled={isSaving || readOnly}
-              className="flex items-center gap-1.5 px-3.5 h-7 rounded-lg bg-[#7B5CFF] hover:bg-[#6a4ce8] text-white text-[11px] font-medium transition-colors disabled:opacity-50 font-[Outfit,sans-serif]"
+              className="flex items-center gap-2 px-5 h-10 rounded-xl bg-gradient-to-r from-[#7B5CFF] to-[#6a4ce8] hover:from-[#6a4ce8] hover:to-[#5b3dd6] text-white text-sm font-medium transition-all disabled:opacity-50 font-[Outfit,sans-serif] shadow-lg shadow-purple-500/20"
             >
               {isSaving ? (
-                <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               ) : (
-                <Save className="w-3.5 h-3.5" />
+                <Save className="w-4 h-4" />
               )}
               Sauvegarder
             </button>
@@ -696,7 +701,7 @@ export default function SimpleLessonEditor({
           {onClose && (
             <button
               onClick={onClose}
-              className="flex items-center justify-center w-7 h-7 rounded-lg text-zinc-500 hover:text-white hover:bg-white/5 transition-colors"
+              className="flex items-center justify-center w-10 h-10 rounded-xl text-zinc-500 hover:text-white hover:bg-white/5 transition-colors"
               aria-label="Fermer"
             >
               <X className="w-4 h-4" />
@@ -707,14 +712,14 @@ export default function SimpleLessonEditor({
 
       {/* ─── Toolbar ─── */}
       {!readOnly && (
-        <div className="flex flex-wrap items-center gap-1 px-2.5 py-2 border-b border-purple-500/20 bg-[#0e1425] shrink-0 overflow-x-auto">
+        <div className="flex flex-wrap items-center gap-1.5 px-3 py-3 border-b border-purple-500/25 bg-gradient-to-b from-[#111b30] to-[#0e1425] shrink-0 overflow-x-auto">
           {/* ── Text formatting ── */}
           <ToolbarButton
             tooltip="Gras (Ctrl+B)"
             active={activeStates.bold}
             onClick={() => execCommand('bold')}
           >
-            <Bold className="w-4 h-4" />
+            <Bold className="w-5 h-5" />
           </ToolbarButton>
 
           <ToolbarButton
@@ -722,7 +727,7 @@ export default function SimpleLessonEditor({
             active={activeStates.italic}
             onClick={() => execCommand('italic')}
           >
-            <Italic className="w-4 h-4" />
+            <Italic className="w-5 h-5" />
           </ToolbarButton>
 
           <ToolbarButton
@@ -730,7 +735,7 @@ export default function SimpleLessonEditor({
             active={activeStates.underline}
             onClick={() => execCommand('underline')}
           >
-            <Underline className="w-4 h-4" />
+            <Underline className="w-5 h-5" />
           </ToolbarButton>
 
           <ToolbarButton
@@ -738,7 +743,7 @@ export default function SimpleLessonEditor({
             active={activeStates.strikethrough}
             onClick={() => execCommand('strikeThrough')}
           >
-            <Strikethrough className="w-4 h-4" />
+            <Strikethrough className="w-5 h-5" />
           </ToolbarButton>
 
           <ToolbarSeparator />
@@ -749,7 +754,7 @@ export default function SimpleLessonEditor({
             active={blockType === 'h1'}
             onClick={() => handleBlockType('h1')}
           >
-            <Heading1 className="w-4 h-4" />
+            <Heading1 className="w-5 h-5" />
           </ToolbarButton>
 
           <ToolbarButton
@@ -757,7 +762,7 @@ export default function SimpleLessonEditor({
             active={blockType === 'h2'}
             onClick={() => handleBlockType('h2')}
           >
-            <Heading2 className="w-4 h-4" />
+            <Heading2 className="w-5 h-5" />
           </ToolbarButton>
 
           <ToolbarButton
@@ -765,7 +770,7 @@ export default function SimpleLessonEditor({
             active={blockType === 'p' || blockType === ''}
             onClick={() => handleBlockType('p')}
           >
-            <Pilcrow className="w-4 h-4" />
+            <Pilcrow className="w-5 h-5" />
           </ToolbarButton>
 
           <ToolbarSeparator />
@@ -776,7 +781,7 @@ export default function SimpleLessonEditor({
             active={activeStates.insertUnorderedList}
             onClick={() => execCommand('insertUnorderedList')}
           >
-            <List className="w-4 h-4" />
+            <List className="w-5 h-5" />
           </ToolbarButton>
 
           <ToolbarButton
@@ -784,7 +789,7 @@ export default function SimpleLessonEditor({
             active={activeStates.insertOrderedList}
             onClick={() => execCommand('insertOrderedList')}
           >
-            <ListOrdered className="w-4 h-4" />
+            <ListOrdered className="w-5 h-5" />
           </ToolbarButton>
 
           <ToolbarSeparator />
@@ -795,7 +800,7 @@ export default function SimpleLessonEditor({
             active={activeStates.justifyLeft}
             onClick={() => execCommand('justifyLeft')}
           >
-            <AlignLeft className="w-4 h-4" />
+            <AlignLeft className="w-5 h-5" />
           </ToolbarButton>
 
           <ToolbarButton
@@ -803,7 +808,7 @@ export default function SimpleLessonEditor({
             active={activeStates.justifyCenter}
             onClick={() => execCommand('justifyCenter')}
           >
-            <AlignCenter className="w-4 h-4" />
+            <AlignCenter className="w-5 h-5" />
           </ToolbarButton>
 
           <ToolbarButton
@@ -811,7 +816,7 @@ export default function SimpleLessonEditor({
             active={activeStates.justifyRight}
             onClick={() => execCommand('justifyRight')}
           >
-            <AlignRight className="w-4 h-4" />
+            <AlignRight className="w-5 h-5" />
           </ToolbarButton>
 
           <ToolbarSeparator />
@@ -825,23 +830,23 @@ export default function SimpleLessonEditor({
                 setShowColorPicker((v) => !v)
               }}
             >
-              <Palette className="w-4 h-4" />
+              <Palette className="w-5 h-5" />
             </ToolbarButton>
 
             {showColorPicker && (
               <>
                 <div className="fixed inset-0 z-[60]" onClick={() => setShowColorPicker(false)} />
-                <div className="absolute top-full left-0 mt-1 z-[70] p-2.5 rounded-lg bg-[#1a1a2e] border border-purple-500/20 shadow-2xl shadow-black/40">
-                  <p className="text-[10px] text-zinc-500 uppercase tracking-wider mb-2 font-[Outfit,sans-serif]">
+                <div className="absolute top-full left-0 mt-1 z-[70] p-3 rounded-xl bg-[#1a1a2e] border border-purple-500/20 shadow-2xl shadow-black/40">
+                  <p className="text-xs text-zinc-500 uppercase tracking-wider mb-2.5 font-[Outfit,sans-serif]">
                     Couleur du texte
                   </p>
-                  <div className="grid grid-cols-4 gap-1.5">
+                  <div className="grid grid-cols-4 gap-2">
                     {PRESET_COLORS.map((color) => (
                       <button
                         key={color.value}
                         type="button"
                         onClick={() => handleTextColor(color.value)}
-                        className="w-7 h-7 rounded-lg border-2 border-white/10 hover:border-purple-400 hover:scale-110 transition-all duration-150"
+                        className="w-10 h-10 rounded-xl border-2 border-white/10 hover:border-purple-400 hover:scale-110 transition-all duration-150"
                         style={{ backgroundColor: color.value }}
                         title={color.name}
                       />
@@ -861,7 +866,7 @@ export default function SimpleLessonEditor({
               active={activeStates.createLink}
               onClick={toggleLink}
             >
-              <Link className="w-4 h-4" />
+              <Link className="w-5 h-5" />
             </ToolbarButton>
 
             {showLinkInput && (
@@ -880,7 +885,7 @@ export default function SimpleLessonEditor({
             tooltip="Supprimer le lien"
             onClick={handleUnlink}
           >
-            <Unlink className="w-4 h-4" />
+            <Unlink className="w-5 h-5" />
           </ToolbarButton>
 
           <ToolbarSeparator />
@@ -890,7 +895,7 @@ export default function SimpleLessonEditor({
             tooltip="Insérer une image"
             onClick={handleImageUpload}
           >
-            <ImageIcon className="w-4 h-4" />
+            <ImageIcon className="w-5 h-5" />
           </ToolbarButton>
 
           {/* ── Video ── */}
@@ -899,7 +904,7 @@ export default function SimpleLessonEditor({
               tooltip="Vidéo YouTube"
               onClick={toggleVideo}
             >
-              <Video className="w-4 h-4" />
+              <Video className="w-5 h-5" />
             </ToolbarButton>
 
             {showVideoInput && (
@@ -919,7 +924,7 @@ export default function SimpleLessonEditor({
               tooltip="Insérer un audio"
               onClick={toggleAudio}
             >
-              <Music className="w-4 h-4" />
+              <Music className="w-5 h-5" />
             </ToolbarButton>
 
             {showAudioInput && (

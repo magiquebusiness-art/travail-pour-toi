@@ -17,142 +17,144 @@ interface GrapesJSEditorProps {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type GrapesJSEditor = any
 
-/* Compact UI theme — injected AFTER GrapesJS loads to win specificity war */
+/* Balanced UI theme — comfortable sizes, NyXia colors */
 const NYXIA_UI_CSS = `
-/* ========== NYXIA COMPACT EDITOR THEME ========== */
+/* ========== NYXIA EDITOR THEME ========== */
 
-/* Global: shrink everything */
+/* Global */
 .gjs-editor,
 .gjs-one-bg,
 .gjs-two-bg,
 .gjs-three-bg,
 .gjs-four-bg {
   font-family: 'Outfit', ui-sans-serif, system-ui, sans-serif !important;
-  font-size: 11px !important;
+  font-size: 13px !important;
 }
 
 /* Kill floating toolbar */
 .gjs-toolbar { display: none !important; }
 
-/* ---- LEFT PANEL: force narrow ---- */
+/* ---- LEFT PANEL ---- */
 .gjs-pn,
 .gjs-pn-left,
 .gjs-pn-panel {
-  width: 180px !important;
-  min-width: 180px !important;
-  max-width: 180px !important;
+  width: 230px !important;
+  min-width: 230px !important;
+  max-width: 230px !important;
   padding: 0 !important;
 }
 .gjs-pn-btn {
-  width: 20px !important;
-  height: 20px !important;
-  font-size: 9px !important;
+  width: 28px !important;
+  height: 28px !important;
+  font-size: 12px !important;
   margin: 0 !important;
   padding: 0 !important;
-  line-height: 20px !important;
+  line-height: 28px !important;
+  border-radius: 6px !important;
 }
-.gjs-pn-btn svg { width: 10px !important; height: 10px !important; }
-.gjs-pn-label { font-size: 8px !important; padding: 0 !important; }
-.gjs-pn-title { font-size: 9px !important; padding: 3px 5px !important; margin: 0 !important; }
-.gjs-pn-commands, .gjs-pn-buttons { padding: 2px 3px !important; }
+.gjs-pn-btn svg { width: 14px !important; height: 14px !important; }
+.gjs-pn-label { font-size: 11px !important; padding: 0 !important; }
+.gjs-pn-title { font-size: 12px !important; padding: 6px 8px !important; margin: 0 !important; }
+.gjs-pn-commands, .gjs-pn-buttons { padding: 4px 5px !important; gap: 3px !important; }
 
-/* ---- BLOCKS: much smaller ---- */
-.gjs-block { padding: 3px !important; margin: 1px !important; }
-.gjs-block__media { font-size: 14px !important; margin-bottom: 0 !important; }
-.gjs-block__label { font-size: 8px !important; }
-.gjs-blocks-header { padding: 2px 4px !important; font-size: 9px !important; }
-.gjs-category-title { font-size: 9px !important; padding: 2px 4px !important; }
-.gjs-category { font-size: 9px !important; }
+/* ---- BLOCKS ---- */
+.gjs-block { padding: 6px !important; margin: 2px !important; border-radius: 8px !important; }
+.gjs-block__media { font-size: 22px !important; margin-bottom: 2px !important; }
+.gjs-block__label { font-size: 11px !important; }
+.gjs-blocks-header { padding: 6px 8px !important; font-size: 12px !important; }
+.gjs-category-title { font-size: 12px !important; padding: 6px 8px !important; }
+.gjs-category { font-size: 12px !important; }
 .gjs-block-container { width: 100% !important; }
 .gjs-block-box { width: 100% !important; }
 .gjs-block .gjs-block__media-inner { width: 100% !important; }
-.gjs-block svg { width: 24px !important; height: 24px !important; }
-.gjs-block__media-svg { width: 24px !important; height: 24px !important; }
-.gjs-block-icon { width: 24px !important; height: 24px !important; font-size: 14px !important; }
+.gjs-block svg { width: 28px !important; height: 28px !important; }
+.gjs-block__media-svg { width: 28px !important; height: 28px !important; }
+.gjs-block-icon { width: 28px !important; height: 28px !important; font-size: 18px !important; }
 
-/* ---- LAYERS: compact ---- */
-.gjs-layers { font-size: 9px !important; }
-.gjs-layer { padding: 1px 3px !important; min-height: 18px !important; font-size: 9px !important; }
-.gjs-layer-name { font-size: 9px !important; }
-.gjs-layer-cv { font-size: 9px !important; }
-.gjs-layer-count { font-size: 7px !important; }
-.gjs-layers-header { padding: 2px 4px !important; font-size: 9px !important; }
-.gjs-layer-item { padding: 0 2px !important; }
-.gjs-layer-vis { width: 12px !important; height: 12px !important; font-size: 7px !important; }
-.gjs-layer-move { width: 10px !important; height: 10px !important; }
-.gjs-layer-caret { font-size: 7px !important; }
+/* ---- LAYERS ---- */
+.gjs-layers { font-size: 12px !important; }
+.gjs-layer { padding: 4px 6px !important; min-height: 28px !important; font-size: 12px !important; }
+.gjs-layer-name { font-size: 12px !important; }
+.gjs-layer-cv { font-size: 12px !important; }
+.gjs-layer-count { font-size: 10px !important; }
+.gjs-layers-header { padding: 6px 8px !important; font-size: 12px !important; }
+.gjs-layer-item { padding: 0 3px !important; }
+.gjs-layer-vis { width: 18px !important; height: 18px !important; font-size: 10px !important; }
+.gjs-layer-move { width: 14px !important; height: 14px !important; }
+.gjs-layer-caret { font-size: 10px !important; }
 
-/* ---- STYLE MANAGER: compact ---- */
-.gjs-sm { font-size: 10px !important; }
-.gjs-sm-label { font-size: 8px !important; }
-.gjs-sm-title { font-size: 9px !important; padding: 2px 4px !important; }
-.gjs-sm-section-title { font-size: 9px !important; padding: 2px 4px !important; }
-.gjs-sm-sector-title { font-size: 9px !important; padding: 3px 4px !important; }
-.gjs-sm-property { font-size: 9px !important; padding: 2px 4px !important; }
-.gjs-sm-input { height: 18px !important; font-size: 9px !important; padding: 0 2px !important; }
-.gjs-sm-range { height: 18px !important; }
-.gjs-sm-unit { font-size: 8px !important; padding: 1px 2px !important; }
-.gjs-sm-composite { font-size: 9px !important; }
-.gjs-sm-undo, .gjs-sm-redo { width: 16px !important; height: 16px !important; font-size: 8px !important; }
-.gjs-sm-switch { font-size: 9px !important; }
-.gjs-sm-integer { font-size: 9px !important; }
-.gjs-sm-select { font-size: 9px !important; }
+/* ---- STYLE MANAGER ---- */
+.gjs-sm { font-size: 12px !important; }
+.gjs-sm-label { font-size: 11px !important; }
+.gjs-sm-title { font-size: 12px !important; padding: 6px 8px !important; }
+.gjs-sm-section-title { font-size: 12px !important; padding: 6px 8px !important; }
+.gjs-sm-sector-title { font-size: 12px !important; padding: 6px 8px !important; }
+.gjs-sm-property { font-size: 12px !important; padding: 4px 8px !important; }
+.gjs-sm-input { height: 28px !important; font-size: 12px !important; padding: 0 6px !important; }
+.gjs-sm-range { height: 28px !important; }
+.gjs-sm-unit { font-size: 11px !important; padding: 2px 4px !important; }
+.gjs-sm-composite { font-size: 12px !important; }
+.gjs-sm-undo, .gjs-sm-redo { width: 22px !important; height: 22px !important; font-size: 11px !important; }
+.gjs-sm-switch { font-size: 12px !important; }
+.gjs-sm-integer { font-size: 12px !important; }
+.gjs-sm-select { font-size: 12px !important; }
 
 /* ---- TRAIT MANAGER ---- */
-.gjs-trt-traits { font-size: 9px !important; }
-.gjs-trt-trait { padding: 2px 4px !important; }
-.gjs-trt-label { font-size: 8px !important; }
-.gjs-tr { height: 18px !important; font-size: 9px !important; }
-.gjs-tr-select { font-size: 9px !important; height: 18px !important; }
-.gjs-tr-input { font-size: 9px !important; height: 18px !important; }
+.gjs-trt-traits { font-size: 12px !important; }
+.gjs-trt-trait { padding: 4px 8px !important; }
+.gjs-trt-label { font-size: 11px !important; }
+.gjs-tr { height: 28px !important; font-size: 12px !important; }
+.gjs-tr-select { font-size: 12px !important; height: 28px !important; }
+.gjs-tr-input { font-size: 12px !important; height: 28px !important; }
 
 /* ---- INPUTS ---- */
-.gjs-field { font-size: 9px !important; }
+.gjs-field { font-size: 12px !important; }
 .gjs-field input, .gjs-field select, .gjs-field textarea {
-  font-size: 9px !important; padding: 1px 3px !important; height: 18px !important;
+  font-size: 12px !important; padding: 3px 6px !important; height: 28px !important;
+  border-radius: 6px !important;
 }
 
 /* ---- DEVICE MANAGER ---- */
-.gjs-devices-c { gap: 1px !important; }
-.gjs-devices-c .gjs-devices-btn { padding: 1px 4px !important; font-size: 9px !important; margin: 0 !important; }
+.gjs-devices-c { gap: 3px !important; }
+.gjs-devices-c .gjs-devices-btn { padding: 3px 8px !important; font-size: 12px !important; margin: 0 !important; }
 
 /* ---- CANVAS ---- */
 .gjs-cv-canvas { background-color: #0a0f1e !important; }
 .gjs-canvas { background-color: #0a0f1e !important; }
 
 /* ---- MODALS ---- */
-.gjs-modal { font-size: 10px !important; }
-.gjs-modal-title { font-size: 11px !important; padding: 5px 8px !important; }
-.gjs-modal-content { padding: 5px 8px !important; }
+.gjs-modal { font-size: 13px !important; }
+.gjs-modal-title { font-size: 15px !important; padding: 10px 14px !important; }
+.gjs-modal-content { padding: 10px 14px !important; }
 
 /* ---- CONTEXT MENU ---- */
-.gjs-context { font-size: 9px !important; }
-.gjs-context-item { padding: 2px 6px !important; font-size: 9px !important; }
+.gjs-context { font-size: 12px !important; }
+.gjs-context-item { padding: 5px 10px !important; font-size: 12px !important; }
 
 /* ---- TOAST ---- */
-.gjs-toast { font-size: 9px !important; padding: 3px 6px !important; }
+.gjs-toast { font-size: 12px !important; padding: 6px 10px !important; }
 
 /* ---- BADGE ---- */
-.gjs-badge { font-size: 7px !important; padding: 0 2px !important; }
+.gjs-badge { font-size: 9px !important; padding: 0 3px !important; }
 
 /* ---- COLOR PICKER ---- */
-.gjs-field-color-picker { height: 18px !important; }
+.gjs-field-color-picker { height: 28px !important; }
 
 /* ---- HIGHLIGHT ---- */
-.gjs-selected { outline-width: 1px !important; }
+.gjs-selected { outline-width: 2px !important; }
 
-/* ---- SCROLLBARS: ultra thin ---- */
+/* ---- SCROLLBARS ---- */
 .gjs-pn-panel::-webkit-scrollbar,
 .gjs-sm-scroll::-webkit-scrollbar,
 .gjs-layers::-webkit-scrollbar,
 .gjs-blocks::-webkit-scrollbar,
 .gjs-cv-canvas::-webkit-scrollbar,
-.gjs-am-assets::-webkit-scrollbar { width: 3px !important; }
+.gjs-am-assets::-webkit-scrollbar { width: 6px !important; }
 .gjs-pn-panel::-webkit-scrollbar-thumb,
 .gjs-sm-scroll::-webkit-scrollbar-thumb,
 .gjs-layers::-webkit-scrollbar-thumb,
 .gjs-blocks::-webkit-scrollbar-thumb,
-.gjs-cv-canvas::-webkit-scrollbar-thumb { background: #7B5CFF33 !important; border-radius: 2px !important; }
+.gjs-cv-canvas::-webkit-scrollbar-thumb { background: #7B5CFF44 !important; border-radius: 3px !important; }
 .gjs-pn-panel::-webkit-scrollbar-track,
 .gjs-sm-scroll::-webkit-scrollbar-track,
 .gjs-layers::-webkit-scrollbar-track,
@@ -161,24 +163,23 @@ const NYXIA_UI_CSS = `
 
 /* ---- NYXIA COLORS ---- */
 .gjs-one-bg { background-color: #0c1a2e !important; }
-.gjs-two-color { color: #94a3b8 !important; }
+.gjs-two-color { color: #c4c8d4 !important; }
 .gjs-three-bg { background-color: #111b30 !important; }
 .gjs-four-color, .gjs-four-color-h:hover { color: #7B5CFF !important; }
 
-/* ---- CATCH-ALL for any gjs- class ---- */
-[class*="gjs-sm-"] { font-size: 9px !important; }
-[class*="gjs-layer"] { font-size: 9px !important; }
-[class*="gjs-block"] { font-size: 9px !important; }
-[class*="gjs-pn"] { font-size: 9px !important; }
-[class*="gjs-field"] { font-size: 9px !important; }
+/* ---- CATCH-ALL ---- */
+[class*="gjs-sm-"] { font-size: 12px !important; }
+[class*="gjs-layer"] { font-size: 12px !important; }
+[class*="gjs-block"] { font-size: 12px !important; }
+[class*="gjs-pn"] { font-size: 12px !important; }
+[class*="gjs-field"] { font-size: 12px !important; }
 
 /* ---- REMOVE ALL GRAPESJS BRANDING ---- */
 .gjs-cv-canvas__frame { pointer-events: auto !important; }
 .gjs-logo, .gjs-logo-content, [title*="GrapesJS"], [title*="grapesjs"] { display: none !important; }
 .gjs-brand { display: none !important; }
-.gjs-panel__switcher { font-size: 9px !important; }
+.gjs-panel__switcher { font-size: 12px !important; }
 .gjs-off-prv, .gjs-no-ph { display: none !important; }
-/* Hide "GrapesJS" in any title/aria-label attributes */
 [aria-label*="GrapesJS"], [aria-label*="grapesjs"], [title*="GrapesJS"], [title*="grapesjs"],
 [data-tooltip*="GrapesJS"], [data-tooltip*="grapesjs"] { display: none !important; }
 `
@@ -319,19 +320,19 @@ export default function GrapesJSEditorComponent({
 
   return (
     <div className="fixed inset-0 z-[100] bg-[#06101f] flex flex-col">
-      <div className="flex items-center justify-between px-4 h-8 border-b border-purple-500/20 bg-[#0c1a2e] shrink-0">
-        <span className="text-zinc-400 font-medium text-[10px] tracking-widest uppercase">Éditeur de Page</span>
-        <div className="flex items-center gap-1">
-          <button onClick={handlePreview} className="flex items-center gap-1 px-2 h-6 rounded text-[10px] text-zinc-400 hover:text-white hover:bg-white/5 transition-colors">
-            <Eye className="w-3 h-3" /> Aperçu
+      <div className="flex items-center justify-between px-5 h-12 border-b border-purple-500/25 bg-gradient-to-r from-[#0c1a2e] to-[#111b30] shrink-0">
+        <span className="text-zinc-300 font-semibold text-sm tracking-wide">Éditeur de Page de Vente</span>
+        <div className="flex items-center gap-2">
+          <button onClick={handlePreview} className="flex items-center gap-1.5 px-4 h-9 rounded-lg text-sm text-zinc-300 hover:text-white hover:bg-white/5 border border-purple-500/20 transition-colors">
+            <Eye className="w-4 h-4" /> Aperçu
           </button>
-          <button onClick={handleSave} disabled={isSaving} className="flex items-center gap-1 px-2.5 h-6 rounded bg-[#7B5CFF] hover:bg-[#6a4ce8] text-white text-[10px] font-medium transition-colors disabled:opacity-50">
-            {isSaving ? <Loader2 className="w-2.5 h-2.5 animate-spin" /> : <Save className="w-2.5 h-2.5" />}
-            Sauver
+          <button onClick={handleSave} disabled={isSaving} className="flex items-center gap-1.5 px-4 h-9 rounded-lg bg-gradient-to-r from-[#7B5CFF] to-[#6a4ce8] hover:from-[#6a4ce8] hover:to-[#5a3dd6] text-white text-sm font-medium shadow-lg shadow-purple-500/20 transition-all disabled:opacity-50">
+            {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+            Sauvegarder
           </button>
           {onClose && (
-            <button onClick={onClose} className="flex items-center justify-center w-6 h-6 rounded text-zinc-500 hover:text-white hover:bg-white/5 transition-colors">
-              <X className="w-3 h-3" />
+            <button onClick={onClose} className="flex items-center justify-center w-9 h-9 rounded-lg text-zinc-500 hover:text-white hover:bg-white/5 transition-colors">
+              <X className="w-4 h-4" />
             </button>
           )}
         </div>
