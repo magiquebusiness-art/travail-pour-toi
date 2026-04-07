@@ -178,11 +178,14 @@ CREATE INDEX IF NOT EXISTS idx_mp_products_status ON marketplace_products(status
 -- Default categories for marketplace
 INSERT OR IGNORE INTO marketplace_categories (name, slug, icon, sort_order) VALUES
   ('Formation & Coaching', 'formation-coaching', '🎓', 1),
-  ('Marketing Digital', 'marketing-digital', '📱', 2),
-  ('Design & Création', 'design-creation', '🎨', 3),
-  ('E-commerce', 'e-commerce', '🛒', 4),
-  ('Services B2B', 'services-b2b', '💼', 5),
-  ('Santé & Bien-être', 'sante-bien-etre', '🧘', 6);
+  ('Coach', 'coach', '🏋️', 2),
+  ('Marketing Digital', 'marketing-digital', '📱', 3),
+  ('Design & Création', 'design-creation', '🎨', 4),
+  ('E-commerce', 'e-commerce', '🛒', 5),
+  ('Services B2B', 'services-b2b', '💼', 6),
+  ('Santé & Bien-être', 'sante-bien-etre', '🧘', 7),
+  ('Spiritualité', 'spiritualite', '✨', 8),
+  ('Auteur', 'auteur', '📖', 9);
 
 -- Default commission program
 INSERT INTO programs (id, name, description, commission_l1, commission_l2, commission_l3, owner_id, is_active)

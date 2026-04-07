@@ -142,6 +142,14 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Catégorie invalide' }, { status: 400 })
     }
 
+    // Get admin's affiliate code for auto-assign promo code
+    const adminProfile = await db
+      .prepare('SELECT affiliate_code FROM users WHERE id = ?')
+      .bind(session.userId)
+      .first()
+
+    const autoPromoCode = adminProfile?.affiliate_code || null
+
     // Generate ID
     const productId = `mp_${(await db.prepare("SELECT lower(hex(randomblob(8))) as id").first()).id}`
 
@@ -166,7 +174,7 @@ export async function POST(request: NextRequest) {
       n2,
       n3,
       affiliate_link || null,
-      promo_code || null,
+      autoPromoCode,
       'draft',
       now,
       now

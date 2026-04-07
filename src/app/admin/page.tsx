@@ -917,15 +917,14 @@ export default function AdminDashboardPage() {
 
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="space-y-2">
-                          <Label className="text-zinc-300">Code promo / Code parrainage</Label>
+                          <Label className="text-zinc-300">Code parrainage</Label>
                           <Input
                             type="text"
-                            placeholder="PROMO2024"
-                            value={productForm.promo_code}
-                            onChange={(e) => setProductForm({ ...productForm, promo_code: e.target.value.toUpperCase() })}
-                            className="bg-white/5 border-purple-500/20 text-white placeholder:text-zinc-500 font-mono uppercase"
+                            value={data.profile.affiliate_code}
+                            readOnly
+                            className="bg-white/5 border-green-500/30 text-green-400 font-mono uppercase cursor-not-allowed"
                           />
-                          <p className="text-xs text-zinc-500">Code utilisé par les ambassadeurs pour promouvoir ce produit</p>
+                          <p className="text-xs text-zinc-500">Votre code unique — attribué automatiquement à votre compte</p>
                         </div>
                         <div className="space-y-2">
                           <Label className="text-zinc-300">Commission N1 / N2 / N3 (%)</Label>
@@ -1384,21 +1383,8 @@ export default function AdminDashboardPage() {
                   <CardTitle className="text-white flex items-center gap-2 text-lg">
                     🌐 Configuration DNS
                   </CardTitle>
-                  <CardDescription className="text-zinc-400">
-                    Enregistrement à ajouter chez votre hébergeur de domaine
-                  </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  {/* Info explanation */}
-                  <div className="p-3 rounded-lg bg-amber-500/5 border border-amber-500/20">
-                    <div className="flex items-start gap-2">
-                      <Info className="w-4 h-4 text-amber-400 mt-0.5 shrink-0" />
-                      <p className="text-zinc-400 text-sm">
-                        Pour que votre sous-domaine <span className="text-amber-300 font-medium">{data?.profile?.subdomain || 'votre-sous-domaine'}</span> fonctionne, ajoutez cet enregistrement DNS dans le panneau de votre hébergeur de nom de domaine.
-                      </p>
-                    </div>
-                  </div>
-
                   {/* DNS Record Table */}
                   <div className="rounded-lg overflow-hidden border border-purple-500/20">
                     <table className="w-full text-sm">
@@ -1441,10 +1427,6 @@ export default function AdminDashboardPage() {
                     {copiedDns ? <Check className="w-4 h-4 mr-2 text-green-400" /> : <Copy className="w-4 h-4 mr-2" />}
                     {copiedDns ? 'Copié !' : 'Copier la configuration DNS'}
                   </Button>
-
-                  <p className="text-zinc-500 text-xs text-center">
-                    La propagation DNS peut prendre de quelques minutes à 48h selon votre hébergeur.
-                  </p>
                 </CardContent>
               </Card>
 
