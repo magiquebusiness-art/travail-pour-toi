@@ -1,0 +1,455 @@
+@import "tailwindcss";
+
+/* ===== NyXia Design System ===== */
+:root {
+  --nyxia-violet: #7B5CFF;
+  --nyxia-purple: #6366f1;
+  --nyxia-deep: #3b1f8e;
+  --bg1: #06101f;
+  --bg2: #0c1a2e;
+  --bg3: #111b30;
+  --gold: #F4C842;
+  --gold-dim: #c9a23a;
+  --text-primary: #ffffff;
+  --text-secondary: #a5b4fc;
+  --text-muted: #6b7280;
+
+  --background: #06101f;
+  --foreground: #ffffff;
+
+  --primary: #7B5CFF;
+  --primary-foreground: #ffffff;
+  --primary-hover: #6a4ce8;
+
+  --secondary: #6366f1;
+  --secondary-foreground: #ffffff;
+
+  --accent: #F4C842;
+  --accent-foreground: #06101f;
+
+  --muted: #111b30;
+  --muted-foreground: #a5b4fc;
+
+  --card: #0c1a2e;
+  --card-foreground: #ffffff;
+
+  --border: rgba(123, 92, 255, 0.15);
+  --input: #111b30;
+  --ring: #7B5CFF;
+
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+
+  --radius: 0.75rem;
+}
+
+/* ===== Smooth Scrolling ===== */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ===== Custom Scrollbar ===== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--nyxia-violet), var(--nyxia-deep));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--nyxia-purple), var(--nyxia-violet));
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--nyxia-violet) var(--bg1);
+}
+
+/* ===== Base Styles ===== */
+/* NOTE: No * reset — Tailwind v4 handles box-sizing/margin/padding */
+
+html {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-body), system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ===== Animation Keyframes ===== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 5px rgba(123, 92, 255, 0.4); }
+  50% { box-shadow: 0 0 25px rgba(123, 92, 255, 0.8), 0 0 50px rgba(123, 92, 255, 0.3); }
+}
+
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 5px rgba(244, 200, 66, 0.3); }
+  50% { box-shadow: 0 0 20px rgba(244, 200, 66, 0.6), 0 0 40px rgba(244, 200, 66, 0.2); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(3deg); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes orbFloat1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(80px, -60px) scale(1.15); }
+  66% { transform: translate(-60px, 80px) scale(0.9); }
+}
+
+@keyframes orbFloat2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-70px, 50px) scale(1.1); }
+  66% { transform: translate(50px, -70px) scale(0.95); }
+}
+
+@keyframes orbFloat3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(40px, 40px) scale(1.05); }
+  66% { transform: translate(-30px, -50px) scale(1.1); }
+}
+
+@keyframes borderGlow {
+  0%, 100% { border-color: rgba(123, 92, 255, 0.2); }
+  50% { border-color: rgba(123, 92, 255, 0.5); }
+}
+
+/* ===== Utility Classes ===== */
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.7s ease-out forwards;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.5s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.5s ease-out forwards;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: floatSlow 8s ease-in-out infinite;
+}
+
+.pulse-glow {
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}
+
+.pulse-gold {
+  animation: pulse-gold 2.5s ease-in-out infinite;
+}
+
+/* ===== Gradient Text ===== */
+.gradient-text-violet {
+  background: linear-gradient(135deg, var(--nyxia-violet), var(--nyxia-purple), #a78bfa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-gold {
+  background: linear-gradient(135deg, var(--gold), #fde68a, var(--gold-dim));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-mixed {
+  background: linear-gradient(135deg, var(--nyxia-violet), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== Glassmorphism Cards ===== */
+.glass-card {
+  background: rgba(12, 26, 46, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(123, 92, 255, 0.12);
+  border-radius: 16px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover {
+  border-color: rgba(123, 92, 255, 0.35);
+  background: rgba(12, 26, 46, 0.75);
+  box-shadow: 0 8px 32px rgba(123, 92, 255, 0.15), 0 0 0 1px rgba(123, 92, 255, 0.1);
+  transform: translateY(-4px);
+}
+
+.glass-card-gold {
+  background: rgba(12, 26, 46, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(244, 200, 66, 0.15);
+  border-radius: 16px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card-gold:hover {
+  border-color: rgba(244, 200, 66, 0.4);
+  background: rgba(12, 26, 46, 0.75);
+  box-shadow: 0 8px 32px rgba(244, 200, 66, 0.1), 0 0 0 1px rgba(244, 200, 66, 0.1);
+  transform: translateY(-4px);
+}
+
+/* Glassmorphism nav */
+.glass-nav {
+  background: rgba(6, 16, 31, 0.7);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(123, 92, 255, 0.1);
+}
+
+/* ===== Gradient Border Cards ===== */
+.gradient-border {
+  position: relative;
+  border-radius: 16px;
+  background: rgba(12, 26, 46, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  overflow: hidden;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(123, 92, 255, 0.4), rgba(99, 102, 241, 0.1), rgba(244, 200, 66, 0.3));
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  pointer-events: none;
+}
+
+/* ===== Button Styles ===== */
+.btn-primary {
+  background: linear-gradient(135deg, var(--nyxia-violet), var(--nyxia-purple));
+  color: white;
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 14px 32px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(123, 92, 255, 0.3);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 6px 30px rgba(123, 92, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+  color: var(--bg1);
+  font-weight: 700;
+  border-radius: 12px;
+  padding: 14px 32px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(244, 200, 66, 0.3);
+}
+
+.btn-gold:hover {
+  box-shadow: 0 6px 30px rgba(244, 200, 66, 0.5);
+  transform: translateY(-2px);
+}
+
+.btn-outline-gold {
+  border: 2px solid var(--gold);
+  color: var(--gold);
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 12px 30px;
+  transition: all 0.3s ease;
+  background: transparent;
+}
+
+.btn-outline-gold:hover {
+  background: rgba(244, 200, 66, 0.1);
+  box-shadow: 0 4px 20px rgba(244, 200, 66, 0.2);
+  transform: translateY(-2px);
+}
+
+.btn-outline-violet {
+  border: 2px solid var(--nyxia-violet);
+  color: var(--nyxia-violet);
+  font-weight: 600;
+  border-radius: 12px;
+  padding: 12px 30px;
+  transition: all 0.3s ease;
+  background: transparent;
+}
+
+.btn-outline-violet:hover {
+  background: rgba(123, 92, 255, 0.1);
+  box-shadow: 0 4px 20px rgba(123, 92, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* ===== Animated Orbs ===== */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+}
+
+.orb-violet {
+  background: rgba(123, 92, 255, 0.12);
+  animation: orbFloat1 25s ease-in-out infinite;
+}
+
+.orb-purple {
+  background: rgba(99, 102, 241, 0.1);
+  animation: orbFloat2 30s ease-in-out infinite;
+}
+
+.orb-gold {
+  background: rgba(244, 200, 66, 0.06);
+  animation: orbFloat3 20s ease-in-out infinite;
+}
+
+/* ===== Section Divider ===== */
+.section-divider {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--nyxia-violet), var(--gold));
+  border-radius: 2px;
+  margin: 0 auto;
+}
+
+/* ===== Intersection Observer Animation ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.reveal.visible,
+.reveal.visible-on-load {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children */
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.stagger-children.visible > *:nth-child(1) { transition-delay: 0.1s; }
+.stagger-children.visible > *:nth-child(2) { transition-delay: 0.2s; }
+.stagger-children.visible > *:nth-child(3) { transition-delay: 0.3s; }
+.stagger-children.visible > *:nth-child(4) { transition-delay: 0.4s; }
+.stagger-children.visible > *:nth-child(5) { transition-delay: 0.5s; }
+.stagger-children.visible > *:nth-child(6) { transition-delay: 0.6s; }
+
+.stagger-children.visible > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Fallback: show everything after 3s even without IntersectionObserver */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .stagger-children > * { opacity: 1; transform: none; transition: none; }
+}
+
+/* ===== Network Connection Lines (Commissions) ===== */
+.connection-line {
+  stroke: rgba(123, 92, 255, 0.4);
+  stroke-width: 2;
+  stroke-dasharray: 8 4;
+  animation: dash 20s linear infinite;
+}
+
+@keyframes dash {
+  to { stroke-dashoffset: -1000; }
+}
+
+/* ===== Shimmer Effect ===== */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(123, 92, 255, 0.08) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 3s ease-in-out infinite;
+}

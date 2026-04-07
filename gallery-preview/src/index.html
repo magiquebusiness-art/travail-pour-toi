@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galerie — travail-pour-toi.com</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:#06101f;color:#D6D9F0;font-family:'Outfit',sans-serif;padding:40px 20px}
+  h1{font-family:'Cormorant Garamond',serif;font-size:36px;text-align:center;margin-bottom:6px;background:linear-gradient(135deg,#a78bfa,#4FA3FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .sub{text-align:center;color:#8891B8;font-size:14px;margin-bottom:40px}
+  .note{text-align:center;background:rgba(123,92,255,0.1);border:1px solid rgba(123,92,255,0.25);border-radius:12px;padding:16px 24px;max-width:700px;margin:0 auto 40px;font-size:14px;color:#a78bfa;line-height:1.6}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;max-width:1400px;margin:0 auto}
+  .card{background:rgba(10,22,40,0.8);border:1px solid rgba(123,92,255,0.15);border-radius:16px;overflow:hidden;transition:all .3s}
+  .card:hover{border-color:rgba(123,92,255,0.4);transform:translateY(-4px);box-shadow:0 16px 40px rgba(123,92,255,0.1)}
+  .card img{width:100%;height:340px;object-fit:cover;display:block;cursor:pointer;transition:transform .3s}
+  .card img:hover{transform:scale(1.03)}
+  .card-info{padding:12px 16px}
+  .card-name{font-size:14px;font-weight:600;color:#fff}
+  .card-meta{font-size:11px;color:#8891B8;margin-top:3px}
+  .card-num{display:inline-block;background:rgba(123,92,255,0.15);color:#a78bfa;font-size:10px;font-weight:700;padding:2px 8px;border-radius:50px;margin-bottom:8px}
+</style>
+</head>
+<body>
+<h1>Galerie Preview</h1>
+<p class="sub">travail-pour-toi.com — 21 images disponibles</p>
+<div class="note">Diane, regarde chaque image et dis-moi o&ugrave; tu veux la placer sur la page de vente. Les images sont num&eacute;rot&eacute;es pour faciliter la r&eacute;f&eacute;rence.</div>
+<div class="grid" id="g"></div>
+<script>
+const imgs=[
+  {n:'heureuse.jpg',o:'heureuse.png',d:'1536×1024 — Photo landscape',tag:'Diane'},
+  {n:'personal-image-2.jpg',o:'personal-image-2.png',d:'1536×1024 — Photo landscape',tag:'Diane'},
+  {n:'NyXia.jpg',o:'NyXia.png',d:'1080×1080 — Carré',tag:'Logo'},
+  {n:'NyXia-26.jpg',o:'NyXia-26.png',d:'1024×1536 — Portrait',tag:'NyXia'},
+  {n:'NyXia-33.jpg',o:'NyXia-33.png',d:'1024×1536 — Portrait',tag:'NyXia'},
+  {n:'TravailDureNyxia.jpg',o:'TravailDureNyxia.png',d:'1024×1536 — Portrait',tag:'NyXia'},
+  {n:'FavIcon.jpg',o:'FavIcon.png',d:'1024×1536 — Portrait',tag:'Favicon'},
+  {n:'1.jpg',o:'1.png',d:'1024×1536 — Portrait',tag:'NyXia'},
+  {n:'2.jpg',o:'2.png',d:'1024×1536 — Portrait',tag:'NyXia'},
+  {n:'4.jpg',o:'4.png',d:'1024×1536 — Portrait',tag:'NyXia'},
+  {n:'5.jpg',o:'5.png',d:'1024×1536 — Portrait',tag:'NyXia'},
+  {n:'6.jpg',o:'6.png',d:'1024×1536 — Portrait',tag:'NyXia'},
+  {n:'9.jpg',o:'9.png',d:'1024×1536 — Portrait',tag:'NyXia'},
+  {n:'14.jpg',o:'14.png',d:'1024×1536 — Portrait',tag:'NyXia'},
+  {n:'15.jpg',o:'15.png',d:'1024×1536 — Portrait',tag:'NyXia'},
+  {n:'NyXia-23.jpg',o:'NyXia-23.png',d:'1024×1536 — Portrait',tag:'NyXia'},
+  {n:'NyXia-25.jpg',o:'NyXia-25.png',d:'1024×1536 — Portrait',tag:'NyXia'},
+  {n:'NyXia-27gauche.jpg',o:'NyXia-27gauche.png',d:'1024×1536 — Portrait',tag:'NyXia'},
+  {n:'NyXia-27droite.jpg',o:'NyXia-27droite.png',d:'1024×1536 — Portrait',tag:'NyXia'},
+  {n:'NyXia-34.jpg',o:'NyXia-34.png',d:'1024×1536 — Portrait',tag:'NyXia'},
+  {n:'NyXia-35.jpg',o:'NyXia-35.png',d:'1024×1536 — Portrait',tag:'NyXia'}
+];
+const g=document.getElementById('g');
+imgs.forEach((img,i)=>{
+  g.innerHTML+=`<div class="card"><span class="card-num">#${i+1}</span><img src="images/${img.n}" alt="${img.o}" loading="lazy"><div class="card-info"><div class="card-name">${img.o}</div><div class="card-meta">${img.d} — ${img.tag}</div></div></div>`;
+});
+</script>
+</body>
+</html>
