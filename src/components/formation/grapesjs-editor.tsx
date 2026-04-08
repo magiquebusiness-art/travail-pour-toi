@@ -206,6 +206,10 @@ const NYXIA_PREMIUM_CSS = `
   outline: none !important;
 }
 
+/* === TRAIT MANAGER === */
+.gjs-trt-trait { padding: 8px 12px !important; }
+.gjs-trt-label { font-size: 12px !important; color: #8d89ae !important; }
+
 /* === SÉLECTION === */
 .gjs-selected {
   outline: 2px solid #7B5CFF !important;
@@ -297,35 +301,14 @@ export default function GrapesJSEditorComponent({
           },
           canvas: { styles: initialCss || undefined },
           components: parsedComponents || initialHtml || `
-            <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0f1424;">
-              <div style="text-align:center;max-width:700px;padding:60px 40px;">
-                <div style="display:inline-block;padding:6px 16px;border-radius:20px;background:rgba(108,92,231,0.2);border:1px solid rgba(108,92,231,0.3);margin-bottom:24px;">
-                  <span style="font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;color:#a29bfe;letter-spacing:0.05em;text-transform:uppercase;">Formation Premium</span>
-                </div>
-                <h1 style="font-family:'Cormorant Garamond',serif;font-size:48px;color:#fff;margin-bottom:20px;font-weight:300;line-height:1.2;">
-                  Maîtrisez l'Art du Digital en 30 Jours
+            <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#06101f;">
+              <div style="text-align:center;max-width:600px;padding:40px;">
+                <h1 style="font-family:'Cormorant Garamond',serif;font-size:42px;color:#fff;margin-bottom:16px;font-weight:300;">
+                  Votre Page de Vente
                 </h1>
-                <p style="font-family:'Outfit',sans-serif;font-size:17px;color:rgba(255,255,255,0.5);line-height:1.7;max-width:560px;margin:0 auto 32px;">
-                  Rejoignez 4 200+ entrepreneurs qui ont transformé leur activité avec notre méthode exclusive et éprouvée.
+                <p style="font-family:'Outfit',sans-serif;font-size:16px;color:rgba(255,255,255,0.6);line-height:1.7;">
+                  Glissez des blocs depuis le panneau de gauche pour construire votre page.
                 </p>
-                <div style="display:inline-flex;align-items:center;gap:10px;padding:14px 32px;border-radius:12px;background:linear-gradient(135deg,#6c5ce7,#4b3f8a);color:#fff;font-family:'Outfit',sans-serif;font-size:15px;font-weight:600;cursor:pointer;">
-                  Accéder à la Formation
-                  <span style="font-size:18px;">→</span>
-                </div>
-                <div style="display:flex;justify-content:center;gap:48px;margin-top:48px;">
-                  <div style="text-align:center;">
-                    <div style="font-family:'Outfit',sans-serif;font-size:22px;font-weight:700;color:#fff;">4.2K</div>
-                    <div style="font-family:'Outfit',sans-serif;font-size:12px;color:rgba(255,255,255,0.4);margin-top:4px;">Étudiants</div>
-                  </div>
-                  <div style="text-align:center;">
-                    <div style="font-family:'Outfit',sans-serif;font-size:22px;font-weight:700;color:#fff;">97%</div>
-                    <div style="font-family:'Outfit',sans-serif;font-size:12px;color:rgba(255,255,255,0.4);margin-top:4px;">Satisfaction</div>
-                  </div>
-                  <div style="text-align:center;">
-                    <div style="font-family:'Outfit',sans-serif;font-size:22px;font-weight:700;color:#fff;">30j</div>
-                    <div style="font-family:'Outfit',sans-serif;font-size:12px;color:rgba(255,255,255,0.4);margin-top:4px;">Accès à vie</div>
-                  </div>
-                </div>
               </div>
             </div>
           `,
@@ -345,7 +328,7 @@ export default function GrapesJSEditorComponent({
 
           // Masquer le branding
           gjsEditor.querySelectorAll(
-            '.gjs-off-prv, .gjs-no-ph, [class*="gjs-logo"], .gjs-brand, .gjs-logo, .gjs-logo-content, .gjs-badge, .gjs-editor-top'
+            '.gjs-off-prv, .gjs-no-ph, [class*="gjs-logo"], .gjs-brand, .gjs-logo, .gjs-logo-content, .gjs-badge'
           ).forEach(el => { (el as HTMLElement).style.display = 'none' })
 
           gjsEditor.querySelectorAll(
@@ -422,7 +405,7 @@ export default function GrapesJSEditorComponent({
     const css = editorInstance.current.getCss()
     const w = window.open('', '_blank')
     if (w) {
-      w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>${css}</style><style>*{margin:0;padding:0;box-sizing:border-box;}body{background:#0f1424;}</style></head><body>${html}</body></html>`)
+      w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>${css}</style><style>*{margin:0;padding:0;box-sizing:border-box;}body{background:#06101f;}</style></head><body>${html}</body></html>`)
       w.document.close()
     }
   }, [])
@@ -444,10 +427,10 @@ export default function GrapesJSEditorComponent({
           >
             N
           </div>
-          <span className="text-zinc-100 font-semibold text-[14px] tracking-wide">
+          <span className="text-[#e8e2f8] font-semibold text-[14px] tracking-wide">
             Éditeur de Page
           </span>
-          <span className="px-2 py-0.5 rounded-md bg-purple-500/10 border border-purple-500/20 text-[10px] font-bold uppercase tracking-widest text-purple-400">
+          <span className="px-[9px] py-[3px] rounded-[6px] bg-purple-500/10 border border-purple-500/20 text-[10px] font-bold uppercase tracking-[0.05em] text-purple-400">
             Pro
           </span>
         </div>
