@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState, useCallback } from 'react'
-import { Loader2, Save, Eye, X, Search } from 'lucide-react'
+import { Loader2, Save, Eye, X } from 'lucide-react'
 import { toast } from 'sonner'
 
 interface GrapesJSEditorProps {
@@ -18,215 +18,197 @@ interface GrapesJSEditorProps {
 type GrapesJSEditor = any
 
 const NYXIA_PREMIUM_CSS = `
-/* === RESET & BASE === */
-.gjs-one-bg, .gjs-two-bg, .gjs-three-bg, .gjs-four-bg,
-.gjs-editor, .gjs-frame, .gjs-pn {
-  font-family: 'Outfit', ui-sans-serif, system-ui, -apple-system, sans-serif !important;
+/* === FONT === */
+.gjs-one-bg, .gjs-two-bg, .gjs-three-bg, .gjs-four-bg {
+  font-family: 'Outfit', ui-sans-serif, system-ui, sans-serif !important;
+  font-size: 14px !important;
 }
 
 /* === TOOLBAR FLOTTANT — MASQUÉ === */
 .gjs-toolbar { display: none !important; }
 .gjs-badge { display: none !important; }
 
-/* === TOP BAR / HEADER === */
-.gjs-cv-canvas {
-  top: 58px !important;
-}
-
-/* === PANEL GAUCHE — 280px PREMIUM === */
+/* === PANEL GAUCHE === */
 .gjs-pn {
-  width: 280px !important;
-  min-width: 280px !important;
-  max-width: 280px !important;
-  height: calc(100% - 58px) !important;
+  width: 260px !important;
+  min-width: 260px !important;
+  max-width: 260px !important;
+  height: 100% !important;
   padding: 0 !important;
-  margin-top: 58px !important;
-  border-right: 1px solid rgba(108,92,231,0.12) !important;
-  background: #121826 !important;
+  border-right: 1px solid rgba(123,92,255,0.09) !important;
+  background: linear-gradient(180deg, #0b1428 0%, #091020 100%) !important;
   display: flex !important;
   flex-direction: column !important;
-  z-index: 10 !important;
 }
 .gjs-pn-left, .gjs-pn-panel {
-  width: 280px !important;
-  min-width: 280px !important;
-  max-width: 280px !important;
+  width: 260px !important;
+  min-width: 260px !important;
+  max-width: 260px !important;
   padding: 0 !important;
   background: transparent !important;
-  overflow-y: auto !important;
 }
 
 /* === BOUTONS DE NAVIGATION === */
 .gjs-pn-commands, .gjs-pn-buttons {
   display: flex !important;
   flex-direction: row !important;
-  gap: 3px !important;
-  padding: 10px 12px 8px !important;
-  border-bottom: 1px solid rgba(108,92,231,0.08) !important;
+  gap: 4px !important;
+  padding: 12px 12px 10px !important;
+  border-bottom: 1px solid rgba(123,92,255,0.07) !important;
 }
 .gjs-pn-btn {
   flex: 1 !important;
-  height: 32px !important;
+  height: 34px !important;
   width: auto !important;
-  font-size: 9px !important;
+  font-size: 10px !important;
   font-weight: 700 !important;
-  letter-spacing: 0.08em !important;
+  letter-spacing: 0.04em !important;
   text-transform: uppercase !important;
   margin: 0 !important;
-  padding: 0 6px !important;
-  line-height: 32px !important;
-  border-radius: 8px !important;
+  padding: 0 8px !important;
+  line-height: 34px !important;
+  border-radius: 9px !important;
   background: transparent !important;
   border: 1px solid transparent !important;
-  color: #4a4668 !important;
-  transition: all 0.2s ease !important;
+  color: #564e78 !important;
+  transition: all 0.15s ease !important;
 }
 .gjs-pn-btn:hover {
-  background: rgba(108,92,231,0.08) !important;
-  color: #6c5ce7 !important;
+  background: rgba(255,255,255,0.04) !important;
+  color: #7a7498 !important;
 }
 .gjs-pn-btn.active, .gjs-pn-btn.gjs-pn-active {
-  background: rgba(108,92,231,0.15) !important;
-  border-color: rgba(108,92,231,0.3) !important;
-  color: #a29bfe !important;
+  background: rgba(123,92,255,0.13) !important;
+  border-color: rgba(123,92,255,0.24) !important;
+  color: #b09eff !important;
 }
-.gjs-pn-btn svg { width: 13px !important; height: 13px !important; }
-
-/* === CATEGORY TITLES === */
+.gjs-pn-btn svg { width: 14px !important; height: 14px !important; }
 .gjs-pn-title {
-  font-size: 9px !important;
-  padding: 16px 16px 8px !important;
-  font-weight: 800 !important;
-  color: rgba(108,92,231,0.55) !important;
-  letter-spacing: 0.14em !important;
-  text-transform: uppercase !important;
-}
-.gjs-category-title, .gjs-category-label {
-  font-size: 9px !important;
-  padding: 16px 16px 8px !important;
-  font-weight: 800 !important;
-  color: rgba(108,92,231,0.55) !important;
-  letter-spacing: 0.14em !important;
+  font-size: 10px !important;
+  padding: 14px 14px 7px !important;
+  font-weight: 700 !important;
+  color: rgba(123,92,255,0.5) !important;
+  letter-spacing: 0.1em !important;
   text-transform: uppercase !important;
 }
 
-/* === BLOCS — GRILLE 2 COL PREMIUM === */
+/* === BLOCS — GRILLE 2 COL COMPACTE === */
 .gjs-block-container {
   display: grid !important;
   grid-template-columns: 1fr 1fr !important;
-  gap: 10px !important;
-  padding: 6px 14px 14px !important;
+  gap: 8px !important;
+  padding: 4px 12px 12px !important;
   width: 100% !important;
-  overflow-x: hidden !important;
 }
 .gjs-block {
   width: 100% !important;
-  padding: 20px 10px 16px !important;
+  padding: 16px 10px 12px !important;
   margin: 0 !important;
-  border-radius: 14px !important;
-  border: 1px solid rgba(108,92,231,0.12) !important;
-  background: #1e2139 !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(123,92,255,0.09) !important;
+  background: rgba(123,92,255,0.03) !important;
   cursor: grab !important;
-  transition: all 0.25s cubic-bezier(0.4,0,0.2,1) !important;
-  min-height: 110px !important;
+  transition: all 0.2s cubic-bezier(0.4,0,0.2,1) !important;
+  min-height: 88px !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 10px !important;
+  gap: 9px !important;
   box-sizing: border-box !important;
 }
 .gjs-block:hover {
-  background: #2a2d4a !important;
-  border-color: rgba(108,92,231,0.35) !important;
-  transform: translateY(-3px) !important;
-  box-shadow: 0 12px 32px rgba(108,92,231,0.18) !important;
+  background: rgba(123,92,255,0.11) !important;
+  border-color: rgba(123,92,255,0.28) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(123,92,255,0.12) !important;
 }
-.gjs-block:active {
-  transform: scale(0.96) !important;
-}
+.gjs-block:active { transform: scale(0.97) !important; }
 
-/* === ICÔNE BLOC — BADGE VIOLET === */
+/* Icône dans un badge pill */
 .gjs-block__media {
-  width: 42px !important;
-  height: 42px !important;
-  font-size: 20px !important;
-  line-height: 42px !important;
+  width: 36px !important;
+  height: 36px !important;
+  font-size: 18px !important;
+  line-height: 36px !important;
   text-align: center !important;
-  background: linear-gradient(135deg, rgba(108,92,231,0.25) 0%, rgba(75,63,138,0.2) 100%) !important;
-  border: 1px solid rgba(108,92,231,0.2) !important;
-  border-radius: 12px !important;
-  color: #a29bfe !important;
+  background: rgba(123,92,255,0.1) !important;
+  border: 1px solid rgba(123,92,255,0.18) !important;
+  border-radius: 9px !important;
+  color: #8b6cff !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
 }
 .gjs-block svg {
-  width: 20px !important;
-  height: 20px !important;
-  color: #a29bfe !important;
+  width: 18px !important;
+  height: 18px !important;
+  color: #8b6cff !important;
 }
 .gjs-block__label {
   font-size: 11px !important;
   font-weight: 600 !important;
   text-align: center !important;
-  color: #c4c0d8 !important;
-  letter-spacing: 0.02em !important;
+  color: #8d89ae !important;
+  letter-spacing: 0.01em !important;
   line-height: 1.3 !important;
 }
+.gjs-category-title, .gjs-category-label {
+  font-size: 10px !important;
+  padding: 14px 14px 7px !important;
+  font-weight: 700 !important;
+  color: rgba(123,92,255,0.5) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+}
 
-/* === CANVAS — FOND DARK + GRILLE POINTS === */
+/* === CANVAS — GRILLE POINTS === */
 .gjs-cv-canvas {
-  background-color: #0f1424 !important;
-  background-image: radial-gradient(rgba(108,92,231,0.06) 1px, transparent 1px) !important;
-  background-size: 24px 24px !important;
+  background-color: #060e1c !important;
+  background-image: radial-gradient(rgba(123,92,255,0.07) 1px, transparent 1px) !important;
+  background-size: 28px 28px !important;
 }
 
 /* === LAYERS === */
 .gjs-layer {
-  padding: 10px 14px !important;
-  min-height: 38px !important;
-  font-size: 12px !important;
+  padding: 10px 12px !important;
+  min-height: 40px !important;
+  font-size: 13px !important;
   border-radius: 8px !important;
   margin: 2px 0 !important;
   transition: background 0.15s !important;
 }
-.gjs-layer:hover { background: rgba(108,92,231,0.08) !important; }
-.gjs-layer-name { font-size: 12px !important; color: #9b95b8 !important; }
+.gjs-layer:hover { background: rgba(123,92,255,0.07) !important; }
+.gjs-layer-name { font-size: 13px !important; color: #a09cc0 !important; }
 
 /* === STYLE MANAGER === */
 .gjs-sm-sector-title {
-  font-size: 9px !important;
-  padding: 14px 14px 8px !important;
-  font-weight: 800 !important;
-  color: rgba(108,92,231,0.55) !important;
+  font-size: 10px !important;
+  padding: 12px 14px 8px !important;
+  font-weight: 700 !important;
+  color: rgba(123,92,255,0.5) !important;
   text-transform: uppercase !important;
-  letter-spacing: 0.12em !important;
+  letter-spacing: 0.1em !important;
 }
-.gjs-sm-property { padding: 7px 14px !important; }
+.gjs-sm-property { padding: 8px 12px !important; }
 .gjs-field input, .gjs-field select, .gjs-field textarea {
-  font-size: 12px !important;
+  font-size: 13px !important;
   padding: 7px 12px !important;
-  height: 34px !important;
-  border-radius: 8px !important;
-  background: #1a1d35 !important;
-  border: 1px solid rgba(108,92,231,0.15) !important;
+  height: 36px !important;
+  border-radius: 9px !important;
+  background: rgba(7,16,31,0.7) !important;
+  border: 1px solid rgba(123,92,255,0.13) !important;
   color: #d4d0e0 !important;
   transition: border-color 0.15s !important;
 }
 .gjs-field input:focus, .gjs-field select:focus {
-  border-color: rgba(108,92,231,0.5) !important;
+  border-color: rgba(123,92,255,0.4) !important;
   outline: none !important;
-  box-shadow: 0 0 0 3px rgba(108,92,231,0.1) !important;
 }
-
-/* === TRAIT MANAGER === */
-.gjs-trt-trait { padding: 7px 14px !important; }
-.gjs-trt-label { font-size: 11px !important; color: #8d89ae !important; }
 
 /* === SÉLECTION === */
 .gjs-selected {
-  outline: 2px solid #6c5ce7 !important;
+  outline: 2px solid #7B5CFF !important;
   outline-offset: 1px !important;
 }
 
@@ -237,26 +219,21 @@ const NYXIA_PREMIUM_CSS = `
 .gjs-pn-panel::-webkit-scrollbar-thumb,
 .gjs-blocks::-webkit-scrollbar-thumb,
 .gjs-layers::-webkit-scrollbar-thumb {
-  background: rgba(108,92,231,0.3) !important;
+  background: rgba(123,92,255,0.25) !important;
   border-radius: 2px !important;
 }
 .gjs-pn-panel::-webkit-scrollbar-track { background: transparent !important; }
 
-/* === COULEURS NYXIA PREMIUM === */
-.gjs-one-bg { background-color: #121826 !important; }
+/* === COULEURS NYXIA === */
+.gjs-one-bg { background-color: #0b1428 !important; }
 .gjs-two-color { color: #c4bde0 !important; }
-.gjs-three-bg { background-color: #0f1424 !important; }
-.gjs-four-color, .gjs-four-color-h:hover { color: #6c5ce7 !important; }
+.gjs-three-bg { background-color: #091020 !important; }
+.gjs-four-color, .gjs-four-color-h:hover { color: #8b6cff !important; }
 
 /* === BRANDING MASQUÉ === */
 .gjs-logo, .gjs-logo-content, .gjs-brand,
 .gjs-off-prv, .gjs-no-ph,
 [title*="GrapesJS"], [aria-label*="GrapesJS"] { display: none !important; }
-
-/* === GJS INTERNAL HEADER HIDDEN === */
-.gjs-editor-top {
-  display: none !important;
-}
 `
 
 export default function GrapesJSEditorComponent({
@@ -375,31 +352,21 @@ export default function GrapesJSEditorComponent({
             '[title*="GrapesJS"], [title*="grapesjs"], [aria-label*="GrapesJS"], [aria-label*="grapesjs"]'
           ).forEach(el => { (el as HTMLElement).style.display = 'none' })
 
-          // Forcer la grille 2 colonnes premium
+          // Forcer la grille 2 colonnes sur les blocs
           gjsEditor.querySelectorAll('.gjs-block-container').forEach((container) => {
             const el = container as HTMLElement
             el.style.display = 'grid'
             el.style.gridTemplateColumns = '1fr 1fr'
-            el.style.gap = '10px'
-            el.style.padding = '6px 14px 14px'
+            el.style.gap = '8px'
+            el.style.padding = '4px 12px 12px'
             el.style.width = '100%'
-          })
-
-          // Style premium sur les blocs
-          gjsEditor.querySelectorAll('.gjs-block').forEach((block) => {
-            const el = block as HTMLElement
-            el.style.background = '#1e2139'
-            el.style.minHeight = '110px'
-            el.style.borderRadius = '14px'
-            el.style.border = '1px solid rgba(108,92,231,0.12)'
-            el.style.padding = '20px 10px 16px'
           })
         }
 
-        ;[100, 300, 600, 1000, 2000, 3000].forEach(delay => setTimeout(setupTheme, delay))
+        ;[100, 300, 600, 1000, 2000].forEach(delay => setTimeout(setupTheme, delay))
 
         editor.on('load', () => {
-          ;[100, 500, 1000, 2000].forEach(delay => setTimeout(setupTheme, delay))
+          ;[100, 500, 1000].forEach(delay => setTimeout(setupTheme, delay))
         })
 
         if (isMounted) setIsLoading(false)
@@ -461,82 +428,52 @@ export default function GrapesJSEditorComponent({
   }, [])
 
   return (
-    <div className="fixed inset-0 z-[100] bg-[#121826] flex flex-col">
+    <div className="fixed inset-0 z-[100] bg-[#06101f] flex flex-col">
 
-      {/* ===== TOP BAR PREMIUM ===== */}
-      <div
-        className="flex items-center justify-between px-5 h-[58px] shrink-0 relative z-50"
-        style={{
-          background: 'linear-gradient(180deg, #161b30 0%, #121826 100%)',
-          borderBottom: '1px solid rgba(108,92,231,0.12)',
-          boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
-        }}
-      >
+      {/* TOP BAR */}
+      <div className="flex items-center justify-between px-5 h-[58px] border-b border-purple-500/10 bg-[#0b1428]/95 backdrop-blur-sm shrink-0">
 
-        {/* Gauche — Logo + Titre + Badge */}
+        {/* Gauche — logo + titre + badge */}
         <div className="flex items-center gap-3">
           <div
-            className="w-[34px] h-[34px] rounded-[10px] flex items-center justify-center font-bold text-[15px] text-white"
+            className="w-[34px] h-[34px] rounded-[10px] flex items-center justify-center font-bold text-[14px] text-white"
             style={{
-              background: 'linear-gradient(135deg, #6c5ce7 0%, #4b3f8a 100%)',
-              boxShadow: '0 4px 16px rgba(108,92,231,0.4), inset 0 1px 0 rgba(255,255,255,0.15)',
+              background: 'linear-gradient(135deg, #8b6cff 0%, #5a3dd6 100%)',
+              boxShadow: '0 4px 16px rgba(123,92,255,0.35), inset 0 1px 0 rgba(255,255,255,0.15)',
             }}
           >
             N
           </div>
-          <span className="text-white font-semibold text-[14px] tracking-wide">
+          <span className="text-zinc-100 font-semibold text-[14px] tracking-wide">
             Éditeur de Page
           </span>
-          <span
-            className="px-[10px] py-[3px] rounded-full text-[9px] font-extrabold uppercase tracking-[0.1em] text-white"
-            style={{
-              background: 'linear-gradient(135deg, rgba(108,92,231,0.35) 0%, rgba(75,63,138,0.3) 100%)',
-              border: '1px solid rgba(108,92,231,0.3)',
-            }}
-          >
-            NyXia Pro
+          <span className="px-2 py-0.5 rounded-md bg-purple-500/10 border border-purple-500/20 text-[10px] font-bold uppercase tracking-widest text-purple-400">
+            Pro
           </span>
         </div>
 
-        {/* Centre — Barre de recherche */}
-        <div
-          className="hidden md:flex items-center gap-2 px-4 h-[34px] rounded-[10px] w-[280px]"
-          style={{
-            background: 'rgba(255,255,255,0.04)',
-            border: '1px solid rgba(108,92,231,0.1)',
-          }}
-        >
-          <Search className="w-[14px] h-[14px] text-[#4a4668]" />
-          <span className="text-[12px] text-[#4a4668]">Rechercher...</span>
-        </div>
-
-        {/* Droite — Actions */}
+        {/* Droite — actions */}
         <div className="flex items-center gap-2">
           <button
             onClick={handlePreview}
-            className="flex items-center gap-[6px] px-4 h-[34px] rounded-[9px] text-[12px] font-medium text-[#9b95b8] transition-all"
-            style={{
-              background: 'rgba(255,255,255,0.04)',
-              border: '1px solid rgba(108,92,231,0.1)',
-            }}
+            className="flex items-center gap-[7px] px-4 h-[36px] rounded-[10px] text-[13px] font-medium text-[#b4aecf] border border-white/[0.07] bg-white/[0.02] hover:bg-white/[0.06] hover:text-[#e8e2f8] hover:border-white/[0.12] transition-all"
           >
-            <Eye className="w-[13px] h-[13px]" />
+            <Eye className="w-[14px] h-[14px]" />
             Aperçu
           </button>
 
           <button
             onClick={handleSave}
             disabled={isSaving}
-            className="flex items-center gap-[6px] px-5 h-[34px] rounded-[9px] text-[12px] font-semibold text-white transition-all disabled:opacity-50"
+            className="flex items-center gap-[7px] px-5 h-[36px] rounded-[10px] text-[13px] font-semibold text-white border border-purple-400/40 transition-all disabled:opacity-50 hover:-translate-y-px"
             style={{
-              background: 'linear-gradient(135deg, #6c5ce7 0%, #4b3f8a 100%)',
-              border: '1px solid rgba(108,92,231,0.4)',
-              boxShadow: '0 4px 16px rgba(108,92,231,0.3), inset 0 1px 0 rgba(255,255,255,0.1)',
+              background: 'linear-gradient(135deg, rgba(123,92,255,0.9) 0%, rgba(90,61,214,0.9) 100%)',
+              boxShadow: '0 4px 18px rgba(123,92,255,0.28), inset 0 1px 0 rgba(255,255,255,0.12)',
             }}
           >
             {isSaving
-              ? <Loader2 className="w-[13px] h-[13px] animate-spin" />
-              : <Save className="w-[13px] h-[13px]" />
+              ? <Loader2 className="w-[14px] h-[14px] animate-spin" />
+              : <Save className="w-[14px] h-[14px]" />
             }
             Sauvegarder
           </button>
@@ -544,45 +481,24 @@ export default function GrapesJSEditorComponent({
           {onClose && (
             <button
               onClick={onClose}
-              className="flex items-center justify-center w-[34px] h-[34px] rounded-[9px] text-[#4a4668] transition-all"
-              style={{
-                background: 'rgba(255,255,255,0.03)',
-                border: '1px solid rgba(108,92,231,0.06)',
-              }}
+              className="flex items-center justify-center w-[36px] h-[36px] rounded-[9px] text-[#5c5880] border border-white/[0.05] hover:bg-white/[0.05] hover:text-[#a09cc0] transition-all"
             >
-              <X className="w-[14px] h-[14px]" />
+              <X className="w-[15px] h-[15px]" />
             </button>
           )}
         </div>
       </div>
 
-      {/* ===== RÈGLE GRILLE ===== */}
-      <div
-        className="flex items-center px-5 h-[24px] shrink-0 overflow-hidden"
-        style={{
-          background: '#0f1424',
-          borderBottom: '1px solid rgba(108,92,231,0.06)',
-        }}
-      >
-        <div className="flex items-center w-full text-[9px] text-[#2e2b4a] font-mono">
-          {Array.from({ length: 30 }, (_, i) => (
-            <span key={i} className="shrink-0" style={{ width: '80px' }}>
-              {i * 80}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* ===== ZONE ÉDITEUR ===== */}
+      {/* ZONE ÉDITEUR */}
       <div className="flex-1 relative overflow-hidden">
         {isLoading && (
-          <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#121826]">
+          <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#06101f]">
             <div className="text-center">
               <div
-                className="w-10 h-10 rounded-full border-2 border-t-purple-500 animate-spin mx-auto mb-4"
-                style={{ borderColor: 'rgba(108,92,231,0.2)', borderTopColor: '#6c5ce7' }}
+                className="w-9 h-9 rounded-full border-2 border-t-purple-500 animate-spin mx-auto mb-3"
+                style={{ borderColor: 'rgba(123,92,255,0.2)', borderTopColor: '#7B5CFF' }}
               />
-              <p className="text-[#4a4668] text-[13px] font-medium tracking-wide">
+              <p className="text-[#564e78] text-[13px] font-medium tracking-wide">
                 Chargement de l&apos;éditeur…
               </p>
             </div>
