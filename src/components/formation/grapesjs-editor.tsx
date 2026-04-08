@@ -17,245 +17,6 @@ interface GrapesJSEditorProps {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type GrapesJSEditor = any
 
-const NYXIA_PREMIUM_CSS = `
-/* === FONT === */
-.gjs-one-bg, .gjs-two-bg, .gjs-three-bg, .gjs-four-bg {
-  font-family: 'Outfit', ui-sans-serif, system-ui, sans-serif !important;
-  font-size: 14px !important;
-}
-
-/* === TOOLBAR FLOTTANT — MASQUÉ === */
-.gjs-toolbar { display: none !important; }
-.gjs-badge { display: none !important; }
-
-/* === PANEL GAUCHE === */
-.gjs-pn {
-  width: 260px !important;
-  min-width: 260px !important;
-  max-width: 260px !important;
-  height: 100% !important;
-  padding: 0 !important;
-  border-right: 1px solid rgba(123,92,255,0.09) !important;
-  background: linear-gradient(180deg, #0b1428 0%, #091020 100%) !important;
-  display: flex !important;
-  flex-direction: column !important;
-}
-.gjs-pn-left, .gjs-pn-panel {
-  width: 260px !important;
-  min-width: 260px !important;
-  max-width: 260px !important;
-  padding: 0 !important;
-  background: transparent !important;
-}
-
-/* === BOUTONS DE NAVIGATION === */
-.gjs-pn-commands, .gjs-pn-buttons {
-  display: flex !important;
-  flex-direction: row !important;
-  gap: 4px !important;
-  padding: 12px 12px 10px !important;
-  border-bottom: 1px solid rgba(123,92,255,0.07) !important;
-}
-.gjs-pn-btn {
-  flex: 1 !important;
-  height: 34px !important;
-  width: auto !important;
-  font-size: 10px !important;
-  font-weight: 700 !important;
-  letter-spacing: 0.04em !important;
-  text-transform: uppercase !important;
-  margin: 0 !important;
-  padding: 0 8px !important;
-  line-height: 34px !important;
-  border-radius: 9px !important;
-  background: transparent !important;
-  border: 1px solid transparent !important;
-  color: #564e78 !important;
-  transition: all 0.15s ease !important;
-}
-.gjs-pn-btn:hover {
-  background: rgba(255,255,255,0.04) !important;
-  color: #7a7498 !important;
-}
-.gjs-pn-btn.active, .gjs-pn-btn.gjs-pn-active {
-  background: rgba(123,92,255,0.13) !important;
-  border-color: rgba(123,92,255,0.24) !important;
-  color: #b09eff !important;
-}
-.gjs-pn-btn svg { width: 14px !important; height: 14px !important; }
-.gjs-pn-title {
-  font-size: 10px !important;
-  padding: 14px 14px 7px !important;
-  font-weight: 700 !important;
-  color: rgba(123,92,255,0.5) !important;
-  letter-spacing: 0.1em !important;
-  text-transform: uppercase !important;
-}
-
-/* === BLOCS — GRILLE 2 COL COMPACTE === */
-.gjs-blocks-c .gjs-block-category .gjs-block-list,
-.gjs-block-container,
-[class*="blocks__blocks"] {
-  display: grid !important;
-  grid-template-columns: 1fr 1fr !important;
-  gap: 8px !important;
-  padding: 4px 12px 12px !important;
-  width: 100% !important;
-}
-.gjs-block {
-  width: 100% !important;
-  padding: 14px 8px 10px !important;
-  margin: 0 !important;
-  border-radius: 12px !important;
-  border: 1px solid rgba(123,92,255,0.09) !important;
-  background: rgba(123,92,255,0.03) !important;
-  cursor: grab !important;
-  transition: all 0.2s cubic-bezier(0.4,0,0.2,1) !important;
-  min-height: 88px !important;
-  max-height: 100px !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 9px !important;
-  box-sizing: border-box !important;
-}
-.gjs-block:hover {
-  background: rgba(123,92,255,0.11) !important;
-  border-color: rgba(123,92,255,0.28) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: 0 8px 24px rgba(123,92,255,0.12) !important;
-}
-.gjs-block:active { transform: scale(0.97) !important; }
-
-/* Icône dans un badge pill */
-.gjs-block__media {
-  width: 36px !important;
-  height: 36px !important;
-  font-size: 18px !important;
-  line-height: 36px !important;
-  text-align: center !important;
-  background: rgba(123,92,255,0.1) !important;
-  border: 1px solid rgba(123,92,255,0.18) !important;
-  border-radius: 9px !important;
-  color: #8b6cff !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-.gjs-block svg,
-.gjs-block__media svg {
-  width: 22px !important;
-  height: 22px !important;
-  color: #8b6cff !important;
-}
-.gjs-block__label {
-  font-size: 11px !important;
-  font-weight: 600 !important;
-  text-align: center !important;
-  color: #8d89ae !important;
-  letter-spacing: 0.01em !important;
-  line-height: 1.3 !important;
-}
-.gjs-category-title, .gjs-category-label {
-  font-size: 10px !important;
-  padding: 14px 14px 7px !important;
-  font-weight: 700 !important;
-  color: rgba(123,92,255,0.5) !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.1em !important;
-}
-
-/* === CANVAS — GRILLE POINTS === */
-#gjs .gjs-cv-canvas,
-.gjs-cv-canvas__frames,
-.gjs-frame-wrapper,
-.gjs-cv-canvas {
-  background-color: #060e1c !important;
-  background-image: radial-gradient(rgba(123,92,255,0.07) 1px, transparent 1px) !important;
-  background-size: 28px 28px !important;
-}
-
-/* === LAYERS === */
-.gjs-layer {
-  padding: 10px 12px !important;
-  min-height: 40px !important;
-  font-size: 13px !important;
-  border-radius: 8px !important;
-  margin: 2px 0 !important;
-  transition: background 0.15s !important;
-}
-.gjs-layer:hover { background: rgba(123,92,255,0.07) !important; }
-.gjs-layer-name { font-size: 13px !important; color: #a09cc0 !important; }
-
-/* === STYLE MANAGER === */
-.gjs-sm-sector-title {
-  font-size: 10px !important;
-  padding: 12px 14px 8px !important;
-  font-weight: 700 !important;
-  color: rgba(123,92,255,0.5) !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.1em !important;
-}
-.gjs-sm-property { padding: 8px 12px !important; }
-.gjs-field input, .gjs-field select, .gjs-field textarea {
-  font-size: 13px !important;
-  padding: 7px 12px !important;
-  height: 36px !important;
-  border-radius: 9px !important;
-  background: rgba(7,16,31,0.7) !important;
-  border: 1px solid rgba(123,92,255,0.13) !important;
-  color: #d4d0e0 !important;
-  transition: border-color 0.15s !important;
-}
-.gjs-field input:focus, .gjs-field select:focus {
-  border-color: rgba(123,92,255,0.4) !important;
-  outline: none !important;
-}
-
-/* === TRAIT MANAGER === */
-.gjs-trt-trait { padding: 8px 12px !important; }
-.gjs-trt-label { font-size: 12px !important; color: #8d89ae !important; }
-
-/* === SÉLECTION === */
-.gjs-selected {
-  outline: 2px solid #7B5CFF !important;
-  outline-offset: 1px !important;
-}
-
-/* === SCROLLBARS === */
-.gjs-pn-panel::-webkit-scrollbar,
-.gjs-blocks::-webkit-scrollbar,
-.gjs-layers::-webkit-scrollbar { width: 4px !important; }
-.gjs-pn-panel::-webkit-scrollbar-thumb,
-.gjs-blocks::-webkit-scrollbar-thumb,
-.gjs-layers::-webkit-scrollbar-thumb {
-  background: rgba(123,92,255,0.25) !important;
-  border-radius: 2px !important;
-}
-.gjs-pn-panel::-webkit-scrollbar-track { background: transparent !important; }
-
-/* === COULEURS NYXIA === */
-.gjs-one-bg { background-color: #0b1428 !important; }
-.gjs-two-color { color: #c4bde0 !important; }
-.gjs-three-bg { background-color: #091020 !important; }
-.gjs-four-color, .gjs-four-color-h:hover { color: #8b6cff !important; }
-
-/* === BRANDING MASQUÉ === */
-.gjs-logo, .gjs-logo-content, .gjs-brand,
-.gjs-off-prv, .gjs-no-ph,
-[title*="GrapesJS"], [aria-label*="GrapesJS"] { display: none !important; }
-
-/* === VUES PANEL — FORCER POSITION === */
-.gjs-pn-views-container { display: none !important; }
-.gjs-pn-views {
-  width: 258px !important;
-  left: 0 !important;
-  top: auto !important;
-  position: relative !important;
-}
-`
-
 export default function GrapesJSEditorComponent({
   formationId,
   initialHtml = '',
@@ -273,7 +34,10 @@ export default function GrapesJSEditorComponent({
 
   useEffect(() => {
     let isMounted = true
-    let themeEl: HTMLStyleElement | null = null
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let observer: MutationObserver | null = null
+    let styleEl: HTMLStyleElement | null = null
+    let rafId: number | null = null
 
     async function initEditor() {
       try {
@@ -333,64 +97,353 @@ export default function GrapesJSEditorComponent({
 
         editorInstance.current = editor
 
-        // Inject premium theme CSS
-        themeEl = document.createElement('style')
-        themeEl.textContent = NYXIA_PREMIUM_CSS
-        document.head.appendChild(themeEl)
+        // =====================================================
+        // THÈME AGRESSIF — on n'injecte le CSS QU'APRÈS le load
+        // =====================================================
 
-        const setupTheme = () => {
+        const THEME_CSS = `
+/* === FONT === */
+#nyxia-gjs-editor .gjs-one-bg,
+#nyxia-gjs-editor .gjs-two-bg,
+#nyxia-gjs-editor .gjs-three-bg,
+#nyxia-gjs-editor .gjs-four-bg {
+  font-family: 'Outfit', ui-sans-serif, system-ui, sans-serif !important;
+  font-size: 14px !important;
+}
+
+/* === TOOLBAR FLOTTANT — MASQUÉ === */
+#nyxia-gjs-editor .gjs-toolbar { display: none !important; }
+#nyxia-gjs-editor .gjs-badge { display: none !important; }
+
+/* === PANEL GAUCHE === */
+#nyxia-gjs-editor .gjs-pn {
+  width: 260px !important;
+  min-width: 260px !important;
+  max-width: 260px !important;
+  height: 100% !important;
+  padding: 0 !important;
+  border-right: 1px solid rgba(123,92,255,0.09) !important;
+  background: linear-gradient(180deg, #0b1428 0%, #091020 100%) !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+#nyxia-gjs-editor .gjs-pn-left,
+#nyxia-gjs-editor .gjs-pn-panel {
+  width: 260px !important;
+  min-width: 260px !important;
+  max-width: 260px !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+/* === BOUTONS DE NAVIGATION === */
+#nyxia-gjs-editor .gjs-pn-commands,
+#nyxia-gjs-editor .gjs-pn-buttons {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 4px !important;
+  padding: 12px 12px 10px !important;
+  border-bottom: 1px solid rgba(123,92,255,0.07) !important;
+}
+#nyxia-gjs-editor .gjs-pn-btn {
+  flex: 1 !important;
+  height: 34px !important;
+  width: auto !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+  margin: 0 !important;
+  padding: 0 8px !important;
+  line-height: 34px !important;
+  border-radius: 9px !important;
+  background: transparent !important;
+  border: 1px solid transparent !important;
+  color: #564e78 !important;
+  transition: all 0.15s ease !important;
+}
+#nyxia-gjs-editor .gjs-pn-btn:hover {
+  background: rgba(255,255,255,0.04) !important;
+  color: #7a7498 !important;
+}
+#nyxia-gjs-editor .gjs-pn-btn.active,
+#nyxia-gjs-editor .gjs-pn-btn.gjs-pn-active {
+  background: rgba(123,92,255,0.13) !important;
+  border-color: rgba(123,92,255,0.24) !important;
+  color: #b09eff !important;
+}
+#nyxia-gjs-editor .gjs-pn-btn svg { width: 14px !important; height: 14px !important; }
+#nyxia-gjs-editor .gjs-pn-title {
+  font-size: 10px !important;
+  padding: 14px 14px 7px !important;
+  font-weight: 700 !important;
+  color: rgba(123,92,255,0.5) !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+}
+
+/* === BLOCS — GRILLE 2 COL COMPACTE === */
+#nyxia-gjs-editor .gjs-blocks-c .gjs-block-category .gjs-block-list,
+#nyxia-gjs-editor .gjs-block-container,
+#nyxia-gjs-editor .gjs-sm-sectors,
+#nyxia-gjs-editor [class*="blocks__blocks"],
+#nyxia-gjs-editor [class*="block-list"] {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 8px !important;
+  padding: 4px 12px 12px !important;
+  width: 100% !important;
+}
+
+#nyxia-gjs-editor .gjs-block {
+  width: 100% !important;
+  padding: 14px 8px 10px !important;
+  margin: 0 !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(123,92,255,0.09) !important;
+  background: rgba(123,92,255,0.03) !important;
+  cursor: grab !important;
+  transition: all 0.2s cubic-bezier(0.4,0,0.2,1) !important;
+  min-height: 88px !important;
+  max-height: 100px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 9px !important;
+  box-sizing: border-box !important;
+  float: none !important;
+}
+#nyxia-gjs-editor .gjs-block:hover {
+  background: rgba(123,92,255,0.11) !important;
+  border-color: rgba(123,92,255,0.28) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(123,92,255,0.12) !important;
+}
+#nyxia-gjs-editor .gjs-block:active { transform: scale(0.97) !important; }
+
+/* Icône dans un badge pill */
+#nyxia-gjs-editor .gjs-block__media {
+  width: 36px !important;
+  height: 36px !important;
+  font-size: 18px !important;
+  line-height: 36px !important;
+  text-align: center !important;
+  background: rgba(123,92,255,0.1) !important;
+  border: 1px solid rgba(123,92,255,0.18) !important;
+  border-radius: 9px !important;
+  color: #8b6cff !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+#nyxia-gjs-editor .gjs-block svg,
+#nyxia-gjs-editor .gjs-block__media svg {
+  width: 22px !important;
+  height: 22px !important;
+  color: #8b6cff !important;
+}
+#nyxia-gjs-editor .gjs-block__label {
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  text-align: center !important;
+  color: #8d89ae !important;
+  letter-spacing: 0.01em !important;
+  line-height: 1.3 !important;
+}
+#nyxia-gjs-editor .gjs-category-title,
+#nyxia-gjs-editor .gjs-category-label {
+  font-size: 10px !important;
+  padding: 14px 14px 7px !important;
+  font-weight: 700 !important;
+  color: rgba(123,92,255,0.5) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+}
+
+/* === CANVAS — GRILLE POINTS === */
+#nyxia-gjs-editor .gjs-cv-canvas,
+#nyxia-gjs-editor .gjs-cv-canvas__frames,
+#nyxia-gjs-editor .gjs-frame-wrapper,
+#nyxia-gjs-editor .gjs-canvas {
+  background-color: #060e1c !important;
+  background-image: radial-gradient(rgba(123,92,255,0.07) 1px, transparent 1px) !important;
+  background-size: 28px 28px !important;
+}
+
+/* === LAYERS === */
+#nyxia-gjs-editor .gjs-layer {
+  padding: 10px 12px !important;
+  min-height: 40px !important;
+  font-size: 13px !important;
+  border-radius: 8px !important;
+  margin: 2px 0 !important;
+  transition: background 0.15s !important;
+}
+#nyxia-gjs-editor .gjs-layer:hover { background: rgba(123,92,255,0.07) !important; }
+#nyxia-gjs-editor .gjs-layer-name { font-size: 13px !important; color: #a09cc0 !important; }
+
+/* === STYLE MANAGER === */
+#nyxia-gjs-editor .gjs-sm-sector-title {
+  font-size: 10px !important;
+  padding: 12px 14px 8px !important;
+  font-weight: 700 !important;
+  color: rgba(123,92,255,0.5) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+}
+#nyxia-gjs-editor .gjs-sm-property { padding: 8px 12px !important; }
+#nyxia-gjs-editor .gjs-field input,
+#nyxia-gjs-editor .gjs-field select,
+#nyxia-gjs-editor .gjs-field textarea {
+  font-size: 13px !important;
+  padding: 7px 12px !important;
+  height: 36px !important;
+  border-radius: 9px !important;
+  background: rgba(7,16,31,0.7) !important;
+  border: 1px solid rgba(123,92,255,0.13) !important;
+  color: #d4d0e0 !important;
+  transition: border-color 0.15s !important;
+}
+#nyxia-gjs-editor .gjs-field input:focus,
+#nyxia-gjs-editor .gjs-field select:focus {
+  border-color: rgba(123,92,255,0.4) !important;
+  outline: none !important;
+}
+
+/* === TRAIT MANAGER === */
+#nyxia-gjs-editor .gjs-trt-trait { padding: 8px 12px !important; }
+#nyxia-gjs-editor .gjs-trt-label { font-size: 12px !important; color: #8d89ae !important; }
+
+/* === SÉLECTION === */
+#nyxia-gjs-editor .gjs-selected {
+  outline: 2px solid #7B5CFF !important;
+  outline-offset: 1px !important;
+}
+
+/* === SCROLLBARS === */
+#nyxia-gjs-editor .gjs-pn-panel::-webkit-scrollbar,
+#nyxia-gjs-editor .gjs-blocks::-webkit-scrollbar,
+#nyxia-gjs-editor .gjs-layers::-webkit-scrollbar { width: 4px !important; }
+#nyxia-gjs-editor .gjs-pn-panel::-webkit-scrollbar-thumb,
+#nyxia-gjs-editor .gjs-blocks::-webkit-scrollbar-thumb,
+#nyxia-gjs-editor .gjs-layers::-webkit-scrollbar-thumb {
+  background: rgba(123,92,255,0.25) !important;
+  border-radius: 2px !important;
+}
+#nyxia-gjs-editor .gjs-pn-panel::-webkit-scrollbar-track { background: transparent !important; }
+
+/* === COULEURS NYXIA === */
+#nyxia-gjs-editor .gjs-one-bg { background-color: #0b1428 !important; }
+#nyxia-gjs-editor .gjs-two-color { color: #c4bde0 !important; }
+#nyxia-gjs-editor .gjs-three-bg { background-color: #091020 !important; }
+#nyxia-gjs-editor .gjs-four-color,
+#nyxia-gjs-editor .gjs-four-color-h:hover { color: #8b6cff !important; }
+
+/* === VUES PANEL === */
+#nyxia-gjs-editor .gjs-pn-views-container { display: none !important; }
+#nyxia-gjs-editor .gjs-pn-views {
+  width: 258px !important;
+  left: 0 !important;
+  top: auto !important;
+  position: relative !important;
+}
+
+/* === BRANDING MASQUÉ === */
+#nyxia-gjs-editor .gjs-logo,
+#nyxia-gjs-editor .gjs-logo-content,
+#nyxia-gjs-editor .gjs-brand,
+#nyxia-gjs-editor .gjs-off-prv,
+#nyxia-gjs-editor .gjs-no-ph,
+#nyxia-gjs-editor .gjs-cv-select,
+#nyxia-gjs-editor [title*="GrapesJS"],
+#nyxia-gjs-editor [aria-label*="GrapesJS"] { display: none !important; }
+`
+
+        // Fonction qui force le thème — inline styles + ré-injection CSS
+        const forceTheme = () => {
           if (!editorRef.current) return
-          const gjsEditor = editorRef.current.querySelector('.gjs-editor') || editorRef.current
+          const container = editorRef.current
 
-          // Masquer le branding
-          gjsEditor.querySelectorAll(
-            '.gjs-off-prv, .gjs-no-ph, [class*="gjs-logo"], .gjs-brand, .gjs-logo, .gjs-logo-content, .gjs-badge'
+          // === Ré-injecter le <style> TOUJOURS EN DERNIER dans <head> ===
+          if (styleEl) styleEl.remove()
+          styleEl = document.createElement('style')
+          styleEl.id = 'nyxia-gjs-theme'
+          styleEl.textContent = THEME_CSS
+          document.head.appendChild(styleEl)
+
+          // === Inline styles pour les conteneurs de blocs ===
+          container.querySelectorAll('.gjs-block-container, .gjs-block-list, [class*="block-list"]').forEach((el) => {
+            const node = el as HTMLElement
+            node.style.cssText = 'display:grid !important;grid-template-columns:1fr 1fr !important;gap:8px !important;padding:4px 12px 12px !important;width:100% !important;'
+          })
+
+          // === Inline styles pour chaque bloc ===
+          container.querySelectorAll('.gjs-block').forEach((el) => {
+            const node = el as HTMLElement
+            node.style.float = 'none'
+            node.style.display = 'flex'
+            node.style.flexDirection = 'column'
+            node.style.alignItems = 'center'
+            node.style.justifyContent = 'center'
+            node.style.width = '100%'
+            node.style.margin = '0'
+            node.style.minHeight = '88px'
+            node.style.maxHeight = '100px'
+          })
+
+          // === Masquer branding ===
+          container.querySelectorAll(
+            '.gjs-off-prv, .gjs-no-ph, [class*="gjs-logo"], .gjs-brand, .gjs-logo, .gjs-logo-content, .gjs-badge, .gjs-cv-select'
           ).forEach(el => { (el as HTMLElement).style.display = 'none' })
-
-          gjsEditor.querySelectorAll(
+          container.querySelectorAll(
             '[title*="GrapesJS"], [title*="grapesjs"], [aria-label*="GrapesJS"], [aria-label*="grapesjs"]'
           ).forEach(el => { (el as HTMLElement).style.display = 'none' })
 
-          // Forcer la grille 2 colonnes sur tous les conteneurs de blocs
-          gjsEditor.querySelectorAll('.gjs-block-container, .gjs-block-list, .gjs-blocks-c .gjs-block-category > div').forEach((container) => {
-            const el = container as HTMLElement
-            el.style.cssText = 'display:grid !important; grid-template-columns:1fr 1fr !important; gap:8px !important; padding:4px 12px 12px !important; width:100% !important;'
+          // === Canvas grille de points ===
+          container.querySelectorAll('.gjs-cv-canvas, .gjs-cv-canvas__frames, .gjs-frame-wrapper').forEach((el) => {
+            const node = el as HTMLElement
+            node.style.backgroundColor = '#060e1c'
+            node.style.backgroundImage = 'radial-gradient(rgba(123,92,255,0.07) 1px, transparent 1px)'
+            node.style.backgroundSize = '28px 28px'
           })
 
-          // Masquer le conteneur de vues par défaut
-          gjsEditor.querySelectorAll('.gjs-pn-views-container').forEach(el => {
+          // === Vues panel ===
+          container.querySelectorAll('.gjs-pn-views-container').forEach(el => {
             (el as HTMLElement).style.display = 'none'
           })
-
-          // Forcer la position du panneau de vues
-          gjsEditor.querySelectorAll('.gjs-pn-views').forEach(el => {
-            const panel = el as HTMLElement
-            panel.style.width = '258px'
-            panel.style.left = '0'
-            panel.style.top = 'auto'
-            panel.style.position = 'relative'
+          container.querySelectorAll('.gjs-pn-views').forEach(el => {
+            const node = el as HTMLElement
+            node.style.width = '258px'
+            node.style.left = '0'
+            node.style.top = 'auto'
+            node.style.position = 'relative'
           })
         }
 
-        // MutationObserver — réagit en temps réel aux changements DOM de GrapesJS
-        const observer = new MutationObserver(setupTheme)
-        if (editorRef.current) {
-          observer.observe(editorRef.current, { childList: true, subtree: true })
-          setTimeout(() => observer.disconnect(), 5000)
-        }
-
+        // Après le load complet de l'éditeur
         editor.on('load', () => {
-          setupTheme()
-          // Relancer un observer après le load complet
-          const loadObserver = new MutationObserver(setupTheme)
-          if (editorRef.current) {
-            loadObserver.observe(editorRef.current, { childList: true, subtree: true })
-            setTimeout(() => loadObserver.disconnect(), 5000)
-          }
+          // Premier passage immédiat
+          forceTheme()
+
+          // MutationObserver PERMANENT avec throttle via rAF
+          if (editorRef.current && observer) observer.disconnect()
+          observer = new MutationObserver(() => {
+            if (rafId) return
+            rafId = requestAnimationFrame(() => {
+              forceTheme()
+              rafId = null
+            })
+          })
+          observer.observe(editorRef.current!, { childList: true, subtree: true })
         })
 
-        // Thème initial immédiat
-        setupTheme()
+        // Aussi réagir aux événements clés de GrapesJS
+        ;['component:add', 'block:drag:start', 'canvas:render', 'sorter:drag:end', 'canvas:drop'].forEach(evt => {
+          editor.on(evt, () => {
+            requestAnimationFrame(forceTheme)
+          })
+        })
 
         if (isMounted) setIsLoading(false)
       } catch (error) {
@@ -406,7 +459,9 @@ export default function GrapesJSEditorComponent({
 
     return () => {
       isMounted = false
-      if (themeEl) themeEl.remove()
+      if (rafId) cancelAnimationFrame(rafId)
+      if (observer) observer.disconnect()
+      if (styleEl) styleEl.remove()
       if (editorInstance.current) {
         try { editorInstance.current.destroy() } catch { /* ignore */ }
         editorInstance.current = null
