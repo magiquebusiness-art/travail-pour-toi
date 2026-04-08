@@ -93,7 +93,9 @@ const NYXIA_PREMIUM_CSS = `
 }
 
 /* === BLOCS — GRILLE 2 COL COMPACTE === */
-.gjs-block-container {
+.gjs-blocks-c .gjs-block-category .gjs-block-list,
+.gjs-block-container,
+[class*="blocks__blocks"] {
   display: grid !important;
   grid-template-columns: 1fr 1fr !important;
   gap: 8px !important;
@@ -102,7 +104,7 @@ const NYXIA_PREMIUM_CSS = `
 }
 .gjs-block {
   width: 100% !important;
-  padding: 16px 10px 12px !important;
+  padding: 14px 8px 10px !important;
   margin: 0 !important;
   border-radius: 12px !important;
   border: 1px solid rgba(123,92,255,0.09) !important;
@@ -110,6 +112,7 @@ const NYXIA_PREMIUM_CSS = `
   cursor: grab !important;
   transition: all 0.2s cubic-bezier(0.4,0,0.2,1) !important;
   min-height: 88px !important;
+  max-height: 100px !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
@@ -140,9 +143,10 @@ const NYXIA_PREMIUM_CSS = `
   align-items: center !important;
   justify-content: center !important;
 }
-.gjs-block svg {
-  width: 18px !important;
-  height: 18px !important;
+.gjs-block svg,
+.gjs-block__media svg {
+  width: 22px !important;
+  height: 22px !important;
   color: #8b6cff !important;
 }
 .gjs-block__label {
@@ -163,6 +167,9 @@ const NYXIA_PREMIUM_CSS = `
 }
 
 /* === CANVAS — GRILLE POINTS === */
+#gjs .gjs-cv-canvas,
+.gjs-cv-canvas__frames,
+.gjs-frame-wrapper,
 .gjs-cv-canvas {
   background-color: #060e1c !important;
   background-image: radial-gradient(rgba(123,92,255,0.07) 1px, transparent 1px) !important;
@@ -238,6 +245,15 @@ const NYXIA_PREMIUM_CSS = `
 .gjs-logo, .gjs-logo-content, .gjs-brand,
 .gjs-off-prv, .gjs-no-ph,
 [title*="GrapesJS"], [aria-label*="GrapesJS"] { display: none !important; }
+
+/* === VUES PANEL — FORCER POSITION === */
+.gjs-pn-views-container { display: none !important; }
+.gjs-pn-views {
+  width: 258px !important;
+  left: 0 !important;
+  top: auto !important;
+  position: relative !important;
+}
 `
 
 export default function GrapesJSEditorComponent({
@@ -335,22 +351,46 @@ export default function GrapesJSEditorComponent({
             '[title*="GrapesJS"], [title*="grapesjs"], [aria-label*="GrapesJS"], [aria-label*="grapesjs"]'
           ).forEach(el => { (el as HTMLElement).style.display = 'none' })
 
-          // Forcer la grille 2 colonnes sur les blocs
-          gjsEditor.querySelectorAll('.gjs-block-container').forEach((container) => {
+          // Forcer la grille 2 colonnes sur tous les conteneurs de blocs
+          gjsEditor.querySelectorAll('.gjs-block-container, .gjs-block-list, .gjs-blocks-c .gjs-block-category > div').forEach((container) => {
             const el = container as HTMLElement
-            el.style.display = 'grid'
-            el.style.gridTemplateColumns = '1fr 1fr'
-            el.style.gap = '8px'
-            el.style.padding = '4px 12px 12px'
-            el.style.width = '100%'
+            el.style.cssText = 'display:grid !important; grid-template-columns:1fr 1fr !important; gap:8px !important; padding:4px 12px 12px !important; width:100% !important;'
+          })
+
+          // Masquer le conteneur de vues par défaut
+          gjsEditor.querySelectorAll('.gjs-pn-views-container').forEach(el => {
+            (el as HTMLElement).style.display = 'none'
+          })
+
+          // Forcer la position du panneau de vues
+          gjsEditor.querySelectorAll('.gjs-pn-views').forEach(el => {
+            const panel = el as HTMLElement
+            panel.style.width = '258px'
+            panel.style.left = '0'
+            panel.style.top = 'auto'
+            panel.style.position = 'relative'
           })
         }
 
-        ;[100, 300, 600, 1000, 2000].forEach(delay => setTimeout(setupTheme, delay))
+        // MutationObserver — réagit en temps réel aux changements DOM de GrapesJS
+        const observer = new MutationObserver(setupTheme)
+        if (editorRef.current) {
+          observer.observe(editorRef.current, { childList: true, subtree: true })
+          setTimeout(() => observer.disconnect(), 5000)
+        }
 
         editor.on('load', () => {
-          ;[100, 500, 1000].forEach(delay => setTimeout(setupTheme, delay))
+          setupTheme()
+          // Relancer un observer après le load complet
+          const loadObserver = new MutationObserver(setupTheme)
+          if (editorRef.current) {
+            loadObserver.observe(editorRef.current, { childList: true, subtree: true })
+            setTimeout(() => loadObserver.disconnect(), 5000)
+          }
         })
+
+        // Thème initial immédiat
+        setupTheme()
 
         if (isMounted) setIsLoading(false)
       } catch (error) {
