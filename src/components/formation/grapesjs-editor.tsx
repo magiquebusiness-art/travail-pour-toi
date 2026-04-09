@@ -1801,21 +1801,77 @@ const ALL_BLOCKS = [
 // ───────────────────────────────────────────────
 function getThemeCSS(): string {
   return `
-/* ═══════════════════════════════════════════════
-   NYXIA PREMIUM THEME — GrapesJS v2
-   ═══════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════
+   NYXIA PREMIUM THEME — GrapesJS v0.22
+   Strategy: Override ALL 32 CSS custom properties at container root.
+   This cascades through ALL 150 var() references automatically.
+   ═══════════════════════════════════════════════════════════════ */
 
-/* ── FONTS ── */
-.gjs-one-bg, .gjs-two-bg, .gjs-three-bg, .gjs-four-bg {
+/* ═══ NUCLEAR: Override CSS variables at container level ═══ */
+#nyxia-gjs-editor {
+  /* Core palette */
+  --gjs-main-color: #0b1428;
+  --gjs-primary-color: #0b1428;
+  --gjs-secondary-color: #e8e2f8;
+  --gjs-tertiary-color: #091020;
+  --gjs-quaternary-color: #7B5CFF;
+
+  /* Typography */
+  --gjs-font-color: #c4bde0;
+  --gjs-font-color-active: #ffffff;
+  --gjs-main-font: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --gjs-font-size: 0.8rem;
+
+  /* Dark overlays */
+  --gjs-main-dark-color: rgba(0, 0, 0, 0.35);
+  --gjs-secondary-dark-color: rgba(0, 0, 0, 0.2);
+
+  /* Light overlays */
+  --gjs-main-light-color: rgba(123, 92, 255, 0.06);
+  --gjs-secondary-light-color: rgba(255, 255, 255, 0.7);
+  --gjs-soft-light-color: rgba(123, 92, 255, 0.02);
+
+  /* Functional colors */
+  --gjs-color-blue: #7B5CFF;
+  --gjs-color-red: #ff5252;
+  --gjs-color-yellow: #F4C842;
+  --gjs-color-green: #4ade80;
+  --gjs-color-highlight: #7B5CFF;
+  --gjs-color-warn: #F4C842;
+
+  /* Borders & shadows */
+  --gjs-light-border: rgba(123, 92, 255, 0.1);
+  --gjs-arrow-color: rgba(160, 156, 192, 0.7);
+  --gjs-dark-text-shadow: rgba(0, 0, 0, 0.4);
+
+  /* Spacing */
+  --gjs-left-width: 270px;
+  --gjs-input-padding: 8px;
+  --gjs-color-input-padding: 28px;
+  --gjs-flex-item-gap: 6px;
+  --gjs-handle-margin: -5px;
+
+  /* Canvas & layout */
+  --gjs-canvas-top: 0px;
+  --gjs-animation-duration: 0.2s;
+  --gjs-padding-elem-classmanager: 6px 8px;
+  --gjs-upload-padding: 150px 10px;
+  --gjs-placeholder-background-color: var(--gjs-color-green);
+}
+
+/* ═══ STRUCTURAL OVERRIDES ═══ */
+
+/* Editor root */
+.gjs-editor {
   font-family: ${P.fontStack} !important;
   font-size: 14px !important;
 }
 
-/* ── TOOLBAR — hidden (we use custom) ── */
+/* Hide default toolbar (we use custom) */
 .gjs-toolbar, .gjs-tools .gjs-toolbar { display: none !important; }
 .gjs-badge { display: none !important; }
 
-/* ── LEFT PANEL ── */
+/* Left panel */
 .gjs-pn {
   width: 270px !important;
   min-width: 270px !important;
@@ -1823,7 +1879,7 @@ function getThemeCSS(): string {
   height: 100% !important;
   padding: 0 !important;
   margin: 0 !important;
-  border-right: 1px solid rgba(123,92,255,0.09) !important;
+  border-right: 1px solid rgba(123,92,255,0.1) !important;
   background: linear-gradient(180deg, #0b1428 0%, #091020 100%) !important;
   display: flex !important;
   flex-direction: column !important;
@@ -1839,7 +1895,7 @@ function getThemeCSS(): string {
   overflow: hidden !important;
 }
 
-/* ── PANEL NAV BUTTONS ── */
+/* Panel nav buttons */
 .gjs-pn-commands, .gjs-pn-buttons {
   display: flex !important;
   flex-direction: row !important;
@@ -1886,7 +1942,7 @@ function getThemeCSS(): string {
   text-transform: uppercase !important;
 }
 
-/* ── BLOCKS — 2-COL GRID ── */
+/* ═══ BLOCKS — 2-COL GRID ═══ */
 .gjs-blocks-c .gjs-block-category .gjs-block-list,
 .gjs-block-container,
 .gjs-sm-sectors,
@@ -1972,7 +2028,7 @@ function getThemeCSS(): string {
   letter-spacing: 0.1em !important;
 }
 
-/* ── CANVAS — dot grid ── */
+/* ═══ CANVAS — dot grid ═══ */
 .gjs-cv-canvas,
 .gjs-cv-canvas__frames,
 .gjs-frame-wrapper,
@@ -1983,7 +2039,7 @@ function getThemeCSS(): string {
   background-size: 28px 28px !important;
 }
 
-/* ── LAYERS ── */
+/* ═══ LAYERS ═══ */
 .gjs-layer {
   padding: 10px 12px !important;
   min-height: 40px !important;
@@ -1995,7 +2051,7 @@ function getThemeCSS(): string {
 .gjs-layer:hover { background: rgba(123,92,255,0.07) !important; }
 .gjs-layer-name { font-size: 13px !important; color: #a09cc0 !important; }
 
-/* ── STYLE MANAGER ── */
+/* ═══ STYLE MANAGER ═══ */
 .gjs-sm-sector-title {
   font-size: 10px !important;
   padding: 12px 14px 8px !important;
@@ -2022,11 +2078,11 @@ function getThemeCSS(): string {
   box-shadow: 0 0 0 3px rgba(123,92,255,0.08) !important;
 }
 
-/* ── TRAIT MANAGER ── */
+/* ═══ TRAIT MANAGER ═══ */
 .gjs-trt-trait { padding: 8px 12px !important; }
 .gjs-trt-label { font-size: 12px !important; color: #8d89ae !important; }
 
-/* ── SELECTION ── */
+/* ═══ SELECTION ═══ */
 .gjs-selected,
 .gjs-selected * {
   outline: 2px solid #7B5CFF !important;
@@ -2034,7 +2090,7 @@ function getThemeCSS(): string {
   transition: outline-color 0.15s ease !important;
 }
 
-/* ── SCROLLBARS ── */
+/* ═══ SCROLLBARS ═══ */
 .gjs-pn-panel::-webkit-scrollbar,
 .gjs-blocks::-webkit-scrollbar,
 .gjs-layers::-webkit-scrollbar { width: 5px !important; }
@@ -2051,13 +2107,7 @@ function getThemeCSS(): string {
 }
 .gjs-pn-panel::-webkit-scrollbar-track { background: transparent !important; }
 
-/* ── BASE COLORS ── */
-.gjs-one-bg { background-color: #0b1428 !important; }
-.gjs-two-color { color: #c4bde0 !important; }
-.gjs-three-bg { background-color: #091020 !important; }
-.gjs-four-color, .gjs-four-color-h:hover { color: #8b6cff !important; }
-
-/* ── VIEWS PANEL ── */
+/* ═══ VIEWS PANEL ═══ */
 .gjs-pn-views-container { display: none !important; }
 .gjs-pn-views {
   width: 268px !important;
@@ -2066,14 +2116,14 @@ function getThemeCSS(): string {
   position: relative !important;
 }
 
-/* ── BRANDING — ALL HIDDEN ── */
+/* ═══ BRANDING — ALL HIDDEN ═══ */
 .gjs-logo, .gjs-logo-content, .gjs-brand,
 .gjs-off-prv, .gjs-no-ph, .gjs-cv-select,
 .gjs-editor-top,
 [title*="GrapesJS"], [aria-label*="GrapesJS"],
 [data-gjs-type="wrapper"] + div { display: none !important; }
 
-/* ── MODAL ── */
+/* ═══ MODAL ═══ */
 .gjs-modal {
   background: #0b1428 !important;
   border: 1px solid rgba(123,92,255,0.2) !important;
@@ -2104,6 +2154,8 @@ function getThemeCSS(): string {
 }
 .gjs-sm-sectors { background: transparent !important; }
 .gjs-sm-sector { border-bottom: 1px solid rgba(123,92,255,0.07) !important; }
+
+/* ═══ INPUTS (hardcoded in GrapesJS CSS) ═══ */
 .gjs-input {
   background: rgba(7,16,31,0.7) !important;
   border: 1px solid rgba(123,92,255,0.13) !important;
@@ -2124,7 +2176,6 @@ function getThemeCSS(): string {
   border-radius: 9px !important;
 }
 .gjs-color-picker { border: 1px solid rgba(123,92,255,0.13) !important; border-radius: 9px !important; }
-.gjs-one-bg { color: #c4bde0 !important; }
 .gjs-field-arrow { border-color: rgba(123,92,255,0.3) !important; }
 .gjs-checkbox { background: rgba(123,92,255,0.15) !important; border-color: rgba(123,92,255,0.3) !important; }
 .gjs-field-range input { background: rgba(123,92,255,0.15) !important; }
@@ -2153,7 +2204,7 @@ function getThemeCSS(): string {
 .gjs-field-checkbox input[type="checkbox"] { background: rgba(123,92,255,0.15) !important; border-color: rgba(123,92,255,0.3) !important; }
 .gjs-field-checkbox input[type="checkbox"]:checked { background: #7B5CFF !important; border-color: #7B5CFF !important; }
 
-/* ── DEVICE FRAME ── */
+/* ═══ DEVICE FRAME ═══ */
 .nyxia-device-frame {
   transition: width 0.35s cubic-bezier(0.4,0,0.2,1),
               height 0.35s cubic-bezier(0.4,0,0.2,1),
