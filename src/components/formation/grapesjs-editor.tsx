@@ -435,6 +435,7 @@ export default function GrapesJSEditorComponent({
               modalImportTitle: 'Importer',
               modalImportLabel: 'Collez votre HTML/CSS ici',
               modalImportContent: '',
+              useCustomTheme: false,
             },
             [grapesjsCustomCode as unknown as string]: {
               modalTitle: 'Code personnalisé',
