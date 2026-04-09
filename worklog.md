@@ -505,3 +505,28 @@ Stage Summary:
 - SimpleLessonEditor Dialog is now 96vw × 88vh for maximum workspace
 - GrapesJS editor sidebar widened to 260px with all elements scaled up
 - Deployed at: https://a41e8dc6.travail-pour-toi.pages.dev
+
+---
+Task ID: 13
+Agent: Super Z (main)
+Task: Fix GrapesJS Studio Editor — Missing base CSS was the root cause
+
+Work Log:
+- Analyzed the entire project state including all source files
+- Discovered the REAL root cause: `grapesjs/dist/css/grapes.min.css` was NEVER imported
+- Without base CSS, the editor had no structural styles, making ALL custom CSS overrides useless
+- Previous attempts (5+) failed because CSS overrides had nothing to override — the editor was unstyled
+- Added `import 'grapesjs/dist/css/grapes.min.css'` to grapesjs-editor.tsx
+- Kept `useCustomTheme: false` (from previous session) to prevent preset-webpage's ugly brown/pink theme
+- Added `navbarOpts: false` and `countdownOpts: false` to clean up preset-webpage
+- Added `devicePreviewMode: true` for cleaner canvas
+- Configured `blockOpts` to keep useful blocks (flexGrid, text, image, video, map, table, form)
+- Committed as f33bd1e: "fix: import GrapesJS base CSS + optimize preset-webpage config"
+- Pushed to GitHub, deployment succeeded via GitHub Actions
+
+Stage Summary:
+- ROOT CAUSE FOUND: Missing `import 'grapesjs/dist/css/grapes.min.css'` — the editor loaded without any base styles
+- All previous CSS override attempts (5+) were fighting against a completely unstyled editor
+- Fix: Added the missing CSS import + useCustomTheme:false + optimized plugin config
+- Deployed successfully to travail-pour-toi.com
+- The GrapesJS editor should now display with proper structure + NyXia premium dark theme
