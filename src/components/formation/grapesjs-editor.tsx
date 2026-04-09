@@ -4,6 +4,9 @@ import { useEffect, useRef, useState, useCallback } from 'react'
 import { Loader2, Save, Eye, X } from 'lucide-react'
 import { toast } from 'sonner'
 
+// ─── CSS DE BASE GRAPESJS — OBLIGATOIRE pour la structure ───
+import 'grapesjs/dist/css/grapes.min.css'
+
 interface GrapesJSEditorProps {
   formationId: string
   initialHtml?: string
@@ -424,6 +427,8 @@ export default function GrapesJSEditorComponent({
           forceClass: false,
           protectedCss: '',
           canvasCss: '',
+          // Désactiver le sélecteur de device en haut du canvas
+          devicePreviewMode: true,
           plugins: [
             grapesjsBlocksBasic,
             grapesjsPresetWebpage,
@@ -436,6 +441,19 @@ export default function GrapesJSEditorComponent({
               modalImportLabel: 'Collez votre HTML/CSS ici',
               modalImportContent: '',
               useCustomTheme: false,
+              // Désactiver les composants inutiles du preset
+              navbarOpts: false,
+              countdownOpts: false,
+              // Garder les blocs utiles
+              blockOpts: {
+                flexGrid: true,
+                text: true,
+                image: true,
+                video: true,
+                map: true,
+                table: true,
+                form: true,
+              },
             },
             [grapesjsCustomCode as unknown as string]: {
               modalTitle: 'Code personnalisé',
