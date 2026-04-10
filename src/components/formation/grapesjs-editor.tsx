@@ -1924,14 +1924,31 @@ export default function GrapesJSEditorComponent({
             },
           },
           components: parsedComponents || initialHtml || `
-            <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#06101f;">
-              <div style="text-align:center;max-width:600px;padding:40px;">
-                <h1 style="font-family:${P.headingFont};font-size:42px;color:#fff;margin-bottom:16px;font-weight:800;">
-                  Votre Page de Vente
-                </h1>
-                <p style="font-family:${P.fontStack};font-size:16px;color:rgba(255,255,255,0.6);line-height:1.7;">
-                  Glissez des blocs depuis le panneau de gauche pour construire votre page.
-                </p>
+            <div style="min-height:100vh;background:#06101f;padding:0;">
+              <div style="background:linear-gradient(135deg, #0b1428 0%, #091020 50%, #1a0d3e 100%);padding:80px 40px;text-align:center;position:relative;overflow:hidden;">
+                <div style="max-width:720px;margin:0 auto;position:relative;z-index:1;">
+                  <div style="display:inline-block;padding:8px 20px;border-radius:50px;background:rgba(123,92,255,0.15);border:1px solid rgba(123,92,255,0.3);color:#7B5CFF;font-size:13px;font-weight:600;letter-spacing:0.5px;margin-bottom:24px;">✨ FORMATION PREMIUM</div>
+                  <h1 style="font-family:${P.headingFont};font-size:48px;color:#fff;margin-bottom:20px;font-weight:800;line-height:1.15;">Maîtrisez l'Art du Digital en 30 Jours</h1>
+                  <p style="font-family:${P.fontStack};font-size:18px;color:rgba(255,255,255,0.6);line-height:1.7;margin-bottom:36px;">Rejoignez 4 200+ entrepreneurs qui ont transformé leur expertise en business rentable grâce à notre méthode éprouvée.</p>
+                  <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
+                    <a style="display:inline-block;padding:16px 36px;border-radius:12px;background:linear-gradient(135deg,#7B5CFF 0%,#3b1f8e 100%);color:#fff;font-size:16px;font-weight:700;text-decoration:none;box-shadow:0 4px 20px rgba(123,92,255,0.35);">Accéder à la Formation</a>
+                    <a style="display:inline-block;padding:16px 36px;border-radius:12px;background:transparent;color:#e8e2f8;font-size:16px;font-weight:600;text-decoration:none;border:1px solid rgba(123,92,255,0.3);">En Savoir Plus →</a>
+                  </div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:720px;margin:0 auto;padding:40px 40px 60px;">
+                <div style="text-align:center;padding:28px 16px;border-radius:16px;background:rgba(123,92,255,0.04);border:1px solid rgba(123,92,255,0.08);">
+                  <div style="font-size:32px;font-weight:800;color:#7B5CFF;margin-bottom:6px;">4.2K</div>
+                  <div style="font-size:13px;color:rgba(255,255,255,0.5);font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Étudiants</div>
+                </div>
+                <div style="text-align:center;padding:28px 16px;border-radius:16px;background:rgba(123,92,255,0.04);border:1px solid rgba(123,92,255,0.08);">
+                  <div style="font-size:32px;font-weight:800;color:#F4C842;margin-bottom:6px;">97%</div>
+                  <div style="font-size:13px;color:rgba(255,255,255,0.5);font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Satisfaction</div>
+                </div>
+                <div style="text-align:center;padding:28px 16px;border-radius:16px;background:rgba(123,92,255,0.04);border:1px solid rgba(123,92,255,0.08);">
+                  <div style="font-size:32px;font-weight:800;color:#4ade80;margin-bottom:6px;">30j</div>
+                  <div style="font-size:13px;color:rgba(255,255,255,0.5);font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Accès à vie</div>
+                </div>
               </div>
             </div>
           `,
@@ -1940,11 +1957,24 @@ export default function GrapesJSEditorComponent({
 
         editorInstance.current = editor
 
-        // ── Register custom blocks ──
+        // ── Register custom blocks with emoji labels ──
+        const CATEGORY_ICONS: Record<string, string> = {
+          'Hero': '🚀',
+          'Features': '💡',
+          'Pricing': '💎',
+          'Testimonials': '⭐',
+          'CTA': '🎯',
+          'Content': '📝',
+          'Footer': '📌',
+          'E-commerce': '🛒',
+        }
         ALL_BLOCKS.forEach((block) => {
           editor.BlockManager.add(block.id, {
-            label: block.label,
-            category: block.category,
+            label: `<div style="display:flex;align-items:center;gap:8px;padding:4px 0;">
+              <span style="font-size:16px;flex-shrink:0;">${CATEGORY_ICONS[block.category] || '📦'}</span>
+              <span style="font-size:12px;font-weight:600;color:#a09cc0;white-space:nowrap;">${block.label}</span>
+            </div>`,
+            category: { label: `${CATEGORY_ICONS[block.category] || '📦'} ${block.category}`, id: block.category.toLowerCase() },
             content: block.content,
             select: true,
             activate: true,
@@ -1955,22 +1985,33 @@ export default function GrapesJSEditorComponent({
         setTimeout(() => {
           if (!editorInstance.current) return
           try {
-            // Force the blocks panel button to be active
             const blocksBtn = editorInstance.current.getContainer()?.closest('#nyxia-gjs-editor')?.querySelector('[data-gjs-cmd="open-blocks"]')
             if (blocksBtn) blocksBtn.click()
             else editorInstance.current.runCommand('open-blocks')
           } catch { /* ignore */ }
-          // Force style panel button visibility
           try {
             const smBtn = editorInstance.current.getContainer()?.closest('#nyxia-gjs-editor')?.querySelector('[data-gjs-cmd="open-sm"]')
-            if (smBtn) {
-              smBtn.setAttribute('title', 'Styles')
-            }
+            if (smBtn) smBtn.setAttribute('title', 'Styles')
           } catch { /* ignore */ }
           try {
             const layersBtn = editorInstance.current.getContainer()?.closest('#nyxia-gjs-editor')?.querySelector('[data-gjs-cmd="open-layers"]')
-            if (layersBtn) {
-              layersBtn.setAttribute('title', 'Couches')
+            if (layersBtn) layersBtn.setAttribute('title', 'Couches')
+          } catch { /* ignore */ }
+          // Inject panel header branding
+          try {
+            const panel = editorInstance.current.getContainer()?.closest('#nyxia-gjs-editor')?.querySelector('.gjs-pn-left')
+            if (panel) {
+              const header = document.createElement('div')
+              header.id = 'nyxia-panel-header'
+              header.innerHTML = `
+                <div style="display:flex;align-items:center;gap:10px;padding:16px 14px 12px;border-bottom:1px solid rgba(123,92,255,0.06);">
+                  <div style="width:32px;height:32px;border-radius:9px;background:linear-gradient(145deg,#8b6cff 0%,#5a3dd6 100%);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:white;box-shadow:0 3px 12px rgba(123,92,255,0.3);flex-shrink:0;">N</div>
+                  <div style="display:flex;flex-direction:column;gap:2px;">
+                    <div style="font-size:12px;font-weight:700;color:#eae6ff;letter-spacing:0.02em;">Éditeur de Page</div>
+                    <div style="font-size:9px;font-weight:800;color:rgba(123,92,255,0.55);text-transform:uppercase;letter-spacing:0.1em;">NyXia Studio Pro</div>
+                  </div>
+                </div>`
+              panel.insertBefore(header, panel.firstChild)
             }
           } catch { /* ignore */ }
         }, 800)
