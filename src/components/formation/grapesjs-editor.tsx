@@ -2005,6 +2005,51 @@ export default function GrapesJSEditorComponent({
           // No branding injection — keep panels clean
         }, 800)
 
+        // ── AGGRESSIVELY remove any badges/pastilles from DOM ──
+        const removeBadges = () => {
+          if (!editorInstance.current) return
+          try {
+            const container = editorInstance.current.getContainer()
+            if (!container) return
+            // Remove any element with badge/pastille/branding in its class
+            container.querySelectorAll('[class*="badge"], [class*="Badge"], [class*="pastille"], [class*="Pastille"], [class*="watermark"], [class*="Branding"], [class*="branding"]').forEach((el) => {
+              el.remove()
+            })
+            // Remove canvas frame info (bottom badge area)
+            container.querySelectorAll('.gjs-cv-frame__info, .gjs-canvas__frames').forEach((el) => {
+              el.remove()
+            })
+            // Remove any absolute/fixed positioned spans at bottom
+            container.querySelectorAll('span, div, a').forEach((el) => {
+              const htmlEl = el as HTMLElement
+              const style = window.getComputedStyle(htmlEl)
+              const classes = htmlEl.className || ''
+              if (
+                (typeof classes === 'string' && (classes.includes('badge') || classes.includes('Badge') || classes.includes('pastille'))) ||
+                (htmlEl.textContent?.trim() === 'GrapesJS') ||
+                (htmlEl.getAttribute('href')?.includes('grapesjs'))
+              ) {
+                htmlEl.remove()
+              }
+            })
+          } catch { /* ignore */ }
+        }
+        // Run multiple times to catch late-injected badges
+        setTimeout(removeBadges, 1000)
+        setTimeout(removeBadges, 2000)
+        setTimeout(removeBadges, 4000)
+        // Also use MutationObserver to catch badges added later
+        const badgeObserver = new MutationObserver(() => removeBadges())
+        if (editorRef.current) {
+          badgeObserver.observe(editorRef.current, { childList: true, subtree: true })
+        }
+        // Store observer for cleanup
+        const origDestroy = editor.destroy
+        editor.destroy = function (...args: unknown[]) {
+          badgeObserver.disconnect()
+          return origDestroy.apply(editor, args as [])
+        }
+
         // ── LocalStorage auto-save (debounced) ──
         const autoSave = debounce(() => {
           if (!editorInstance.current) return
