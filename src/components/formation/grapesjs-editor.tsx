@@ -1793,6 +1793,168 @@ const ECOMMERCE_BLOCKS = [
   },
 ]
 
+const AUDIO_BLOCKS = [
+  {
+    id: 'audio-player',
+    label: 'Lecteur Audio',
+    category: 'Audio',
+    content: `<div style="${css({
+      background: `linear-gradient(135deg, ${P.dark1} 0%, ${P.dark3} 100%)`,
+      padding: '40px',
+      borderRadius: SIZES.borderRadius.lg,
+      border: `1px solid rgba(${123},${92},${255},0.1)`,
+      maxWidth: '640px',
+      margin: '0 auto',
+    })}">
+      <div style="${css({
+        display: 'flex',
+        alignItems: 'center',
+        gap: '20px',
+        marginBottom: '24px',
+      })}">
+        <div style="${css({
+          width: '64px',
+          height: '64px',
+          borderRadius: '50%',
+          background: `linear-gradient(135deg, ${P.violet} 0%, ${P.deepPurple} 100%)`,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexShrink: '0',
+          boxShadow: `0 4px 20px rgba(${123},${92},${255},0.3)`,
+        })}"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><polygon points="9,6 19,12 9,18"/></svg></div>
+        <div>
+          <h3 style="${css({
+            fontSize: '18px',
+            fontWeight: '700',
+            color: P.white,
+            marginBottom: '4px',
+          })}">Titre de l'audio</h3>
+          <p style="${css({
+            fontSize: '13px',
+            color: P.textSecondary,
+          })}">Module 1 — Leçon introductive</p>
+        </div>
+      </div>
+      <div style="${css({
+        background: `rgba(${17},${27},${48},0.5)`,
+        borderRadius: SIZES.borderRadius.md,
+        padding: '4px',
+        border: `1px solid rgba(${123},${92},${255},0.08)`,
+      })}">
+        <div style="${css({
+          height: '6px',
+          borderRadius: '3px',
+          background: `rgba(${123},${92},${255},0.2)`,
+          marginBottom: '16px',
+          position: 'relative',
+          overflow: 'hidden',
+        })}">
+          <div style="${css({
+            width: '35%',
+            height: '100%',
+            borderRadius: '3px',
+            background: `linear-gradient(90deg, ${P.violet}, ${P.purple})`,
+          })}"></div>
+        </div>
+        <div style="${css({
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '0 12px 8px',
+        })}">
+          <span style="${css({ fontSize: '12px', color: P.textMuted })}">3:24</span>
+          <span style="${css({ fontSize: '12px', color: P.textMuted })}">12:45</span>
+        </div>
+      </div>
+      <p style="${css({
+        fontSize: '12px',
+        color: P.textMuted,
+        marginTop: '16px',
+        textAlign: 'center',
+        fontStyle: 'italic',
+      })}">Remplacez par votre fichier MP3 via les propriétés</p>
+    </div>`,
+  },
+  {
+    id: 'audio-podcast',
+    label: 'Podcast Section',
+    category: 'Audio',
+    content: `<div style="${css({
+      background: P.dark2,
+      padding: '80px 40px',
+    })}">
+      <div style="${css({ textAlign: 'center', maxWidth: '600px', margin: '0 auto 48px' })}">
+        <h2 style="${css({
+          fontSize: '36px',
+          fontWeight: '800',
+          color: P.white,
+          marginBottom: '14px',
+          fontFamily: P.headingFont,
+        })}">Écouter les Modules</h2>
+        <p style="${css({
+          fontSize: '17px',
+          color: P.textSecondary,
+          lineHeight: '1.7',
+        })}">Écoutez chaque module à votre rythme, ou les télécharger pour les écouter partout.</p>
+      </div>
+      <div style="${css({
+        maxWidth: '700px',
+        margin: '0 auto',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '16px',
+      })}">
+        ${[
+          { num: '01', title: 'Introduction au programme', dur: '12:45' },
+          { num: '02', title: 'Comprendre votre marché', dur: '18:30' },
+          { num: '03', title: 'Premiers pas pratiques', dur: '24:15' },
+        ].map((ep) => `
+          <div style="${css({
+            display: 'flex',
+            alignItems: 'center',
+            gap: '16px',
+            padding: '20px 24px',
+            borderRadius: SIZES.borderRadius.md,
+            background: `rgba(${17},${27},${48},0.5)`,
+            border: `1px solid rgba(${123},${92},${255},0.08)`,
+          })}">
+            <div style="${css({
+              width: '44px',
+              height: '44px',
+              borderRadius: '50%',
+              background: `rgba(${123},${92},${255},0.1)`,
+              border: `1px solid rgba(${123},${92},${255},0.15)`,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: '0',
+              fontSize: '16px',
+              fontWeight: '800',
+              color: P.violet,
+            })}">${ep.num}</div>
+            <div style="${css({ flex: '1', minWidth: '0' })}">
+              <p style="${css({ fontSize: '15px', fontWeight: '600', color: P.white, marginBottom: '4px' })}">${ep.title}</p>
+              <p style="${css({ fontSize: '12px', color: P.textMuted })}">${ep.dur}</p>
+            </div>
+            <div style="${css({
+              width: '36px',
+              height: '36px',
+              borderRadius: '50%',
+              background: `linear-gradient(135deg, ${P.violet} 0%, ${P.deepPurple} 100%)`,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: '0',
+              boxShadow: `0 2px 12px rgba(${123},${92},${255},0.25)`,
+              cursor: 'pointer',
+            })}"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="8,5 20,12 8,19"/></svg></div>
+          </div>`).join('')}
+      </div>
+    </div>`,
+  },
+]
+
 // Flatten all blocks
 const ALL_BLOCKS = [
   ...HERO_BLOCKS,
@@ -1801,6 +1963,7 @@ const ALL_BLOCKS = [
   ...TESTIMONIAL_BLOCKS,
   ...CTA_BLOCKS,
   ...CONTENT_BLOCKS,
+  ...AUDIO_BLOCKS,
   ...FOOTER_BLOCKS,
   ...ECOMMERCE_BLOCKS,
 ]
@@ -1972,6 +2135,7 @@ export default function GrapesJSEditorComponent({
           'Content': '<svg width="28" height="28" fill="none" stroke="#7B5CFF" stroke-width="1.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
           'Footer': '<svg width="28" height="28" fill="none" stroke="#7B5CFF" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
           'E-commerce': '<svg width="28" height="28" fill="none" stroke="#7B5CFF" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>',
+          'Audio': '<svg width="28" height="28" fill="none" stroke="#7B5CFF" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>',
         }
         ALL_BLOCKS.forEach((block) => {
           editor.BlockManager.add(block.id, {

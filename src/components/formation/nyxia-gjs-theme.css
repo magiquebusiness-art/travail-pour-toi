@@ -86,8 +86,15 @@
 }
 
 /* Hide default top bar (we have our own React toolbar) */
-#nyxia-gjs-editor .gjs-editor-top {
+#nyxia-gjs-editor .gjs-editor-top,
+#nyxia-gjs-editor .gjs-cv-tools {
   display: none !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  max-height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
