@@ -52,3 +52,29 @@ Stage Summary:
 - Deployed commit daebc4c
 - Key fixes: 100dvh viewport, 2-col block grid, bigger blocks/panels
 - Files modified: nyxia-gjs-theme.css, grapesjs-editor.tsx
+---
+Task ID: 1
+Agent: Main Agent
+Task: Fix GrapesJS editor - restore functionality, fix overflow, remove NyXia badge
+
+Work Log:
+- Analyzed screenshot with VLM to understand current state
+- Read full grapesjs-editor.tsx (2458 lines) and nyxia-gjs-theme.css (780 lines)
+- Identified 3 root causes:
+  1. CSS hides .gjs-mdl-dialog (breaks ALL modals - image upload, code editor, etc.)
+  2. CSS hides .gjs-toolbar and .gjs-cv-tools (breaks component editing)
+  3. CSS overrides display:flex, float:none on panels (breaks GrapesJS internal float-based layout engine)
+- Rewrote nyxia-gjs-theme.css with color-only overrides + 2-column block grid
+- Removed NyXia 'Studio Pro' badge from toolbar
+- Removed injected panel header branding JS
+- Simplified loading screen text
+- Build verified successfully
+- Committed as 83ee7e7 and pushed to main
+
+Stage Summary:
+- CSS now only overrides COLORS (safe) + block grid (2 columns)
+- NO layout overrides (display, float, overflow on structural elements)
+- NO hiding of functional elements (modals, toolbars, etc.)
+- Only GrapesJS branding (.gjs-badge, .gjs-logo-content, .gjs-brand) and default top bar hidden
+- All buttons, modals, drag-drop, image upload should now work
+- NyXia pastille/badge removed from UI
