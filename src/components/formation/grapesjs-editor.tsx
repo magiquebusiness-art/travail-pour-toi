@@ -1997,23 +1997,7 @@ export default function GrapesJSEditorComponent({
             const layersBtn = editorInstance.current.getContainer()?.closest('#nyxia-gjs-editor')?.querySelector('[data-gjs-cmd="open-layers"]')
             if (layersBtn) layersBtn.setAttribute('title', 'Couches')
           } catch { /* ignore */ }
-          // Inject panel header branding
-          try {
-            const panel = editorInstance.current.getContainer()?.closest('#nyxia-gjs-editor')?.querySelector('.gjs-pn-left')
-            if (panel) {
-              const header = document.createElement('div')
-              header.id = 'nyxia-panel-header'
-              header.innerHTML = `
-                <div style="display:flex;align-items:center;gap:10px;padding:16px 14px 12px;border-bottom:1px solid rgba(123,92,255,0.06);">
-                  <div style="width:32px;height:32px;border-radius:9px;background:linear-gradient(145deg,#8b6cff 0%,#5a3dd6 100%);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:white;box-shadow:0 3px 12px rgba(123,92,255,0.3);flex-shrink:0;">N</div>
-                  <div style="display:flex;flex-direction:column;gap:2px;">
-                    <div style="font-size:12px;font-weight:700;color:#eae6ff;letter-spacing:0.02em;">Éditeur de Page</div>
-                    <div style="font-size:9px;font-weight:800;color:rgba(123,92,255,0.55);text-transform:uppercase;letter-spacing:0.1em;">NyXia Studio Pro</div>
-                  </div>
-                </div>`
-              panel.insertBefore(header, panel.firstChild)
-            }
-          } catch { /* ignore */ }
+          // No branding injection — keep panels clean
         }, 800)
 
         // ── LocalStorage auto-save (debounced) ──
@@ -2184,19 +2168,8 @@ ${html}
             value={pageTitle}
             onChange={(e) => setPageTitle(e.target.value)}
             className="bg-transparent border-none outline-none text-[15px] font-semibold min-w-0 truncate"
-            style={{ color: '#eae6ff', maxWidth: '220px', letterSpacing: '0.01em' }}
+            style={{ color: '#eae6ff', maxWidth: '280px', letterSpacing: '0.01em' }}
           />
-          <span
-            className="px-[10px] py-[3px] rounded-[6px] text-[10px] font-bold uppercase tracking-[0.06em] shrink-0"
-            style={{
-              background: 'linear-gradient(135deg, rgba(123,92,255,0.15) 0%, rgba(99,102,241,0.1) 100%)',
-              border: '1px solid rgba(123,92,255,0.22)',
-              color: '#c0b4ff',
-              boxShadow: '0 2px 8px rgba(123,92,255,0.08)',
-            }}
-          >
-            Studio Pro
-          </span>
         </div>
 
         {/* Center — Device Toggle + Undo/Redo */}
@@ -2420,13 +2393,8 @@ ${html}
                   <Sparkles className="w-5 h-5" style={{ color: '#b09eff' }} />
                 </div>
               </div>
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <span className="text-[16px] font-bold" style={{ color: '#c0b4ff' }}>
-                  NyXia Studio Pro
-                </span>
-              </div>
-              <p className="text-[13px]" style={{ color: '#6b6490' }}>
-                Chargement de l&apos;éditeur et des blocs premium…
+              <p className="text-[13px] mt-4" style={{ color: '#6b6490' }}>
+                Chargement de l&apos;éditeur…
               </p>
             </div>
           </div>
