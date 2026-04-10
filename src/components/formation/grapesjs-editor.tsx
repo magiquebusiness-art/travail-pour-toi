@@ -54,8 +54,8 @@ const P = {
   textPrimary: '#e8e2f8',
   textSecondary: '#a09cc0',
   textMuted: '#564e78',
-  fontStack: "'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'",
-  headingFont: "'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'",
+  fontStack: "'Inter', system-ui, -apple-system, 'Segoe UI', 'Roboto', 'sans-serif'",
+  headingFont: "'Inter', system-ui, -apple-system, 'Segoe UI', 'Roboto', 'sans-serif'",
 }
 
 const SIZES = {
@@ -110,7 +110,7 @@ const HERO_BLOCKS = [
           fontWeight: '600',
           letterSpacing: '0.5px',
           marginBottom: '24px',
-        })}">✨ FORMATION PREMIUM</div>
+        })}"><span style="background:linear-gradient(135deg,#F4C842,#7B5CFF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800;letter-spacing:0.08em;">FORMATION PREMIUM</span></div>
         <h1 style="${css({
           fontSize: '48px',
           fontWeight: '800',
@@ -221,7 +221,7 @@ const HERO_BLOCKS = [
         justifyContent: 'center',
         color: P.textMuted,
         fontSize: '16px',
-      })}">📷 Image Placeholder</div>
+      })}"><svg width="20" height="20" fill="none" stroke="#564e78" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
     </div>`,
   },
   {
@@ -278,7 +278,7 @@ const HERO_BLOCKS = [
             justifyContent: 'center',
             fontSize: '28px',
             color: P.violet,
-          })}">▶</div>
+          })}"><svg width="28" height="28" viewBox="0 0 24 24" fill="#7B5CFF"><polygon points="6,3 20,12 6,21"/></svg></div>
         </div>
       </div>
     </div>`,
@@ -303,7 +303,7 @@ const HERO_BLOCKS = [
           border: `1px solid rgba(${123},${92},${255},0.3)`,
           marginBottom: '28px',
         })}">
-          <span style="${css({ fontSize: '18px' })}">🏆</span>
+          <span style="${css({ fontSize: '18px' })}"><svg width="18" height="18" viewBox="0 0 24 24" fill="#F4C842"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
           <span style="${css({
             color: P.violet,
             fontSize: '13px',
@@ -341,7 +341,7 @@ const HERO_BLOCKS = [
           marginTop: '16px',
           fontSize: '13px',
           color: P.textMuted,
-        })}">✓ Garantie 30 jours • ✓ Accès à vie</p>
+        })}"><span style="color:#F4C842;font-weight:700;">✓</span> Garantie 30 jours &bull; <span style="color:#F4C842;font-weight:700;">✓</span> Accès à vie</p>
       </div>
     </div>`,
   },
@@ -354,9 +354,9 @@ const FEATURES_BLOCKS = [
     category: 'Features',
     content: (() => {
       const items = [
-        { icon: '🎯', title: 'Objectifs Clairs', desc: 'Définissez vos objectifs et suivez votre progression avec notre système de tracking intégré.' },
-        { icon: '📈', title: 'Résultats Mesurables', desc: 'Obtenez des résultats concrets avec notre méthode éprouvée par des milliers de professionnels.' },
-        { icon: '💡', title: 'Soutien Expert', desc: 'Bénéficiez du soutien de nos experts et d\'une communauté engagée pour réussir.' },
+        { icon: 'svg-target', title: 'Objectifs Clairs', desc: 'Définissez vos objectifs et suivez votre progression avec notre système de tracking intégré.' },
+        { icon: 'svg-chart', title: 'Résultats Mesurables', desc: 'Obtenez des résultats concrets avec notre méthode éprouvée par des milliers de professionnels.' },
+        { icon: 'svg-lightbulb', title: 'Soutien Expert', desc: 'Bénéficiez du soutien de nos experts et d\'une communauté engagée pour réussir.' },
       ]
       const cards = items.map((item) => `
         <div style="${css({
@@ -377,7 +377,7 @@ const FEATURES_BLOCKS = [
             justifyContent: 'center',
             fontSize: '28px',
             margin: '0 auto 20px',
-          })}">${item.icon}</div>
+          })}">${item.icon === 'svg-target' ? '<svg width="28" height="28" fill="none" stroke="#7B5CFF" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>' : item.icon === 'svg-chart' ? '<svg width="28" height="28" fill="none" stroke="#7B5CFF" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>' : '<svg width="28" height="28" fill="none" stroke="#7B5CFF" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>'}</div>
           <h3 style="${css({
             fontSize: '20px',
             fontWeight: '700',
@@ -424,10 +424,10 @@ const FEATURES_BLOCKS = [
     category: 'Features',
     content: (() => {
       const items = [
-        { icon: '🚀', title: 'Rapidité' },
-        { icon: '🔒', title: 'Sécurité' },
-        { icon: '📊', title: 'Analytique' },
-        { icon: '🌍', title: 'Accessibilité' },
+        { icon: 'svg-rocket', title: 'Rapidité' },
+        { icon: 'svg-lock', title: 'Sécurité' },
+        { icon: 'svg-bars', title: 'Analytique' },
+        { icon: 'svg-globe', title: 'Accessibilité' },
       ]
       const cards = items.map((item) => `
         <div style="${css({
@@ -447,7 +447,7 @@ const FEATURES_BLOCKS = [
             justifyContent: 'center',
             fontSize: '24px',
             margin: '0 auto 16px',
-          })}">${item.icon}</div>
+          })}">${item.icon === 'svg-rocket' ? '<svg width="22" height="22" fill="none" stroke="#7B5CFF" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>' : item.icon === 'svg-lock' ? '<svg width="22" height="22" fill="none" stroke="#7B5CFF" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>' : item.icon === 'svg-bars' ? '<svg width="22" height="22" fill="none" stroke="#7B5CFF" stroke-width="1.5" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>' : '<svg width="22" height="22" fill="none" stroke="#7B5CFF" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>'}</div>
           <h3 style="${css({
             fontSize: '17px',
             fontWeight: '700',
@@ -535,7 +535,7 @@ const FEATURES_BLOCKS = [
           justifyContent: 'center',
           color: P.textMuted,
           fontSize: '15px',
-        })}">📷 Image Placeholder</div>
+        })}"><svg width="20" height="20" fill="none" stroke="#564e78" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
       </div>
       <div style="${css({
         height: '1px',
@@ -671,7 +671,7 @@ const PRICING_BLOCKS = [
             fontSize: '12px',
             fontWeight: '700',
             letterSpacing: '0.5px',
-          })}">⭐ POPULAIRE</div>` : ''}
+          })}"><span style="background:linear-gradient(135deg,#F4C842,#ff8c00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800;">POPULAIRE</span></div>` : ''}
           <h3 style="${css({
             fontSize: '20px',
             fontWeight: '700',
@@ -794,7 +794,7 @@ const PRICING_BLOCKS = [
         textDecoration: 'none',
         boxShadow: `0 4px 20px rgba(${244},${200},${66},0.3)`,
       })}">Obtenir l'Accès</a>
-      <p style="${css({ marginTop: '16px', fontSize: '13px', color: P.textMuted })}">🔒 Garantie satisfait ou remboursé 30 jours</p>
+      <p style="${css({ marginTop: '16px', fontSize: '13px', color: P.textMuted })}"><svg width="14" height="14" fill="none" stroke="#F4C842" stroke-width="1.5" viewBox="0 0 24 24" style="vertical-align:-2px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Garantie satisfait ou remboursé 30 jours</p>
     </div>`,
   },
   {
@@ -826,7 +826,7 @@ const PRICING_BLOCKS = [
         })}">
           <div style="${css({ padding: '18px 24px', color: P.textMuted, fontSize: '14px', fontWeight: '600' })}">Fonctionnalité</div>
           <div style="${css({ padding: '18px 16px', color: P.textSecondary, fontSize: '14px', fontWeight: '700', textAlign: 'center' })}">Basic</div>
-          <div style="${css({ padding: '18px 16px', color: P.violet, fontSize: '14px', fontWeight: '700', textAlign: 'center' })}">Pro ⭐</div>
+          <div style="${css({ padding: '18px 16px', color: P.violet, fontSize: '14px', fontWeight: '700', textAlign: 'center' })}">Pro</div>
           <div style="${css({ padding: '18px 16px', color: P.textSecondary, fontSize: '14px', fontWeight: '700', textAlign: 'center' })}">Premium</div>
         </div>
         ${['Formations', 'Support', 'Coaching', 'Certificat', 'Ressources'].map((feat) => `
@@ -852,9 +852,9 @@ const TESTIMONIAL_BLOCKS = [
     category: 'Testimonials',
     content: (() => {
       const items = [
-        { name: 'Marie Dupont', role: 'Coach', text: 'Cette formation a complètement transformé mon business. En 3 mois, j\'ai doublé mes revenus.', avatar: '👩‍💼' },
-        { name: 'Thomas B.', role: 'Entrepreneur', text: 'Le contenu est exceptionnel. L\'accompagnement personnalisé fait vraiment la différence.', avatar: '👨‍💻' },
-        { name: 'Sophie L.', role: 'Formatrice', text: 'Je recommande cette plateforme à 100%. L\'investissement est rentabilisé dès le premier mois.', avatar: '👩‍🏫' },
+        { name: 'Marie Dupont', role: 'Coach', text: 'Cette formation a complètement transformé mon business. En 3 mois, j\'ai doublé mes revenus.', initials: 'MD' },
+        { name: 'Thomas B.', role: 'Entrepreneur', text: 'Le contenu est exceptionnel. L\'accompagnement personnalisé fait vraiment la différence.', initials: 'TB' },
+        { name: 'Sophie L.', role: 'Formatrice', text: 'Je recommande cette plateforme à 100%. L\'investissement est rentabilisé dès le premier mois.', initials: 'SL' },
       ]
       const cards = items.map((item) => `
         <div style="${css({
@@ -886,7 +886,7 @@ const TESTIMONIAL_BLOCKS = [
               alignItems: 'center',
               justifyContent: 'center',
               fontSize: '20px',
-            })}">${item.avatar}</div>
+            })}">${item.initials}</div>
             <div>
               <div style="${css({ fontSize: '15px', fontWeight: '700', color: P.white })}">${item.name}</div>
               <div style="${css({ fontSize: '13px', color: P.textMuted })}">${item.role}</div>
@@ -984,10 +984,10 @@ const TESTIMONIAL_BLOCKS = [
         paddingBottom: '8px',
       })}">
         ${[
-          { name: 'Julie R.', text: 'Méthode incroyable, résultats au-delà de mes attentes !', avatar: '👩‍🔬' },
-          { name: 'Marc P.', text: 'Le meilleur investissement que j\'ai fait pour ma carrière.', avatar: '👨‍🔧' },
-          { name: 'Emma L.', text: 'Contenu de qualité supérieure, communauté très active.', avatar: '👩‍🎨' },
-          { name: 'David S.', text: 'J\'ai lancé mon business en 30 jours grâce à cette formation.', avatar: '👨‍💼' },
+          { name: 'Julie R.', text: 'Méthode incroyable, résultats au-delà de mes attentes !', initials: 'JR' },
+          { name: 'Marc P.', text: 'Le meilleur investissement que j\'ai fait pour ma carrière.', initials: 'MP' },
+          { name: 'Emma L.', text: 'Contenu de qualité supérieure, communauté très active.', initials: 'EL' },
+          { name: 'David S.', text: 'J\'ai lancé mon business en 30 jours grâce à cette formation.', initials: 'DS' },
         ].map((item) => `
           <div style="${css({
             minWidth: '280px',
@@ -1007,7 +1007,7 @@ const TESTIMONIAL_BLOCKS = [
               justifyContent: 'center',
               fontSize: '22px',
               marginBottom: '16px',
-            })}">${item.avatar}</div>
+            })}">${item.initials}</div>
             <p style="${css({
               fontSize: '14px',
               color: P.textSecondary,
@@ -1079,7 +1079,7 @@ const CTA_BLOCKS = [
       <div style="${css({
         fontSize: '36px',
         marginBottom: '16px',
-      })}">💌</div>
+      })}"><svg width="24" height="24" fill="none" stroke="#7B5CFF" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
       <h2 style="${css({
         fontSize: '30px',
         fontWeight: '800',
@@ -1121,7 +1121,7 @@ const CTA_BLOCKS = [
           whiteSpace: 'nowrap',
         })}">S'inscrire</button>
       </div>
-      <p style="${css({ marginTop: '14px', fontSize: '12px', color: P.textMuted })}">🔒 Pas de spam. Désabonnement en un clic.</p>
+      <p style="${css({ marginTop: '14px', fontSize: '12px', color: P.textMuted })}"><svg width="12" height="12" fill="none" stroke="#F4C842" stroke-width="1.5" viewBox="0 0 24 24" style="vertical-align:-1px;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Pas de spam. Désabonnement en un clic.</p>
     </div>`,
   },
   {
@@ -1148,7 +1148,7 @@ const CTA_BLOCKS = [
         fontWeight: '700',
         letterSpacing: '1px',
         marginBottom: '20px',
-      })}">⚡ OFFRE LIMITÉE</div>
+      })}"><svg width="14" height="14" viewBox="0 0 24 24" fill="#F4C842" style="vertical-align:-2px;margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>OFFRE LIMITÉE</div>
       <h2 style="${css({
         fontSize: '32px',
         fontWeight: '800',
@@ -1224,7 +1224,7 @@ const CONTENT_BLOCKS = [
         justifyContent: 'center',
         color: P.textMuted,
         fontSize: '15px',
-      })}">📷 Image Placeholder</div>
+      })}"><svg width="20" height="20" fill="none" stroke="#564e78" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
       <div style="${css({ flex: '1', minWidth: '300px' })}">
         <div style="${css({
           padding: '6px 16px',
@@ -1328,10 +1328,10 @@ const CONTENT_BLOCKS = [
     category: 'Content',
     content: (() => {
       const members = [
-        { name: 'Marie Laurent', role: 'Fondatrice & CEO', avatar: '👩‍💼' },
-        { name: 'Thomas Bernard', role: 'Directeur Technique', avatar: '👨‍💻' },
-        { name: 'Sophie Martin', role: 'Responsable Pédagogique', avatar: '👩‍🏫' },
-        { name: 'Lucas Petit', role: 'Community Manager', avatar: '👨‍🎨' },
+        { name: 'Marie Laurent', role: 'Fondatrice & CEO', initials: 'ML' },
+        { name: 'Thomas Bernard', role: 'Directeur Technique', initials: 'TB' },
+        { name: 'Sophie Martin', role: 'Responsable Pédagogique', initials: 'SM' },
+        { name: 'Lucas Petit', role: 'Community Manager', initials: 'LP' },
       ]
       const cards = members.map((m) => `
         <div style="${css({
@@ -1520,7 +1520,13 @@ const FOOTER_BLOCKS = [
             marginBottom: '16px',
           })}">Suivez-nous</h4>
           <div style="${css({ display: 'flex', gap: '10px' })}">
-            ${['📘', '📸', '🐦'].map((s) => `
+            ${[
+              { svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="#7B5CFF"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>' },
+              { svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7B5CFF" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="#7B5CFF" stroke="none"/></svg>' },
+              { svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="#7B5CFF"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>' },
+              { svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="#7B5CFF"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.43z"/><polygon points="9.75,15.02 15.5,11.75 9.75,8.48" fill="#0a0e1a"/></svg>' },
+              { svg: '<svg width="16" height="16" viewBox="0 0 24 24" fill="#7B5CFF"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>' },
+            ].map((s) => `
               <a style="${css({
                 width: '36px',
                 height: '36px',
@@ -1529,9 +1535,8 @@ const FOOTER_BLOCKS = [
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '16px',
                 textDecoration: 'none',
-              })}">${s}</a>`).join('')}
+              })}">${s.svg}</a>`).join('')}}
           </div>
         </div>
       </div>
@@ -1623,7 +1628,7 @@ const ECOMMERCE_BLOCKS = [
               fontSize: '11px',
               fontWeight: '700',
             })}">${p.badge}</div>` : ''}
-            📷 Image
+            <svg width="18" height="18" fill="none" stroke="#564e78" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
           </div>
           <div style="${css({ padding: '20px' })}">
             <h3 style="${css({
@@ -1709,7 +1714,7 @@ const ECOMMERCE_BLOCKS = [
         justifyContent: 'center',
         color: P.textMuted,
         fontSize: '15px',
-      })}">📷 Image du Produit</div>
+      })}"><svg width="18" height="18" fill="none" stroke="#564e78" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
       <div style="${css({ flex: '1', minWidth: '300px' })}">
         <div style="${css({
           padding: '5px 14px',
@@ -1782,7 +1787,7 @@ const ECOMMERCE_BLOCKS = [
           textAlign: 'center',
           fontSize: '13px',
           color: P.textMuted,
-        })}">🔒 Paiement sécurisé • Garantie 30 jours</p>
+        })}\"><span style="color:#F4C842;font-weight:700;">&#10003;</span> Paiement sécurisé &bull; Garantie 30 jours</p>
       </div>
     </div>`,
   },
@@ -1927,7 +1932,7 @@ export default function GrapesJSEditorComponent({
             <div style="min-height:100vh;background:#06101f;padding:0;">
               <div style="background:linear-gradient(135deg, #0b1428 0%, #091020 50%, #1a0d3e 100%);padding:80px 40px;text-align:center;position:relative;overflow:hidden;">
                 <div style="max-width:720px;margin:0 auto;position:relative;z-index:1;">
-                  <div style="display:inline-block;padding:8px 20px;border-radius:50px;background:rgba(123,92,255,0.15);border:1px solid rgba(123,92,255,0.3);color:#7B5CFF;font-size:13px;font-weight:600;letter-spacing:0.5px;margin-bottom:24px;">✨ FORMATION PREMIUM</div>
+                  <div style="display:inline-block;padding:8px 20px;border-radius:50px;background:rgba(123,92,255,0.15);border:1px solid rgba(123,92,255,0.3);color:#7B5CFF;font-size:13px;font-weight:600;letter-spacing:0.5px;margin-bottom:24px;"><span style="background:linear-gradient(135deg,#F4C842,#7B5CFF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800;letter-spacing:0.08em;">FORMATION PREMIUM</span></div>
                   <h1 style="font-family:${P.headingFont};font-size:48px;color:#fff;margin-bottom:20px;font-weight:800;line-height:1.15;">Maîtrisez l'Art du Digital en 30 Jours</h1>
                   <p style="font-family:${P.fontStack};font-size:18px;color:rgba(255,255,255,0.6);line-height:1.7;margin-bottom:36px;">Rejoignez 4 200+ entrepreneurs qui ont transformé leur expertise en business rentable grâce à notre méthode éprouvée.</p>
                   <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;">
@@ -1957,24 +1962,24 @@ export default function GrapesJSEditorComponent({
 
         editorInstance.current = editor
 
-        // ── Register custom blocks with emoji labels ──
+        // ── Register custom blocks with SVG labels ──
         const CATEGORY_ICONS: Record<string, string> = {
-          'Hero': '🚀',
-          'Features': '💡',
-          'Pricing': '💎',
-          'Testimonials': '⭐',
-          'CTA': '🎯',
-          'Content': '📝',
-          'Footer': '📌',
-          'E-commerce': '🛒',
+          'Hero': '<svg width="28" height="28" fill="none" stroke="#7B5CFF" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="M12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/></svg>',
+          'Features': '<svg width="28" height="28" fill="none" stroke="#7B5CFF" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>',
+          'Pricing': '<svg width="28" height="28" fill="none" stroke="#7B5CFF" stroke-width="1.5" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>',
+          'Testimonials': '<svg width="28" height="28" fill="none" stroke="#7B5CFF" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+          'CTA': '<svg width="28" height="28" fill="none" stroke="#7B5CFF" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
+          'Content': '<svg width="28" height="28" fill="none" stroke="#7B5CFF" stroke-width="1.5" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+          'Footer': '<svg width="28" height="28" fill="none" stroke="#7B5CFF" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+          'E-commerce': '<svg width="28" height="28" fill="none" stroke="#7B5CFF" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>',
         }
         ALL_BLOCKS.forEach((block) => {
           editor.BlockManager.add(block.id, {
             label: `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:12px 6px 8px;">
-              <span style="font-size:36px;line-height:1;flex-shrink:0;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.3));">${CATEGORY_ICONS[block.category] || '📦'}</span>
+              <span style="line-height:1;flex-shrink:0;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.3));">${CATEGORY_ICONS[block.category] || '<svg width="28" height="28" fill="none" stroke="#7B5CFF" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>'}</span>
               <span style="font-size:11px;font-weight:700;color:#a09cc0;white-space:nowrap;letter-spacing:0.02em;text-align:center;">${block.label}</span>
             </div>`,
-            category: { label: `${CATEGORY_ICONS[block.category] || '📦'} ${block.category}`, id: block.category.toLowerCase() },
+            category: { label: block.category, id: block.category.toLowerCase() },
             content: block.content,
             select: true,
             activate: true,
