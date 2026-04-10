@@ -101,6 +101,35 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   FIX: Force ALL GrapesJS floating UI to stay below React toolbar (64px)
+   The .gjs-toolbar (component toolbar on select), .gjs-resizer,
+   .gjs-offset-v, .gjs-rte-toolbar etc. use position:absolute from
+   top:0 of the GJS container, which overlaps our React toolbar.
+   ═══════════════════════════════════════════════════════════════════════════ */
+#nyxia-gjs-editor .gjs-toolbar,
+#nyxia-gjs-editor .gjs-resizer,
+#nyxia-gjs-editor .gjs-rte-toolbar,
+#nyxia-gjs-editor .gjs-rte-actionbar,
+#nyxia-gjs-editor .gjs-ghost,
+#nyxia-gjs-editor .gjs-tools,
+#nyxia-gjs-editor .gjs-tools-gl,
+#nyxia-gjs-editor .gjs-placeholder {
+  position: relative !important;
+}
+
+/* Specifically clamp the component selection toolbar */
+#nyxia-gjs-editor .gjs-toolbar {
+  z-index: 50 !important;
+}
+
+/* The selection highlight bar must never go above the React toolbar */
+#nyxia-gjs-editor .gjs-frame-wrapper__top,
+#nyxia-gjs-editor .gjs-frame-wrapper__top-r,
+#nyxia-gjs-editor .gjs-frame-wrapper__name {
+  position: relative !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
    PANEL BACKGROUNDS — Colors + padding to prevent text clipping
    ═══════════════════════════════════════════════════════════════════════════ */
 #nyxia-gjs-editor .gjs-pn {
