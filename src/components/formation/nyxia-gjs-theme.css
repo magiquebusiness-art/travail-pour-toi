@@ -37,9 +37,6 @@
   --gjs-flex-item-gap: 10px;
   --gjs-handle-margin: -5px;
   --gjs-canvas-top: 0px;
-
-  /* Prevent text from overlapping the toolbar */
-  --gjs-canvas-top-offset: 20px;
   --gjs-animation-duration: 0.25s;
   --gjs-padding-elem-classmanager: 10px 12px;
   --gjs-upload-padding: 160px 12px;
@@ -101,32 +98,22 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   FIX: Force ALL GrapesJS floating UI to stay below React toolbar (64px)
-   The .gjs-toolbar (component toolbar on select), .gjs-resizer,
-   .gjs-offset-v, .gjs-rte-toolbar etc. use position:absolute from
-   top:0 of the GJS container, which overlaps our React toolbar.
+   CANVAS CONTAINMENT — Prevent content from escaping above the canvas
    ═══════════════════════════════════════════════════════════════════════════ */
-#nyxia-gjs-editor .gjs-toolbar,
-#nyxia-gjs-editor .gjs-resizer,
-#nyxia-gjs-editor .gjs-rte-toolbar,
-#nyxia-gjs-editor .gjs-rte-actionbar,
-#nyxia-gjs-editor .gjs-ghost,
+/* The canvas area must clip content at its boundaries */
+#nyxia-gjs-editor .gjs-cv-canvas {
+  overflow: hidden !important;
+}
+
+/* Selection tools inside canvas must stay within canvas bounds */
 #nyxia-gjs-editor .gjs-tools,
-#nyxia-gjs-editor .gjs-tools-gl,
-#nyxia-gjs-editor .gjs-placeholder {
-  position: relative !important;
+#nyxia-gjs-editor .gjs-tools-gl {
+  overflow: hidden !important;
 }
 
-/* Specifically clamp the component selection toolbar */
-#nyxia-gjs-editor .gjs-toolbar {
-  z-index: 50 !important;
-}
-
-/* The selection highlight bar must never go above the React toolbar */
-#nyxia-gjs-editor .gjs-frame-wrapper__top,
-#nyxia-gjs-editor .gjs-frame-wrapper__top-r,
-#nyxia-gjs-editor .gjs-frame-wrapper__name {
-  position: relative !important;
+/* Frame wrapper (selection highlight around selected element) must not escape canvas */
+#nyxia-gjs-editor .gjs-frame-wrapper {
+  overflow: hidden !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

@@ -2282,17 +2282,6 @@ export default function GrapesJSEditorComponent({
           editor.BlockManager.add(block.id, blockDef)
         })
 
-        // ── Fix: Toolbar must stay above all GrapesJS content ──
-        const fixToolbarZIndex = () => {
-          const toolbar = editorRef.current?.parentElement?.querySelector('[style*="z-index: 99999"]') as HTMLElement | null
-          if (toolbar) {
-            toolbar.style.position = 'relative'
-            toolbar.style.zIndex = '99999'
-          }
-        }
-        setTimeout(fixToolbarZIndex, 500)
-        setTimeout(fixToolbarZIndex, 1500)
-
         // ── CRITICAL: Force blocks panel to show after plugins load ──
         setTimeout(() => {
           if (!editorInstance.current) return
@@ -2717,7 +2706,7 @@ ${html}
       </div>
 
       {/* ═══════ EDITOR AREA ═══════ */}
-      <div ref={canvasWrapperRef} className="flex-1 relative" style={{ overflow: 'hidden', minHeight: 0 }}>
+      <div ref={canvasWrapperRef} className="flex-1 relative" style={{ overflow: 'hidden', minHeight: 0, isolation: 'isolate', zIndex: 1 }}>
         {isLoading && (
           <div className="absolute inset-0 z-50 flex items-center justify-center" style={{ background: '#0a0e1a' }}>
             <div className="text-center">
