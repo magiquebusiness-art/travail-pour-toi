@@ -1977,7 +1977,7 @@ export default function GrapesJSEditorComponent({
           editor.BlockManager.add(block.id, {
             label: `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:12px 6px 8px;">
               <span style="line-height:1;flex-shrink:0;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.3));">${CATEGORY_ICONS[block.category] || '<svg width="28" height="28" fill="none" stroke="#7B5CFF" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>'}</span>
-              <span style="font-size:11px;font-weight:700;color:#a09cc0;white-space:nowrap;letter-spacing:0.02em;text-align:center;">${block.label}</span>
+              <span style="font-size:10px;font-weight:700;color:#a09cc0;white-space:normal;word-wrap:break-word;overflow-wrap:break-word;letter-spacing:0.01em;text-align:center;line-height:1.25;max-width:100%;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${block.label}</span>
             </div>`,
             category: { label: block.category, id: block.category.toLowerCase() },
             content: block.content,

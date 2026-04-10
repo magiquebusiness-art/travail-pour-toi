@@ -30,7 +30,7 @@
   --gjs-light-border: rgba(123, 92, 255, 0.12);
   --gjs-arrow-color: rgba(160, 156, 192, 0.7);
   --gjs-dark-text-shadow: rgba(0, 0, 0, 0.5);
-  --gjs-left-width: 380px;
+  --gjs-left-width: 420px;
   --gjs-right-width: 320px;
   --gjs-input-padding: 12px;
   --gjs-color-input-padding: 36px;
@@ -154,7 +154,7 @@
    ★★★ BLOCKS PANEL — 2-COLUMN GRID + BIG PREMIUM CARDS ★★★
    ═══════════════════════════════════════════════════════════════════════════ */
 #nyxia-gjs-editor .gjs-blocks {
-  padding: 6px 14px 20px 10px !important;
+  padding: 6px 10px 20px 6px !important;
 }
 
 /* Force block containers to 2-column grid */
@@ -261,22 +261,27 @@
   font-size: 34px !important;
 }
 
-/* Block label — ensure text visible, not clipped */
+/* Block label — allow wrapping, never clip text */
 #nyxia-gjs-editor .gjs-block__label {
   font-size: 10px !important;
   font-weight: 700 !important;
   text-align: center !important;
   color: #8078a4 !important;
   letter-spacing: 0.01em !important;
-  line-height: 1.2 !important;
+  line-height: 1.25 !important;
   margin: 0 !important;
-  padding: 0 6px 6px !important;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  white-space: nowrap !important;
+  padding: 0 5px 6px !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  white-space: normal !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
   width: 100% !important;
   box-sizing: border-box !important;
   transition: color 0.3s ease !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
 }
 #nyxia-gjs-editor .gjs-block:hover .gjs-block__label {
   color: #d0c8f4 !important;
