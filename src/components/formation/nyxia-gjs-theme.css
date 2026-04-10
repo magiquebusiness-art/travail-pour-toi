@@ -37,6 +37,9 @@
   --gjs-flex-item-gap: 10px;
   --gjs-handle-margin: -5px;
   --gjs-canvas-top: 0px;
+
+  /* Prevent text from overlapping the toolbar */
+  --gjs-canvas-top-offset: 20px;
   --gjs-animation-duration: 0.25s;
   --gjs-padding-elem-classmanager: 10px 12px;
   --gjs-upload-padding: 160px 12px;
@@ -155,6 +158,27 @@
     radial-gradient(ellipse at 50% 0%, rgba(123, 92, 255, 0.04) 0%, transparent 60%),
     radial-gradient(rgba(123, 92, 255, 0.045) 1px, transparent 1px) !important;
   background-size: 100% 100%, 28px 28px !important;
+  overflow: hidden !important;
+}
+
+/* Prevent content from overflowing above the canvas area */
+#nyxia-gjs-editor .gjs-canvas {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   AUDIO ELEMENTS — Functional MP3 players
+   ═══════════════════════════════════════════════════════════════════════════ */
+#nyxia-gjs-editor audio {
+  pointer-events: auto !important;
+  cursor: default !important;
+}
+
+/* Prevent GrapesJS from wrapping audio controls in selectable divs */
+#nyxia-gjs-editor audio + div,
+#nyxia-gjs-editor audio + span {
+  display: none !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

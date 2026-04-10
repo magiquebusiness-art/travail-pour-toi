@@ -1796,162 +1796,145 @@ const ECOMMERCE_BLOCKS = [
 const AUDIO_BLOCKS = [
   {
     id: 'audio-player',
-    label: 'Lecteur Audio',
+    label: 'Lecteur Audio MP3',
     category: 'Audio',
-    content: `<div style="${css({
-      background: `linear-gradient(135deg, ${P.dark1} 0%, ${P.dark3} 100%)`,
-      padding: '40px',
-      borderRadius: SIZES.borderRadius.lg,
-      border: `1px solid rgba(${123},${92},${255},0.1)`,
-      maxWidth: '640px',
-      margin: '0 auto',
-    })}">
-      <div style="${css({
-        display: 'flex',
-        alignItems: 'center',
-        gap: '20px',
-        marginBottom: '24px',
-      })}">
-        <div style="${css({
-          width: '64px',
-          height: '64px',
-          borderRadius: '50%',
-          background: `linear-gradient(135deg, ${P.violet} 0%, ${P.deepPurple} 100%)`,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexShrink: '0',
-          boxShadow: `0 4px 20px rgba(${123},${92},${255},0.3)`,
-        })}"><svg width="28" height="28" viewBox="0 0 24 24" fill="white"><polygon points="9,6 19,12 9,18"/></svg></div>
-        <div>
-          <h3 style="${css({
-            fontSize: '18px',
-            fontWeight: '700',
-            color: P.white,
-            marginBottom: '4px',
-          })}">Titre de l'audio</h3>
-          <p style="${css({
-            fontSize: '13px',
-            color: P.textSecondary,
-          })}">Module 1 — Leçon introductive</p>
-        </div>
-      </div>
-      <div style="${css({
-        background: `rgba(${17},${27},${48},0.5)`,
-        borderRadius: SIZES.borderRadius.md,
-        padding: '4px',
-        border: `1px solid rgba(${123},${92},${255},0.08)`,
-      })}">
-        <div style="${css({
-          height: '6px',
-          borderRadius: '3px',
-          background: `rgba(${123},${92},${255},0.2)`,
-          marginBottom: '16px',
-          position: 'relative',
-          overflow: 'hidden',
-        })}">
-          <div style="${css({
-            width: '35%',
-            height: '100%',
-            borderRadius: '3px',
-            background: `linear-gradient(90deg, ${P.violet}, ${P.purple})`,
-          })}"></div>
-        </div>
-        <div style="${css({
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '0 12px 8px',
-        })}">
-          <span style="${css({ fontSize: '12px', color: P.textMuted })}">3:24</span>
-          <span style="${css({ fontSize: '12px', color: P.textMuted })}">12:45</span>
-        </div>
-      </div>
-      <p style="${css({
-        fontSize: '12px',
-        color: P.textMuted,
-        marginTop: '16px',
-        textAlign: 'center',
-        fontStyle: 'italic',
-      })}">Remplacez par votre fichier MP3 via les propriétés</p>
-    </div>`,
+    content: {
+      type: 'nyxia-audio',
+      name: 'Lecteur Audio',
+      content: '<audio controls style="width:100%;border-radius:12px;outline:none;" preload="metadata"></audio>',
+      traits: [
+        {
+          type: 'text',
+          name: 'src',
+          label: 'URL du fichier MP3',
+          placeholder: 'https://exemple.com/fichier.mp3',
+          changeProp: true,
+        },
+        {
+          type: 'text',
+          name: 'audioTitle',
+          label: 'Titre',
+          placeholder: 'Module 1 — Leçon introductive',
+          changeProp: true,
+        },
+      ],
+      styles: `
+        .nyxia-audio-wrapper {
+          background: linear-gradient(135deg, ${P.dark1} 0%, ${P.dark3} 100%);
+          padding: 28px 32px;
+          border-radius: 16px;
+          border: 1px solid rgba(123,92,255,0.1);
+          max-width: 640px;
+          margin: 0 auto;
+        }
+        .nyxia-audio-title {
+          font-size: 17px;
+          font-weight: 700;
+          color: #ffffff;
+          margin-bottom: 16px;
+          padding-left: 2px;
+        }
+        .nyxia-audio-title:empty { display: none; }
+      `,
+    },
   },
   {
-    id: 'audio-podcast',
-    label: 'Podcast Section',
+    id: 'audio-podcast-section',
+    label: 'Section Podcast MP3',
     category: 'Audio',
-    content: `<div style="${css({
-      background: P.dark2,
-      padding: '80px 40px',
-    })}">
-      <div style="${css({ textAlign: 'center', maxWidth: '600px', margin: '0 auto 48px' })}">
-        <h2 style="${css({
-          fontSize: '36px',
-          fontWeight: '800',
-          color: P.white,
-          marginBottom: '14px',
-          fontFamily: P.headingFont,
-        })}">Écouter les Modules</h2>
-        <p style="${css({
-          fontSize: '17px',
-          color: P.textSecondary,
-          lineHeight: '1.7',
-        })}">Écoutez chaque module à votre rythme, ou les télécharger pour les écouter partout.</p>
-      </div>
-      <div style="${css({
-        maxWidth: '700px',
-        margin: '0 auto',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '16px',
-      })}">
-        ${[
-          { num: '01', title: 'Introduction au programme', dur: '12:45' },
-          { num: '02', title: 'Comprendre votre marché', dur: '18:30' },
-          { num: '03', title: 'Premiers pas pratiques', dur: '24:15' },
-        ].map((ep) => `
-          <div style="${css({
-            display: 'flex',
-            alignItems: 'center',
-            gap: '16px',
-            padding: '20px 24px',
-            borderRadius: SIZES.borderRadius.md,
-            background: `rgba(${17},${27},${48},0.5)`,
-            border: `1px solid rgba(${123},${92},${255},0.08)`,
-          })}">
-            <div style="${css({
-              width: '44px',
-              height: '44px',
-              borderRadius: '50%',
-              background: `rgba(${123},${92},${255},0.1)`,
-              border: `1px solid rgba(${123},${92},${255},0.15)`,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: '0',
-              fontSize: '16px',
-              fontWeight: '800',
-              color: P.violet,
-            })}">${ep.num}</div>
-            <div style="${css({ flex: '1', minWidth: '0' })}">
-              <p style="${css({ fontSize: '15px', fontWeight: '600', color: P.white, marginBottom: '4px' })}">${ep.title}</p>
-              <p style="${css({ fontSize: '12px', color: P.textMuted })}">${ep.dur}</p>
+    content: {
+      type: 'nyxia-audio-list',
+      name: 'Section Podcast',
+      content: `
+        <div class="nyxia-podcast-section">
+          <div class="nyxia-podcast-header">
+            <h2>Écouter les Modules</h2>
+            <p>Écoutez chaque module à votre rythme, ou les télécharger pour les écouter partout.</p>
+          </div>
+          <div class="nyxia-podcast-list">
+            <div class="nyxia-podcast-item" data-episode="1">
+              <span class="nyxia-podcast-num">01</span>
+              <div class="nyxia-podcast-info">
+                <input type="text" class="nyxia-podcast-title-input" placeholder="Titre de l'épisode 1" value="Introduction au programme" data-gjs-selectable="true" data-gjs-editable="true" />
+                <audio controls style="width:100%;margin-top:10px;border-radius:8px;outline:none;height:40px;" preload="metadata"></audio>
+              </div>
             </div>
-            <div style="${css({
-              width: '36px',
-              height: '36px',
-              borderRadius: '50%',
-              background: `linear-gradient(135deg, ${P.violet} 0%, ${P.deepPurple} 100%)`,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexShrink: '0',
-              boxShadow: `0 2px 12px rgba(${123},${92},${255},0.25)`,
-              cursor: 'pointer',
-            })}"><svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="8,5 20,12 8,19"/></svg></div>
-          </div>`).join('')}
-      </div>
-    </div>`,
+            <div class="nyxia-podcast-item" data-episode="2">
+              <span class="nyxia-podcast-num">02</span>
+              <div class="nyxia-podcast-info">
+                <input type="text" class="nyxia-podcast-title-input" placeholder="Titre de l'épisode 2" value="Comprendre votre marché" data-gjs-selectable="true" data-gjs-editable="true" />
+                <audio controls style="width:100%;margin-top:10px;border-radius:8px;outline:none;height:40px;" preload="metadata"></audio>
+              </div>
+            </div>
+            <div class="nyxia-podcast-item" data-episode="3">
+              <span class="nyxia-podcast-num">03</span>
+              <div class="nyxia-podcast-info">
+                <input type="text" class="nyxia-podcast-title-input" placeholder="Titre de l'épisode 3" value="Premiers pas pratiques" data-gjs-selectable="true" data-gjs-editable="true" />
+                <audio controls style="width:100%;margin-top:10px;border-radius:8px;outline:none;height:40px;" preload="metadata"></audio>
+              </div>
+            </div>
+          </div>
+        </div>
+      `,
+      styles: `
+        .nyxia-podcast-section { background: #06101f; padding: 60px 40px; }
+        .nyxia-podcast-header { text-align: center; max-width: 600px; margin: 0 auto 40px; }
+        .nyxia-podcast-header h2 { font-size: 32px; font-weight: 800; color: #fff; margin-bottom: 12px; font-family: ${P.headingFont}; }
+        .nyxia-podcast-header p { font-size: 16px; color: #a09cc0; line-height: 1.7; }
+        .nyxia-podcast-list { max-width: 700px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+        .nyxia-podcast-item { display: flex; align-items: flex-start; gap: 16px; padding: 20px 24px; border-radius: 12px; background: rgba(17,27,48,0.5); border: 1px solid rgba(123,92,255,0.08); }
+        .nyxia-podcast-num { width: 44px; height: 44px; border-radius: 50%; background: rgba(123,92,255,0.1); border: 1px solid rgba(123,92,255,0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 16px; font-weight: 800; color: #7B5CFF; }
+        .nyxia-podcast-info { flex: 1; min-width: 0; }
+        .nyxia-podcast-title-input { background: transparent; border: none; outline: none; font-size: 15px; font-weight: 600; color: #fff; width: 100%; padding: 0; cursor: text; }
+        .nyxia-podcast-title-input::placeholder { color: #564e78; }
+      `,
+    },
+  },
+  {
+    id: 'audio-simple-upload',
+    label: 'Audio Simple Upload',
+    category: 'Audio',
+    content: {
+      type: 'nyxia-audio-upload',
+      name: 'Upload Audio',
+      content: `
+        <div class="nyxia-upload-zone" data-upload="audio">
+          <div class="nyxia-upload-icon">
+            <svg width="48" height="48" fill="none" stroke="#7B5CFF" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </div>
+          <p class="nyxia-upload-text">Glissez un fichier MP3 ici</p>
+          <p class="nyxia-upload-hint">ou collez l'URL de votre fichier audio dans les propriétés</p>
+        </div>
+      `,
+      traits: [
+        {
+          type: 'text',
+          name: 'src',
+          label: 'URL du fichier MP3',
+          placeholder: 'https://exemple.com/fichier.mp3',
+          changeProp: true,
+        },
+      ],
+      styles: `
+        .nyxia-upload-zone {
+          background: linear-gradient(135deg, rgba(11,20,40,0.8) 0%, rgba(9,16,32,0.9) 100%);
+          border: 2px dashed rgba(123,92,255,0.2);
+          border-radius: 16px;
+          padding: 48px 24px;
+          text-align: center;
+          max-width: 640px;
+          margin: 0 auto;
+          transition: border-color 0.3s, background 0.3s;
+        }
+        .nyxia-upload-zone:hover {
+          border-color: rgba(123,92,255,0.4);
+          background: linear-gradient(135deg, rgba(123,92,255,0.05) 0%, rgba(9,16,32,0.9) 100%);
+        }
+        .nyxia-upload-icon { margin-bottom: 16px; opacity: 0.7; }
+        .nyxia-upload-text { font-size: 16px; font-weight: 600; color: #e8e2f8; margin-bottom: 6px; }
+        .nyxia-upload-hint { font-size: 13px; color: #564e78; }
+      `,
+    },
   },
 ]
 
@@ -2137,18 +2120,179 @@ export default function GrapesJSEditorComponent({
           'E-commerce': '<svg width="28" height="28" fill="none" stroke="#7B5CFF" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>',
           'Audio': '<svg width="28" height="28" fill="none" stroke="#7B5CFF" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>',
         }
+        // ── Register custom AUDIO component types ──
+        // GrapesJS needs to know about <audio> elements so they're not stripped
+        editor.DomComponents.addType('nyxia-audio', {
+          isComponent: (el: HTMLElement) => {
+            if (el.tagName === 'AUDIO' && el.closest('[data-gjs-type="nyxia-audio"],.nyxia-audio-wrapper')) {
+              return { type: 'nyxia-audio' }
+            }
+          },
+          model: {
+            defaults: {
+              name: 'Lecteur Audio',
+              tagName: 'div',
+              draggable: true,
+              droppable: false,
+              traits: [
+                {
+                  type: 'text',
+                  name: 'src',
+                  label: 'URL du fichier MP3',
+                  placeholder: 'https://exemple.com/fichier.mp3',
+                  changeProp: true,
+                },
+                {
+                  type: 'text',
+                  name: 'audioTitle',
+                  label: 'Titre',
+                  placeholder: 'Module 1 — Leçon introductive',
+                  changeProp: true,
+                },
+              ] as any,
+              init() {
+                const model = this as any
+                const onSrcChange = () => {
+                  const src = model.get('src')
+                  const audioEl = model.querySelector('audio') as any
+                  if (audioEl && src) {
+                    audioEl.setAttribute('src', src)
+                  }
+                }
+                const onTitleChange = () => {
+                  const title = model.get('audioTitle')
+                  const titleEl = model.querySelector('.nyxia-audio-title')
+                  if (titleEl) {
+                    titleEl.textContent = title || ''
+                  }
+                }
+                model.on('change:src', onSrcChange)
+                model.on('change:audioTitle', onTitleChange)
+              },
+            },
+          },
+          view: {
+            onRender({ el }: { el: HTMLElement }) {
+              const audioEl = el.querySelector('audio') as HTMLAudioElement | null
+              if (audioEl) {
+                // Prevent GrapesJS from intercepting audio interactions
+                audioEl.addEventListener('mousedown', (e) => e.stopPropagation())
+                audioEl.addEventListener('click', (e) => e.stopPropagation())
+              }
+            },
+          },
+        })
+
+        editor.DomComponents.addType('nyxia-audio-upload', {
+          isComponent: (el: HTMLElement) => {
+            if (el.hasAttribute && el.hasAttribute('data-upload') && el.getAttribute('data-upload') === 'audio') {
+              return { type: 'nyxia-audio-upload' }
+            }
+          },
+          model: {
+            defaults: {
+              name: 'Upload Audio',
+              tagName: 'div',
+              draggable: true,
+              droppable: false,
+              traits: [
+                {
+                  type: 'text',
+                  name: 'src',
+                  label: 'URL du fichier MP3',
+                  placeholder: 'https://exemple.com/fichier.mp3',
+                  changeProp: true,
+                },
+              ] as any,
+              init() {
+                const model = this as any
+                const onSrcChange = () => {
+                  const src = model.get('src')
+                  if (src) {
+                    // When URL is set, replace the upload zone with a real audio player
+                    const wrapper = model.getEl()
+                    if (wrapper) {
+                      wrapper.innerHTML = `
+                        <div class="nyxia-audio-wrapper" style="background:linear-gradient(135deg,#0b1428 0%,#091020 100%);padding:28px 32px;border-radius:16px;border:1px solid rgba(123,92,255,0.1);max-width:640px;margin:0 auto;">
+                          <audio controls style="width:100%;border-radius:12px;outline:none;" preload="metadata" src="${src}"></audio>
+                        </div>
+                      `
+                    }
+                  }
+                }
+                model.on('change:src', onSrcChange)
+              },
+            },
+          },
+          view: {
+            onRender({ el }: { el: HTMLElement }) {
+              // Allow drop events on the upload zone
+              const dropHandler = (e: DragEvent) => {
+                e.preventDefault()
+                e.stopPropagation()
+                const files = e.dataTransfer?.files
+                if (files && files.length > 0) {
+                  const file = files[0]
+                  if (file.type.startsWith('audio/')) {
+                    const url = URL.createObjectURL(file)
+                    const audioSrc = el.querySelector('audio') as HTMLAudioElement | null
+                    const wrapper = el.querySelector('.nyxia-upload-zone') as HTMLElement | null
+                    if (wrapper) {
+                      wrapper.innerHTML = `
+                        <div style="background:linear-gradient(135deg,#0b1428 0%,#091020 100%);padding:28px 32px;border-radius:16px;border:1px solid rgba(123,92,255,0.1);">
+                          <audio controls style="width:100%;border-radius:12px;outline:none;" preload="metadata" src="${url}"></audio>
+                          <p style="font-size:12px;color:#a09cc0;margin-top:10px;text-align:center;">${file.name}</p>
+                        </div>
+                      `
+                    }
+                  }
+                }
+              }
+              el.addEventListener('dragover', (e) => { e.preventDefault(); e.stopPropagation() })
+              el.addEventListener('drop', dropHandler)
+            },
+          },
+        })
+
+        // ── Register blocks ──
         ALL_BLOCKS.forEach((block) => {
-          editor.BlockManager.add(block.id, {
+          const blockDef: any = {
             label: `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:12px 6px 8px;">
               <span style="line-height:1;flex-shrink:0;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.3));">${CATEGORY_ICONS[block.category] || '<svg width="28" height="28" fill="none" stroke="#7B5CFF" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>'}</span>
               <span style="font-size:10px;font-weight:700;color:#a09cc0;white-space:normal;word-wrap:break-word;overflow-wrap:break-word;letter-spacing:0.01em;text-align:center;line-height:1.25;max-width:100%;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${block.label}</span>
             </div>`,
             category: { label: block.category, id: block.category.toLowerCase() },
-            content: block.content,
             select: true,
             activate: true,
-          })
+          }
+
+          // Handle both string content and object content
+          if (typeof block.content === 'object' && block.content !== null) {
+            // Custom component block — pass type + traits
+            blockDef.content = {
+              type: block.content.type,
+              ...('content' in block.content ? { content: block.content.content } : {}),
+              ...('traits' in block.content ? { traits: block.content.traits } : {}),
+              ...('styles' in block.content ? { styles: block.content.styles } : {}),
+            }
+          } else {
+            blockDef.content = block.content
+          }
+
+          editor.BlockManager.add(block.id, blockDef)
         })
+
+        // ── Fix: Ensure canvas has proper top offset to prevent text overlap ──
+        setTimeout(() => {
+          const canvas = editorRef.current?.querySelector('.gjs-cv-canvas') as HTMLElement
+          if (canvas) {
+            canvas.style.paddingTop = '20px'
+          }
+          const canvasFrame = editorRef.current?.querySelector('.gjs-canvas') as HTMLElement
+          if (canvasFrame) {
+            canvasFrame.style.overflow = 'hidden'
+          }
+        }, 500)
 
         // ── CRITICAL: Force blocks panel to show after plugins load ──
         setTimeout(() => {
