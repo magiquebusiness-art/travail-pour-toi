@@ -78,3 +78,23 @@ Stage Summary:
 - Only GrapesJS branding (.gjs-badge, .gjs-logo-content, .gjs-brand) and default top bar hidden
 - All buttons, modals, drag-drop, image upload should now work
 - NyXia pastille/badge removed from UI
+
+---
+Task ID: 1
+Agent: Main Agent
+Task: Fix canvas elements overlapping React toolbar (preview eye bar) - 4th attempt
+
+Work Log:
+- Analyzed the full DOM structure of the editor
+- Identified root cause: GrapesJS overlay elements (selection tools, toolbars) can escape container boundaries via position:fixed or very high z-indexes
+- Added `transform: 'translateZ(0)'` to canvasWrapperRef — this creates a new containing block for fixed-positioned descendants
+- Added `contain: 'paint'` to canvasWrapperRef — this creates paint containment that clips all content at boundaries AND creates a new stacking context
+- Updated CSS theme: force `.gjs-toolbar`, `.gjs-tools`, `.gjs-tools-gl` to use `position: absolute !important` (prevents fixed positioning from escaping)
+- Removed redundant `overflow: 'hidden'` from editorRef (the parent canvasWrapperRef handles containment now)
+- Kept `.gjs-cv-canvas { overflow: hidden }` and `.gjs-frame-wrapper { overflow: hidden }` for internal containment
+
+Stage Summary:
+- Three-layer containment strategy: transform + contain:paint on wrapper + position:absolute on GrapesJS overlays
+- This prevents any GrapesJS selection/toolbar element from escaping above the React toolbar
+- No changes to panel layout or button functionality
+- Files modified: grapesjs-editor.tsx (line 2709, 2768), nyxia-gjs-theme.css (lines 108-114)

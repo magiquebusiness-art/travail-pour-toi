@@ -2706,7 +2706,7 @@ ${html}
       </div>
 
       {/* ═══════ EDITOR AREA ═══════ */}
-      <div ref={canvasWrapperRef} className="flex-1 relative" style={{ overflow: 'hidden', minHeight: 0, isolation: 'isolate', zIndex: 1 }}>
+      <div ref={canvasWrapperRef} className="flex-1 relative" style={{ overflow: 'hidden', minHeight: 0, isolation: 'isolate', zIndex: 1, transform: 'translateZ(0)', contain: 'paint' }}>
         {isLoading && (
           <div className="absolute inset-0 z-50 flex items-center justify-center" style={{ background: '#0a0e1a' }}>
             <div className="text-center">
@@ -2765,7 +2765,7 @@ ${html}
               borderRadius: deviceMode !== 'desktop' ? '12px' : '0',
             }}
           >
-            <div ref={editorRef} className="w-full h-full" style={{ minHeight: '100%', maxHeight: '100%', overflow: 'hidden' }} />
+            <div ref={editorRef} className="w-full h-full" style={{ minHeight: '100%', maxHeight: '100%' }} />
           </div>
         </div>
       </div>
