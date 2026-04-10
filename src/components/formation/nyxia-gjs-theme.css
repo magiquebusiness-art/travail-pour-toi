@@ -1,44 +1,44 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   NYXIA PREMIUM THEME — GrapesJS v0.22
+   NYXIA PREMIUM THEME v2 — GrapesJS v0.22
+   Premium dark-violet theme with glassmorphism & glow effects.
    Loaded AFTER grapes.min.css to override ALL defaults.
-   Targets #nyxia-gjs-editor scope for isolation.
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* ═══ CSS CUSTOM PROPERTIES — override :root defaults from GrapesJS ═══ */
 #nyxia-gjs-editor,
 :root {
-  --gjs-main-color: #0b1428;
-  --gjs-primary-color: #0b1428;
-  --gjs-secondary-color: #e8e2f8;
-  --gjs-tertiary-color: #091020;
+  --gjs-main-color: #0a0e1a;
+  --gjs-primary-color: #0a0e1a;
+  --gjs-secondary-color: #eae6ff;
+  --gjs-tertiary-color: #080c18;
   --gjs-quaternary-color: #7B5CFF;
-  --gjs-font-color: #c4bde0;
+  --gjs-font-color: #c8c2e4;
   --gjs-font-color-active: #ffffff;
   --gjs-main-font: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --gjs-font-size: 0.8rem;
-  --gjs-main-dark-color: rgba(0, 0, 0, 0.35);
-  --gjs-secondary-dark-color: rgba(0, 0, 0, 0.2);
-  --gjs-main-light-color: rgba(123, 92, 255, 0.06);
-  --gjs-secondary-light-color: rgba(255, 255, 255, 0.7);
-  --gjs-soft-light-color: rgba(123, 92, 255, 0.02);
+  --gjs-font-size: 0.85rem;
+  --gjs-main-dark-color: rgba(0, 0, 0, 0.4);
+  --gjs-secondary-dark-color: rgba(0, 0, 0, 0.25);
+  --gjs-main-light-color: rgba(123, 92, 255, 0.08);
+  --gjs-secondary-light-color: rgba(255, 255, 255, 0.75);
+  --gjs-soft-light-color: rgba(123, 92, 255, 0.03);
   --gjs-color-blue: #7B5CFF;
   --gjs-color-red: #ff5252;
   --gjs-color-yellow: #F4C842;
   --gjs-color-green: #4ade80;
   --gjs-color-highlight: #7B5CFF;
   --gjs-color-warn: #F4C842;
-  --gjs-light-border: rgba(123, 92, 255, 0.1);
+  --gjs-light-border: rgba(123, 92, 255, 0.12);
   --gjs-arrow-color: rgba(160, 156, 192, 0.7);
-  --gjs-dark-text-shadow: rgba(0, 0, 0, 0.4);
-  --gjs-left-width: 270px;
-  --gjs-right-width: 280px;
-  --gjs-input-padding: 8px;
-  --gjs-color-input-padding: 28px;
-  --gjs-flex-item-gap: 6px;
+  --gjs-dark-text-shadow: rgba(0, 0, 0, 0.5);
+  --gjs-left-width: 300px;
+  --gjs-right-width: 300px;
+  --gjs-input-padding: 10px;
+  --gjs-color-input-padding: 30px;
+  --gjs-flex-item-gap: 8px;
   --gjs-handle-margin: -5px;
   --gjs-canvas-top: 0px;
-  --gjs-animation-duration: 0.2s;
-  --gjs-padding-elem-classmanager: 6px 8px;
+  --gjs-animation-duration: 0.25s;
+  --gjs-padding-elem-classmanager: 8px 10px;
   --gjs-upload-padding: 150px 10px;
   --gjs-placeholder-background-color: var(--gjs-color-green);
 }
@@ -47,12 +47,12 @@
    EDITOR ROOT
    ═══════════════════════════════════════════════════════════════════════════ */
 #nyxia-gjs-editor {
-  background: #0b1428 !important;
+  background: #0a0e1a !important;
 }
 #nyxia-gjs-editor .gjs-editor {
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif !important;
   font-size: 14px !important;
-  background: #0b1428 !important;
+  background: #0a0e1a !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -79,45 +79,49 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   EDITOR LAYOUT — 3 columns: left panel | canvas | right panel
-   ═══════════════════════════════════════════════════════════════════════════ */
+   EDITOR LAYOUT
+   ═══════════════════════════════════════════════════════════════ */
 #nyxia-gjs-editor .gjs-editor-cont {
-  background: #0b1428 !important;
+  background: #0a0e1a !important;
 }
 
-/* Canvas wrapper — takes remaining space */
+/* Canvas — premium dark grid */
 #nyxia-gjs-editor .gjs-cv-canvas,
 #nyxia-gjs-editor .gjs-cv-canvas__frames,
 #nyxia-gjs-editor .gjs-frame-wrapper,
 #nyxia-gjs-editor .gjs-canvas,
 #nyxia-gjs-editor #gjs-canvas {
-  background-color: #060e1c !important;
-  background-image: radial-gradient(rgba(123, 92, 255, 0.06) 1px, transparent 1px) !important;
-  background-size: 24px 24px !important;
+  background-color: #060a14 !important;
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(123, 92, 255, 0.04) 0%, transparent 60%),
+    radial-gradient(rgba(123, 92, 255, 0.045) 1px, transparent 1px) !important;
+  background-size: 100% 100%, 28px 28px !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   LEFT PANEL
+   LEFT PANEL — Glassmorphism premium
    ═══════════════════════════════════════════════════════════════════════════ */
 #nyxia-gjs-editor .gjs-pn {
-  width: 270px !important;
-  min-width: 270px !important;
-  max-width: 270px !important;
+  width: 300px !important;
+  min-width: 300px !important;
+  max-width: 300px !important;
   height: 100% !important;
   padding: 0 !important;
   margin: 0 !important;
-  border-right: 1px solid rgba(123, 92, 255, 0.08) !important;
-  background: linear-gradient(180deg, #0c1122 0%, #091020 100%) !important;
+  border-right: 1px solid rgba(123, 92, 255, 0.07) !important;
+  background: linear-gradient(180deg, rgba(12, 16, 30, 0.97) 0%, rgba(8, 12, 24, 0.99) 100%) !important;
+  backdrop-filter: blur(20px) !important;
   display: flex !important;
   flex-direction: column !important;
   overflow: hidden !important;
   float: none !important;
+  box-shadow: 4px 0 30px rgba(0, 0, 0, 0.3), inset -1px 0 0 rgba(123, 92, 255, 0.04) !important;
 }
 #nyxia-gjs-editor .gjs-pn-left,
 #nyxia-gjs-editor .gjs-pn-panel {
-  width: 270px !important;
-  min-width: 270px !important;
-  max-width: 270px !important;
+  width: 300px !important;
+  min-width: 300px !important;
+  max-width: 300px !important;
   padding: 0 !important;
   margin: 0 !important;
   background: transparent !important;
@@ -126,32 +130,34 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   RIGHT PANEL — Style Manager
+   RIGHT PANEL — Glassmorphism premium
    ═══════════════════════════════════════════════════════════════════════════ */
 #nyxia-gjs-editor .gjs-pn-right {
-  width: 280px !important;
-  min-width: 280px !important;
-  max-width: 280px !important;
+  width: 300px !important;
+  min-width: 300px !important;
+  max-width: 300px !important;
   height: 100% !important;
   padding: 0 !important;
   margin: 0 !important;
-  background: linear-gradient(180deg, #0c1122 0%, #091020 100%) !important;
-  border-left: 1px solid rgba(123, 92, 255, 0.08) !important;
+  background: linear-gradient(180deg, rgba(12, 16, 30, 0.97) 0%, rgba(8, 12, 24, 0.99) 100%) !important;
+  backdrop-filter: blur(20px) !important;
+  border-left: 1px solid rgba(123, 92, 255, 0.07) !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
   float: none !important;
+  box-shadow: -4px 0 30px rgba(0, 0, 0, 0.3), inset 1px 0 0 rgba(123, 92, 255, 0.04) !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   PANEL NAV BUTTONS (blocks / layers / style)
+   PANEL NAV BUTTONS — Premium pill-style tabs
    ═══════════════════════════════════════════════════════════════════════════ */
 #nyxia-gjs-editor .gjs-pn-commands,
 #nyxia-gjs-editor .gjs-pn-buttons,
 #nyxia-gjs-editor .gjs-pn-btns {
   display: flex !important;
   flex-direction: row !important;
-  gap: 3px !important;
-  padding: 10px 10px 8px !important;
+  gap: 4px !important;
+  padding: 14px 14px 10px !important;
   margin: 0 !important;
   border-bottom: 1px solid rgba(123, 92, 255, 0.06) !important;
   background: transparent !important;
@@ -159,20 +165,20 @@
 #nyxia-gjs-editor .gjs-pn-btn,
 #nyxia-gjs-editor .gjs-pn-command {
   flex: 1 !important;
-  height: 32px !important;
+  height: 36px !important;
   width: auto !important;
-  font-size: 9px !important;
+  font-size: 11px !important;
   font-weight: 700 !important;
   letter-spacing: 0.04em !important;
   text-transform: uppercase !important;
   margin: 0 !important;
-  padding: 0 6px !important;
-  line-height: 32px !important;
-  border-radius: 8px !important;
+  padding: 0 8px !important;
+  line-height: 36px !important;
+  border-radius: 10px !important;
   background: transparent !important;
   border: 1px solid transparent !important;
-  color: #564e78 !important;
-  transition: all 0.2s ease !important;
+  color: #4e4870 !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
   text-align: center !important;
   display: flex !important;
   align-items: center !important;
@@ -180,37 +186,39 @@
 }
 #nyxia-gjs-editor .gjs-pn-btn:hover,
 #nyxia-gjs-editor .gjs-pn-command:hover {
-  background: rgba(255, 255, 255, 0.04) !important;
+  background: rgba(123, 92, 255, 0.06) !important;
   color: #7a7498 !important;
+  transform: translateY(-1px) !important;
 }
 #nyxia-gjs-editor .gjs-pn-btn.active,
 #nyxia-gjs-editor .gjs-pn-btn.gjs-pn-active,
 #nyxia-gjs-editor .gjs-pn-command.active,
 #nyxia-gjs-editor .gjs-pn-command.gjs-pn-active {
-  background: rgba(123, 92, 255, 0.13) !important;
-  border-color: rgba(123, 92, 255, 0.2) !important;
-  color: #b09eff !important;
+  background: linear-gradient(135deg, rgba(123, 92, 255, 0.18) 0%, rgba(99, 102, 241, 0.12) 100%) !important;
+  border-color: rgba(123, 92, 255, 0.25) !important;
+  color: #c0b4ff !important;
+  box-shadow: 0 4px 16px rgba(123, 92, 255, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
 }
 #nyxia-gjs-editor .gjs-pn-btn svg {
-  width: 14px !important;
-  height: 14px !important;
+  width: 15px !important;
+  height: 15px !important;
 }
 #nyxia-gjs-editor .gjs-pn-title {
-  font-size: 9px !important;
-  padding: 12px 12px 6px !important;
+  font-size: 10px !important;
+  padding: 16px 16px 8px !important;
   margin: 0 !important;
-  font-weight: 700 !important;
-  color: rgba(123, 92, 255, 0.45) !important;
-  letter-spacing: 0.1em !important;
+  font-weight: 800 !important;
+  color: rgba(123, 92, 255, 0.4) !important;
+  letter-spacing: 0.12em !important;
   text-transform: uppercase !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   BLOCKS PANEL — 2-column grid of premium blocks
+   BLOCKS PANEL — Big premium cards
    ═══════════════════════════════════════════════════════════════════════════ */
 #nyxia-gjs-editor .gjs-blocks {
   background: transparent !important;
-  padding: 4px 10px 12px !important;
+  padding: 6px 12px 16px !important;
   overflow-y: auto !important;
 }
 #nyxia-gjs-editor .gjs-block-container,
@@ -219,7 +227,7 @@
 #nyxia-gjs-editor [class*="block-list"] {
   display: grid !important;
   grid-template-columns: 1fr 1fr !important;
-  gap: 6px !important;
+  gap: 8px !important;
   padding: 0 !important;
   width: 100% !important;
   margin: 0 !important;
@@ -227,92 +235,125 @@
 }
 #nyxia-gjs-editor .gjs-block {
   width: 100% !important;
-  padding: 10px 6px 8px !important;
+  padding: 14px 8px 12px !important;
   margin: 0 !important;
-  border-radius: 10px !important;
-  border: 1px solid rgba(123, 92, 255, 0.08) !important;
-  background: rgba(123, 92, 255, 0.025) !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(123, 92, 255, 0.07) !important;
+  background: linear-gradient(145deg, rgba(123, 92, 255, 0.03) 0%, rgba(123, 92, 255, 0.01) 100%) !important;
   cursor: grab !important;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  min-height: 70px !important;
-  max-height: 90px !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  min-height: 88px !important;
   display: flex !important;
   flex-direction: column !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 6px !important;
+  gap: 8px !important;
   box-sizing: border-box !important;
   float: none !important;
   clear: both !important;
   overflow: hidden !important;
+  position: relative !important;
+}
+#nyxia-gjs-editor .gjs-block::before {
+  content: '' !important;
+  position: absolute !important;
+  inset: 0 !important;
+  border-radius: 12px !important;
+  background: linear-gradient(145deg, rgba(123, 92, 255, 0.08) 0%, transparent 50%) !important;
+  opacity: 0 !important;
+  transition: opacity 0.3s ease !important;
+  pointer-events: none !important;
 }
 #nyxia-gjs-editor .gjs-block:hover {
-  background: rgba(123, 92, 255, 0.1) !important;
-  border-color: rgba(123, 92, 255, 0.25) !important;
-  transform: translateY(-1px) !important;
-  box-shadow: 0 6px 20px rgba(123, 92, 255, 0.1) !important;
+  background: linear-gradient(145deg, rgba(123, 92, 255, 0.1) 0%, rgba(99, 102, 241, 0.06) 100%) !important;
+  border-color: rgba(123, 92, 255, 0.28) !important;
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow:
+    0 8px 28px rgba(123, 92, 255, 0.12),
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+}
+#nyxia-gjs-editor .gjs-block:hover::before {
+  opacity: 1 !important;
 }
 #nyxia-gjs-editor .gjs-block:active {
-  transform: scale(0.97) !important;
+  transform: scale(0.96) !important;
+  box-shadow:
+    0 2px 8px rgba(123, 92, 255, 0.15),
+    inset 0 2px 4px rgba(0, 0, 0, 0.1) !important;
 }
 #nyxia-gjs-editor .gjs-block__media {
-  width: 30px !important;
-  height: 30px !important;
-  font-size: 14px !important;
-  line-height: 30px !important;
+  width: 36px !important;
+  height: 36px !important;
+  font-size: 16px !important;
+  line-height: 36px !important;
   text-align: center !important;
-  background: rgba(123, 92, 255, 0.08) !important;
+  background: linear-gradient(135deg, rgba(123, 92, 255, 0.1) 0%, rgba(99, 102, 241, 0.08) 100%) !important;
   border: 1px solid rgba(123, 92, 255, 0.15) !important;
-  border-radius: 7px !important;
-  color: #8b6cff !important;
+  border-radius: 10px !important;
+  color: #9b85ff !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   margin: 0 !important;
   flex-shrink: 0 !important;
+  transition: all 0.3s ease !important;
+}
+#nyxia-gjs-editor .gjs-block:hover .gjs-block__media {
+  background: linear-gradient(135deg, rgba(123, 92, 255, 0.2) 0%, rgba(99, 102, 241, 0.15) 100%) !important;
+  border-color: rgba(123, 92, 255, 0.35) !important;
+  box-shadow: 0 4px 12px rgba(123, 92, 255, 0.15) !important;
+  transform: scale(1.08) !important;
 }
 #nyxia-gjs-editor .gjs-block svg,
 #nyxia-gjs-editor .gjs-block__media svg,
 #nyxia-gjs-editor .gjs-block__media i {
-  width: 16px !important;
-  height: 16px !important;
-  color: #8b6cff !important;
-  font-size: 16px !important;
+  width: 18px !important;
+  height: 18px !important;
+  color: #9b85ff !important;
+  font-size: 18px !important;
 }
 #nyxia-gjs-editor .gjs-block__label {
-  font-size: 10px !important;
-  font-weight: 600 !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
   text-align: center !important;
-  color: #8d89ae !important;
-  letter-spacing: 0.01em !important;
-  line-height: 1.2 !important;
+  color: #9088b8 !important;
+  letter-spacing: 0.02em !important;
+  line-height: 1.3 !important;
   margin: 0 !important;
   overflow: hidden !important;
   text-overflow: ellipsis !important;
   white-space: nowrap !important;
   width: 100% !important;
+  transition: color 0.25s ease !important;
+}
+#nyxia-gjs-editor .gjs-block:hover .gjs-block__label {
+  color: #c0b4ff !important;
 }
 
-/* ═══ Block Categories ═══ */
+/* ═══ Block Categories — Premium section headers ═══ */
 #nyxia-gjs-editor .gjs-category-title,
 #nyxia-gjs-editor .gjs-category-label,
 #nyxia-gjs-editor .gjs-block-category__title,
 #nyxia-gjs-editor .gjs-block-category .gjs-title,
 #nyxia-gjs-editor .gjs-blocks-c .gjs-block-category__title {
-  font-size: 9px !important;
-  padding: 12px 12px 5px !important;
-  margin: 0 !important;
-  font-weight: 700 !important;
-  color: rgba(123, 92, 255, 0.45) !important;
+  font-size: 10px !important;
+  padding: 14px 14px 6px !important;
+  margin: 4px 0 2px !important;
+  font-weight: 800 !important;
+  color: rgba(123, 92, 255, 0.5) !important;
   text-transform: uppercase !important;
-  letter-spacing: 0.1em !important;
+  letter-spacing: 0.14em !important;
   background: transparent !important;
   border: none !important;
+  border-bottom: 1px solid rgba(123, 92, 255, 0.04) !important;
   cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  position: relative !important;
 }
 #nyxia-gjs-editor .gjs-category-title:hover,
 #nyxia-gjs-editor .gjs-block-category__title:hover {
-  color: rgba(123, 92, 255, 0.7) !important;
+  color: rgba(123, 92, 255, 0.8) !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -320,23 +361,25 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 #nyxia-gjs-editor .gjs-layers {
   background: transparent !important;
-  padding: 4px 8px !important;
+  padding: 6px 10px !important;
 }
 #nyxia-gjs-editor .gjs-layer {
-  padding: 8px 10px !important;
-  min-height: 36px !important;
-  font-size: 12px !important;
-  border-radius: 7px !important;
-  margin: 2px 0 !important;
-  transition: background 0.15s !important;
+  padding: 10px 12px !important;
+  min-height: 40px !important;
+  font-size: 13px !important;
+  border-radius: 10px !important;
+  margin: 3px 0 !important;
+  transition: all 0.2s ease !important;
   color: #a09cc0 !important;
+  border: 1px solid transparent !important;
 }
 #nyxia-gjs-editor .gjs-layer:hover {
   background: rgba(123, 92, 255, 0.06) !important;
+  border-color: rgba(123, 92, 255, 0.08) !important;
 }
 #nyxia-gjs-editor .gjs-layer-name,
 #nyxia-gjs-editor .gjs-layer-inner {
-  font-size: 12px !important;
+  font-size: 13px !important;
   color: #a09cc0 !important;
 }
 #nyxia-gjs-editor .gjs-layer-vis,
@@ -344,10 +387,11 @@
   color: #6b6490 !important;
 }
 #nyxia-gjs-editor .gjs-layer-count {
-  background: rgba(123, 92, 255, 0.12) !important;
+  background: linear-gradient(135deg, rgba(123, 92, 255, 0.15) 0%, rgba(99, 102, 241, 0.1) 100%) !important;
   color: #b09eff !important;
-  border-radius: 5px !important;
-  font-size: 10px !important;
+  border-radius: 7px !important;
+  font-size: 11px !important;
+  padding: 2px 8px !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -355,112 +399,125 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 #nyxia-gjs-editor .gjs-sm-sectors {
   background: transparent !important;
-  padding: 4px 0 !important;
+  padding: 6px 0 !important;
 }
 #nyxia-gjs-editor .gjs-sm-sector {
-  border-bottom: 1px solid rgba(123, 92, 255, 0.06) !important;
-  padding: 4px 0 !important;
+  border-bottom: 1px solid rgba(123, 92, 255, 0.05) !important;
+  padding: 6px 0 !important;
 }
 #nyxia-gjs-editor .gjs-sm-sector-title {
-  font-size: 9px !important;
-  padding: 10px 12px 6px !important;
+  font-size: 10px !important;
+  padding: 12px 14px 8px !important;
   margin: 0 !important;
-  font-weight: 700 !important;
-  color: rgba(123, 92, 255, 0.45) !important;
+  font-weight: 800 !important;
+  color: rgba(123, 92, 255, 0.5) !important;
   text-transform: uppercase !important;
-  letter-spacing: 0.1em !important;
+  letter-spacing: 0.12em !important;
 }
 #nyxia-gjs-editor .gjs-sm-property {
-  padding: 6px 10px !important;
+  padding: 8px 12px !important;
 }
 #nyxia-gjs-editor .gjs-sm-legend {
-  color: #8d89ae !important;
-  font-size: 12px !important;
+  color: #9088b8 !important;
+  font-size: 13px !important;
 }
 #nyxia-gjs-editor .gjs-sm-stack {
   color: #a09cc0 !important;
 }
 #nyxia-gjs-editor .gjs-sm-composite {
-  border-top: 1px solid rgba(123, 92, 255, 0.06) !important;
+  border-top: 1px solid rgba(123, 92, 255, 0.05) !important;
 }
 
-/* ═══ Field inputs ═══ */
+/* ═══ Field inputs — Premium dark glass style ═══ */
 #nyxia-gjs-editor .gjs-field input,
 #nyxia-gjs-editor .gjs-field select,
 #nyxia-gjs-editor .gjs-field textarea,
 #nyxia-gjs-editor .gjs-input,
 #nyxia-gjs-editor .gjs-textarea,
 #nyxia-gjs-editor .gjs-select {
-  font-size: 12px !important;
-  padding: 6px 10px !important;
-  height: 32px !important;
-  border-radius: 8px !important;
-  background: rgba(7, 16, 31, 0.7) !important;
+  font-size: 13px !important;
+  padding: 8px 12px !important;
+  height: 36px !important;
+  border-radius: 10px !important;
+  background: rgba(6, 10, 20, 0.8) !important;
   border: 1px solid rgba(123, 92, 255, 0.1) !important;
   color: #d4d0e0 !important;
-  transition: border-color 0.2s ease !important;
+  transition: all 0.25s ease !important;
   box-sizing: border-box !important;
 }
 #nyxia-gjs-editor .gjs-field input:focus,
 #nyxia-gjs-editor .gjs-field select:focus,
 #nyxia-gjs-editor .gjs-input:focus {
-  border-color: rgba(123, 92, 255, 0.45) !important;
+  border-color: rgba(123, 92, 255, 0.5) !important;
   outline: none !important;
-  box-shadow: 0 0 0 2px rgba(123, 92, 255, 0.06) !important;
+  box-shadow:
+    0 0 0 3px rgba(123, 92, 255, 0.08),
+    0 4px 16px rgba(123, 92, 255, 0.08) !important;
+  background: rgba(6, 10, 20, 0.95) !important;
 }
 
 /* ═══ Trait Manager ═══ */
 #nyxia-gjs-editor .gjs-trt-trait {
-  padding: 6px 10px !important;
+  padding: 8px 12px !important;
 }
 #nyxia-gjs-editor .gjs-trt-label {
-  font-size: 11px !important;
-  color: #8d89ae !important;
+  font-size: 12px !important;
+  color: #9088b8 !important;
 }
 
-/* ═══ Selection Highlight ═══ */
+/* ═══ Selection Highlight — Premium glow ═══ */
 #nyxia-gjs-editor .gjs-selected,
 #nyxia-gjs-editor .gjs-selected * {
   outline: 2px solid #7B5CFF !important;
-  outline-offset: 1px !important;
+  outline-offset: 2px !important;
+  box-shadow: 0 0 0 4px rgba(123, 92, 255, 0.08) !important;
 }
 
 /* ═══ Component Hover ═══ */
 #nyxia-gjs-editor .gjs-hovered {
-  outline: 1px solid rgba(123, 92, 255, 0.4) !important;
+  outline: 1px solid rgba(123, 92, 255, 0.5) !important;
+  box-shadow: 0 0 0 2px rgba(123, 92, 255, 0.04) !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    MISC UI ELEMENTS
    ═══════════════════════════════════════════════════════════════════════════ */
 #nyxia-gjs-editor .gjs-color-picker {
-  border: 1px solid rgba(123, 92, 255, 0.1) !important;
-  border-radius: 8px !important;
+  border: 1px solid rgba(123, 92, 255, 0.12) !important;
+  border-radius: 10px !important;
 }
 #nyxia-gjs-editor .gjs-field-arrow {
-  border-color: rgba(123, 92, 255, 0.3) !important;
+  border-color: rgba(123, 92, 255, 0.35) !important;
 }
 #nyxia-gjs-editor .gjs-field-range input {
-  background: rgba(123, 92, 255, 0.12) !important;
+  background: linear-gradient(90deg, rgba(123, 92, 255, 0.15), rgba(123, 92, 255, 0.25)) !important;
+  border-radius: 4px !important;
 }
 #nyxia-gjs-editor .gjs-field-radio label {
   color: #a09cc0 !important;
+  font-size: 13px !important;
 }
 #nyxia-gjs-editor .gjs-radio-item input[type="radio"] {
-  background: rgba(123, 92, 255, 0.12) !important;
+  background: rgba(123, 92, 255, 0.1) !important;
   border-color: rgba(123, 92, 255, 0.25) !important;
+  border-radius: 6px !important;
+  transition: all 0.2s ease !important;
 }
 #nyxia-gjs-editor .gjs-radio-item input[type="radio"]:checked {
-  background: #7B5CFF !important;
+  background: linear-gradient(135deg, #7B5CFF 0%, #6366f1 100%) !important;
   border-color: #7B5CFF !important;
+  box-shadow: 0 2px 8px rgba(123, 92, 255, 0.25) !important;
 }
 #nyxia-gjs-editor .gjs-field-checkbox input[type="checkbox"] {
-  background: rgba(123, 92, 255, 0.12) !important;
+  background: rgba(123, 92, 255, 0.1) !important;
   border-color: rgba(123, 92, 255, 0.25) !important;
+  border-radius: 6px !important;
+  transition: all 0.2s ease !important;
 }
 #nyxia-gjs-editor .gjs-field-checkbox input[type="checkbox"]:checked {
-  background: #7B5CFF !important;
+  background: linear-gradient(135deg, #7B5CFF 0%, #6366f1 100%) !important;
   border-color: #7B5CFF !important;
+  box-shadow: 0 2px 8px rgba(123, 92, 255, 0.25) !important;
 }
 #nyxia-gjs-editor .gjs-caret {
   border-color: rgba(123, 92, 255, 0.3) transparent transparent transparent !important;
@@ -473,110 +530,221 @@
 }
 #nyxia-gjs-editor .gjs-asset {
   color: #a09cc0 !important;
+  border-radius: 10px !important;
+  padding: 8px !important;
+  transition: all 0.2s ease !important;
+}
+#nyxia-gjs-editor .gjs-asset:hover {
+  background: rgba(123, 92, 255, 0.06) !important;
 }
 #nyxia-gjs-editor .gjs-asset-image {
   border: 1px solid rgba(123, 92, 255, 0.08) !important;
-  border-radius: 7px !important;
+  border-radius: 10px !important;
+  transition: all 0.3s ease !important;
+}
+#nyxia-gjs-editor .gjs-asset-image:hover {
+  border-color: rgba(123, 92, 255, 0.2) !important;
+  box-shadow: 0 4px 16px rgba(123, 92, 255, 0.1) !important;
 }
 #nyxia-gjs-editor .gjs-clm-tags {
-  background: rgba(123, 92, 255, 0.08) !important;
-  border-color: rgba(123, 92, 255, 0.15) !important;
+  background: rgba(123, 92, 255, 0.06) !important;
+  border-color: rgba(123, 92, 255, 0.12) !important;
+  border-radius: 10px !important;
 }
 #nyxia-gjs-editor .gjs-clm-tag {
-  background: rgba(123, 92, 255, 0.15) !important;
+  background: linear-gradient(135deg, rgba(123, 92, 255, 0.15) 0%, rgba(99, 102, 241, 0.1) 100%) !important;
   color: #b09eff !important;
-  border-radius: 5px !important;
+  border-radius: 7px !important;
+  font-size: 12px !important;
+  padding: 4px 10px !important;
+  transition: all 0.2s ease !important;
+}
+#nyxia-gjs-editor .gjs-clm-tag:hover {
+  background: linear-gradient(135deg, rgba(123, 92, 255, 0.25) 0%, rgba(99, 102, 241, 0.2) 100%) !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   MODAL DIALOGS
+   MODAL DIALOGS — Premium glassmorphism
    ═══════════════════════════════════════════════════════════════════════════ */
 #nyxia-gjs-editor .gjs-modal {
-  background: #0b1428 !important;
-  border: 1px solid rgba(123, 92, 255, 0.15) !important;
-  border-radius: 16px !important;
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5) !important;
+  background: rgba(10, 14, 26, 0.98) !important;
+  border: 1px solid rgba(123, 92, 255, 0.12) !important;
+  border-radius: 20px !important;
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.6),
+    0 0 60px rgba(123, 92, 255, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+  backdrop-filter: blur(30px) !important;
 }
 #nyxia-gjs-editor .gjs-modal-title {
-  color: #e8e2f8 !important;
+  color: #eae6ff !important;
+  font-weight: 700 !important;
 }
 #nyxia-gjs-editor .gjs-modal-header {
-  background: #091020 !important;
+  background: rgba(8, 12, 24, 0.9) !important;
   border-bottom: 1px solid rgba(123, 92, 255, 0.08) !important;
+  border-radius: 20px 20px 0 0 !important;
 }
 #nyxia-gjs-editor .gjs-modal-content {
-  background: #0b1428 !important;
+  background: transparent !important;
 }
 #nyxia-gjs-editor .gjs-footer {
-  background: #091020 !important;
+  background: rgba(8, 12, 24, 0.9) !important;
   border-top: 1px solid rgba(123, 92, 255, 0.08) !important;
+  border-radius: 0 0 20px 20px !important;
 }
 #nyxia-gjs-editor .gjs-btn-primary {
-  background: #7B5CFF !important;
+  background: linear-gradient(135deg, #7B5CFF 0%, #6366f1 100%) !important;
   color: white !important;
-  border-radius: 9px !important;
+  border-radius: 11px !important;
   border: none !important;
-  transition: all 0.2s ease !important;
+  font-weight: 700 !important;
+  padding: 10px 24px !important;
+  transition: all 0.25s ease !important;
+  box-shadow: 0 4px 16px rgba(123, 92, 255, 0.25) !important;
 }
 #nyxia-gjs-editor .gjs-btn-primary:hover {
-  background: #6a4cee !important;
-  box-shadow: 0 4px 16px rgba(123, 92, 255, 0.3) !important;
+  background: linear-gradient(135deg, #8b6cff 0%, #7376f7 100%) !important;
+  box-shadow: 0 6px 24px rgba(123, 92, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  transform: translateY(-1px) !important;
 }
 #nyxia-gjs-editor .gjs-btn-grey,
 #nyxia-gjs-editor .gjs-btn-secondary {
-  background: rgba(123, 92, 255, 0.12) !important;
+  background: rgba(123, 92, 255, 0.08) !important;
   color: #b09eff !important;
-  border-radius: 9px !important;
-  border: 1px solid rgba(123, 92, 255, 0.15) !important;
-  transition: all 0.2s ease !important;
+  border-radius: 11px !important;
+  border: 1px solid rgba(123, 92, 255, 0.12) !important;
+  font-weight: 600 !important;
+  padding: 10px 24px !important;
+  transition: all 0.25s ease !important;
+}
+#nyxia-gjs-editor .gjs-btn-grey:hover,
+#nyxia-gjs-editor .gjs-btn-secondary:hover {
+  background: rgba(123, 92, 255, 0.14) !important;
+  border-color: rgba(123, 92, 255, 0.2) !important;
+  box-shadow: 0 4px 12px rgba(123, 92, 255, 0.1) !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   CUSTOM SCROLLBARS
+   CUSTOM SCROLLBARS — Premium thin violet
    ═══════════════════════════════════════════════════════════════════════════ */
 #nyxia-gjs-editor ::-webkit-scrollbar {
-  width: 5px !important;
-  height: 5px !important;
+  width: 6px !important;
+  height: 6px !important;
 }
 #nyxia-gjs-editor ::-webkit-scrollbar-track {
   background: transparent !important;
 }
 #nyxia-gjs-editor ::-webkit-scrollbar-thumb {
-  background: rgba(123, 92, 255, 0.2) !important;
-  border-radius: 3px !important;
+  background: rgba(123, 92, 255, 0.18) !important;
+  border-radius: 4px !important;
+  transition: background 0.2s ease !important;
 }
 #nyxia-gjs-editor ::-webkit-scrollbar-thumb:hover {
   background: rgba(123, 92, 255, 0.35) !important;
+  box-shadow: 0 0 8px rgba(123, 92, 255, 0.15) !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   DEVICE FRAME — responsive preview wrapper
+   DEVICE FRAME — Premium device preview with glow
    ═══════════════════════════════════════════════════════════════════════════ */
 .nyxia-device-frame {
-  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-              height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.35s ease;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.4s ease,
+              border-radius 0.4s ease;
   margin: 0 auto;
-  box-shadow: 0 0 0 1px rgba(123, 92, 255, 0.06),
-              0 8px 40px rgba(0, 0, 0, 0.3);
+  box-shadow:
+    0 0 0 1px rgba(123, 92, 255, 0.06),
+    0 12px 48px rgba(0, 0, 0, 0.35);
 }
 .nyxia-device-frame.tablet {
-  box-shadow: 0 0 0 1px rgba(123, 92, 255, 0.1),
-              0 12px 48px rgba(0, 0, 0, 0.4),
-              0 0 60px rgba(123, 92, 255, 0.04);
+  box-shadow:
+    0 0 0 1px rgba(123, 92, 255, 0.1),
+    0 16px 56px rgba(0, 0, 0, 0.45),
+    0 0 80px rgba(123, 92, 255, 0.05);
 }
 .nyxia-device-frame.mobile {
-  box-shadow: 0 0 0 1px rgba(123, 92, 255, 0.12),
-              0 16px 56px rgba(0, 0, 0, 0.5),
-              0 0 80px rgba(123, 92, 255, 0.05);
+  box-shadow:
+    0 0 0 1px rgba(123, 92, 255, 0.12),
+    0 20px 64px rgba(0, 0, 0, 0.55),
+    0 0 100px rgba(123, 92, 255, 0.06);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   UTILITY — force the gjs-one-bg class (used by preset-webpage views)
+   UTILITY — force the gjs-one-bg class
    ═══════════════════════════════════════════════════════════════════════════ */
 #nyxia-gjs-editor .gjs-one-bg {
   background: transparent !important;
 }
 #nyxia-gjs-editor .gjs-one-bg:hover {
   background: rgba(123, 92, 255, 0.04) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EXTRA: Panel inner glow effect at top
+   ═══════════════════════════════════════════════════════════════════════════ */
+#nyxia-gjs-editor .gjs-pn::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 120px !important;
+  background: linear-gradient(180deg, rgba(123, 92, 255, 0.04) 0%, transparent 100%) !important;
+  pointer-events: none !important;
+  z-index: 0 !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EXTRA: Block drag ghost styling
+   ═══════════════════════════════════════════════════════════════════════════ */
+#nyxia-gjs-editor .gjs-dragging {
+  opacity: 0.85 !important;
+}
+#nyxia-gjs-editor .gjs-cursor {
+  background: rgba(123, 92, 255, 0.15) !important;
+  border: 2px dashed rgba(123, 92, 255, 0.4) !important;
+  border-radius: 8px !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EXTRA: Canvas placeholder text
+   ═══════════════════════════════════════════════════════════════════════════ */
+#nyxia-gjs-editor .gjs-placeholder {
+  background: rgba(123, 92, 255, 0.08) !important;
+  border: 2px dashed rgba(123, 92, 255, 0.25) !important;
+  border-radius: 10px !important;
+  min-height: 80px !important;
+  color: #9088b8 !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  transition: all 0.25s ease !important;
+}
+#nyxia-gjs-editor .gjs-placeholder:hover {
+  background: rgba(123, 92, 255, 0.12) !important;
+  border-color: rgba(123, 92, 255, 0.35) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   EXTRA: Context menu styling
+   ═══════════════════════════════════════════════════════════════════════════ */
+#nyxia-gjs-editor .gjs-contextual {
+  background: rgba(10, 14, 26, 0.97) !important;
+  border: 1px solid rgba(123, 92, 255, 0.12) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5), 0 0 30px rgba(123, 92, 255, 0.05) !important;
+  backdrop-filter: blur(20px) !important;
+  padding: 6px !important;
+}
+#nyxia-gjs-editor .gjs-contextual-item {
+  color: #a09cc0 !important;
+  font-size: 13px !important;
+  padding: 8px 14px !important;
+  border-radius: 8px !important;
+  transition: all 0.15s ease !important;
+}
+#nyxia-gjs-editor .gjs-contextual-item:hover {
+  background: rgba(123, 92, 255, 0.12) !important;
+  color: #eae6ff !important;
 }

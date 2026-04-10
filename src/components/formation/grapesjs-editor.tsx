@@ -2113,55 +2113,58 @@ ${html}
   }, [])
 
   return (
-    <div className="fixed inset-0 z-[100] flex flex-col" style={{ background: '#06101f' }}>
+    <div className="fixed inset-0 z-[100] flex flex-col" style={{ background: '#0a0e1a' }}>
 
-      {/* ═══════ TOP TOOLBAR ═══════ */}
+      {/* ═══════ TOP TOOLBAR — Premium ═══════ */}
       <div
-        className="flex items-center justify-between px-4 h-[54px] shrink-0"
+        className="flex items-center justify-between px-5 h-[60px] shrink-0"
         style={{
-          borderBottom: '1px solid rgba(123,92,255,0.08)',
-          background: 'linear-gradient(180deg, rgba(11,20,40,0.98) 0%, rgba(9,16,32,0.98) 100%)',
-          backdropFilter: 'blur(12px)',
+          borderBottom: '1px solid rgba(123,92,255,0.07)',
+          background: 'linear-gradient(180deg, rgba(12,16,28,0.98) 0%, rgba(8,12,22,0.99) 100%)',
+          backdropFilter: 'blur(16px)',
+          boxShadow: '0 2px 20px rgba(0,0,0,0.2), 0 1px 0 rgba(123,92,255,0.04)',
         }}
       >
         {/* Left — Logo + Page Title */}
-        <div className="flex items-center gap-3 min-w-0 flex-1">
+        <div className="flex items-center gap-4 min-w-0 flex-1">
           <div
-            className="w-[32px] h-[32px] rounded-[9px] flex items-center justify-center font-bold text-[13px] text-white shrink-0"
+            className="w-[38px] h-[38px] rounded-[11px] flex items-center justify-center font-bold text-[15px] text-white shrink-0"
             style={{
-              background: 'linear-gradient(135deg, #8b6cff 0%, #5a3dd6 100%)',
-              boxShadow: '0 3px 14px rgba(123,92,255,0.35), inset 0 1px 0 rgba(255,255,255,0.15)',
+              background: 'linear-gradient(145deg, #8b6cff 0%, #5a3dd6 50%, #4a2dbf 100%)',
+              boxShadow: '0 4px 18px rgba(123,92,255,0.4), 0 1px 3px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.18)',
+              letterSpacing: '0.02em',
             }}
           >
             N
           </div>
-          <div className="h-5 w-px shrink-0" style={{ background: 'rgba(123,92,255,0.12)' }} />
+          <div className="h-6 w-px shrink-0" style={{ background: 'linear-gradient(180deg, rgba(123,92,255,0.2), rgba(123,92,255,0.05))' }} />
           <input
             type="text"
             value={pageTitle}
             onChange={(e) => setPageTitle(e.target.value)}
-            className="bg-transparent border-none outline-none text-[14px] font-semibold min-w-0 truncate"
-            style={{ color: '#e8e2f8', maxWidth: '200px' }}
+            className="bg-transparent border-none outline-none text-[15px] font-semibold min-w-0 truncate"
+            style={{ color: '#eae6ff', maxWidth: '220px', letterSpacing: '0.01em' }}
           />
           <span
-            className="px-[8px] py-[2px] rounded-[5px] text-[10px] font-bold uppercase tracking-[0.04em] shrink-0"
+            className="px-[10px] py-[3px] rounded-[6px] text-[10px] font-bold uppercase tracking-[0.06em] shrink-0"
             style={{
-              background: 'rgba(123,92,255,0.1)',
-              border: '1px solid rgba(123,92,255,0.2)',
-              color: '#b09eff',
+              background: 'linear-gradient(135deg, rgba(123,92,255,0.15) 0%, rgba(99,102,241,0.1) 100%)',
+              border: '1px solid rgba(123,92,255,0.22)',
+              color: '#c0b4ff',
+              boxShadow: '0 2px 8px rgba(123,92,255,0.08)',
             }}
           >
-            Pro
+            Studio Pro
           </span>
         </div>
 
         {/* Center — Device Toggle + Undo/Redo */}
-        <div className="flex items-center gap-1">
-          {/* Device Toggle */}
+        <div className="flex items-center gap-2">
+          {/* Device Toggle — Premium pill */}
           <div
-            className="flex items-center gap-[2px] p-[3px] rounded-[10px] mr-2"
+            className="flex items-center gap-[3px] p-[4px] rounded-[12px] mr-3"
             style={{
-              background: 'rgba(123,92,255,0.06)',
+              background: 'linear-gradient(135deg, rgba(123,92,255,0.06) 0%, rgba(99,102,241,0.04) 100%)',
               border: '1px solid rgba(123,92,255,0.08)',
             }}
           >
@@ -2173,122 +2176,145 @@ ${html}
               <button
                 key={mode}
                 onClick={() => setDeviceMode(mode)}
-                className="flex items-center justify-center w-[34px] h-[30px] rounded-[8px] transition-all duration-200"
+                className="flex items-center justify-center w-[38px] h-[34px] rounded-[9px] transition-all duration-300"
                 style={{
-                  background: deviceMode === mode ? 'rgba(123,92,255,0.18)' : 'transparent',
-                  color: deviceMode === mode ? '#b09eff' : '#564e78',
-                  boxShadow: deviceMode === mode ? '0 2px 8px rgba(123,92,255,0.15)' : 'none',
+                  background: deviceMode === mode
+                    ? 'linear-gradient(135deg, rgba(123,92,255,0.2) 0%, rgba(99,102,241,0.12) 100%)'
+                    : 'transparent',
+                  color: deviceMode === mode ? '#c0b4ff' : '#4e4870',
+                  boxShadow: deviceMode === mode
+                    ? '0 3px 12px rgba(123,92,255,0.18), inset 0 1px 0 rgba(255,255,255,0.06)'
+                    : 'none',
+                  border: deviceMode === mode
+                    ? '1px solid rgba(123,92,255,0.2)'
+                    : '1px solid transparent',
                 }}
                 title={label}
               >
-                <Icon className="w-[15px] h-[15px]" />
+                <Icon className="w-[16px] h-[16px]" />
               </button>
             ))}
           </div>
 
           {/* Separator */}
-          <div className="h-5 w-px mx-1" style={{ background: 'rgba(123,92,255,0.08)' }} />
+          <div className="h-6 w-px mx-1" style={{ background: 'linear-gradient(180deg, rgba(123,92,255,0.12), rgba(123,92,255,0.04))' }} />
 
           {/* Undo */}
           <button
             onClick={handleUndo}
-            className="flex items-center justify-center w-[34px] h-[34px] rounded-[9px] transition-all duration-200"
-            style={{ color: '#564e78' }}
+            className="flex items-center justify-center w-[38px] h-[38px] rounded-[10px] transition-all duration-200"
+            style={{ color: '#4e4870' }}
             onMouseEnter={(e) => {
-              ;(e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.04)'
-              ;(e.currentTarget as HTMLElement).style.color = '#7a7498'
+              const el = e.currentTarget as HTMLElement
+              el.style.background = 'rgba(123,92,255,0.08)'
+              el.style.color = '#9088b8'
+              el.style.boxShadow = '0 2px 8px rgba(123,92,255,0.08)'
             }}
             onMouseLeave={(e) => {
-              ;(e.currentTarget as HTMLElement).style.background = 'transparent'
-              ;(e.currentTarget as HTMLElement).style.color = '#564e78'
+              const el = e.currentTarget as HTMLElement
+              el.style.background = 'transparent'
+              el.style.color = '#4e4870'
+              el.style.boxShadow = 'none'
             }}
             title="Annuler (Ctrl+Z)"
           >
-            <Undo2 className="w-[15px] h-[15px]" />
+            <Undo2 className="w-[16px] h-[16px]" />
           </button>
 
           {/* Redo */}
           <button
             onClick={handleRedo}
-            className="flex items-center justify-center w-[34px] h-[34px] rounded-[9px] transition-all duration-200"
-            style={{ color: '#564e78' }}
+            className="flex items-center justify-center w-[38px] h-[38px] rounded-[10px] transition-all duration-200"
+            style={{ color: '#4e4870' }}
             onMouseEnter={(e) => {
-              ;(e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.04)'
-              ;(e.currentTarget as HTMLElement).style.color = '#7a7498'
+              const el = e.currentTarget as HTMLElement
+              el.style.background = 'rgba(123,92,255,0.08)'
+              el.style.color = '#9088b8'
+              el.style.boxShadow = '0 2px 8px rgba(123,92,255,0.08)'
             }}
             onMouseLeave={(e) => {
-              ;(e.currentTarget as HTMLElement).style.background = 'transparent'
-              ;(e.currentTarget as HTMLElement).style.color = '#564e78'
+              const el = e.currentTarget as HTMLElement
+              el.style.background = 'transparent'
+              el.style.color = '#4e4870'
+              el.style.boxShadow = 'none'
             }}
             title="Rétablir (Ctrl+Shift+Z)"
           >
-            <Redo2 className="w-[15px] h-[15px]" />
+            <Redo2 className="w-[16px] h-[16px]" />
           </button>
         </div>
 
-        {/* Right — Actions */}
-        <div className="flex items-center gap-2 flex-shrink-0">
+        {/* Right — Actions — Premium buttons */}
+        <div className="flex items-center gap-3 flex-shrink-0">
           <button
             onClick={handleExportHTML}
-            className="flex items-center gap-[6px] px-3 h-[34px] rounded-[9px] text-[12px] font-medium transition-all duration-200"
+            className="flex items-center gap-[7px] px-4 h-[38px] rounded-[10px] text-[12px] font-semibold transition-all duration-300"
             style={{
-              color: '#b4aecf',
-              border: '1px solid rgba(255,255,255,0.06)',
-              background: 'rgba(255,255,255,0.02)',
+              color: '#9088b8',
+              border: '1px solid rgba(123,92,255,0.08)',
+              background: 'rgba(123,92,255,0.04)',
             }}
             onMouseEnter={(e) => {
               const el = e.currentTarget as HTMLElement
-              el.style.background = 'rgba(255,255,255,0.06)'
-              el.style.color = '#e8e2f8'
+              el.style.background = 'rgba(123,92,255,0.1)'
+              el.style.color = '#c0b4ff'
+              el.style.borderColor = 'rgba(123,92,255,0.18)'
+              el.style.boxShadow = '0 4px 12px rgba(123,92,255,0.08)'
             }}
             onMouseLeave={(e) => {
               const el = e.currentTarget as HTMLElement
-              el.style.background = 'rgba(255,255,255,0.02)'
-              el.style.color = '#b4aecf'
+              el.style.background = 'rgba(123,92,255,0.04)'
+              el.style.color = '#9088b8'
+              el.style.borderColor = 'rgba(123,92,255,0.08)'
+              el.style.boxShadow = 'none'
             }}
             title="Exporter le HTML"
           >
-            <Code2 className="w-[14px] h-[14px]" />
+            <Code2 className="w-[15px] h-[15px]" />
             <span className="hidden sm:inline">Exporter</span>
           </button>
 
           <button
             onClick={handlePreview}
-            className="flex items-center gap-[6px] px-3 h-[34px] rounded-[9px] text-[12px] font-medium transition-all duration-200"
+            className="flex items-center gap-[7px] px-4 h-[38px] rounded-[10px] text-[12px] font-semibold transition-all duration-300"
             style={{
-              color: '#b4aecf',
-              border: '1px solid rgba(255,255,255,0.06)',
-              background: 'rgba(255,255,255,0.02)',
+              color: '#9088b8',
+              border: '1px solid rgba(123,92,255,0.08)',
+              background: 'rgba(123,92,255,0.04)',
             }}
             onMouseEnter={(e) => {
               const el = e.currentTarget as HTMLElement
-              el.style.background = 'rgba(255,255,255,0.06)'
-              el.style.color = '#e8e2f8'
+              el.style.background = 'rgba(123,92,255,0.1)'
+              el.style.color = '#c0b4ff'
+              el.style.borderColor = 'rgba(123,92,255,0.18)'
+              el.style.boxShadow = '0 4px 12px rgba(123,92,255,0.08)'
             }}
             onMouseLeave={(e) => {
               const el = e.currentTarget as HTMLElement
-              el.style.background = 'rgba(255,255,255,0.02)'
-              el.style.color = '#b4aecf'
+              el.style.background = 'rgba(123,92,255,0.04)'
+              el.style.color = '#9088b8'
+              el.style.borderColor = 'rgba(123,92,255,0.08)'
+              el.style.boxShadow = 'none'
             }}
             title="Aperçu"
           >
-            <Eye className="w-[14px] h-[14px]" />
+            <Eye className="w-[15px] h-[15px]" />
             <span className="hidden sm:inline">Aperçu</span>
           </button>
 
           <button
             onClick={handleSave}
             disabled={isSaving}
-            className="flex items-center gap-[6px] px-4 h-[34px] rounded-[9px] text-[12px] font-semibold text-white border transition-all duration-200 disabled:opacity-50"
+            className="flex items-center gap-[7px] px-5 h-[38px] rounded-[11px] text-[13px] font-bold text-white border transition-all duration-300 disabled:opacity-50"
             style={{
-              background: 'linear-gradient(135deg, rgba(123,92,255,0.9) 0%, rgba(90,61,214,0.9) 100%)',
-              border: '1px solid rgba(123,92,255,0.35)',
-              boxShadow: '0 3px 14px rgba(123,92,255,0.25), inset 0 1px 0 rgba(255,255,255,0.1)',
+              background: 'linear-gradient(145deg, #7B5CFF 0%, #6366f1 50%, #5a3dd6 100%)',
+              border: '1px solid rgba(123,92,255,0.4)',
+              boxShadow: '0 4px 20px rgba(123,92,255,0.3), 0 1px 3px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.12)',
             }}
           >
             {isSaving
-              ? <Loader2 className="w-[14px] h-[14px] animate-spin" />
-              : <Save className="w-[14px] h-[14px]" />
+              ? <Loader2 className="w-[15px] h-[15px] animate-spin" />
+              : <Save className="w-[15px] h-[15px]" />
             }
             Sauvegarder
           </button>
@@ -2296,20 +2322,22 @@ ${html}
           {onClose && (
             <button
               onClick={onClose}
-              className="flex items-center justify-center w-[34px] h-[34px] rounded-[9px] transition-all duration-200"
-              style={{ color: '#5c5880', border: '1px solid rgba(255,255,255,0.04)' }}
+              className="flex items-center justify-center w-[38px] h-[38px] rounded-[10px] transition-all duration-200"
+              style={{ color: '#4e4870', border: '1px solid rgba(123,92,255,0.06)' }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget as HTMLElement
-                el.style.background = 'rgba(255,255,255,0.05)'
-                el.style.color = '#a09cc0'
+                el.style.background = 'rgba(255,80,80,0.08)'
+                el.style.color = '#ff7b7b'
+                el.style.borderColor = 'rgba(255,80,80,0.15)'
               }}
               onMouseLeave={(e) => {
                 const el = e.currentTarget as HTMLElement
                 el.style.background = 'transparent'
-                el.style.color = '#5c5880'
+                el.style.color = '#4e4870'
+                el.style.borderColor = 'rgba(123,92,255,0.06)'
               }}
             >
-              <X className="w-[15px] h-[15px]" />
+              <X className="w-[16px] h-[16px]" />
             </button>
           )}
         </div>
@@ -2318,23 +2346,46 @@ ${html}
       {/* ═══════ EDITOR AREA ═══════ */}
       <div ref={canvasWrapperRef} className="flex-1 relative overflow-hidden">
         {isLoading && (
-          <div className="absolute inset-0 z-50 flex items-center justify-center" style={{ background: '#06101f' }}>
+          <div className="absolute inset-0 z-50 flex items-center justify-center" style={{ background: '#0a0e1a' }}>
             <div className="text-center">
-              <div
-                className="w-9 h-9 rounded-full animate-spin mx-auto mb-4"
-                style={{
-                  border: '2px solid rgba(123,92,255,0.2)',
-                  borderTopColor: '#7B5CFF',
-                }}
-              />
+              {/* Premium animated orb */}
+              <div className="relative mx-auto mb-6" style={{ width: '64px', height: '64px' }}>
+                <div
+                  className="absolute inset-0 rounded-full animate-spin"
+                  style={{
+                    border: '3px solid rgba(123,92,255,0.1)',
+                    borderTopColor: '#7B5CFF',
+                    filter: 'blur(0.5px)',
+                  }}
+                />
+                <div
+                  className="absolute inset-[6px] rounded-full animate-spin"
+                  style={{
+                    border: '2px solid rgba(123,92,255,0.08)',
+                    borderBottomColor: '#6366f1',
+                    animationDirection: 'reverse',
+                    animationDuration: '1.5s',
+                  }}
+                />
+                <div
+                  className="absolute inset-[14px] rounded-full"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(123,92,255,0.2) 0%, rgba(99,102,241,0.15) 100%)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <Sparkles className="w-5 h-5" style={{ color: '#b09eff' }} />
+                </div>
+              </div>
               <div className="flex items-center justify-center gap-2 mb-2">
-                <Sparkles className="w-4 h-4" style={{ color: '#7B5CFF' }} />
-                <span className="text-[14px] font-semibold" style={{ color: '#8d89ae' }}>
-                  Chargement de l&apos;éditeur
+                <span className="text-[16px] font-bold" style={{ color: '#c0b4ff' }}>
+                  NyXia Studio Pro
                 </span>
               </div>
-              <p className="text-[12px]" style={{ color: '#564e78' }}>
-                Préparation des blocs professionnels…
+              <p className="text-[13px]" style={{ color: '#6b6490' }}>
+                Chargement de l&apos;éditeur et des blocs premium…
               </p>
             </div>
           </div>
