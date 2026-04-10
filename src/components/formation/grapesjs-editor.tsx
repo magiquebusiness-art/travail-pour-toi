@@ -2282,17 +2282,55 @@ export default function GrapesJSEditorComponent({
           editor.BlockManager.add(block.id, blockDef)
         })
 
-        // ── Fix: Ensure canvas has proper top offset to prevent text overlap ──
-        setTimeout(() => {
-          const canvas = editorRef.current?.querySelector('.gjs-cv-canvas') as HTMLElement
-          if (canvas) {
-            canvas.style.paddingTop = '20px'
+        // ── Fix: Ensure canvas content stays within boundaries (no toolbar overlap) ──
+        const fixCanvasContainment = () => {
+          if (!editorRef.current) return
+          const container = editorRef.current
+
+          // Force all canvas-related wrappers to contain their content
+          const canvasSelectors = [
+            '.gjs-canvas',
+            '.gjs-cv-canvas',
+            '.gjs-cv',
+            '.gjs-canvas-frame',
+            '.gjs-canvas__frames',
+            '.gjs-cv-frame',
+          ]
+          canvasSelectors.forEach((sel) => {
+            const el = container.querySelector(sel) as HTMLElement | null
+            if (el) {
+              el.style.overflow = 'hidden'
+              el.style.position = 'relative'
+              el.style.zIndex = '1'
+            }
+          })
+
+          // Also fix the entire editor container
+          const editorEl = container.querySelector('.gjs-editor') as HTMLElement | null
+          if (editorEl) {
+            editorEl.style.overflow = 'hidden'
           }
-          const canvasFrame = editorRef.current?.querySelector('.gjs-canvas') as HTMLElement
-          if (canvasFrame) {
-            canvasFrame.style.overflow = 'hidden'
-          }
-        }, 500)
+
+          // Fix any absolutely positioned elements that escaped
+          const contentFrames = container.querySelectorAll('[data-gjs-type], .gjs-selected, [style*="position: absolute"]')
+          contentFrames.forEach((el) => {
+            const htmlEl = el as HTMLElement
+            const rect = htmlEl.getBoundingClientRect()
+            const canvasRect = container.querySelector('.gjs-canvas')?.getBoundingClientRect()
+            if (canvasRect && rect.top < canvasRect.top) {
+              htmlEl.style.position = 'relative'
+            }
+          })
+        }
+
+        setTimeout(fixCanvasContainment, 500)
+        setTimeout(fixCanvasContainment, 1500)
+        setTimeout(fixCanvasContainment, 3000)
+
+        // Re-run containment fix on any component change
+        editor.on('component:add', () => setTimeout(fixCanvasContainment, 100))
+        editor.on('component:update', () => setTimeout(fixCanvasContainment, 100))
+        editor.on('canvas:scroll', () => setTimeout(fixCanvasContainment, 100))
 
         // ── CRITICAL: Force blocks panel to show after plugins load ──
         setTimeout(() => {
@@ -2502,6 +2540,8 @@ ${html}
       <div
         className="flex items-center justify-between px-5 h-[64px] shrink-0"
         style={{
+          position: 'relative',
+          zIndex: 99999,
           borderBottom: '1px solid rgba(123,92,255,0.07)',
           background: 'linear-gradient(180deg, rgba(12,16,28,0.98) 0%, rgba(8,12,22,0.99) 100%)',
           backdropFilter: 'blur(16px)',
@@ -2716,7 +2756,7 @@ ${html}
       </div>
 
       {/* ═══════ EDITOR AREA ═══════ */}
-      <div ref={canvasWrapperRef} className="flex-1 relative" style={{ overflow: 'hidden', minHeight: 0 }}>
+      <div ref={canvasWrapperRef} className="flex-1 relative" style={{ overflow: 'hidden', minHeight: 0, position: 'relative', zIndex: 1 }}>
         {isLoading && (
           <div className="absolute inset-0 z-50 flex items-center justify-center" style={{ background: '#0a0e1a' }}>
             <div className="text-center">
