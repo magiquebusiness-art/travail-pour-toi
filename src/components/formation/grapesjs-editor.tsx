@@ -1970,9 +1970,9 @@ export default function GrapesJSEditorComponent({
         }
         ALL_BLOCKS.forEach((block) => {
           editor.BlockManager.add(block.id, {
-            label: `<div style="display:flex;align-items:center;gap:8px;padding:4px 0;">
-              <span style="font-size:16px;flex-shrink:0;">${CATEGORY_ICONS[block.category] || '📦'}</span>
-              <span style="font-size:12px;font-weight:600;color:#a09cc0;white-space:nowrap;">${block.label}</span>
+            label: `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:8px 4px 4px;">
+              <span style="font-size:28px;line-height:1;flex-shrink:0;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.25));">${CATEGORY_ICONS[block.category] || '📦'}</span>
+              <span style="font-size:10px;font-weight:700;color:#9088b8;white-space:nowrap;letter-spacing:0.02em;text-align:center;">${block.label}</span>
             </div>`,
             category: { label: `${CATEGORY_ICONS[block.category] || '📦'} ${block.category}`, id: block.category.toLowerCase() },
             content: block.content,
