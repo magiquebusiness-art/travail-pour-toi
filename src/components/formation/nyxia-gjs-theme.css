@@ -98,24 +98,23 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════════════════
-   CANVAS CONTAINMENT — Prevent content from escaping above the canvas
+   CANVAS CONTAINMENT — Prevent selection tools from escaping above canvas
    ═══════════════════════════════════════════════════════════════════════════ */
-/* The canvas area must clip content at its boundaries */
-#nyxia-gjs-editor .gjs-cv-canvas {
+
+/* CLIP the canvas view — clip-path:inset(0) is stronger than overflow:hidden
+   It physically clips ALL descendants including position:fixed elements */
+#nyxia-gjs-editor .gjs-cv {
+  clip-path: inset(0) !important;
   overflow: hidden !important;
+  position: relative !important;
 }
 
-/* Force all GrapesJS overlay toolbars to use absolute positioning (not fixed) */
-/* so they stay contained within the editor's stacking context */
+/* Force all GrapesJS overlay toolbars: absolute + low z-index */
 #nyxia-gjs-editor .gjs-toolbar,
 #nyxia-gjs-editor .gjs-tools,
 #nyxia-gjs-editor .gjs-tools-gl {
   position: absolute !important;
-}
-
-/* The frame wrapper (selection highlight) must stay within canvas */
-#nyxia-gjs-editor .gjs-frame-wrapper {
-  overflow: hidden !important;
+  z-index: 1 !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

@@ -120,3 +120,25 @@ Stage Summary:
 - JavaScript inline styles override any CSS that GrapesJS applies
 - MutationObserver ensures containment is re-enforced when GrapesJS modifies tool positions
 - Files modified: grapesjs-editor.tsx (lines 2304-2381, 2421-2427)
+---
+Task ID: 1
+Agent: Main Agent
+Task: Fix GrapesJS canvas selection tools overlapping React toolbar (attempt #5)
+
+Work Log:
+- Analyzed the full DOM structure of the GrapesJS editor component
+- Identified that previous CSS containment attempts (overflow:hidden, contain:paint, transform:translateZ(0)) all failed
+- Implemented a 4-layer defense strategy:
+  Layer 1: CSS clip-path:inset(0) on .gjs-cv (stronger than overflow:hidden, clips ALL descendants including position:fixed)
+  Layer 2: GrapesJS component:selected + component:update events with requestAnimationFrame
+  Layer 3: MutationObserver on document.body to catch tools appended outside editor and relocate them inside .gjs-cv
+  Layer 4: Continuous requestAnimationFrame loop while editor is open
+- Also added z-index:1 !important on .gjs-tools in CSS
+- Removed ineffective .gjs-cv-canvas and .gjs-frame-wrapper overflow:hidden rules
+- All observers and RAF loop are cleaned up on editor destroy
+
+Stage Summary:
+- Modified: nyxia-gjs-theme.css (clip-path + z-index rules)
+- Modified: grapesjs-editor.tsx (comprehensive JS fix with 4 layers)
+- No TypeScript compilation errors introduced
+

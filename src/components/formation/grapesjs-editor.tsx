@@ -2302,83 +2302,111 @@ export default function GrapesJSEditorComponent({
         }, 800)
 
         // ═══════════════════════════════════════════════════════════════════
-        // CRITICAL FIX: Prevent canvas selection tools from overflowing
-        // above the React toolbar. GrapesJS positions its .gjs-tools
-        // (selection toolbar) absolutely within .gjs-cv, and when an
-        // element near the top is selected, the toolbar escapes above.
-        // We use inline styles (highest specificity) + MutationObserver
-        // to enforce containment — CSS !important alone is not enough.
+        // FIX #5: Prevent canvas selection tools (.gjs-tools) from
+        // appearing above the React toolbar.
+        //
+        // Strategy: 3 layers of defense
+        //   1. CSS clip-path:inset(0) on .gjs-cv (in theme CSS)
+        //   2. GrapesJS component:selected event → immediate position fix
+        //   3. document.body MutationObserver → catch tools appended
+        //      outside .gjs-cv and relocate them inside
         // ═══════════════════════════════════════════════════════════════════
-        const enforceCanvasContainment = () => {
+        const fixToolsPosition = () => {
           if (!editorRef.current) return
           try {
             const gjsContainer = editorRef.current
 
-            // Target the canvas VIEW (.gjs-cv) — this wraps both the
-            // actual canvas (.gjs-cv-canvas) AND the selection tools
+            // 1. Enforce clip-path + overflow on .gjs-cv via inline style
             const cvViews = gjsContainer.querySelectorAll('.gjs-cv')
             cvViews.forEach((cv) => {
               const el = cv as HTMLElement
-              // Force overflow hidden with inline style (can't be overridden by CSS)
-              el.style.overflow = 'hidden'
-              el.style.position = 'relative'
-              // Create a new stacking context so all tools stay within
-              el.style.isolation = 'isolate'
-              el.style.zIndex = 'auto'
-            })
-
-            // Also target the canvas itself
-            const cvCanvases = gjsContainer.querySelectorAll('.gjs-cv-canvas')
-            cvCanvases.forEach((cvs) => {
-              const el = cvs as HTMLElement
+              el.style.clipPath = 'inset(0)'
               el.style.overflow = 'hidden'
               el.style.position = 'relative'
             })
 
-            // Force all toolbar/selection tools to use absolute positioning
-            // (never fixed) and clamp their z-index
-            const toolElements = gjsContainer.querySelectorAll(
-              '.gjs-tools, .gjs-tools-gl, .gjs-toolbar, .gjs-resizer, .gjs-viewport'
-            )
-            toolElements.forEach((tool) => {
+            // 2. Find ALL .gjs-tools anywhere in the document
+            //    (GrapesJS may append them to document.body)
+            document.querySelectorAll('.gjs-tools, .gjs-tools-gl, .gjs-toolbar').forEach((tool) => {
               const el = tool as HTMLElement
-              // Ensure position is absolute (never fixed which escapes the container)
-              if (window.getComputedStyle(el).position === 'fixed') {
-                el.style.position = 'absolute'
+
+              // If tool is NOT inside .gjs-cv, move it there
+              const cvEl = gjsContainer.querySelector('.gjs-cv') as HTMLElement
+              if (cvEl && !cvEl.contains(el)) {
+                cvEl.appendChild(el)
+              }
+
+              // Force absolute positioning (never fixed)
+              el.style.position = 'absolute'
+              el.style.zIndex = '1'
+
+              // Clamp top: never let it go above 0 (canvas top)
+              const currentTop = parseFloat(el.style.top || '0')
+              if (currentTop < 0) {
+                el.style.top = '0px'
               }
             })
-
-            // CRITICAL: Also enforce overflow:hidden on the DIRECT parent
-            // of .gjs-cv-canvas — this is where the tools are siblings
-            const canvasParent = gjsContainer.querySelector('.gjs-cv-canvas')?.parentElement
-            if (canvasParent && canvasParent !== gjsContainer) {
-              canvasParent.style.overflow = 'hidden'
-              canvasParent.style.position = 'relative'
-              canvasParent.style.isolation = 'isolate'
-            }
           } catch { /* ignore */ }
         }
 
-        // Run containment fix multiple times (plugins modify DOM late)
-        setTimeout(enforceCanvasContainment, 100)
-        setTimeout(enforceCanvasContainment, 500)
-        setTimeout(enforceCanvasContainment, 1000)
-        setTimeout(enforceCanvasContainment, 2000)
-        setTimeout(enforceCanvasContainment, 4000)
+        // Layer 2: Fix on every component selection
+        editor.on('component:selected', () => {
+          requestAnimationFrame(() => fixToolsPosition())
+          // Double-fix: run again after a short delay for late DOM updates
+          setTimeout(fixToolsPosition, 16)
+        })
+        editor.on('component:update', () => {
+          requestAnimationFrame(() => fixToolsPosition())
+        })
 
-        // Store observer — cleaned up via the shared destroy patch below
+        // Run fix multiple times during init (plugins modify DOM late)
+        setTimeout(fixToolsPosition, 100)
+        setTimeout(fixToolsPosition, 500)
+        setTimeout(fixToolsPosition, 1000)
+        setTimeout(fixToolsPosition, 2000)
+
+        // Layer 3: MutationObserver on editor container
         const containmentObserver = new MutationObserver(() => {
-          enforceCanvasContainment()
+          fixToolsPosition()
         })
         if (editorRef.current) {
           containmentObserver.observe(editorRef.current, {
             childList: true,
             subtree: true,
             attributes: true,
-            // Only watch style changes on tool elements
             attributeFilter: ['style', 'class'],
           })
         }
+
+        // Layer 3b: MutationObserver on document.body to catch tools
+        // appended OUTSIDE the editor container
+        const bodyObserver = new MutationObserver((mutations) => {
+          for (const mutation of mutations) {
+            for (const node of mutation.addedNodes) {
+              if (node instanceof HTMLElement && (
+                node.classList?.contains('gjs-tools') ||
+                node.classList?.contains('gjs-tools-gl') ||
+                node.classList?.contains('gjs-toolbar')
+              )) {
+                requestAnimationFrame(() => fixToolsPosition())
+              }
+            }
+          }
+        })
+        bodyObserver.observe(document.body, { childList: true })
+
+        // Layer 4: Continuous RAF loop while editor is open — catches any
+        // repositioning that GrapesJS does on scroll/resize/etc.
+        let rafActive = true
+        const rafLoop = () => {
+          if (!rafActive) return
+          fixToolsPosition()
+          requestAnimationFrame(rafLoop)
+        }
+        // Start RAF loop after editor is fully initialized
+        setTimeout(() => {
+          requestAnimationFrame(rafLoop)
+        }, 2000)
 
         // ── AGGRESSIVELY remove any badges/pastilles from DOM ──
         const removeBadges = () => {
@@ -2419,9 +2447,10 @@ export default function GrapesJSEditorComponent({
           badgeObserver.observe(editorRef.current, { childList: true, subtree: true })
         }
         // Store observers for cleanup in a single destroy patch
-        const editorObservers = [containmentObserver, badgeObserver]
+        const editorObservers = [containmentObserver, badgeObserver, bodyObserver]
         const origDestroy = editor.destroy
         editor.destroy = function (...args: unknown[]) {
+          rafActive = false
           editorObservers.forEach((obs) => obs.disconnect())
           return origDestroy.apply(editor, args as [])
         }
