@@ -149,7 +149,7 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   CANVAS — Dark background with dot grid + CONTAINMENT
+   CANVAS — Dark background with dot grid
    ═══════════════════════════════════════════════════════════════════════════ */
 #nyxia-gjs-editor .gjs-cv-canvas,
 #nyxia-gjs-editor .gjs-canvas {
@@ -158,47 +158,6 @@
     radial-gradient(ellipse at 50% 0%, rgba(123, 92, 255, 0.04) 0%, transparent 60%),
     radial-gradient(rgba(123, 92, 255, 0.045) 1px, transparent 1px) !important;
   background-size: 100% 100%, 28px 28px !important;
-  overflow: hidden !important;
-}
-
-/* Prevent content from overflowing above the canvas area */
-#nyxia-gjs-editor .gjs-canvas {
-  position: relative !important;
-  overflow: hidden !important;
-  z-index: 1 !important;
-}
-
-/* CRITICAL: Contain ALL canvas content within boundaries */
-#nyxia-gjs-editor .gjs-canvas-frame,
-#nyxia-gjs-editor .gjs-cv-canvas,
-#nyxia-gjs-editor canvas {
-  overflow: hidden !important;
-  position: relative !important;
-}
-
-/* Force the canvas wrapper to clip all child content */
-#nyxia-gjs-editor .gjs-cv {
-  overflow: hidden !important;
-  position: relative !important;
-}
-
-/* Ensure canvas content doesn't escape upward */
-#nyxia-gjs-editor .gjs-canvas__frames,
-#nyxia-gjs-editor .gjs-cv-frame {
-  overflow: hidden !important;
-  position: relative !important;
-}
-
-/* Prevent any element inside the editor from going above the toolbar */
-#nyxia-gjs-editor {
-  overflow: hidden !important;
-  position: relative !important;
-}
-
-/* Contain the entire editor body */
-#nyxia-gjs-editor .gjs-editor,
-#nyxia-gjs-editor .gjs-editor-content {
-  overflow: hidden !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
