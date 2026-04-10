@@ -1894,6 +1894,16 @@ export default function GrapesJSEditorComponent({
           forceClass: false,
           protectedCss: '',
           canvasCss: '',
+          // Disable ALL default toolbars
+          toolbar: false,
+          // Don't show the default canvas top bar
+          canvas: {
+            styles: initialCss || undefined,
+          },
+          // Remove default device buttons from canvas
+          deviceManager: {
+            devices: [],
+          },
           plugins: [
             grapesjsBlocksBasic,
             grapesjsPresetWebpage,
@@ -1912,9 +1922,6 @@ export default function GrapesJSEditorComponent({
             [grapesjsCustomCode as unknown as string]: {
               modalTitle: 'Code personnalisé',
             },
-          },
-          canvas: {
-            styles: initialCss || undefined,
           },
           components: parsedComponents || initialHtml || `
             <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#06101f;">
@@ -1943,6 +1950,30 @@ export default function GrapesJSEditorComponent({
             activate: true,
           })
         })
+
+        // ── CRITICAL: Force blocks panel to show after plugins load ──
+        setTimeout(() => {
+          if (!editorInstance.current) return
+          try {
+            // Force the blocks panel button to be active
+            const blocksBtn = editorInstance.current.getContainer()?.closest('#nyxia-gjs-editor')?.querySelector('[data-gjs-cmd="open-blocks"]')
+            if (blocksBtn) blocksBtn.click()
+            else editorInstance.current.runCommand('open-blocks')
+          } catch { /* ignore */ }
+          // Force style panel button visibility
+          try {
+            const smBtn = editorInstance.current.getContainer()?.closest('#nyxia-gjs-editor')?.querySelector('[data-gjs-cmd="open-sm"]')
+            if (smBtn) {
+              smBtn.setAttribute('title', 'Styles')
+            }
+          } catch { /* ignore */ }
+          try {
+            const layersBtn = editorInstance.current.getContainer()?.closest('#nyxia-gjs-editor')?.querySelector('[data-gjs-cmd="open-layers"]')
+            if (layersBtn) {
+              layersBtn.setAttribute('title', 'Couches')
+            }
+          } catch { /* ignore */ }
+        }, 800)
 
         // ── LocalStorage auto-save (debounced) ──
         const autoSave = debounce(() => {
@@ -2326,7 +2357,7 @@ ${html}
               borderRadius: deviceMode !== 'desktop' ? '12px' : '0',
             }}
           >
-            <div ref={editorRef} className="w-full h-full" />
+            <div ref={editorRef} className="w-full h-full" style={{ minHeight: '100%' }} />
           </div>
         </div>
       </div>
