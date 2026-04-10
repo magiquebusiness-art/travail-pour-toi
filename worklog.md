@@ -98,3 +98,25 @@ Stage Summary:
 - This prevents any GrapesJS selection/toolbar element from escaping above the React toolbar
 - No changes to panel layout or button functionality
 - Files modified: grapesjs-editor.tsx (line 2709, 2768), nyxia-gjs-theme.css (lines 108-114)
+
+---
+Task ID: 1b
+Agent: Main Agent
+Task: Fix canvas elements overlapping React toolbar - 5th attempt (JavaScript approach)
+
+Work Log:
+- Identified that CSS-only fixes (overflow, contain:paint, position changes) were being overridden by GrapesJS inline styles
+- Implemented JavaScript-based containment enforcement that runs AFTER editor initialization
+- `enforceCanvasContainment()` function uses inline styles (highest CSS specificity) to:
+  - Force `overflow: hidden` + `position: relative` + `isolation: isolate` on `.gjs-cv` (canvas view)
+  - Force `overflow: hidden` + `position: relative` on `.gjs-cv-canvas` (canvas)
+  - Force `position: absolute` on any `.gjs-tools` that has `position: fixed`
+  - Force `overflow: hidden` + `isolation: isolate` on the direct parent of `.gjs-cv-canvas`
+- Runs via setTimeout at 100ms, 500ms, 1s, 2s, 4s to catch late DOM modifications by plugins
+- Uses MutationObserver to continuously enforce containment when DOM changes
+- Merged cleanup into a single editor.destroy patch (containmentObserver + badgeObserver)
+
+Stage Summary:
+- JavaScript inline styles override any CSS that GrapesJS applies
+- MutationObserver ensures containment is re-enforced when GrapesJS modifies tool positions
+- Files modified: grapesjs-editor.tsx (lines 2304-2381, 2421-2427)

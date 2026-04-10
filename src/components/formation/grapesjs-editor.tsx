@@ -2301,6 +2301,85 @@ export default function GrapesJSEditorComponent({
           // No branding injection — keep panels clean
         }, 800)
 
+        // ═══════════════════════════════════════════════════════════════════
+        // CRITICAL FIX: Prevent canvas selection tools from overflowing
+        // above the React toolbar. GrapesJS positions its .gjs-tools
+        // (selection toolbar) absolutely within .gjs-cv, and when an
+        // element near the top is selected, the toolbar escapes above.
+        // We use inline styles (highest specificity) + MutationObserver
+        // to enforce containment — CSS !important alone is not enough.
+        // ═══════════════════════════════════════════════════════════════════
+        const enforceCanvasContainment = () => {
+          if (!editorRef.current) return
+          try {
+            const gjsContainer = editorRef.current
+
+            // Target the canvas VIEW (.gjs-cv) — this wraps both the
+            // actual canvas (.gjs-cv-canvas) AND the selection tools
+            const cvViews = gjsContainer.querySelectorAll('.gjs-cv')
+            cvViews.forEach((cv) => {
+              const el = cv as HTMLElement
+              // Force overflow hidden with inline style (can't be overridden by CSS)
+              el.style.overflow = 'hidden'
+              el.style.position = 'relative'
+              // Create a new stacking context so all tools stay within
+              el.style.isolation = 'isolate'
+              el.style.zIndex = 'auto'
+            })
+
+            // Also target the canvas itself
+            const cvCanvases = gjsContainer.querySelectorAll('.gjs-cv-canvas')
+            cvCanvases.forEach((cvs) => {
+              const el = cvs as HTMLElement
+              el.style.overflow = 'hidden'
+              el.style.position = 'relative'
+            })
+
+            // Force all toolbar/selection tools to use absolute positioning
+            // (never fixed) and clamp their z-index
+            const toolElements = gjsContainer.querySelectorAll(
+              '.gjs-tools, .gjs-tools-gl, .gjs-toolbar, .gjs-resizer, .gjs-viewport'
+            )
+            toolElements.forEach((tool) => {
+              const el = tool as HTMLElement
+              // Ensure position is absolute (never fixed which escapes the container)
+              if (window.getComputedStyle(el).position === 'fixed') {
+                el.style.position = 'absolute'
+              }
+            })
+
+            // CRITICAL: Also enforce overflow:hidden on the DIRECT parent
+            // of .gjs-cv-canvas — this is where the tools are siblings
+            const canvasParent = gjsContainer.querySelector('.gjs-cv-canvas')?.parentElement
+            if (canvasParent && canvasParent !== gjsContainer) {
+              canvasParent.style.overflow = 'hidden'
+              canvasParent.style.position = 'relative'
+              canvasParent.style.isolation = 'isolate'
+            }
+          } catch { /* ignore */ }
+        }
+
+        // Run containment fix multiple times (plugins modify DOM late)
+        setTimeout(enforceCanvasContainment, 100)
+        setTimeout(enforceCanvasContainment, 500)
+        setTimeout(enforceCanvasContainment, 1000)
+        setTimeout(enforceCanvasContainment, 2000)
+        setTimeout(enforceCanvasContainment, 4000)
+
+        // Store observer — cleaned up via the shared destroy patch below
+        const containmentObserver = new MutationObserver(() => {
+          enforceCanvasContainment()
+        })
+        if (editorRef.current) {
+          containmentObserver.observe(editorRef.current, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            // Only watch style changes on tool elements
+            attributeFilter: ['style', 'class'],
+          })
+        }
+
         // ── AGGRESSIVELY remove any badges/pastilles from DOM ──
         const removeBadges = () => {
           if (!editorInstance.current) return
@@ -2339,10 +2418,11 @@ export default function GrapesJSEditorComponent({
         if (editorRef.current) {
           badgeObserver.observe(editorRef.current, { childList: true, subtree: true })
         }
-        // Store observer for cleanup
+        // Store observers for cleanup in a single destroy patch
+        const editorObservers = [containmentObserver, badgeObserver]
         const origDestroy = editor.destroy
         editor.destroy = function (...args: unknown[]) {
-          badgeObserver.disconnect()
+          editorObservers.forEach((obs) => obs.disconnect())
           return origDestroy.apply(editor, args as [])
         }
 
