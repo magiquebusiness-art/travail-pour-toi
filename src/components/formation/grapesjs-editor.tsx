@@ -1,5 +1,8 @@
 'use client'
 
+/* ── CRITICAL: Import GrapesJS base CSS ── */
+import 'grapesjs/dist/css/grapes.min.css'
+
 import { useEffect, useRef, useState, useCallback } from 'react'
 import {
   Save,
