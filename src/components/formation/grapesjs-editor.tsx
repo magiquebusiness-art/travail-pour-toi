@@ -1970,9 +1970,9 @@ export default function GrapesJSEditorComponent({
         }
         ALL_BLOCKS.forEach((block) => {
           editor.BlockManager.add(block.id, {
-            label: `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:8px 4px 4px;">
-              <span style="font-size:28px;line-height:1;flex-shrink:0;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.25));">${CATEGORY_ICONS[block.category] || '📦'}</span>
-              <span style="font-size:10px;font-weight:700;color:#9088b8;white-space:nowrap;letter-spacing:0.02em;text-align:center;">${block.label}</span>
+            label: `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:12px 6px 8px;">
+              <span style="font-size:36px;line-height:1;flex-shrink:0;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.3));">${CATEGORY_ICONS[block.category] || '📦'}</span>
+              <span style="font-size:11px;font-weight:700;color:#a09cc0;white-space:nowrap;letter-spacing:0.02em;text-align:center;">${block.label}</span>
             </div>`,
             category: { label: `${CATEGORY_ICONS[block.category] || '📦'} ${block.category}`, id: block.category.toLowerCase() },
             content: block.content,
@@ -2154,11 +2154,11 @@ ${html}
   }, [])
 
   return (
-    <div className="fixed inset-0 z-[100] flex flex-col" style={{ background: '#0a0e1a' }}>
+    <div className="fixed inset-0 z-[100] flex flex-col" style={{ background: '#0a0e1a', height: '100dvh', maxHeight: '100dvh', overflow: 'hidden' }}>
 
       {/* ═══════ TOP TOOLBAR — Premium ═══════ */}
       <div
-        className="flex items-center justify-between px-5 h-[60px] shrink-0"
+        className="flex items-center justify-between px-5 h-[64px] shrink-0"
         style={{
           borderBottom: '1px solid rgba(123,92,255,0.07)',
           background: 'linear-gradient(180deg, rgba(12,16,28,0.98) 0%, rgba(8,12,22,0.99) 100%)',
@@ -2385,7 +2385,7 @@ ${html}
       </div>
 
       {/* ═══════ EDITOR AREA ═══════ */}
-      <div ref={canvasWrapperRef} className="flex-1 relative overflow-hidden">
+      <div ref={canvasWrapperRef} className="flex-1 relative" style={{ overflow: 'hidden', minHeight: 0 }}>
         {isLoading && (
           <div className="absolute inset-0 z-50 flex items-center justify-center" style={{ background: '#0a0e1a' }}>
             <div className="text-center">
@@ -2449,7 +2449,7 @@ ${html}
               borderRadius: deviceMode !== 'desktop' ? '12px' : '0',
             }}
           >
-            <div ref={editorRef} className="w-full h-full" style={{ minHeight: '100%' }} />
+            <div ref={editorRef} className="w-full h-full" style={{ minHeight: '100%', maxHeight: '100%', overflow: 'hidden' }} />
           </div>
         </div>
       </div>
