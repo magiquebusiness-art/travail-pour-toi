@@ -25,3 +25,30 @@ Stage Summary:
 - Blocks panel now shows a premium 2-column grid of large, gorgeous cards
 - Each category (Hero, Features, Pricing, Testimonials, CTA, Content, Footer, E-commerce) displays blocks in pairs
 - Commit c025d11 pushed, deploying to Cloudflare Workers
+
+---
+Task ID: 1
+Agent: Super Z (main)
+Task: Fix GrapesJS editor — 2-column blocks, bigger elements, viewport overflow
+
+Work Log:
+- Analyzed screenshot: editor had 1-column blocks, content overflowed below Windows taskbar
+- Read current nyxia-gjs-theme.css (v3) and grapesjs-editor.tsx
+- Rewrote nyxia-gjs-theme.css to v4 with:
+  - 2-column grid for blocks with comprehensive CSS selectors
+  - Block min-height 100px (up from 72px), icons 34px+ (up from 26px), labels 11px (up from 10px)
+  - Left panel widened to 380px, right panel to 320px
+  - Height: 100% / max-height: 100% on all containers to prevent overflow
+  - Additional safety selectors for nested block containers
+- Fixed viewport overflow in component JSX:
+  - Container uses height: 100dvh / maxHeight: 100dvh (dynamic viewport height accounts for taskbar)
+  - Toolbar height increased to 64px
+  - Editor area uses overflow: hidden + minHeight: 0
+  - Editor ref has maxHeight: 100% + overflow: hidden
+- Increased block label icons from 28px to 36px, labels from 10px to 11px
+- Committed as daebc4c, pushed to GitHub for Cloudflare Workers auto-deploy
+
+Stage Summary:
+- Deployed commit daebc4c
+- Key fixes: 100dvh viewport, 2-col block grid, bigger blocks/panels
+- Files modified: nyxia-gjs-theme.css, grapesjs-editor.tsx
