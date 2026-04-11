@@ -89,17 +89,21 @@ export default function FormationLearnPage() {
   const [hasAccess, setHasAccess] = useState<boolean | null>(null) // null = checking
   const [studentEmail, setStudentEmail] = useState<string>('')
   const [isEnrollmentLoading, setIsEnrollmentLoading] = useState(true)
+  const [isPolling, setIsPolling] = useState(false)
 
   const searchParams = useSearchParams()
 
   // Check enrollment status on mount
   useEffect(() => {
+    let pollInterval: ReturnType<typeof setInterval> | null = null
+
     async function checkAccess() {
       try {
         // Get email from URL params (passed after Stripe payment) or localStorage
         const emailParam = searchParams.get('email')
         const savedEmail = localStorage.getItem(`nyxia_enrollment_${formationId}`)
         const email = emailParam || savedEmail || ''
+        const isPaymentSuccess = searchParams.get('payment') === 'success'
 
         if (email) {
           setStudentEmail(email)
@@ -118,6 +122,41 @@ export default function FormationLearnPage() {
               const lessons: string[] = JSON.parse(data.enrollment.completed_lessons)
               setCompletedLessons(new Set(lessons))
             } catch { /* ignore parse errors */ }
+          }
+
+          // If payment=success but no access yet, start polling
+          if (isPaymentSuccess && !data.hasAccess) {
+            setIsPolling(true)
+            let attempts = 0
+            const maxAttempts = 10
+            pollInterval = setInterval(async () => {
+              attempts++
+              try {
+                const pollRes = await fetch(`/api/stripe/enrollment?formationId=${formationId}&email=${encodeURIComponent(email)}`)
+                const pollData = await pollRes.json()
+                if (pollData.hasAccess) {
+                  if (pollInterval) clearInterval(pollInterval)
+                  pollInterval = null
+                  setIsPolling(false)
+                  setHasAccess(true)
+                  if (pollData.enrollment?.completed_lessons) {
+                    try {
+                      setCompletedLessons(new Set(JSON.parse(pollData.enrollment.completed_lessons)))
+                    } catch {}
+                  }
+                } else if (attempts >= maxAttempts) {
+                  if (pollInterval) clearInterval(pollInterval)
+                  pollInterval = null
+                  setIsPolling(false)
+                }
+              } catch {
+                if (attempts >= maxAttempts && pollInterval) {
+                  clearInterval(pollInterval)
+                  pollInterval = null
+                  setIsPolling(false)
+                }
+              }
+            }, 3000)
           }
         } else {
           // No email provided — check if formation is free
@@ -139,6 +178,10 @@ export default function FormationLearnPage() {
     }
 
     checkAccess()
+
+    return () => {
+      if (pollInterval) clearInterval(pollInterval)
+    }
   }, [formationId, searchParams])
 
   useEffect(() => {
@@ -254,6 +297,20 @@ export default function FormationLearnPage() {
 
   // Paywall — user has no access and formation is paid
   if (hasAccess === false && formation.price > 0) {
+    // Polling state: show payment processing animation
+    if (isPolling) {
+      return (
+        <div className="min-h-screen relative flex items-center justify-center">
+          <StarryBackground />
+          <div className="relative z-10 max-w-md w-full mx-4 text-center">
+            <Loader2 className="w-12 h-12 text-purple-400 animate-spin mx-auto mb-6" />
+            <h2 className="text-2xl font-bold text-white mb-3">Confirmation du paiement en cours...</h2>
+            <p className="text-zinc-400">Votre paiement a été reçu. Veuillez patienter quelques instants pendant que nous activons votre accès.</p>
+          </div>
+        </div>
+      )
+    }
+
     return (
       <div className="min-h-screen relative flex items-center justify-center">
         <StarryBackground />
@@ -269,6 +326,11 @@ export default function FormationLearnPage() {
               <p className="text-zinc-500 text-sm mb-8">
                 Procédez au paiement pour débloquer l&apos;intégralité du contenu et suivre votre progression.
               </p>
+              {searchParams.get('payment') === 'success' && !isPolling && (
+                <div className="mb-6 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                  <p className="text-amber-400 text-sm">Si vous venez de payer, veuillez patienter un instant ou contacter le support.</p>
+                </div>
+              )}
               <Link href={`/formations/${formationId}`}>
                 <Button className="btn-gold w-full py-4 text-base border-0 mb-4">
                   <CreditCard className="w-5 h-5 mr-2" />
@@ -328,6 +390,14 @@ export default function FormationLearnPage() {
               <AlertTriangle className="w-3 h-3 mr-1" />
               Aperçu gratuit
             </Badge>
+          )}
+          {hasAccess && studentEmail && (
+            <Link href={`/mes-formations?email=${encodeURIComponent(studentEmail)}`} className="hidden sm:block">
+              <Button variant="ghost" size="sm" className="text-[#a5b4fc] hover:text-white text-xs">
+                <BookOpen className="w-3 h-3 mr-1.5" />
+                Mes Formations
+              </Button>
+            </Link>
           )}
           <Link href={`/formations/${formationId}`}>
             <Button variant="ghost" size="sm" className="text-zinc-400 hover:text-white text-xs">

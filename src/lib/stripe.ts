@@ -434,6 +434,41 @@ async function handleCheckoutComplete(session: Stripe.Checkout.Session, db: any,
     `).bind(userId, studentEmail, studentName, affiliateCode).run()
   }
 
+  // 6. Send enrollment confirmation email
+  try {
+    const formationTitle = (await db.prepare('SELECT title FROM formations WHERE id = ?').bind(formationId).first())?.title || 'Formation'
+    const { getEnrollmentConfirmationHTML } = await import('./email-templates')
+    const { sendWelcomeEmail } = await import('./resend')
+    const origin = 'https://travail-pour-toi.com'
+    const accessUrl = `${origin}/formations/${formationId}/learn?email=${encodeURIComponent(studentEmail)}`
+    const htmlContent = getEnrollmentConfirmationHTML(formationTitle, studentName || '', accessUrl)
+
+    // Use the Resend API directly via fetch (server-side compatible)
+    const RESEND_API_KEY = 're_cKkFtPtR_1dXxefB6C9sM7sKzWBhKde9z'
+    const emailRes = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: 'NyXia MarketPlace <noreply@cashflowecosysteme.com>',
+        to: [studentEmail],
+        subject: `Bienvenue dans votre formation : ${formationTitle}`,
+        html: htmlContent,
+      }),
+    })
+    if (emailRes.ok) {
+      console.log(`Enrollment confirmation email sent to ${studentEmail}`)
+    } else {
+      const emailError = await emailRes.text()
+      console.error(`Failed to send enrollment email: ${emailError}`)
+    }
+  } catch (emailErr) {
+    console.error('Failed to send enrollment confirmation email:', emailErr)
+    // Don't fail the enrollment if email fails
+  }
+
   console.log(`Enrollment created: ${studentEmail} → formation ${formationId}`)
 }
 

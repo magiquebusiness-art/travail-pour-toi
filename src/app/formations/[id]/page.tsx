@@ -97,6 +97,7 @@ export default function FormationLandingPage() {
   const [isCheckingOut, setIsCheckingOut] = useState(false)
   const [checkoutError, setCheckoutError] = useState('')
   const [paymentStatus, setPaymentStatus] = useState<'success' | 'cancelled' | null>(null)
+  const [isFreeFormation, setIsFreeFormation] = useState(false)
 
   const searchParams = useSearchParams()
 
@@ -150,6 +151,25 @@ export default function FormationLandingPage() {
     setIsCheckingOut(true)
 
     try {
+      // Free formation — use free enrollment endpoint
+      if (isFreeFormation) {
+        const res = await fetch(`/api/formations/${formationId}/enroll-free`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: studentEmail.trim(),
+            name: studentName.trim() || null,
+          }),
+        })
+        const data = await res.json()
+        if (data.accessUrl) {
+          window.location.href = data.accessUrl
+        } else {
+          setCheckoutError(data.error || 'Erreur lors de l\'inscription gratuite')
+        }
+        return
+      }
+
       const res = await fetch('/api/stripe/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -171,13 +191,15 @@ export default function FormationLandingPage() {
     } finally {
       setIsCheckingOut(false)
     }
-  }, [formationId, studentEmail, studentName])
+  }, [formationId, studentEmail, studentName, isFreeFormation])
 
   const handleBuyClick = useCallback(() => {
     if (formation && formation.price <= 0) {
-      // Free formation — go directly to learn
-      window.location.href = `/formations/${formationId}/learn`
+      // Free formation — collect email first
+      setIsFreeFormation(true)
+      setCheckoutOpen(true)
     } else {
+      setIsFreeFormation(false)
       setCheckoutOpen(true)
     }
   }, [formation, formationId])
@@ -490,9 +512,13 @@ export default function FormationLandingPage() {
           <DialogHeader>
             <DialogTitle className="flex items-center gap-3 text-xl">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#7B5CFF]/20 to-purple-500/10 flex items-center justify-center">
-                <CreditCard className="w-5 h-5 text-[#7B5CFF]" />
+                {isFreeFormation ? (
+                  <CheckCircle2 className="w-5 h-5 text-green-400" />
+                ) : (
+                  <CreditCard className="w-5 h-5 text-[#7B5CFF]" />
+                )}
               </div>
-              Paiement sécurisé
+              {isFreeFormation ? 'Inscription gratuite' : 'Paiement sécurisé'}
             </DialogTitle>
             <DialogDescription className="text-zinc-400">
               Accédez à la formation <span className="text-purple-400 font-medium">{formation.title}</span>
@@ -551,12 +577,17 @@ export default function FormationLandingPage() {
             <Button
               onClick={handleCheckout}
               disabled={isCheckingOut || !studentEmail.trim()}
-              className="btn-primary w-full py-4 text-base border-0 disabled:opacity-50"
+              className={isFreeFormation ? 'w-full py-4 text-base border-0 disabled:opacity-50 bg-green-600 hover:bg-green-700 text-white' : 'btn-primary w-full py-4 text-base border-0 disabled:opacity-50'}
             >
               {isCheckingOut ? (
                 <>
                   <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                  Redirection vers le paiement...
+                  {isFreeFormation ? 'Inscription en cours...' : 'Redirection vers le paiement...'}
+                </>
+              ) : isFreeFormation ? (
+                <>
+                  <CheckCircle2 className="w-5 h-5 mr-2" />
+                  Accéder gratuitement
                 </>
               ) : (
                 <>
