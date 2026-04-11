@@ -102,6 +102,25 @@ export async function GET(request: Request) {
       LIMIT 10
     `).bind(userId).all()
 
+    // Completion rate distribution — how students are spread across progress ranges
+    const completionDistribution = await db.prepare(`
+      SELECT
+        SUM(CASE WHEN e.progress_percent < 25 THEN 1 ELSE 0 END) as range_0_25,
+        SUM(CASE WHEN e.progress_percent >= 25 AND e.progress_percent < 50 THEN 1 ELSE 0 END) as range_25_50,
+        SUM(CASE WHEN e.progress_percent >= 50 AND e.progress_percent < 75 THEN 1 ELSE 0 END) as range_50_75,
+        SUM(CASE WHEN e.progress_percent >= 75 AND e.progress_percent < 100 THEN 1 ELSE 0 END) as range_75_100
+      FROM formation_enrollments e
+      INNER JOIN formations f ON f.id = e.formation_id
+      WHERE f.tenant_id = ? AND e.status = 'active'
+    `).bind(userId).first()
+
+    const completionRateDistribution = [
+      { range: '0-25%', count: completionDistribution?.range_0_25 || 0 },
+      { range: '25-50%', count: completionDistribution?.range_25_50 || 0 },
+      { range: '50-75%', count: completionDistribution?.range_50_75 || 0 },
+      { range: '75-100%', count: completionDistribution?.range_75_100 || 0 },
+    ]
+
     return NextResponse.json({
       stats: {
         totalRevenueCents: revenueResult?.total_revenue_cents || 0,
@@ -114,6 +133,7 @@ export async function GET(request: Request) {
         publishedFormations: formationsResult?.published_formations || 0,
         avgCompletion: Math.round(completionResult?.avg_completion || 0),
       },
+      completionRateDistribution,
       chartData: chartData.results || [],
       recentEnrollments: recentEnrollments.results || [],
     })

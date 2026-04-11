@@ -1,11 +1,10 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useMemo, useRef } from 'react'
 import { useParams, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
-import { Progress } from '@/components/ui/progress'
 import { StarryBackground } from '@/components/StarryBackground'
 import {
   ArrowLeft,
@@ -19,6 +18,7 @@ import {
   HelpCircle,
   ChevronDown,
   ChevronRight,
+  ChevronLeft,
   Loader2,
   Diamond,
   GraduationCap,
@@ -28,7 +28,12 @@ import {
   CreditCard,
   Shield,
   AlertTriangle,
+  Trophy,
+  Award,
+  PartyPopper,
+  ArrowRight,
 } from 'lucide-react'
+import { useToast } from '@/hooks/use-toast'
 
 interface Formation {
   id: string
@@ -73,9 +78,149 @@ const contentTypeIcon = (type: string) => {
   }
 }
 
+// ════════════════════════════════════════════════════════════════════════════════
+// Completion Celebration Overlay Component
+// ════════════════════════════════════════════════════════════════════════════════
+
+function CelebrationOverlay({
+  formationTitle,
+  totalLessons,
+  formationId,
+  studentEmail,
+  onDismiss,
+}: {
+  formationTitle: string
+  totalLessons: number
+  formationId: string
+  studentEmail: string
+  onDismiss: () => void
+}) {
+  const [countdown, setCountdown] = useState(5)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCountdown(prev => {
+        if (prev <= 1) {
+          clearInterval(timer)
+          onDismiss()
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
+    return () => clearInterval(timer)
+  }, [onDismiss])
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center cursor-pointer"
+      onClick={onDismiss}
+      role="dialog"
+      aria-label="Félicitations - Formation terminée"
+    >
+      {/* Backdrop */}
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+
+      {/* Confetti particles (CSS-only) */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {Array.from({ length: 30 }).map((_, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full celebration-particle"
+            style={{
+              left: `${Math.random() * 100}%`,
+              bottom: `-20px`,
+              width: `${Math.random() * 10 + 6}px`,
+              height: `${Math.random() * 10 + 6}px`,
+              backgroundColor: i % 3 === 0 ? '#F4C842' : i % 3 === 1 ? '#7B5CFF' : '#a78bfa',
+              animationDelay: `${Math.random() * 3}s`,
+              animationDuration: `${Math.random() * 2 + 3}s`,
+              opacity: Math.random() * 0.7 + 0.3,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Content Card */}
+      <div
+        className="relative z-10 max-w-lg w-full mx-4 animate-scale-in"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="glass-card-gold p-8 sm:p-10 text-center relative overflow-hidden">
+          {/* Glow effects */}
+          <div className="absolute -top-20 -left-20 w-60 h-60 rounded-full bg-[#F4C842]/10 blur-[80px] pointer-events-none" />
+          <div className="absolute -bottom-20 -right-20 w-60 h-60 rounded-full bg-[#7B5CFF]/10 blur-[80px] pointer-events-none" />
+
+          <div className="relative z-10">
+            {/* Trophy icon */}
+            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-[#F4C842]/20 to-[#F4C842]/5 flex items-center justify-center pulse-gold">
+              <Trophy className="w-10 h-10 text-[#F4C842]" />
+            </div>
+
+            <h2 className="text-3xl sm:text-4xl font-bold gradient-text-gold mb-3">
+              Félicitations !
+            </h2>
+
+            <p className="text-zinc-300 text-base mb-6">
+              Vous avez terminé la formation avec succès.
+            </p>
+
+            {/* Stats */}
+            <div className="grid grid-cols-1 gap-3 mb-8">
+              <div className="bg-white/5 rounded-xl p-4 border border-white/5">
+                <p className="text-zinc-400 text-xs uppercase tracking-wider mb-1">Formation</p>
+                <p className="text-white font-semibold text-sm truncate">{formationTitle}</p>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-white/5 rounded-xl p-4 border border-white/5">
+                  <p className="text-zinc-400 text-xs uppercase tracking-wider mb-1">Leçons</p>
+                  <p className="text-[#F4C842] font-bold text-xl">{totalLessons}</p>
+                  <p className="text-zinc-500 text-[10px]">complétées</p>
+                </div>
+                <div className="bg-white/5 rounded-xl p-4 border border-white/5">
+                  <p className="text-zinc-400 text-xs uppercase tracking-wider mb-1">Progression</p>
+                  <p className="text-[#7B5CFF] font-bold text-xl">100%</p>
+                  <p className="text-zinc-500 text-[10px]">terminé</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col gap-3">
+              <Link href={`/formations/${formationId}/certificate?email=${encodeURIComponent(studentEmail)}`}>
+                <Button className="btn-gold w-full py-4 text-base border-0">
+                  <Award className="w-5 h-5 mr-2" />
+                  Obtenir mon certificat
+                </Button>
+              </Link>
+              <Link href={`/mes-formations?email=${encodeURIComponent(studentEmail)}`}>
+                <Button variant="ghost" size="sm" className="text-zinc-400 hover:text-white text-sm w-full">
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Retourner à mes formations
+                </Button>
+              </Link>
+            </div>
+
+            {/* Auto-dismiss countdown */}
+            <p className="text-zinc-600 text-xs mt-6">
+              Fermeture automatique dans {countdown}s
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ════════════════════════════════════════════════════════════════════════════════
+// Main Learn Page Component
+// ════════════════════════════════════════════════════════════════════════════════
+
 export default function FormationLearnPage() {
   const params = useParams()
   const formationId = params.id as string
+  const searchParams = useSearchParams()
+  const { toast } = useToast()
 
   const [formation, setFormation] = useState<Formation | null>(null)
   const [modules, setModules] = useState<Module[]>([])
@@ -84,22 +229,52 @@ export default function FormationLearnPage() {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [expandedModules, setExpandedModules] = useState<Set<string>>(new Set())
   const [completedLessons, setCompletedLessons] = useState<Set<string>>(new Set())
+  const [showCelebration, setShowCelebration] = useState(false)
 
   // Enrollment & access control state
-  const [hasAccess, setHasAccess] = useState<boolean | null>(null) // null = checking
+  const [hasAccess, setHasAccess] = useState<boolean | null>(null)
   const [studentEmail, setStudentEmail] = useState<string>('')
   const [isEnrollmentLoading, setIsEnrollmentLoading] = useState(true)
   const [isPolling, setIsPolling] = useState(false)
 
-  const searchParams = useSearchParams()
+  const celebrationDismissed = useRef(false)
 
-  // Check enrollment status on mount
+  // ── Compute flat lesson list and navigation ────────────────────────────────
+  const flatLessons = useMemo(() => {
+    return modules.flatMap(m => m.lessons)
+  }, [modules])
+
+  const currentLessonIndex = useMemo(() => {
+    if (!currentLesson) return -1
+    return flatLessons.findIndex(l => l.id === currentLesson.id)
+  }, [currentLesson, flatLessons])
+
+  const prevLesson = useMemo(() => {
+    return currentLessonIndex > 0 ? flatLessons[currentLessonIndex - 1] : null
+  }, [currentLessonIndex, flatLessons])
+
+  const nextLesson = useMemo(() => {
+    return currentLessonIndex >= 0 && currentLessonIndex < flatLessons.length - 1
+      ? flatLessons[currentLessonIndex + 1]
+      : null
+  }, [currentLessonIndex, flatLessons])
+
+  const isLastLesson = currentLessonIndex === flatLessons.length - 1
+
+  const allCompleted = useMemo(() => {
+    return completedLessons.size === flatLessons.length && flatLessons.length > 0
+  }, [completedLessons.size, flatLessons.length])
+
+  // Compute progress
+  const allLessonsCount = flatLessons.length
+  const progressPercent = allLessonsCount > 0 ? Math.round((completedLessons.size / allLessonsCount) * 100) : 0
+
+  // ── Check enrollment status on mount ───────────────────────────────────────
   useEffect(() => {
     let pollInterval: ReturnType<typeof setInterval> | null = null
 
     async function checkAccess() {
       try {
-        // Get email from URL params (passed after Stripe payment) or localStorage
         const emailParam = searchParams.get('email')
         const savedEmail = localStorage.getItem(`nyxia_enrollment_${formationId}`)
         const email = emailParam || savedEmail || ''
@@ -107,7 +282,6 @@ export default function FormationLearnPage() {
 
         if (email) {
           setStudentEmail(email)
-          // Save to localStorage for future visits
           if (emailParam) {
             localStorage.setItem(`nyxia_enrollment_${formationId}`, emailParam)
           }
@@ -116,7 +290,6 @@ export default function FormationLearnPage() {
           const data = await res.json()
           setHasAccess(data.hasAccess)
 
-          // Restore progress from enrollment
           if (data.enrollment?.completed_lessons) {
             try {
               const lessons: string[] = JSON.parse(data.enrollment.completed_lessons)
@@ -124,7 +297,6 @@ export default function FormationLearnPage() {
             } catch { /* ignore parse errors */ }
           }
 
-          // If payment=success but no access yet, start polling
           if (isPaymentSuccess && !data.hasAccess) {
             setIsPolling(true)
             let attempts = 0
@@ -159,7 +331,6 @@ export default function FormationLearnPage() {
             }, 3000)
           }
         } else {
-          // No email provided — check if formation is free
           const formationRes = await fetch(`/api/formations/${formationId}`)
           const formationData = await formationRes.json()
           if (formationData.formation?.price <= 0) {
@@ -170,7 +341,6 @@ export default function FormationLearnPage() {
         }
       } catch (error) {
         console.error('Enrollment check error:', error)
-        // On error, allow access to free lesson previews
         setHasAccess(false)
       } finally {
         setIsEnrollmentLoading(false)
@@ -184,6 +354,7 @@ export default function FormationLearnPage() {
     }
   }, [formationId, searchParams])
 
+  // ── Fetch formation data ───────────────────────────────────────────────────
   useEffect(() => {
     async function fetchData() {
       try {
@@ -195,14 +366,12 @@ export default function FormationLearnPage() {
         setFormation(result.formation)
         setModules(result.modules || [])
 
-        // Auto-select first lesson
-        const allLessons: Lesson[] = []
+        const allFetched: Lesson[] = []
         result.modules?.forEach((mod: Module) => {
-          allLessons.push(...mod.lessons)
+          allFetched.push(...mod.lessons)
         })
-        if (allLessons.length > 0) {
-          setCurrentLesson(allLessons[0])
-          // Expand first module
+        if (allFetched.length > 0) {
+          setCurrentLesson(allFetched[0])
           if (result.modules?.length > 0) {
             setExpandedModules(new Set([result.modules[0].id]))
           }
@@ -217,9 +386,23 @@ export default function FormationLearnPage() {
     fetchData()
   }, [formationId])
 
+  // ── Show celebration when all lessons completed ────────────────────────────
+  useEffect(() => {
+    if (allCompleted && !celebrationDismissed.current && flatLessons.length > 0) {
+      const timer = setTimeout(() => {
+        setShowCelebration(true)
+      }, 600)
+      return () => clearTimeout(timer)
+    }
+  }, [allCompleted, flatLessons.length])
+
+  const dismissCelebration = useCallback(() => {
+    celebrationDismissed.current = true
+    setShowCelebration(false)
+  }, [])
+
   const selectLesson = useCallback((lesson: Lesson) => {
     setCurrentLesson(lesson)
-    // Ensure the module containing this lesson is expanded
     setExpandedModules(prev => new Set([...prev, lesson.module_id]))
   }, [])
 
@@ -233,6 +416,8 @@ export default function FormationLearnPage() {
   }, [])
 
   const markComplete = useCallback((lessonId: string) => {
+    const wasAlreadyCompleted = completedLessons.has(lessonId)
+
     setCompletedLessons(prev => {
       const next = new Set(prev)
       if (next.has(lessonId)) next.delete(lessonId)
@@ -240,7 +425,6 @@ export default function FormationLearnPage() {
       return next
     })
 
-    // Save progress to database
     if (studentEmail) {
       fetch('/api/stripe/enrollment', {
         method: 'POST',
@@ -252,22 +436,39 @@ export default function FormationLearnPage() {
         }),
       }).catch((err) => console.error('Failed to save progress:', err))
     }
-  }, [formationId, studentEmail])
 
-  // Compute progress
-  const allLessons = modules.reduce((sum, m) => sum + m.lessons.length, 0)
-  const progressPercent = allLessons > 0 ? Math.round((completedLessons.size / allLessons) * 100) : 0
+    // Auto-advance to next lesson after 1 second (only if marking as complete, not un-marking)
+    if (!wasAlreadyCompleted && nextLesson) {
+      setTimeout(() => {
+        setCurrentLesson(nextLesson)
+        setExpandedModules(prev => new Set([...prev, nextLesson.module_id]))
+      }, 1000)
+    }
 
-  // Determine if lesson is locked based on enrollment
+    // Show toast feedback
+    if (!wasAlreadyCompleted) {
+      if (isLastLesson) {
+        toast({
+          title: 'Dernière leçon terminée !',
+          description: 'Toutes nos félicitations pour avoir complété cette formation.',
+        })
+      } else {
+        toast({
+          title: 'Leçon terminée',
+          description: 'Passage automatique à la leçon suivante...',
+        })
+      }
+    }
+  }, [formationId, studentEmail, completedLessons, nextLesson, isLastLesson, toast])
+
+  // Determine if lesson is locked
   const isLessonLocked = useCallback((lesson: Lesson) => {
-    // Free lessons are always accessible
     if (lesson.is_free) return false
-    // If user has full access, nothing is locked
     if (hasAccess) return false
-    // Otherwise, paid lessons are locked
     return true
   }, [hasAccess])
 
+  // ── Loading state ──────────────────────────────────────────────────────────
   if (isLoading || isEnrollmentLoading) {
     return (
       <div className="min-h-screen relative flex items-center justify-center">
@@ -295,9 +496,8 @@ export default function FormationLearnPage() {
     )
   }
 
-  // Paywall — user has no access and formation is paid
+  // ── Paywall ────────────────────────────────────────────────────────────────
   if (hasAccess === false && formation.price > 0) {
-    // Polling state: show payment processing animation
     if (isPolling) {
       return (
         <div className="min-h-screen relative flex items-center justify-center">
@@ -354,12 +554,13 @@ export default function FormationLearnPage() {
     <div className="min-h-screen relative flex flex-col">
       <StarryBackground />
 
-      {/* Header */}
+      {/* ── Header ──────────────────────────────────────────────────────────── */}
       <header className="relative z-20 flex items-center justify-between px-4 py-3 border-b border-purple-500/10 bg-[#06101f]/80 backdrop-blur-lg shrink-0">
         <div className="flex items-center gap-3">
           <button
             className="lg:hidden p-2 text-zinc-400 hover:text-white"
             onClick={() => setSidebarOpen(!sidebarOpen)}
+            aria-label={sidebarOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
           >
             {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -372,8 +573,8 @@ export default function FormationLearnPage() {
           <div className="hidden sm:block h-4 w-px bg-zinc-700" />
           <span className="text-zinc-400 text-sm truncate max-w-[200px]">{formation.title}</span>
         </div>
-        <div className="flex items-center gap-3">
-          {/* Progress */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* Progress bar */}
           {hasAccess && (
             <div className="hidden sm:flex items-center gap-2">
               <div className="w-32 h-2 bg-white/5 rounded-full overflow-hidden">
@@ -391,11 +592,13 @@ export default function FormationLearnPage() {
               Aperçu gratuit
             </Badge>
           )}
+          {/* Mes Formations link - for enrolled students */}
           {hasAccess && studentEmail && (
-            <Link href={`/mes-formations?email=${encodeURIComponent(studentEmail)}`} className="hidden sm:block">
+            <Link href={`/mes-formations?email=${encodeURIComponent(studentEmail)}`}>
               <Button variant="ghost" size="sm" className="text-[#a5b4fc] hover:text-white text-xs">
-                <BookOpen className="w-3 h-3 mr-1.5" />
-                Mes Formations
+                <GraduationCap className="w-3 h-3 mr-1.5" />
+                <span className="hidden sm:inline">Mes Formations</span>
+                <span className="sm:hidden">Mes cours</span>
               </Button>
             </Link>
           )}
@@ -407,7 +610,7 @@ export default function FormationLearnPage() {
         </div>
       </header>
 
-      {/* Main Content */}
+      {/* ── Main Content ────────────────────────────────────────────────────── */}
       <div className="flex-1 flex relative z-10">
         {/* Sidebar */}
         <aside
@@ -416,6 +619,28 @@ export default function FormationLearnPage() {
           } fixed lg:sticky top-0 lg:top-[56px] left-0 z-30 w-80 h-[calc(100vh-56px)] bg-[#0c1a2e]/95 backdrop-blur-xl border-r border-purple-500/10 overflow-y-auto custom-scrollbar transition-transform duration-300 shrink-0`}
         >
           <div className="p-4">
+            {/* Progress summary in sidebar */}
+            {hasAccess && (
+              <div className="mb-4 p-3 rounded-xl bg-white/5 border border-white/5">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-zinc-400 text-xs">Progression globale</span>
+                  <span className="text-white text-xs font-semibold">{completedLessons.size}/{allLessonsCount}</span>
+                </div>
+                <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-[#7B5CFF] to-[#F4C842] rounded-full transition-all duration-500"
+                    style={{ width: `${progressPercent}%` }}
+                  />
+                </div>
+                {allCompleted && (
+                  <div className="flex items-center gap-1.5 mt-2">
+                    <Trophy className="w-3 h-3 text-[#F4C842]" />
+                    <span className="text-[#F4C842] text-[10px] font-semibold">Formation terminée !</span>
+                  </div>
+                )}
+              </div>
+            )}
+
             <h2 className="text-white font-semibold text-sm mb-4 flex items-center gap-2">
               <BookOpen className="w-4 h-4 text-purple-400" />
               Contenu du cours
@@ -424,7 +649,6 @@ export default function FormationLearnPage() {
             <div className="space-y-1">
               {modules.map((module) => (
                 <div key={module.id}>
-                  {/* Module Header */}
                   <button
                     onClick={() => toggleModule(module.id)}
                     className="w-full flex items-center gap-2 p-2 rounded-lg text-left hover:bg-white/5 transition-colors"
@@ -436,7 +660,6 @@ export default function FormationLearnPage() {
                     </div>
                   </button>
 
-                  {/* Lessons */}
                   {expandedModules.has(module.id) && (
                     <div className="ml-4 space-y-0.5 mt-0.5">
                       {module.lessons.map((lesson) => {
@@ -479,13 +702,13 @@ export default function FormationLearnPage() {
           </div>
         </aside>
 
-        {/* Main Lesson Area */}
+        {/* ── Main Lesson Area ──────────────────────────────────────────────── */}
         <main className="flex-1 p-4 sm:p-8 lg:p-12 max-w-4xl">
           {currentLesson ? (
             <div className="space-y-6">
               {/* Lesson Header */}
               <div>
-                <div className="flex items-center gap-2 mb-3">
+                <div className="flex items-center gap-2 mb-3 flex-wrap">
                   {contentTypeIcon(currentLesson.content_type)}
                   <Badge className="bg-purple-500/10 text-purple-400 border-purple-500/20 text-xs">
                     {currentLesson.content_type === 'video' ? 'Vidéo' :
@@ -496,6 +719,10 @@ export default function FormationLearnPage() {
                   {currentLesson.duration_minutes > 0 && (
                     <span className="text-zinc-500 text-xs">{formatDuration(currentLesson.duration_minutes)}</span>
                   )}
+                  {/* Lesson position indicator */}
+                  <span className="text-zinc-600 text-xs ml-auto">
+                    Leçon {currentLessonIndex + 1} sur {allLessonsCount}
+                  </span>
                 </div>
                 <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">{currentLesson.title}</h1>
               </div>
@@ -504,7 +731,6 @@ export default function FormationLearnPage() {
               {currentLesson.content_type === 'video' && currentLesson.video_url && (
                 <div className="aspect-video rounded-2xl overflow-hidden bg-black/30 border border-purple-500/10">
                   <div className="w-full h-full flex items-center justify-center relative">
-                    {/* Simple video embed (YouTube/Vimeo detection) */}
                     {currentLesson.video_url.includes('youtube.com') || currentLesson.video_url.includes('youtu.be') ? (
                       <iframe
                         src={currentLesson.video_url.replace('watch?v=', 'embed/').replace('youtu.be/', 'youtube.com/embed/')}
@@ -543,26 +769,100 @@ export default function FormationLearnPage() {
                 )}
               </div>
 
-              {/* Bottom Navigation */}
-              <div className="flex items-center justify-between pt-8 border-t border-purple-500/10">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="border-purple-500/20 text-zinc-400 hover:text-white"
-                  onClick={() => markComplete(currentLesson.id)}
-                >
-                  {completedLessons.has(currentLesson.id) ? (
-                    <>
-                      <CheckCircle2 className="w-4 h-4 mr-2 text-green-400" />
-                      Complétée
-                    </>
-                  ) : (
-                    <>
-                      <Circle className="w-4 h-4 mr-2" />
-                      Marquer comme terminée
-                    </>
-                  )}
-                </Button>
+              {/* ── Bottom Navigation Bar ────────────────────────────────────── */}
+              <div className="pt-8 border-t border-purple-500/10">
+                {/* Mark Complete Button - centered */}
+                <div className="flex justify-center mb-6">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className={`border-purple-500/20 transition-all ${
+                      completedLessons.has(currentLesson.id)
+                        ? 'text-green-400 border-green-500/30 bg-green-500/5 hover:bg-green-500/10'
+                        : 'text-zinc-400 hover:text-white hover:border-purple-500/40'
+                    }`}
+                    onClick={() => markComplete(currentLesson.id)}
+                  >
+                    {completedLessons.has(currentLesson.id) ? (
+                      <>
+                        <CheckCircle2 className="w-4 h-4 mr-2 text-green-400" />
+                        Complétée
+                      </>
+                    ) : (
+                      <>
+                        <Circle className="w-4 h-4 mr-2" />
+                        Marquer comme terminée
+                      </>
+                    )}
+                  </Button>
+                </div>
+
+                {/* Next / Previous Navigation */}
+                <div className="flex items-center justify-between gap-4">
+                  {/* Previous Lesson */}
+                  <div className="flex-1 min-w-0">
+                    {prevLesson ? (
+                      <button
+                        onClick={() => selectLesson(prevLesson)}
+                        className="group flex items-center gap-3 p-3 rounded-xl border border-white/5 hover:border-purple-500/20 hover:bg-white/5 transition-all w-full text-left"
+                      >
+                        <ChevronLeft className="w-5 h-5 text-zinc-500 group-hover:text-purple-400 shrink-0 transition-colors" />
+                        <div className="min-w-0">
+                          <span className="text-zinc-600 text-[10px] uppercase tracking-wider block">Leçon précédente</span>
+                          <span className="text-zinc-400 text-sm group-hover:text-white transition-colors truncate block">
+                            {prevLesson.title}
+                          </span>
+                        </div>
+                      </button>
+                    ) : (
+                      <div className="p-3 opacity-30">
+                        <span className="text-zinc-600 text-[10px] uppercase tracking-wider block">Leçon précédente</span>
+                        <span className="text-zinc-700 text-sm block">Aucune</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Next Lesson or Certificate */}
+                  <div className="flex-1 min-w-0">
+                    {nextLesson ? (
+                      <button
+                        onClick={() => selectLesson(nextLesson)}
+                        className="group flex items-center justify-end gap-3 p-3 rounded-xl border border-white/5 hover:border-purple-500/20 hover:bg-white/5 transition-all w-full text-right"
+                      >
+                        <div className="min-w-0 text-right">
+                          <span className="text-zinc-600 text-[10px] uppercase tracking-wider block">Leçon suivante</span>
+                          <span className="text-zinc-400 text-sm group-hover:text-white transition-colors truncate block">
+                            {nextLesson.title}
+                          </span>
+                        </div>
+                        <ChevronRight className="w-5 h-5 text-zinc-500 group-hover:text-purple-400 shrink-0 transition-colors" />
+                      </button>
+                    ) : (
+                      // Last lesson - show certificate link if completed
+                      <div>
+                        {allCompleted ? (
+                          <Link
+                            href={`/formations/${formationId}/certificate?email=${encodeURIComponent(studentEmail)}`}
+                            className="group flex items-center justify-end gap-3 p-3 rounded-xl border border-[#F4C842]/20 bg-[#F4C842]/5 hover:bg-[#F4C842]/10 transition-all w-full text-right"
+                          >
+                            <div className="min-w-0 text-right">
+                              <span className="text-[#F4C842]/60 text-[10px] uppercase tracking-wider block">Formation terminée</span>
+                              <span className="text-[#F4C842] text-sm font-semibold group-hover:text-[#fde68a] transition-colors block">
+                                Voir mon certificat
+                              </span>
+                            </div>
+                            <Award className="w-5 h-5 text-[#F4C842] shrink-0" />
+                          </Link>
+                        ) : (
+                          <div className="p-3 opacity-30 text-right">
+                            <span className="text-zinc-600 text-[10px] uppercase tracking-wider block">Leçon suivante</span>
+                            <span className="text-zinc-700 text-sm block">Dernière leçon</span>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           ) : (
@@ -581,6 +881,17 @@ export default function FormationLearnPage() {
         <div
           className="fixed inset-0 z-20 bg-black/50 lg:hidden"
           onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* ── Completion Celebration Overlay ──────────────────────────────────── */}
+      {showCelebration && (
+        <CelebrationOverlay
+          formationTitle={formation.title}
+          totalLessons={allLessonsCount}
+          formationId={formationId}
+          studentEmail={studentEmail}
+          onDismiss={dismissCelebration}
         />
       )}
     </div>
