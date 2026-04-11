@@ -1,10 +1,13 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { useParams } from 'next/navigation'
+import { useEffect, useState, useCallback } from 'react'
+import { useParams, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog'
 import { StarryBackground } from '@/components/StarryBackground'
 import {
   GraduationCap,
@@ -24,6 +27,9 @@ import {
   Headphones,
   HelpCircle,
   Lock,
+  CreditCard,
+  CheckCircle2,
+  XCircle,
 } from 'lucide-react'
 
 interface Formation {
@@ -84,6 +90,23 @@ export default function FormationLandingPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [expandedModules, setExpandedModules] = useState<Set<number>>(new Set())
 
+  // Checkout state
+  const [checkoutOpen, setCheckoutOpen] = useState(false)
+  const [studentEmail, setStudentEmail] = useState('')
+  const [studentName, setStudentName] = useState('')
+  const [isCheckingOut, setIsCheckingOut] = useState(false)
+  const [checkoutError, setCheckoutError] = useState('')
+  const [paymentStatus, setPaymentStatus] = useState<'success' | 'cancelled' | null>(null)
+
+  const searchParams = useSearchParams()
+
+  useEffect(() => {
+    // Check payment status from URL params
+    const payment = searchParams.get('payment')
+    if (payment === 'success') setPaymentStatus('success')
+    else if (payment === 'cancelled') setPaymentStatus('cancelled')
+  }, [searchParams])
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -111,6 +134,53 @@ export default function FormationLandingPage() {
 
     fetchData()
   }, [formationId])
+
+  const handleCheckout = useCallback(async () => {
+    if (!studentEmail.trim()) {
+      setCheckoutError('Veuillez entrer votre email')
+      return
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(studentEmail)) {
+      setCheckoutError('Adresse email invalide')
+      return
+    }
+
+    setCheckoutError('')
+    setIsCheckingOut(true)
+
+    try {
+      const res = await fetch('/api/stripe/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          formationId,
+          studentEmail: studentEmail.trim(),
+          studentName: studentName.trim() || null,
+        }),
+      })
+      const data = await res.json()
+
+      if (data.url) {
+        window.location.href = data.url
+      } else {
+        setCheckoutError(data.error || 'Erreur lors de la création du paiement')
+      }
+    } catch {
+      setCheckoutError('Erreur de connexion. Veuillez réessayer.')
+    } finally {
+      setIsCheckingOut(false)
+    }
+  }, [formationId, studentEmail, studentName])
+
+  const handleBuyClick = useCallback(() => {
+    if (formation && formation.price <= 0) {
+      // Free formation — go directly to learn
+      window.location.href = `/formations/${formationId}/learn`
+    } else {
+      setCheckoutOpen(true)
+    }
+  }, [formation, formationId])
 
   const toggleModule = (index: number) => {
     setExpandedModules(prev => {
@@ -253,13 +323,24 @@ export default function FormationLandingPage() {
                     {formation.price > 0 ? formatCurrency(formation.price) : 'Gratuit'}
                   </span>
                 </div>
-                <Link href={`/formations/${formationId}/learn`}>
-                  <Button className="btn-primary text-base px-8 py-4 border-0">
-                    <Play className="w-5 h-5 mr-2" />
-                    S&apos;inscrire maintenant
-                  </Button>
-                </Link>
+                <Button onClick={handleBuyClick} className="btn-primary text-base px-8 py-4 border-0">
+                  <Play className="w-5 h-5 mr-2" />
+                  S&apos;inscrire maintenant
+                </Button>
               </div>
+              {/* Payment status feedback */}
+              {paymentStatus === 'success' && (
+                <div className="flex items-center gap-2 mt-4 p-3 rounded-lg bg-green-500/10 border border-green-500/20">
+                  <CheckCircle2 className="w-5 h-5 text-green-400 shrink-0" />
+                  <p className="text-green-400 text-sm">Paiement réussi ! Vous pouvez maintenant accéder à la formation.</p>
+                </div>
+              )}
+              {paymentStatus === 'cancelled' && (
+                <div className="flex items-center gap-2 mt-4 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                  <XCircle className="w-5 h-5 text-amber-400 shrink-0" />
+                  <p className="text-amber-400 text-sm">Paiement annulé. Vous pouvez réessayer quand vous le souhaitez.</p>
+                </div>
+              )}
             </div>
 
             {/* Visual Card */}
@@ -378,11 +459,9 @@ export default function FormationLandingPage() {
                 Rejoignez {stats.student_count || 0} étudiants qui ont déjà commencé leur parcours de transformation.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Link href={`/formations/${formationId}/learn`}>
-                  <Button className="btn-gold text-lg px-10 py-5 border-0">
-                    S&apos;inscrire maintenant — {formation.price > 0 ? formatCurrency(formation.price) : 'Gratuit'}
-                  </Button>
-                </Link>
+                <Button onClick={handleBuyClick} className="btn-gold text-lg px-10 py-5 border-0">
+                  S&apos;inscrire maintenant — {formation.price > 0 ? formatCurrency(formation.price) : 'Gratuit'}
+                </Button>
               </div>
             </div>
           </div>
@@ -404,6 +483,97 @@ export default function FormationLandingPage() {
           </div>
         </div>
       </footer>
+
+      {/* Checkout Modal */}
+      <Dialog open={checkoutOpen} onOpenChange={setCheckoutOpen}>
+        <DialogContent className="sm:max-w-md bg-[#0c1a2e] border-purple-500/20 text-white">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-3 text-xl">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#7B5CFF]/20 to-purple-500/10 flex items-center justify-center">
+                <CreditCard className="w-5 h-5 text-[#7B5CFF]" />
+              </div>
+              Paiement sécurisé
+            </DialogTitle>
+            <DialogDescription className="text-zinc-400">
+              Accédez à la formation <span className="text-purple-400 font-medium">{formation.title}</span>
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-5 mt-2">
+            {/* Price summary */}
+            <div className="p-4 rounded-xl bg-white/[0.03] border border-purple-500/10">
+              <div className="flex items-center justify-between">
+                <span className="text-zinc-400 text-sm">Total</span>
+                <span className="text-2xl font-bold text-white">
+                  {formation.price > 0 ? formatCurrency(formation.price) : 'Gratuit'}
+                </span>
+              </div>
+              <p className="text-zinc-500 text-xs mt-1">Paiement unique, accès illimité à vie</p>
+            </div>
+
+            {/* Email field */}
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-zinc-300 text-sm">Adresse email *</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="votre@email.com"
+                value={studentEmail}
+                onChange={(e) => { setStudentEmail(e.target.value); setCheckoutError('') }}
+                className="bg-white/[0.05] border-purple-500/20 text-white placeholder:text-zinc-600 focus:border-purple-500/50"
+                onKeyDown={(e) => e.key === 'Enter' && handleCheckout()}
+              />
+            </div>
+
+            {/* Name field */}
+            <div className="space-y-2">
+              <Label htmlFor="name" className="text-zinc-300 text-sm">Nom complet (optionnel)</Label>
+              <Input
+                id="name"
+                type="text"
+                placeholder="Votre nom"
+                value={studentName}
+                onChange={(e) => { setStudentName(e.target.value); setCheckoutError('') }}
+                className="bg-white/[0.05] border-purple-500/20 text-white placeholder:text-zinc-600 focus:border-purple-500/50"
+                onKeyDown={(e) => e.key === 'Enter' && handleCheckout()}
+              />
+            </div>
+
+            {/* Error message */}
+            {checkoutError && (
+              <div className="flex items-center gap-2 p-3 rounded-lg bg-red-500/10 border border-red-500/20">
+                <XCircle className="w-4 h-4 text-red-400 shrink-0" />
+                <p className="text-red-400 text-sm">{checkoutError}</p>
+              </div>
+            )}
+
+            {/* Pay button */}
+            <Button
+              onClick={handleCheckout}
+              disabled={isCheckingOut || !studentEmail.trim()}
+              className="btn-primary w-full py-4 text-base border-0 disabled:opacity-50"
+            >
+              {isCheckingOut ? (
+                <>
+                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                  Redirection vers le paiement...
+                </>
+              ) : (
+                <>
+                  <CreditCard className="w-5 h-5 mr-2" />
+                  Payer {formation.price > 0 ? formatCurrency(formation.price) : ''}
+                </>
+              )}
+            </Button>
+
+            {/* Security notice */}
+            <div className="flex items-center justify-center gap-4 text-zinc-500 text-xs">
+              <span className="flex items-center gap-1"><Shield className="w-3 h-3" /> Paiement sécurisé</span>
+              <span className="flex items-center gap-1"><Lock className="w-3 h-3" /> Données cryptées</span>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }

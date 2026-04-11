@@ -30,7 +30,7 @@ export async function POST(request: Request) {
     }
 
     const origin = request.headers.get('origin') || 'https://travail-pour-toi.com'
-    const successUrl = `${origin}/formations/${formationId}?payment=success`
+    const successUrl = `${origin}/formations/${formationId}?payment=success&email=${encodeURIComponent(body.studentEmail)}`
     const cancelUrl = `${origin}/formations/${formationId}?payment=cancelled`
 
     const result = await createCheckoutSession(

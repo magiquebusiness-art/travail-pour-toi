@@ -1,10 +1,11 @@
 'use client'
 
 import { useEffect, useState, useCallback } from 'react'
-import { useParams } from 'next/navigation'
+import { useParams, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { Progress } from '@/components/ui/progress'
 import { StarryBackground } from '@/components/StarryBackground'
 import {
   ArrowLeft,
@@ -24,12 +25,16 @@ import {
   Lock,
   Menu,
   X,
+  CreditCard,
+  Shield,
+  AlertTriangle,
 } from 'lucide-react'
 
 interface Formation {
   id: string
   title: string
   description: string
+  price: number
 }
 
 interface Module {
@@ -79,6 +84,62 @@ export default function FormationLearnPage() {
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const [expandedModules, setExpandedModules] = useState<Set<string>>(new Set())
   const [completedLessons, setCompletedLessons] = useState<Set<string>>(new Set())
+
+  // Enrollment & access control state
+  const [hasAccess, setHasAccess] = useState<boolean | null>(null) // null = checking
+  const [studentEmail, setStudentEmail] = useState<string>('')
+  const [isEnrollmentLoading, setIsEnrollmentLoading] = useState(true)
+
+  const searchParams = useSearchParams()
+
+  // Check enrollment status on mount
+  useEffect(() => {
+    async function checkAccess() {
+      try {
+        // Get email from URL params (passed after Stripe payment) or localStorage
+        const emailParam = searchParams.get('email')
+        const savedEmail = localStorage.getItem(`nyxia_enrollment_${formationId}`)
+        const email = emailParam || savedEmail || ''
+
+        if (email) {
+          setStudentEmail(email)
+          // Save to localStorage for future visits
+          if (emailParam) {
+            localStorage.setItem(`nyxia_enrollment_${formationId}`, emailParam)
+          }
+
+          const res = await fetch(`/api/stripe/enrollment?formationId=${formationId}&email=${encodeURIComponent(email)}`)
+          const data = await res.json()
+          setHasAccess(data.hasAccess)
+
+          // Restore progress from enrollment
+          if (data.enrollment?.completed_lessons) {
+            try {
+              const lessons: string[] = JSON.parse(data.enrollment.completed_lessons)
+              setCompletedLessons(new Set(lessons))
+            } catch { /* ignore parse errors */ }
+          }
+        } else {
+          // No email provided — check if formation is free
+          const formationRes = await fetch(`/api/formations/${formationId}`)
+          const formationData = await formationRes.json()
+          if (formationData.formation?.price <= 0) {
+            setHasAccess(true)
+          } else {
+            setHasAccess(false)
+          }
+        }
+      } catch (error) {
+        console.error('Enrollment check error:', error)
+        // On error, allow access to free lesson previews
+        setHasAccess(false)
+      } finally {
+        setIsEnrollmentLoading(false)
+      }
+    }
+
+    checkAccess()
+  }, [formationId, searchParams])
 
   useEffect(() => {
     async function fetchData() {
@@ -135,13 +196,36 @@ export default function FormationLearnPage() {
       else next.add(lessonId)
       return next
     })
-  }, [])
+
+    // Save progress to database
+    if (studentEmail) {
+      fetch('/api/stripe/enrollment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          formationId,
+          email: studentEmail,
+          lessonId,
+        }),
+      }).catch((err) => console.error('Failed to save progress:', err))
+    }
+  }, [formationId, studentEmail])
 
   // Compute progress
   const allLessons = modules.reduce((sum, m) => sum + m.lessons.length, 0)
   const progressPercent = allLessons > 0 ? Math.round((completedLessons.size / allLessons) * 100) : 0
 
-  if (isLoading) {
+  // Determine if lesson is locked based on enrollment
+  const isLessonLocked = useCallback((lesson: Lesson) => {
+    // Free lessons are always accessible
+    if (lesson.is_free) return false
+    // If user has full access, nothing is locked
+    if (hasAccess) return false
+    // Otherwise, paid lessons are locked
+    return true
+  }, [hasAccess])
+
+  if (isLoading || isEnrollmentLoading) {
     return (
       <div className="min-h-screen relative flex items-center justify-center">
         <StarryBackground />
@@ -163,6 +247,42 @@ export default function FormationLearnPage() {
           <Link href="/formations">
             <Button className="btn-primary border-0"><ArrowLeft className="w-4 h-4 mr-2" />Formations</Button>
           </Link>
+        </div>
+      </div>
+    )
+  }
+
+  // Paywall — user has no access and formation is paid
+  if (hasAccess === false && formation.price > 0) {
+    return (
+      <div className="min-h-screen relative flex items-center justify-center">
+        <StarryBackground />
+        <div className="relative z-10 max-w-md w-full mx-4">
+          <div className="glass-card-gold p-10 text-center relative overflow-hidden">
+            <div className="absolute -top-20 -left-20 w-60 h-60 rounded-full bg-[#F4C842]/5 blur-[80px] pointer-events-none" />
+            <div className="relative z-10">
+              <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-[#7B5CFF]/20 to-purple-500/10 flex items-center justify-center">
+                <Lock className="w-8 h-8 text-purple-400" />
+              </div>
+              <h2 className="text-2xl font-bold text-white mb-3">Accès restreint</h2>
+              <p className="text-zinc-400 mb-2">Cette formation est payante.</p>
+              <p className="text-zinc-500 text-sm mb-8">
+                Procédez au paiement pour débloquer l&apos;intégralité du contenu et suivre votre progression.
+              </p>
+              <Link href={`/formations/${formationId}`}>
+                <Button className="btn-gold w-full py-4 text-base border-0 mb-4">
+                  <CreditCard className="w-5 h-5 mr-2" />
+                  Accéder à la formation
+                </Button>
+              </Link>
+              <Link href="/formations">
+                <Button variant="ghost" size="sm" className="text-zinc-500 hover:text-zinc-300">
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Retour aux formations
+                </Button>
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     )
@@ -192,15 +312,23 @@ export default function FormationLearnPage() {
         </div>
         <div className="flex items-center gap-3">
           {/* Progress */}
-          <div className="hidden sm:flex items-center gap-2">
-            <div className="w-32 h-2 bg-white/5 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-gradient-to-r from-[#7B5CFF] to-[#F4C842] rounded-full transition-all duration-500"
-                style={{ width: `${progressPercent}%` }}
-              />
+          {hasAccess && (
+            <div className="hidden sm:flex items-center gap-2">
+              <div className="w-32 h-2 bg-white/5 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-[#7B5CFF] to-[#F4C842] rounded-full transition-all duration-500"
+                  style={{ width: `${progressPercent}%` }}
+                />
+              </div>
+              <span className="text-zinc-400 text-xs">{progressPercent}%</span>
             </div>
-            <span className="text-zinc-400 text-xs">{progressPercent}%</span>
-          </div>
+          )}
+          {!hasAccess && formation.price > 0 && (
+            <Badge className="bg-amber-500/10 text-amber-400 border-amber-500/20 text-[10px]">
+              <AlertTriangle className="w-3 h-3 mr-1" />
+              Aperçu gratuit
+            </Badge>
+          )}
           <Link href={`/formations/${formationId}`}>
             <Button variant="ghost" size="sm" className="text-zinc-400 hover:text-white text-xs">
               Retour
@@ -244,7 +372,7 @@ export default function FormationLearnPage() {
                       {module.lessons.map((lesson) => {
                         const isCurrent = currentLesson?.id === lesson.id
                         const isCompleted = completedLessons.has(lesson.id)
-                        const isLocked = !lesson.is_free && false // Future: check enrollment
+                        const isLocked = isLessonLocked(lesson)
 
                         return (
                           <button

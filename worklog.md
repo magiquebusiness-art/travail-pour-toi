@@ -161,3 +161,32 @@ Stage Summary:
 - Variables env Stripe à configurer dans Cloudflare Dashboard
 - SQL stripe-schema.sql à exécuter dans D1
 
+---
+Task ID: 1F-1I
+Agent: Main Agent
+Task: Stripe Connect — Phase 1F à 1I : Flow paiement étudiant + contrôle accès + progression DB
+
+Work Log:
+- Modifié /formations/[id]/page.tsx (landing page) :
+  - Ajouté modal checkout Dialog avec email + nom
+  - Appel POST /api/stripe/checkout pour créer session Stripe
+  - Gestion feedback paiement succès/annulé (URL params ?payment=success/cancelled)
+  - Formations gratuites redirigent directement vers /learn sans checkout
+  - Design modal cohérent thème NyXia (glass-card, gradient violet, inputs dark)
+- Modifié /formations/[id]/learn/page.tsx (page apprentissage) :
+  - Remplacé isLocked = false par vérification enrollment réelle via /api/stripe/enrollment
+  - Ajouté paywall premium si pas d'accès (formation payante)
+  - Badge "Aperçu gratuit" dans le header si accès limité
+  - Sauvegarde progression en base via POST /api/stripe/enrollment à chaque leçon complétée
+  - Restauration progression depuis DB au chargement (completed_lessons)
+  - Email étudiant persisté dans localStorage pour les visites futures
+- Modifié /api/stripe/checkout/route.ts :
+  - successUrl inclut maintenant ?email=xxx pour passer l'email à la landing page après paiement
+
+Stage Summary:
+- PHASE 1 STRIPE CONNECT 100% COMPLETE (backend + admin UI + flow étudiant)
+- Variables env Stripe à configurer dans Cloudflare Dashboard :
+  STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, STRIPE_CONNECT_CLIENT_ID
+- SQL stripe-schema.sql à exécuter dans D1 (CREATE TABLE + INSERT config)
+- Prochaine étape : Phase 2 (Espace client isolé ultra moderne)
+
