@@ -190,3 +190,58 @@ Stage Summary:
 - SQL stripe-schema.sql à exécuter dans D1 (CREATE TABLE + INSERT config)
 - Prochaine étape : Phase 2 (Espace client isolé ultra moderne)
 
+---
+Task ID: 2A-2F
+Agent: Main Agent + Full-Stack Developer
+Task: Phase 2 — Espace client isolé ultra moderne (style Systeme.io/Kajabi)
+
+Work Log:
+- Créé layout dashboard premium (sidebar + header) — src/app/dashboard/layout.tsx
+  - Sidebar 260px avec navigation 5 items (Tableau de bord, Formations, Étudiants, Revenus, Paramètres)
+  - Logo NyXia, active state violet, hamburger mobile (Sheet)
+  - Header sticky avec titre dynamique, notifications, avatar dropdown
+  - Auth check via /api/auth/me, redirect /login si non connecté
+- Créé page d'accueil dashboard — src/app/dashboard/page.tsx
+  - Message d'accueil dynamique (Bonjour/après-midi/Bonsoir + prénom)
+  - 4 cartes stats : revenus totaux, étudiants actifs, formations publiées, taux complétion
+  - Graphique barres revenus 30 jours (CSS-only, tooltips hover)
+  - Actions rapides (créer formation, gérer étudiants, voir revenus)
+  - Table étudiants récents (dernières inscriptions)
+  - Loading skeletons, empty states
+- Créé page formations — src/app/dashboard/formations/page.tsx
+  - Grille 2 colonnes avec cartes formations (thumbnail, titre, prix, stats)
+  - Modal création formation (titre, description, prix)
+  - Actions : Éditer (→ /admin/formations), Aperçu (→ /formations/[id]), Supprimer
+  - Badges statut (Publiée/Brouillon), compteurs modules/leçons/étudiants
+- Créé page étudiants — src/app/dashboard/students/page.tsx
+  - Tableau avec recherche + filtre par formation
+  - Colonnes : Étudiant, Email, Formation, Date, Progression (barre), Statut
+  - Pagination (10/page)
+  - Barres progression violet gradient
+- Créé page revenus — src/app/dashboard/revenue/page.tsx
+  - 4 cartes résumé : total, ce mois, cette semaine, commission plateforme
+  - Tableau paiements avec filtre statut (Tout/Payé/En attente/Remboursé)
+  - Bouton export CSV (placeholder)
+  - Pagination
+- Créé page paramètres — src/app/dashboard/settings/page.tsx
+  - Section profil (avatar, nom, email)
+  - Section Stripe Connect (statut connexion, bouton connecter, grid statut)
+  - Section branding (placeholder — "Bientôt disponible")
+  - Zone danger (suppression compte, désactivée)
+- Créé 4 API routes dashboard :
+  - GET /api/dashboard/stats — stats globales + graphique + étudiants récents
+  - GET+POST /api/dashboard/formations — CRUD formations client (filtre tenant_id)
+  - GET /api/dashboard/students — étudiants avec recherche/filtre/pagination
+  - GET /api/dashboard/revenue — paiements avec résumé + filtre statut
+- Toutes les API filtrent par tenant_id = session.userId (multi-tenant)
+- Corrigé tous les accents français dans les 6 pages
+- 0 erreur TypeScript dans les nouveaux fichiers
+
+Stage Summary:
+- PHASE 2 ESPACE CLIENT ISOLÉ 100% COMPLETE (2553 lignes, 10 fichiers)
+- Routes : /dashboard, /dashboard/formations, /dashboard/students, /dashboard/revenue, /dashboard/settings
+- 4 API routes : /api/dashboard/stats, formations, students, revenue
+- Design ultra moderne : glass-morphism, sidebar premium, thème NyXia cohérent
+- Multi-tenant : chaque client ne voit que ses propres données
+- Prochaine étape : Phase 3 (Inscription étudiants + contrôle accès avancé) ou Phase 4 (Progression DB avancée)
+
