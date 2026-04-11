@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { Suspense, useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { Button } from '@/components/ui/button'
@@ -48,6 +48,14 @@ function formatDate(dateStr: string | null): string {
 }
 
 export default function MesFormationsPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="w-8 h-8 border-2 border-purple-500 border-t-transparent rounded-full animate-spin" /></div>}>
+      <MesFormationsContent />
+    </Suspense>
+  )
+}
+
+function MesFormationsContent() {
   const searchParams = useSearchParams()
   const emailParam = searchParams.get('email')
 
