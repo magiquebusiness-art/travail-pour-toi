@@ -647,10 +647,10 @@ export default function Home() {
                   a de la valeur. NyXia te donne les outils pour le transformer en expérience
                   premium que tes clients vont adorer — et pour laquelle ils seront heureux de payer.
                 </p>
-                <a href="/register">
+                <a href="/login">
                   <Button className="btn-gold text-base px-8 py-4 border-0">
                     <Sparkles className="mr-2 h-5 w-5" />
-                    Creer mon espace gratuitement
+                    Espace Créateur
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </a>

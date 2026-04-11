@@ -131,15 +131,8 @@ function LoginForm() {
         </form>
 
         <div className="mt-6 text-center text-sm text-zinc-400">
-          Pas encore de compte createur ?{' '}
-          <Link href="/register" className="text-purple-400 hover:text-purple-300 font-medium">
-            Creer mon espace
-          </Link>
-        </div>
-
-        <div className="mt-3 text-center text-xs text-zinc-500">
-          <Link href="/signup" className="hover:text-zinc-400">
-            Devenir ambassadeur / affilié
+          <Link href="/login" className="text-purple-400 hover:text-purple-300 font-medium">
+            Connexion réservée aux membres
           </Link>
         </div>
 

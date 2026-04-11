@@ -72,7 +72,7 @@ interface Profile {
   email: string
   full_name: string | null
   affiliate_code: string
-  role: 'super_admin' | 'admin' | 'affiliate'
+  role: 'super_admin' | 'admin' | 'client' | 'affiliate'
   paypal_email: string | null
   subdomain: string | null
   parent_id: string | null
@@ -149,7 +149,7 @@ export default function SuperAdminPage() {
     email: '',
     password: '',
     fullName: '',
-    role: 'admin' as 'admin' | 'affiliate',
+    role: 'client' as 'admin' | 'client' | 'affiliate',
     subdomain: '',
     adminId: '',
   })
@@ -422,7 +422,7 @@ export default function SuperAdminPage() {
       } else {
         toast.success('Utilisateur créé avec succès')
       }
-      setNewUser({ email: '', password: '', fullName: '', role: 'admin', subdomain: '', adminId: '' })
+      setNewUser({ email: '', password: '', fullName: '', role: 'client', subdomain: '', adminId: '' })
       fetchData()
     } catch (error) {
       toast.error(error instanceof Error ? error.message : 'Erreur')
@@ -844,26 +844,81 @@ export default function SuperAdminPage() {
           {/* ADMINS TAB */}
           {activeTab === 'admins' && (
             <div className="space-y-6">
-              {/* Create Admin */}
+              {/* Create User */}
               <Card className="glass-card border-0 border-green-500/30">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-white flex items-center gap-2 text-lg">
                     <Plus className="w-5 h-5 text-green-400" />
-                    Créer un compte Admin (Client)
+                    Créer un utilisateur
                   </CardTitle>
                   <CardDescription className="text-zinc-400">
-                    Nouveau client entreprise qui utilisera AffiliationPro
+                    Créez un compte pour un client, admin ou affilié
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <form onSubmit={handleCreateUser} className="grid md:grid-cols-2 lg:grid-cols-5 gap-4">
-                    <Input placeholder="Nom complet" value={newUser.fullName} onChange={(e) => setNewUser({ ...newUser, fullName: e.target.value })} required className="h-10 bg-white/5 border-purple-500/20 text-white" />
-                    <Input type="email" placeholder="Email" value={newUser.email} onChange={(e) => setNewUser({ ...newUser, email: e.target.value })} required className="h-10 bg-white/5 border-purple-500/20 text-white" />
-                    <Input type="text" placeholder="Mot de passe" value={newUser.password} onChange={(e) => setNewUser({ ...newUser, password: e.target.value })} required minLength={6} className="h-10 bg-white/5 border-purple-500/20 text-white" />
-                    <Input placeholder="Sous-domaine (optionnel)" value={newUser.subdomain} onChange={(e) => setNewUser({ ...newUser, subdomain: e.target.value.toLowerCase() })} className="h-10 bg-white/5 border-purple-500/20 text-white" />
-                    <Button type="submit" disabled={isCreatingUser} className="glass-button h-10">
-                      {isCreatingUser ? <Loader2 className="w-4 h-4 animate-spin" /> : <><Plus className="w-4 h-4 mr-2" />Créer Admin</>}
-                    </Button>
+                  <form onSubmit={handleCreateUser} className="space-y-4">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      <div className="space-y-1.5">
+                        <Label className="text-zinc-400 text-xs">Nom complet *</Label>
+                        <Input placeholder="Diane Boyer" value={newUser.fullName} onChange={(e) => setNewUser({ ...newUser, fullName: e.target.value })} required className="h-10 bg-white/5 border-purple-500/20 text-white" />
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label className="text-zinc-400 text-xs">Email *</Label>
+                        <Input type="email" placeholder="client@email.com" value={newUser.email} onChange={(e) => setNewUser({ ...newUser, email: e.target.value })} required className="h-10 bg-white/5 border-purple-500/20 text-white" />
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label className="text-zinc-400 text-xs">Mot de passe *</Label>
+                        <div className="flex gap-2">
+                          <Input type="text" placeholder="Minimum 6 caracteres" value={newUser.password} onChange={(e) => setNewUser({ ...newUser, password: e.target.value })} required minLength={6} className="h-10 bg-white/5 border-purple-500/20 text-white flex-1" />
+                          <Button type="button" variant="ghost" size="sm" className="h-10 px-3 text-zinc-400 hover:text-white shrink-0" onClick={() => setNewUser({ ...newUser, password: generatePassword() })} title="Generer un mot de passe">
+                            <Key className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      <div className="space-y-1.5">
+                        <Label className="text-zinc-400 text-xs">Role *</Label>
+                        <select
+                          value={newUser.role}
+                          onChange={(e) => setNewUser({ ...newUser, role: e.target.value as 'admin' | 'client' | 'affiliate' })}
+                          className="w-full h-10 bg-white/5 border-purple-500/20 text-white rounded-md px-3 text-sm focus:outline-none focus:border-purple-500 appearance-none cursor-pointer"
+                        >
+                          <option value="client" className="bg-zinc-900">Client (Créateur de formations)</option>
+                          <option value="admin" className="bg-zinc-900">Admin (Gestionnaire)</option>
+                          <option value="affiliate" className="bg-zinc-900">Affilié (Ambassadeur)</option>
+                        </select>
+                      </div>
+                      <div className="space-y-1.5">
+                        <Label className="text-zinc-400 text-xs">Sous-domaine (optionnel)</Label>
+                        <Input placeholder="monentreprise" value={newUser.subdomain} onChange={(e) => setNewUser({ ...newUser, subdomain: e.target.value.toLowerCase() })} className="h-10 bg-white/5 border-purple-500/20 text-white" />
+                      </div>
+                      <div className="flex items-end">
+                        <Button type="submit" disabled={isCreatingUser} className="glass-button h-10 w-full">
+                          {isCreatingUser ? <Loader2 className="w-4 h-4 animate-spin" /> : <><Plus className="w-4 h-4 mr-2" />Créer l&apos;utilisateur</>}
+                        </Button>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 pt-1">
+                      {newUser.role === 'client' && (
+                        <Badge className="bg-purple-500/10 text-purple-400 border-purple-500/20 text-xs">
+                          <GraduationCap className="w-3 h-3 mr-1" />
+                          Ce client pourra creer et vendre des formations
+                        </Badge>
+                      )}
+                      {newUser.role === 'admin' && (
+                        <Badge className="bg-blue-500/10 text-blue-400 border-blue-500/20 text-xs">
+                          <Building className="w-3 h-3 mr-1" />
+                          Cet admin pourra gerer des affiliés et des produits
+                        </Badge>
+                      )}
+                      {newUser.role === 'affiliate' && (
+                        <Badge className="bg-green-500/10 text-green-400 border-green-500/20 text-xs">
+                          <Users className="w-3 h-3 mr-1" />
+                          Cet affilié pourra promouvoir des produits
+                        </Badge>
+                      )}
+                    </div>
                   </form>
                 </CardContent>
               </Card>
