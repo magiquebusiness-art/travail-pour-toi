@@ -245,3 +245,45 @@ Stage Summary:
 - Multi-tenant : chaque client ne voit que ses propres données
 - Prochaine étape : Phase 3 (Inscription étudiants + contrôle accès avancé) ou Phase 4 (Progression DB avancée)
 
+---
+Task ID: 3A-3E
+Agent: Main Agent + Full-Stack Developer
+Task: Phase 3 — Inscription étudiants + contrôle accès + portal étudiant + email
+
+Work Log:
+- Fix GAP 1: successUrl redirige maintenant vers /learn (pas /landing)
+- Fix GAP 2: Polling enrollment toutes les 3s pendant 30s après paiement (race condition webhook)
+- Fix GAP 3: Formations gratuites collectent email + créent enrollment record
+- Créé /mes-formations — Portal étudiant avec email lookup, grille formations, progression
+- Créé POST /api/formations/[id]/enroll-free — Inscription gratuite sans paiement
+- Créé GET /api/student/enrollments — Liste formations étudiant avec détails
+- Créé email template confirmation inscription (design NyXia dark theme)
+- handleCheckoutComplete envoie maintenant email confirmation via Resend
+
+Stage Summary:
+- PHASE 3 100% COMPLETE (787 lignes ajoutées, 9 fichiers)
+- Flow paiement → accès cours entièrement fonctionnel
+- Portal étudiant opérationnel à /mes-formations
+
+---
+Task ID: 4A-4E
+Agent: Main Agent + Full-Stack Developer
+Task: Phase 4 — Progression avancée + navigation + page certificat
+
+Work Log:
+- Ajouté navigation Leçon suivante/précédente dans la page learn
+- Auto-avance après "Marquer comme terminée" (délai 1s)
+- Créé overlay célébration complétion avec confettis CSS (30 particules violet/or)
+- Ajouté lien "Mes Formations" dans le header (visible si inscrit)
+- Créé page certificat /formations/[id]/certificate
+  - 3 états : verrouillé, en cours, complété
+  - Carte certificat premium avec branding NyXia
+- Ajouté distribution taux complétion dans dashboard stats API
+
+Stage Summary:
+- PHASE 4 100% COMPLETE (814 lignes ajoutées, 5 fichiers)
+- Navigation cours complète (précédent/suivant/auto-avance)
+- Célébration complétion avec confettis CSS
+- Page certificat avec design premium
+- Dashboard stats enrichi
+
