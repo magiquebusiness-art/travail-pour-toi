@@ -9,7 +9,7 @@ type Verification = VerificationSuccess | VerificationFailure
 async function verifyAdminAccess(request: NextRequest): Promise<Verification> {
   const session = await getSession(request)
   if (!session) return { authorized: false, error: 'Non autorise', status: 401 }
-  if (session.role !== 'admin' && session.role !== 'super_admin') {
+  if (session.role !== 'admin' && session.role !== 'super_admin' && session.role !== 'client') {
     return { authorized: false, error: 'Acces refuse', status: 403 }
   }
   const db = await getDB()

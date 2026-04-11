@@ -8,7 +8,7 @@ export async function GET(request: Request) {
     if (!session) {
       return NextResponse.json({ error: 'Non autorise' }, { status: 401 })
     }
-    if (session.role !== 'admin' && session.role !== 'super_admin') {
+    if (session.role !== 'admin' && session.role !== 'super_admin' && session.role !== 'client') {
       return NextResponse.json({ error: 'Acces refuse' }, { status: 403 })
     }
 

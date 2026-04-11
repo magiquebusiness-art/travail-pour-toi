@@ -20,7 +20,7 @@ function base64urlDecode(str: string): Uint8Array {
 export interface SessionPayload {
   userId: string
   email: string
-  role: 'super_admin' | 'admin' | 'affiliate'
+  role: 'super_admin' | 'admin' | 'client' | 'affiliate'
 }
 
 // Simple JWT using Web Crypto API (no external dependency)
@@ -72,7 +72,7 @@ export async function verifyToken(token: string): Promise<SessionPayload | null>
     return {
       userId: payload.userId,
       email: payload.email,
-      role: payload.role,
+      role: payload.role as SessionPayload['role'],
     }
   } catch {
     return null

@@ -55,6 +55,8 @@ function LoginForm() {
         router.push('/super-admin')
       } else if (result.user?.role === 'admin') {
         router.push('/admin')
+      } else if (result.user?.role === 'client') {
+        router.push('/dashboard')
       } else if (redirectTo) {
         router.push(redirectTo)
       } else {
@@ -74,11 +76,11 @@ function LoginForm() {
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center">
             <Sparkles className="w-5 h-5 text-white" />
           </div>
-          <span className="text-xl font-bold gradient-text">AffiliationPro</span>
+          <span className="text-xl font-bold gradient-text">NyXia</span>
         </div>
         <CardTitle className="text-2xl text-white">Connexion</CardTitle>
         <CardDescription className="text-zinc-400">
-          Connecte-toi à ton compte
+          Connecte-toi à ton espace créateur
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -129,9 +131,15 @@ function LoginForm() {
         </form>
 
         <div className="mt-6 text-center text-sm text-zinc-400">
-          Pas encore de compte ?{' '}
-          <Link href="/signup" className="text-purple-400 hover:text-purple-300 font-medium">
-            S&apos;inscrire gratuitement
+          Pas encore de compte createur ?{' '}
+          <Link href="/register" className="text-purple-400 hover:text-purple-300 font-medium">
+            Creer mon espace
+          </Link>
+        </div>
+
+        <div className="mt-3 text-center text-xs text-zinc-500">
+          <Link href="/signup" className="hover:text-zinc-400">
+            Devenir ambassadeur / affilié
           </Link>
         </div>
 

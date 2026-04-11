@@ -33,7 +33,7 @@ export async function POST(request: Request) {
     const token = await createToken({
       userId: user.id,
       email: user.email,
-      role: user.role as 'super_admin' | 'admin' | 'affiliate',
+      role: user.role as 'super_admin' | 'admin' | 'client' | 'affiliate',
     })
 
     // Return success with session cookie
