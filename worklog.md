@@ -123,3 +123,41 @@ Work Log:
 
 Stage Summary:
 - Styles inline sur .gjs-cv, .gjs-tools, parent du canvas
+---
+Task ID: 1a-1e
+Agent: Main Agent
+Task: Stripe Connect — Phase 1 complète (backend + UI admin)
+
+Work Log:
+- Installé stripe + @stripe/stripe-js via bun
+- Créé stripe-schema.sql : tables stripe_accounts, payments, formation_enrollments (activation), platform_settings
+- Créé src/lib/stripe.ts : librairie Stripe Connect complète
+  - createConnectAccount() : onboarding Express pour clients
+  - getConnectStatus() : statut connexion client
+  - syncConnectAccount() : sync webhook Stripe
+  - createCheckoutSession() : session paiement avec application_fee
+  - handleWebhook() : checkout.completed, account.updated, expired, refund
+  - checkEnrollment() : vérification accès étudiant
+  - getCreatorPaymentStats() : stats paiement créateur
+  - updateProgress() : progression étudiant
+- Créé 6 routes API :
+  POST /api/stripe/connect — création compte + lien onboarding
+  GET /api/stripe/connect/callback — callback OAuth Stripe
+  GET /api/stripe/connect/status — statut connexion
+  POST /api/stripe/checkout — session paiement étudiant
+  POST /api/stripe/webhook — webhook Stripe
+  GET/POST /api/stripe/enrollment — vérification + progression
+- Mis à jour wrangler.jsonc : vars STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, STRIPE_CONNECT_CLIENT_ID
+- Ajouté section Stripe Connect dans admin/page.tsx (tab Settings)
+  - State: stripeConnected, stripeStatus, isConnectingStripe
+  - Handlers: fetchStripeStatus(), handleConnectStripe()
+  - UI: carte premium avec statut connexion, grid 3 colonnes, bouton connecter
+  - Design: gradient violet, glass-card, cohérent avec le thème NyXia
+
+Stage Summary:
+- Phase 1 backend Stripe Connect COMPLETE
+- Phase 1E UI admin Stripe Connect COMPLETE
+- Reste: Phase 1F (bouton paiement page formation)
+- Variables env Stripe à configurer dans Cloudflare Dashboard
+- SQL stripe-schema.sql à exécuter dans D1
+

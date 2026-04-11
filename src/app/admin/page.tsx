@@ -151,6 +151,11 @@ export default function AdminDashboardPage() {
   const [paypalEmail, setPaypalEmail] = useState('')
   const [isSavingPaypal, setIsSavingPaypal] = useState(false)
   const [copied, setCopied] = useState(false)
+
+  // Stripe Connect state
+  const [stripeConnected, setStripeConnected] = useState(false)
+  const [stripeStatus, setStripeStatus] = useState<any>(null)
+  const [isConnectingStripe, setIsConnectingStripe] = useState(false)
   const [processingPayout, setProcessingPayout] = useState<string | null>(null)
 
   // New state for enhanced features
@@ -248,13 +253,17 @@ export default function AdminDashboardPage() {
 
   useEffect(() => {
     fetchData()
-  }, [fetchData])
+    fetchStripeStatus()
+  }, [fetchData, fetchStripeStatus])
 
   useEffect(() => {
     if (activeTab === 'products') {
       fetchProducts()
     }
-  }, [activeTab, fetchProducts])
+    if (activeTab === 'settings') {
+      fetchStripeStatus()
+    }
+  }, [activeTab, fetchProducts, fetchStripeStatus])
 
   const handleSavePaypal = async () => {
     setIsSavingPaypal(true)
@@ -273,6 +282,34 @@ export default function AdminDashboardPage() {
       toast.error(error instanceof Error ? error.message : 'Erreur')
     } finally {
       setIsSavingPaypal(false)
+    }
+  }
+
+  // ── Stripe Connect handlers ──
+  const fetchStripeStatus = useCallback(async () => {
+    try {
+      const res = await fetch('/api/stripe/connect/status')
+      if (res.ok) {
+        const data = await res.json()
+        setStripeConnected(data.connected)
+        setStripeStatus(data)
+      }
+    } catch { /* ignore */ }
+  }, [])
+
+  const handleConnectStripe = async () => {
+    setIsConnectingStripe(true)
+    try {
+      const res = await fetch('/api/stripe/connect', { method: 'POST' })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error)
+      // Rediriger vers Stripe onboarding
+      if (data.url) {
+        window.location.href = data.url
+      }
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Erreur de connexion Stripe')
+      setIsConnectingStripe(false)
     }
   }
 
@@ -1492,6 +1529,129 @@ export default function AdminDashboardPage() {
                       {isSavingPaypal ? <Loader2 className="w-4 h-4 animate-spin" /> : <Check className="w-4 h-4" />}
                     </Button>
                   </div>
+                </CardContent>
+              </Card>
+
+              {/* ═══════ Stripe Connect — Paiement par carte ═══════ */}
+              <Card className="glass-card border-0">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-white flex items-center gap-2 text-lg">
+                    <div className="w-5 h-5 rounded flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #635bff 0%, #7b5cff 100%)' }}>
+                      <span className="text-[10px] font-black text-white">S</span>
+                    </div>
+                    Paiements par Carte (Stripe Connect)
+                  </CardTitle>
+                  <CardDescription className="text-zinc-400">
+                    Acceptez les paiements par carte bancaire sur vos formations
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {stripeConnected ? (
+                    <>
+                      {/* Compte connecté — afficher le statut */}
+                      <div className="rounded-xl p-4 space-y-3" style={{
+                        background: 'linear-gradient(135deg, rgba(99,102,241,0.08) 0%, rgba(123,92,255,0.05) 100%)',
+                        border: '1px solid rgba(123,92,255,0.15)',
+                      }}>
+                        <div className="flex items-center gap-3">
+                          <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{
+                            background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
+                          }}>
+                            <Check className="w-5 h-5 text-white" />
+                          </div>
+                          <div>
+                            <div className="text-white font-semibold text-sm">Compte Stripe Connecte</div>
+                            <div className="text-zinc-400 text-xs">
+                              ID: {stripeStatus?.accountId?.slice(0, 20)}...
+                            </div>
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-3 gap-3 pt-2">
+                          <div className="text-center p-2 rounded-lg" style={{ background: 'rgba(255,255,255,0.03)' }}>
+                            <div className="text-[10px] text-zinc-500 uppercase tracking-wider font-bold mb-1">Paiements</div>
+                            <div className={`text-sm font-bold ${stripeStatus?.chargesEnabled ? 'text-green-400' : 'text-amber-400'}`}>
+                              {stripeStatus?.chargesEnabled ? 'Actifs' : 'Inactifs'}
+                            </div>
+                          </div>
+                          <div className="text-center p-2 rounded-lg" style={{ background: 'rgba(255,255,255,0.03)' }}>
+                            <div className="text-[10px] text-zinc-500 uppercase tracking-wider font-bold mb-1">Versements</div>
+                            <div className={`text-sm font-bold ${stripeStatus?.payoutsEnabled ? 'text-green-400' : 'text-amber-400'}`}>
+                              {stripeStatus?.payoutsEnabled ? 'Actifs' : 'Inactifs'}
+                            </div>
+                          </div>
+                          <div className="text-center p-2 rounded-lg" style={{ background: 'rgba(255,255,255,0.03)' }}>
+                            <div className="text-[10px] text-zinc-500 uppercase tracking-wider font-bold mb-1">Statut</div>
+                            <div className="text-sm font-bold text-green-400">
+                              {stripeStatus?.onboardingComplete ? 'Verifie' : 'En cours'}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Info : comment ça fonctionne */}
+                      <div className="rounded-lg p-3 flex items-start gap-3" style={{
+                        background: 'rgba(123,92,255,0.04)',
+                        border: '1px solid rgba(123,92,255,0.08)',
+                      }}>
+                        <Info className="w-4 h-4 text-purple-400 mt-0.5 shrink-0" />
+                        <div className="text-xs text-zinc-400 leading-relaxed">
+                          Vos etudiants peuvent maintenant payer par carte bancaire.
+                          Les fonds sont directement verses sur votre compte Stripe.
+                          La plateforme preleve automatiquement sa commission.
+                        </div>
+                      </div>
+
+                      <Button onClick={handleConnectStripe} variant="outline" className="w-full text-sm" style={{
+                        borderColor: 'rgba(123,92,255,0.2)',
+                        color: '#a09cc0',
+                      }}>
+                        <RefreshCw className="w-4 h-4 mr-2" />
+                        Mettre a jour le compte Stripe
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      {/* Compte non connecté — inciter à se connecter */}
+                      <div className="rounded-xl p-5 text-center space-y-4" style={{
+                        background: 'linear-gradient(135deg, rgba(99,102,241,0.06) 0%, rgba(123,92,255,0.03) 100%)',
+                        border: '1px dashed rgba(123,92,255,0.2)',
+                      }}>
+                        <div className="w-14 h-14 rounded-2xl mx-auto flex items-center justify-center" style={{
+                          background: 'linear-gradient(135deg, rgba(123,92,255,0.15) 0%, rgba(99,102,241,0.1) 100%)',
+                          boxShadow: '0 4px 16px rgba(123,92,255,0.1)',
+                        }}>
+                          <CreditCard className="w-7 h-7 text-purple-400" />
+                        </div>
+                        <div>
+                          <div className="text-white font-bold text-sm mb-1">Recevez vos paiements directement</div>
+                          <div className="text-zinc-500 text-xs leading-relaxed max-w-xs mx-auto">
+                            Connectez votre compte Stripe pour accepter les paiements par carte bancaire sur vos formations. L&apos;argent arrive directement sur votre compte.
+                          </div>
+                        </div>
+                        <Button onClick={handleConnectStripe} disabled={isConnectingStripe} className="text-sm font-bold px-8" style={{
+                          background: 'linear-gradient(135deg, #7B5CFF 0%, #6366f1 100%)',
+                          color: 'white',
+                          borderRadius: '10px',
+                          boxShadow: '0 4px 16px rgba(123,92,255,0.25)',
+                        }}>
+                          {isConnectingStripe ? (
+                            <>
+                              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                              Connexion en cours...
+                            </>
+                          ) : (
+                            <>
+                              <ExternalLink className="w-4 h-4 mr-2" />
+                              Connecter Stripe
+                            </>
+                          )}
+                        </Button>
+                        <div className="text-zinc-600 text-[10px] uppercase tracking-wider font-bold">
+                          Securise par Stripe — 135 devises supportees
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </CardContent>
               </Card>
 

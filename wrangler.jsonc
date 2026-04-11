@@ -36,5 +36,10 @@
       "database_name": "travail-pour-toi-db",
       "database_id": "b35e5c65-a760-4351-bb7f-63444872753e"
     }
-  ]
+  ],
+  "vars": {
+    "STRIPE_SECRET_KEY": "sk_live_REPLACE_WITH_YOUR_KEY",
+    "STRIPE_WEBHOOK_SECRET": "whsec_REPLACE_WITH_YOUR_SECRET",
+    "STRIPE_CONNECT_CLIENT_ID": "ca_REPLACE_WITH_YOUR_CLIENT_ID"
+  }
 }
