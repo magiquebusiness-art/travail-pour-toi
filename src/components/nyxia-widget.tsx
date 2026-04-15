@@ -117,10 +117,15 @@ export function NyXiaWidget({ mode = 'pastille', userName = '' }: NyXiaWidgetPro
   const speakMsg = (text: string) => {
     if ('speechSynthesis' in window) {
       const utterance = new SpeechSynthesisUtterance(text)
-      utterance.lang = 'fr-CA'
+      utterance.lang = 'fr-FR'
       utterance.rate = 1.05
+      utterance.pitch = 1.1
       const voices = speechSynthesis.getVoices()
-      const frVoice = voices.find(v => v.lang.startsWith('fr'))
+      const frVoice =
+        voices.find(v => v.lang === 'fr-FR' && (v.name.includes('Google') || v.name.includes('Microsoft') || v.name.includes('Amazon'))) ||
+        voices.find(v => v.lang.startsWith('fr') && !v.localService) ||
+        voices.find(v => v.lang.startsWith('fr')) ||
+        voices[0]
       if (frVoice) utterance.voice = frVoice
       speechSynthesis.speak(utterance)
     }
