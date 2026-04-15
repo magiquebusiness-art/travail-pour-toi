@@ -251,6 +251,18 @@ export default function AdminDashboardPage() {
     }
   }, [])
 
+  // ── Stripe Connect handlers ──
+  const fetchStripeStatus = useCallback(async () => {
+    try {
+      const res = await fetch('/api/stripe/connect/status')
+      if (res.ok) {
+        const data = await res.json()
+        setStripeConnected(data.connected)
+        setStripeStatus(data)
+      }
+    } catch { /* ignore */ }
+  }, [])
+
   useEffect(() => {
     fetchData()
     fetchStripeStatus()
@@ -284,18 +296,6 @@ export default function AdminDashboardPage() {
       setIsSavingPaypal(false)
     }
   }
-
-  // ── Stripe Connect handlers ──
-  const fetchStripeStatus = useCallback(async () => {
-    try {
-      const res = await fetch('/api/stripe/connect/status')
-      if (res.ok) {
-        const data = await res.json()
-        setStripeConnected(data.connected)
-        setStripeStatus(data)
-      }
-    } catch { /* ignore */ }
-  }, [])
 
   const handleConnectStripe = async () => {
     setIsConnectingStripe(true)
