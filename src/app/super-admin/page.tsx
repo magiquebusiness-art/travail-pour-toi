@@ -60,6 +60,7 @@ import {
   UserPlus,
   Webhook,
   Store,
+  GraduationCap,
 } from 'lucide-react'
 import { toast } from 'sonner'
 import { useAuth } from '@/hooks/useAuth'
