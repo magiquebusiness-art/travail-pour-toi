@@ -109,12 +109,17 @@
   position: relative !important;
 }
 
-/* Force all GrapesJS overlay toolbars: absolute + low z-index */
+/* Force ALL GrapesJS elements to use relative positioning — never fixed
+   This prevents ANY toolbar/selection tool from escaping the canvas bounds */
 #nyxia-gjs-editor .gjs-toolbar,
 #nyxia-gjs-editor .gjs-tools,
-#nyxia-gjs-editor .gjs-tools-gl {
-  position: absolute !important;
-  z-index: 1 !important;
+#nyxia-gjs-editor .gjs-tools-gl,
+#nyxia-gjs-editor .gjs-editor-cont,
+#nyxia-gjs-editor .gjs-selected,
+#nyxia-gjs-editor .gjs-hovered,
+#nyxia-gjs-editor .gjs-cv-canvas,
+#nyxia-gjs-editor .gjs-canvas {
+  position: relative !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
