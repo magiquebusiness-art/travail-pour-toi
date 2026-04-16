@@ -20,7 +20,7 @@ nyxia-working/
 nyxia-live/
 backup-live/
 production-backup/
-/public/
+# /public/ — needed for NyXia images
 skills/
 affiliation-pro
 travail-pour-toi/
