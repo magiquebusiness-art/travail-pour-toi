@@ -14,6 +14,14 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Switch } from '@/components/ui/switch'
 import { Progress } from '@/components/ui/progress'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import {
   Dialog,
   DialogContent,
@@ -43,6 +51,7 @@ import {
   Upload,
   X,
   Layout,
+  LayoutDashboard,
   Users,
   Play,
   Check,
@@ -62,6 +71,7 @@ import {
   CircleDot,
   Zap,
   Wand2,
+  Bell,
 } from 'lucide-react'
 import { toast } from 'sonner'
 import {
@@ -1027,25 +1037,72 @@ export default function StudioPage() {
                   onClick={openPageEditor}
                   variant="outline"
                   size="sm"
-                  className="border-purple-500/30 text-purple-300 hover:bg-purple-500/10 text-xs hidden sm:flex"
+                  className="border-purple-500/30 text-purple-300 hover:bg-purple-500/10 text-xs"
                 >
-                  <Layout className="w-3.5 h-3.5 mr-1.5" />
-                  Éditeur de Page
+                  <Layout className="w-3.5 h-3.5 sm:mr-1.5" />
+                  <span className="hidden sm:inline">Éditeur de Page</span>
                 </Button>
                 <Link href={`/formations/${selectedFormation.id}`}>
                   <Button variant="outline" size="sm" className="border-purple-500/30 text-purple-300 hover:bg-purple-500/10 text-xs">
-                    <Eye className="w-3.5 h-3.5 mr-1.5" />
-                    Voir la page
+                    <Eye className="w-3.5 h-3.5 sm:mr-1.5" />
+                    <span className="hidden sm:inline">Voir la page</span>
                   </Button>
                 </Link>
               </>
             )}
-            <Link href="/formations" className="hidden sm:block">
+            <Link href="/formations">
               <Button variant="ghost" size="sm" className="text-zinc-500 hover:text-white text-xs">
-                <GraduationCap className="w-3.5 h-3.5 mr-1.5" />
-                Catalogue
+                <GraduationCap className="w-3.5 h-3.5 sm:mr-1.5" />
+                <span className="hidden sm:inline">Catalogue</span>
               </Button>
             </Link>
+            <Link href="/admin">
+              <Button variant="ghost" size="sm" className="text-zinc-500 hover:text-white text-xs">
+                <Settings className="w-3.5 h-3.5 sm:mr-1.5" />
+                <span className="hidden sm:inline">Admin</span>
+              </Button>
+            </Link>
+
+            {/* Notification bell */}
+            <button className="relative p-2 rounded-lg hover:bg-white/10 text-zinc-400 hover:text-white transition-colors">
+              <Bell className="w-4 h-4" />
+              <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-[#F4C842]" />
+            </button>
+
+            {/* User avatar menu */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="p-1 rounded-lg hover:bg-white/10 transition-colors">
+                  <Avatar className="w-7 h-7">
+                    <AvatarFallback className="bg-gradient-to-br from-[#7B5CFF] to-[#6366f1] text-white text-[10px] font-semibold">
+                      <Sparkles className="w-3 h-3" />
+                    </AvatarFallback>
+                  </Avatar>
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48 bg-[#0c1a2e] border-purple-500/20 text-zinc-300">
+                <DropdownMenuItem asChild>
+                  <Link href="/dashboard/settings" className="flex items-center gap-2 cursor-pointer focus:bg-white/[0.05]">
+                    <Settings className="w-4 h-4" />
+                    Paramètres
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/dashboard" className="flex items-center gap-2 cursor-pointer focus:bg-white/[0.05]">
+                    <LayoutDashboard className="w-4 h-4" />
+                    Dashboard
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator className="bg-purple-500/10" />
+                <DropdownMenuItem
+                  onClick={() => logout()}
+                  className="text-red-400 focus:bg-red-500/10 focus:text-red-400 cursor-pointer"
+                >
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Déconnexion
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </header>
 
