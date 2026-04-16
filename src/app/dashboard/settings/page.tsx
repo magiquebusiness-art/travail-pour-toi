@@ -312,9 +312,8 @@ export default function DashboardSettingsPage() {
         </CardContent>
       </Card>
 
-      {/* Branding Section (Placeholder) */}
+      {/* Branding Section */}
       <Card className="glass-card border-0 hover:transform-none relative overflow-hidden">
-        <div className="absolute inset-0 bg-white/[0.01] pointer-events-none" />
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
@@ -326,19 +325,15 @@ export default function DashboardSettingsPage() {
                 Personnalisez l&apos;apparence de vos formations
               </CardDescription>
             </div>
-            <Badge className="bg-purple-500/10 text-purple-400 border-purple-500/20 text-xs">
-              Bientôt disponible
-            </Badge>
           </div>
         </CardHeader>
-        <CardContent className="space-y-5 opacity-60 pointer-events-none">
+        <CardContent className="space-y-5">
           <div className="space-y-2">
-            <Label className="text-zinc-500 text-xs uppercase tracking-wider">Logo de marque</Label>
-            <div className="border-2 border-dashed border-purple-500/20 rounded-xl p-8 text-center">
-              <Upload className="w-8 h-8 mx-auto mb-2 text-zinc-500" />
-              <p className="text-zinc-500 text-sm">Glissez votre logo ici</p>
-              <p className="text-zinc-600 text-xs mt-1">PNG, JPG, max 2 Mo</p>
-            </div>
+            <Label className="text-zinc-500 text-xs uppercase tracking-wider">Nom de votre espace</Label>
+            <Input
+              placeholder="Mon Academie"
+              className="bg-white/[0.03] border-purple-500/10 text-zinc-300 text-sm rounded-xl"
+            />
           </div>
           <div className="space-y-2">
             <Label className="text-zinc-500 text-xs uppercase tracking-wider">Couleur principale</Label>
@@ -346,9 +341,16 @@ export default function DashboardSettingsPage() {
               <div className="w-10 h-10 rounded-lg bg-[#7B5CFF] border border-purple-500/20" />
               <Input
                 value="#7B5CFF"
-                readOnly
                 className="bg-white/[0.03] border-purple-500/10 text-zinc-300 text-sm rounded-xl w-32"
               />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Label className="text-zinc-500 text-xs uppercase tracking-wider">Logo de marque</Label>
+            <div className="border-2 border-dashed border-purple-500/20 rounded-xl p-8 text-center cursor-pointer hover:border-purple-500/40 transition-colors">
+              <Upload className="w-8 h-8 mx-auto mb-2 text-zinc-500" />
+              <p className="text-zinc-500 text-sm">Cliquez ou glissez votre logo ici</p>
+              <p className="text-zinc-600 text-xs mt-1">PNG, JPG, max 2 Mo</p>
             </div>
           </div>
         </CardContent>

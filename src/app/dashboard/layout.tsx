@@ -207,12 +207,6 @@ export default function DashboardLayout({
           </div>
 
           <div className="flex items-center gap-2">
-            {/* Notifications */}
-            <Button variant="ghost" size="icon" className="text-zinc-400 hover:text-white hover:bg-white/[0.05] relative">
-              <Bell className="w-5 h-5" />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#7B5CFF] rounded-full" />
-            </Button>
-
             {/* User dropdown */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
