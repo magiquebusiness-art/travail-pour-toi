@@ -43,3 +43,32 @@ Stage Summary:
   1. Changement de mot de passe d'urgence (Settings > Sécurité) — via /api/auth/change-password
   2. 6 outils sous chaque réponse bot: Copier, Réessayer, Modifier, Envoyer, PDF, Écouter
 - Les tests API confirment que tout fonctionne
+---
+Task ID: 2
+Agent: Main Agent
+Task: Ajouter Base de Connaissance, Intégrations et Création IA à NyXia Z
+
+Work Log:
+- Analysé les 4 fichiers d'exemple de Diane (Exemple_medias.html, Exemple_wan-image.html, Exemple_wan-video.html, Screenshot)
+- Créé 6 API endpoints backend:
+  - /api/knowledge/crud.js (GET/POST/PUT/DELETE) - CRUD pour base de connaissance D1
+  - /api/integrations/crud.js (GET/POST) - Intégrations avec auto-create table
+  - /api/wan/image.js - Génération d'images IA via NVIDIA NIM
+  - /api/wan/video.js - Soumission tâche vidéo IA
+  - /api/wan-video/status.js - Polling statut vidéo
+  - /api/media/search.js - Recherche Pexels photos/vidéos
+- Modifié public/index.html avec 6 éditions:
+  - CSS: ~90 lignes (knowledge cards, integrations, creation tabs/results/history)
+  - Sidebar: 3 nouvelles entrées
+  - HTML: 3 nouveaux panels (knowledge, integrations, creation)
+  - KB Modal pour ajouter/modifier les entrées
+  - JavaScript: ~220 lignes (CRUD knowledge, toggle integrations, WAN image/video, Pexels bank, history)
+  - showPanel: ajout de loadKnowledge() et loadIntegrations()
+- Déployé sur Cloudflare Pages avec succès
+
+Stage Summary:
+- Base de Connaissance: fonctionne (4 entrées existantes visibles)
+- Intégrations: fonctionne (6 intégrations créées auto: Google, Facebook, TikTok, ManyChat, Zapier, Systeme.io)
+- Banque d'images Pexels: FONCTIONNE! (test confirmé avec recherche "sunset")
+- WAN Image/Vidéo: UI en place, backend déployé, mais API externe NVIDIA retourne 404 (endpoint URL ou modèle à vérifier)
+- URL: https://nyxia-z.pages.dev / https://nyxia.travail-pour-toi.com
