@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🔗 Connexions Sociales - NyXia</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- NyXia Design System -->
+  <link rel="stylesheet" href="nyxia-design.css">
+  
+  <style>
+    .platform-card {
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 1px solid rgba(123, 92, 255, 0.2);
+    }
+    
+    .platform-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(123, 92, 255, 0.5);
+      box-shadow: 0 8px 32px rgba(123, 92, 255, 0.2);
+    }
+    
+    .platform-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    
+    .connected-badge {
+      background: linear-gradient(135deg, #10B981, #059669);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    
+    .not-connected-badge {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.6);
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- Background étoilé animé -->
+  <canvas id="starryCanvas" class="starry-background"></canvas>
+  
+  <!-- Container principal -->
+  <div class="nyxia-container">
+    <!-- Header -->
+    <header style="text-align: center; margin-bottom: 3rem;">
+      <a href="index.html" style="color: var(--nyxia-mystic-purple); text-decoration: none; font-family: var(--font-title); font-size: 1.2rem;">
+        ← Retour au Dashboard
+      </a>
+      <h1 class="nyxia-title nyxia-float" style="margin-top: 1rem;">🔗 Connexions Sociales</h1>
+      <p class="nyxia-subtitle" style="color: rgba(255, 255, 255, 0.7); font-size: 1.2rem;">
+        Connectez vos pages Facebook et comptes TikTok
+      </p>
+      <p style="color: rgba(255, 255, 255, 0.5); margin-top: 0.5rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+        Pour automatiser vos publications, vous devez connecter vos comptes sociaux en utilisant des tokens d'accès sécurisés obtenus via les outils de développement officiels.
+      </p>
+    </header>
+
+    <!-- Sélection de la campagne -->
+    <section class="nyxia-card" style="margin-bottom: 2rem;">
+      <h2 class="nyxia-subtitle" style="margin-bottom: 1rem;">📋 Sélectionner une Campagne</h2>
+      <div class="nyxia-grid" style="grid-template-columns: 1fr auto;">
+        <select class="nyxia-input" id="campaignSelect" required>
+          <option value="">-- Choisir une campagne --</option>
+        </select>
+        <button class="nyxia-btn nyxia-btn-primary" onclick="loadConnectedPages()" style="white-space: nowrap;">
+          Charger les connexions
+        </button>
+      </div>
+    </section>
+
+    <!-- Cartes des plateformes -->
+    <section class="nyxia-grid" style="margin-bottom: 2rem; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+      <!-- Facebook Card -->
+      <div class="nyxia-card platform-card" onclick="showConnectForm('facebook')">
+        <div class="platform-icon">📘</div>
+        <h3 style="font-family: var(--font-title); font-size: 1.5rem; color: var(--nyxia-mystic-purple); margin-bottom: 0.5rem;">
+          Facebook Pages
+        </h3>
+        <p style="color: rgba(255, 255, 255, 0.6); margin-bottom: 1rem;">
+          Connectez une ou plusieurs pages Facebook pour publier automatiquement vos Reels et Images.
+        </p>
+        <div id="facebookStatus" style="display: flex; justify-content: space-between; align-items: center;">
+          <span class="not-connected-badge">Non connecté</span>
+          <span id="facebookCount" style="color: rgba(255, 255, 255, 0.5); font-size: 0.9rem;">0 page(s)</span>
+        </div>
+      </div>
+
+      <!-- TikTok Card -->
+      <div class="nyxia-card platform-card" onclick="showConnectForm('tiktok')">
+        <div class="platform-icon">🎵</div>
+        <h3 style="font-family: var(--font-title); font-size: 1.5rem; color: var(--nyxia-mystic-purple); margin-bottom: 0.5rem;">
+          TikTok
+        </h3>
+        <p style="color: rgba(255, 255, 255, 0.6); margin-bottom: 1rem;">
+          Connectez votre compte TikTok pour publier automatiquement vos vidéos Reels.
+        </p>
+        <div id="tiktokStatus" style="display: flex; justify-content: space-between; align-items: center;">
+          <span class="not-connected-badge">Non connecté</span>
+          <span id="tiktokCount" style="color: rgba(255, 255, 255, 0.5); font-size: 0.9rem;">0 compte(s)</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Formulaire de connexion (caché par défaut) -->
+    <section id="connectFormSection" class="nyxia-card" style="margin-bottom: 2rem; display: none;">
+      <h2 class="nyxia-subtitle" style="margin-bottom: 1rem;" id="formTitle">🔗 Connecter une Page</h2>
+      
+      <form id="connectForm" class="nyxia-grid">
+        <input type="hidden" id="selectedPlatform" value="">
+        
+        <div style="grid-column: 1 / -1;">
+          <label class="nyxia-label">Nom affiché (pour vous identifier)</label>
+          <input type="text" class="nyxia-input" id="accountName" placeholder="Ex: Ma Page Pro, Mon Compte Principal..." required>
+        </div>
+        
+        <div style="grid-column: 1 / -1;">
+          <label class="nyxia-label">ID de la page / du compte</label>
+          <input type="text" class="nyxia-input" id="pageId" placeholder="ID numérique ou nom d'utilisateur" required>
+          <p style="color: rgba(255, 255, 255, 0.5); font-size: 0.85rem; margin-top: 0.5rem;">
+            <span id="platformHelp">Pour Facebook: ID de la page. Pour TikTok: nom d'utilisateur ou ID.</span>
+          </p>
+        </div>
+        
+        <div style="grid-column: 1 / -1;">
+          <label class="nyxia-label">Token d'accès (Access Token)</label>
+          <textarea class="nyxia-input" id="accessToken" rows="3" placeholder="Collez votre token d'accès sécurisé ici..." required></textarea>
+          <p style="color: rgba(255, 255, 255, 0.5); font-size: 0.85rem; margin-top: 0.5rem;">
+            🔒 Votre token est crypté et stocké de manière sécurisée. Ne partagez jamais votre token.
+          </p>
+        </div>
+        
+        <div style="grid-column: 1 / -1; display: flex; gap: 1rem;">
+          <button type="submit" class="nyxia-btn nyxia-btn-gold" style="flex: 1;">
+            ✨ Connecter le compte
+          </button>
+          <button type="button" class="nyxia-btn nyxia-btn-secondary" onclick="hideConnectForm()" style="flex: 1;">
+            Annuler
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Liste des pages connectées -->
+    <section class="nyxia-card">
+      <h2 class="nyxia-subtitle" style="margin-bottom: 1.5rem;">💫 Comptes Connectés</h2>
+      
+      <div id="connectedPagesList" style="display: flex; flex-direction: column; gap: 1rem;">
+        <p style="color: rgba(255, 255, 255, 0.5); text-align: center; padding: 2rem;">
+          Sélectionnez une campagne et chargez les connexions pour voir vos comptes connectés.
+        </p>
+      </div>
+    </section>
+
+    <!-- Guide de récupération des tokens -->
+    <section class="nyxia-card" style="margin-top: 2rem; border: 1px solid rgba(244, 200, 66, 0.3);">
+      <h2 class="nyxia-subtitle" style="color: var(--nyxia-gold); margin-bottom: 1rem;">📖 Comment obtenir vos tokens d'accès</h2>
+      
+      <div class="nyxia-grid" style="grid-template-columns: 1fr 1fr; gap: 2rem;">
+        <!-- Facebook Guide -->
+        <div>
+          <h3 style="font-family: var(--font-title); color: #1877F2; margin-bottom: 1rem;">📘 Facebook Graph API</h3>
+          <ol style="color: rgba(255, 255, 255, 0.7); line-height: 1.8;">
+            <li>Allez sur <a href="https://developers.facebook.com" target="_blank" style="color: var(--nyxia-mystic-purple);">developers.facebook.com</a></li>
+            <li>Créez une application ou utilisez une existante</li>
+            <li>Ajoutez le produit "Graph API"</li>
+            <li>Allez dans "Tools & Support" → "Graph API Explorer"</li>
+            <li>Sélectionnez votre application et page</li>
+            <li>Demandez les permissions: <code style="background: rgba(255,255,255,0.1); padding: 0.2rem 0.4rem; border-radius: 4px;">pages_manage_posts,pages_read_engagement</code></li>
+            <li>Copiez le "User Token" ou "Page Access Token"</li>
+          </ol>
+          <p style="color: rgba(255, 255, 255, 0.5); font-size: 0.85rem; margin-top: 1rem;">
+            📚 Documentation complète: <a href="https://developers.facebook.com/docs/graph-api" target="_blank" style="color: var(--nyxia-mystic-purple);">Graph API Docs</a>
+          </p>
+        </div>
+        
+        <!-- TikTok Guide -->
+        <div>
+          <h3 style="font-family: var(--font-title); color: #FE2C55; margin-bottom: 1rem;">🎵 TikTok API</h3>
+          <ol style="color: rgba(255, 255, 255, 0.7); line-height: 1.8;">
+            <li>Allez sur <a href="https://developers.tiktok.com" target="_blank" style="color: var(--nyxia-mystic-purple);">developers.tiktok.com</a></li>
+            <li>Créez un compte développeur et une application</li>
+            <li>Dans le dashboard, allez dans "Products" → "Video Upload"</li>
+            <li>Soumettez votre demande d'accès (approbation requise)</li>
+            <li>Une fois approuvé, générez un "Access Token" via OAuth 2.0</li>
+            <li>Utilisez le scope: <code style="background: rgba(255,255,255,0.1); padding: 0.2rem 0.4rem; border-radius: 4px;">video.upload</code></li>
+            <li>Copiez le token généré</li>
+          </ol>
+          <p style="color: rgba(255, 255, 255, 0.5); font-size: 0.85rem; margin-top: 1rem;">
+            📚 Documentation complète: <a href="https://developers.tiktok.com/doc/" target="_blank" style="color: var(--nyxia-mystic-purple);">TikTok API Docs</a>
+          </p>
+        </div>
+      </div>
+      
+      <div style="margin-top: 1.5rem; padding: 1rem; background: rgba(244, 200, 66, 0.1); border-radius: 12px; border-left: 3px solid var(--nyxia-gold);">
+        <p style="color: rgba(255, 255, 255, 0.8); font-size: 0.9rem;">
+          ⚠️ <strong>Important:</strong> Les tokens Facebook expirent généralement après 60 jours. Vous devrez les renouveler périodiquement. Les tokens TikTok peuvent avoir une durée de vie plus longue selon votre configuration OAuth.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Script d'animation des étoiles -->
+  <script src="starry-animation.js"></script>
+  
+  <!-- Logique métier -->
+  <script>
+    const API_BASE = 'http://localhost:8000'
+    let currentCampaignId = null
+    
+    // Charger les campagnes au démarrage
+    async function loadCampaigns() {
+      try {
+        const response = await fetch(`${API_BASE}/campaigns/`)
+        const campaigns = await response.json()
+        
+        const select = document.getElementById('campaignSelect')
+        select.innerHTML = '<option value="">-- Choisir une campagne --</option>'
+        
+        if (campaigns.length === 0) {
+          select.innerHTML += '<option value="" disabled>Aucune campagne disponible</option>'
+          return
+        }
+        
+        campaigns.forEach(campaign => {
+          select.innerHTML += `<option value="${campaign.id}">${campaign.title}</option>`
+        })
+      } catch (error) {
+        console.error('Erreur chargement campagnes:', error)
+      }
+    }
+    
+    // Afficher le formulaire de connexion
+    function showConnectForm(platform) {
+      if (!currentCampaignId) {
+        alert('⚠️ Veuillez d\'abord sélectionner une campagne !')
+        return
+      }
+      
+      document.getElementById('selectedPlatform').value = platform
+      document.getElementById('connectFormSection').style.display = 'block'
+      document.getElementById('formTitle').textContent = `🔗 Connecter ${platform === 'facebook' ? 'Facebook' : 'TikTok'}`
+      document.getElementById('platformHelp').textContent = platform === 'facebook' 
+        ? 'Pour Facebook: ID de la page (ex: 123456789)'
+        : 'Pour TikTok: Nom d\'utilisateur ou ID du compte'
+      
+      // Scroll vers le formulaire
+      document.getElementById('connectFormSection').scrollIntoView({ behavior: 'smooth' })
+    }
+    
+    // Cacher le formulaire
+    function hideConnectForm() {
+      document.getElementById('connectFormSection').style.display = 'none'
+      document.getElementById('connectForm').reset()
+    }
+    
+    // Soumettre la connexion
+    document.getElementById('connectForm').addEventListener('submit', async (e) => {
+      e.preventDefault()
+      
+      const platform = document.getElementById('selectedPlatform').value
+      const data = {
+        platform: platform,
+        page_id: document.getElementById('pageId').value,
+        page_name: document.getElementById('accountName').value,
+        access_token: document.getElementById('accessToken').value
+      }
+      
+      try {
+        const response = await fetch(`${API_BASE}/campaigns/${currentCampaignId}/pages/`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        })
+        
+        if (response.ok) {
+          const result = await response.json()
+          alert(`✅ ${platform === 'facebook' ? 'Page Facebook' : 'Compte TikTok'} connecté avec succès !`)
+          hideConnectForm()
+          loadConnectedPages()
+        } else {
+          const error = await response.json()
+          alert(`❌ Erreur: ${error.detail || 'Échec de la connexion'}`)
+        }
+      } catch (error) {
+        alert('❌ Erreur de connexion au serveur')
+        console.error(error)
+      }
+    })
+    
+    // Charger les pages connectées
+    async function loadConnectedPages() {
+      const campaignId = document.getElementById('campaignSelect').value
+      
+      if (!campaignId) {
+        alert('⚠️ Veuillez sélectionner une campagne !')
+        return
+      }
+      
+      currentCampaignId = parseInt(campaignId)
+      
+      try {
+        // Récupérer les stats de la campagne qui incluent les pages
+        const response = await fetch(`${API_BASE}/campaigns/${campaignId}/stats/`)
+        const data = await response.json()
+        
+        const list = document.getElementById('connectedPagesList')
+        const pages = data.stats?.pages || []
+        
+        if (pages.length === 0) {
+          list.innerHTML = '<p style="color: rgba(255, 255, 255, 0.5); text-align: center; padding: 2rem;">Aucune page connectée pour cette campagne. Connectez votre première page ci-dessus !</p>'
+          
+          // Mettre à jour les badges
+          document.getElementById('facebookStatus').innerHTML = '<span class="not-connected-badge">Non connecté</span><span style="color: rgba(255, 255, 255, 0.5); font-size: 0.9rem;">0 page(s)</span>'
+          document.getElementById('tiktokStatus').innerHTML = '<span class="not-connected-badge">Non connecté</span><span style="color: rgba(255, 255, 255, 0.5); font-size: 0.9rem;">0 compte(s)</span>'
+          return
+        }
+        
+        // Compter par plateforme
+        const facebookPages = pages.filter(p => p.platform === 'facebook')
+        const tiktokPages = pages.filter(p => p.platform === 'tiktok')
+        
+        // Mettre à jour les badges
+        updatePlatformBadge('facebook', facebookPages.length)
+        updatePlatformBadge('tiktok', tiktokPages.length)
+        
+        // Afficher la liste
+        list.innerHTML = pages.map(page => `
+          <div class="nyxia-card" style="padding: 1.5rem; border-left: 3px solid ${page.platform === 'facebook' ? '#1877F2' : '#FE2C55'};">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div style="display: flex; align-items: center; gap: 1rem;">
+                <div style="font-size: 2rem;">${page.platform === 'facebook' ? '📘' : '🎵'}</div>
+                <div>
+                  <h4 style="font-family: var(--font-title); color: var(--nyxia-mystic-purple); margin-bottom: 0.25rem;">
+                    ${page.page_name || 'Nom non défini'}
+                  </h4>
+                  <p style="color: rgba(255, 255, 255, 0.5); font-size: 0.9rem;">
+                    ID: ${page.page_id} • ${page.platform === 'facebook' ? 'Facebook' : 'TikTok'}
+                  </p>
+                </div>
+              </div>
+              <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <span class="connected-badge">✓ Connecté</span>
+                <button class="nyxia-btn nyxia-btn-secondary" onclick="deletePage(${page.id})" style="padding: 0.5rem 1rem; font-size: 0.9rem;">
+                  🗑️
+                </button>
+              </div>
+            </div>
+          </div>
+        `).join('')
+        
+      } catch (error) {
+        console.error('Erreur chargement pages:', error)
+        document.getElementById('connectedPagesList').innerHTML = '<p style="color: rgba(255, 100, 100, 0.8); text-align: center; padding: 2rem;">Erreur lors du chargement des pages connectées.</p>'
+      }
+    }
+    
+    // Mettre à jour le badge d'une plateforme
+    function updatePlatformBadge(platform, count) {
+      const statusDiv = document.getElementById(`${platform}Status`)
+      const countSpan = document.getElementById(`${platform}Count`)
+      
+      if (count > 0) {
+        statusDiv.innerHTML = `<span class="connected-badge">✓ Connecté</span>`
+        countSpan.textContent = `${count} ${platform === 'facebook' ? 'page(s)' : 'compte(s)'}`
+      } else {
+        statusDiv.innerHTML = '<span class="not-connected-badge">Non connecté</span>'
+        countSpan.textContent = `0 ${platform === 'facebook' ? 'page(s)' : 'compte(s)'}`
+      }
+    }
+    
+    // Supprimer une page
+    async function deletePage(pageId) {
+      if (!confirm('Êtes-vous sûr de vouloir déconnecter cette page ?')) return
+      
+      try {
+        // Note: Vous devrez ajouter un endpoint DELETE dans main.py
+        // Pour l'instant, c'est une simulation
+        alert('ℹ️ Fonctionnalité de suppression à implémenter dans l\'API')
+        // await fetch(`${API_BASE}/campaigns/pages/${pageId}`, { method: 'DELETE' })
+        // loadConnectedPages()
+      } catch (error) {
+        alert('❌ Erreur lors de la suppression')
+      }
+    }
+    
+    // Initialisation
+    document.addEventListener('DOMContentLoaded', () => {
+      loadCampaigns()
+    })
+  </script>
+</body>
+</html>

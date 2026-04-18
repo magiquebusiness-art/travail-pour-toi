@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NyXia - Automation Intelligente</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- NyXia Design System -->
+  <link rel="stylesheet" href="nyxia-design.css">
+</head>
+<body>
+  <!-- Background étoilé animé -->
+  <canvas id="starryCanvas" class="starry-background"></canvas>
+  
+  <!-- Container principal -->
+  <div class="nyxia-container">
+    <!-- Header -->
+    <header style="text-align: center; margin-bottom: 4rem;">
+      <h1 class="nyxia-title nyxia-float">NyXia</h1>
+      <p class="nyxia-subtitle" style="color: rgba(255, 255, 255, 0.7); font-size: 1.2rem;">
+        Intelligence + Mystère + Maîtrise
+      </p>
+      <p style="color: rgba(255, 255, 255, 0.5); margin-top: 0.5rem;">
+        Votre guide cosmique pour l'automatisation sociale
+      </p>
+    </header>
+
+    <!-- Dashboard Stats -->
+    <section class="nyxia-grid" style="margin-bottom: 3rem;">
+      <div class="nyxia-card nyxia-stat">
+        <div class="nyxia-stat-value" id="totalCampaigns">0</div>
+        <div class="nyxia-stat-label">Campagnes Actives</div>
+      </div>
+      <div class="nyxia-card nyxia-stat">
+        <div class="nyxia-stat-value" id="totalContent">0</div>
+        <div class="nyxia-stat-label">Contenus Générés</div>
+      </div>
+      <div class="nyxia-card nyxia-stat">
+        <div class="nyxia-stat-value" id="scheduledPosts">0</div>
+        <div class="nyxia-stat-label">Publications Planifiées</div>
+      </div>
+      <div class="nyxia-card nyxia-stat">
+        <div class="nyxia-stat-value" id="publishedPosts">0</div>
+        <div class="nyxia-stat-label">Publications Publiées</div>
+      </div>
+    </section>
+
+    <!-- Créer une nouvelle campagne -->
+    <section class="nyxia-card" style="margin-bottom: 3rem;">
+      <h2 class="nyxia-subtitle" style="margin-bottom: 1.5rem;">✨ Nouvelle Campagne</h2>
+      
+      <form id="campaignForm" class="nyxia-grid">
+        <div>
+          <label class="nyxia-label">Titre de la campagne</label>
+          <input type="text" class="nyxia-input" id="campaignTitle" placeholder="Ex: Ma Campagne 90 Jours" required>
+        </div>
+        
+        <div>
+          <label class="nyxia-label">Reels par jour</label>
+          <input type="number" class="nyxia-input" id="reelsPerDay" value="3" min="1" max="10" required>
+        </div>
+        
+        <div>
+          <label class="nyxia-label">Images par jour</label>
+          <input type="number" class="nyxia-input" id="imagesPerDay" value="3" min="1" max="10" required>
+        </div>
+        
+        <div>
+          <label class="nyxia-label">Durée (jours)</label>
+          <input type="number" class="nyxia-input" id="planningDays" value="90" min="1" max="365" required>
+        </div>
+        
+        <div style="grid-column: 1 / -1;">
+          <label class="nyxia-label">Hashtags (séparés par espace)</label>
+          <input type="text" class="nyxia-input" id="hashtags" placeholder="#viral #trending #monhashtag" required>
+        </div>
+        
+        <div style="grid-column: 1 / -1;">
+          <button type="submit" class="nyxia-btn nyxia-btn-primary" style="width: 100%;">
+            🚀 Créer la Campagne
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Configuration des titres -->
+    <section class="nyxia-card" style="margin-bottom: 3rem;">
+      <h2 class="nyxia-subtitle" style="margin-bottom: 1.5rem;">📝 Configuration des Titres</h2>
+      <p style="color: rgba(255, 255, 255, 0.6); margin-bottom: 1.5rem;">
+        Entrez vos titres pour générer automatiquement 90 jours de contenu
+      </p>
+      
+      <form id="scheduleForm" class="nyxia-grid">
+        <div style="grid-column: 1 / -1;">
+          <label class="nyxia-label">Sélectionner une campagne</label>
+          <select class="nyxia-input" id="campaignSelect" required>
+            <option value="">-- Choisir une campagne --</option>
+          </select>
+        </div>
+        
+        <div style="grid-column: 1 / -1;">
+          <label class="nyxia-label">Titres pour Reels (un par ligne)</label>
+          <textarea class="nyxia-input" id="reelsTitles" rows="5" placeholder="Titre Reel 1&#10;Titre Reel 2&#10;Titre Reel 3" required></textarea>
+        </div>
+        
+        <div style="grid-column: 1 / -1;">
+          <label class="nyxia-label">Titres pour Images (un par ligne)</label>
+          <textarea class="nyxia-input" id="imagesTitles" rows="5" placeholder="Titre Image 1&#10;Titre Image 2&#10;Titre Image 3" required></textarea>
+        </div>
+        
+        <div style="grid-column: 1 / -1;">
+          <button type="submit" class="nyxia-btn nyxia-btn-gold" style="width: 100%;">
+            ✨ Générer le Planning 90 Jours
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Liste des campagnes -->
+    <section class="nyxia-card">
+      <h2 class="nyxia-subtitle" style="margin-bottom: 1.5rem;">🎯 Campagnes Actives</h2>
+      
+      <div id="campaignsList" style="display: flex; flex-direction: column; gap: 1rem;">
+        <p style="color: rgba(255, 255, 255, 0.5); text-align: center; padding: 2rem;">
+          Aucune campagne pour le moment. Créez votre première campagne !
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Script d'animation des étoiles -->
+  <script>
+    // Animation Canvas - Reproduction du composant React
+    const canvas = document.getElementById('starryCanvas')
+    const ctx = canvas.getContext('2d')
+    
+    let width = window.innerWidth
+    let height = window.innerHeight
+    
+    function resizeCanvas() {
+      width = window.innerWidth
+      height = window.innerHeight
+      canvas.width = width
+      canvas.height = height
+      createStars()
+    }
+    
+    // Étoiles
+    let stars = []
+    const numStars = 400
+    
+    function createStars() {
+      stars = []
+      for (let i = 0; i < numStars; i++) {
+        stars.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          radius: Math.random() * 0.6 + 0.3,
+          alpha: Math.random() * 0.7 + 0.3,
+          alphaChange: Math.random() * 0.015 + 0.005,
+          twinkleSpeed: Math.random() * 0.015 + 0.003
+        })
+      }
+    }
+    
+    // Étoiles filantes
+    let shootingStars = []
+    
+    resizeCanvas()
+    window.addEventListener('resize', resizeCanvas)
+    
+    function animate() {
+      // Fond bleu nuit
+      ctx.fillStyle = '#0B1F3A'
+      ctx.fillRect(0, 0, width, height)
+      
+      // Dégradé violet mystique
+      const gradient = ctx.createRadialGradient(
+        width / 2, height / 2, 0,
+        width / 2, height / 2, Math.max(width, height) / 1.5
+      )
+      gradient.addColorStop(0, 'rgba(43, 15, 58, 0.5)')
+      gradient.addColorStop(0.6, 'rgba(43, 15, 58, 0.2)')
+      gradient.addColorStop(1, 'rgba(11, 31, 58, 0)')
+      ctx.fillStyle = gradient
+      ctx.fillRect(0, 0, width, height)
+      
+      // Dessiner les étoiles
+      for (let i = 0; i < stars.length; i++) {
+        const star = stars[i]
+        
+        star.alpha += star.alphaChange
+        if (star.alpha >= 1) {
+          star.alpha = 1
+          star.alphaChange = -star.twinkleSpeed
+        } else if (star.alpha <= 0.2) {
+          star.alpha = 0.2
+          star.alphaChange = star.twinkleSpeed
+        }
+        
+        // Halo doré
+        ctx.beginPath()
+        ctx.arc(star.x, star.y, star.radius * 2.5, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(216, 177, 90, ${star.alpha * 0.08})`
+        ctx.fill()
+        
+        // Étoile centrale
+        ctx.beginPath()
+        ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(255, 250, 235, ${star.alpha})`
+        ctx.fill()
+      }
+      
+      // Étoiles filantes
+      if (Math.random() < 0.012) {
+        shootingStars.push({
+          x: Math.random() * width * 0.8,
+          y: Math.random() * 100,
+          length: Math.random() * 150 + 80,
+          speed: Math.random() * 18 + 10,
+          angle: Math.PI / 4 + (Math.random() - 0.5) * 0.3,
+          alpha: 1,
+          thickness: Math.random() * 2 + 1.5
+        })
+      }
+      
+      // Dessiner étoiles filantes
+      for (let i = shootingStars.length - 1; i >= 0; i--) {
+        const star = shootingStars[i]
+        
+        const trailGradient = ctx.createLinearGradient(
+          star.x, star.y,
+          star.x - star.length * Math.cos(star.angle),
+          star.y - star.length * Math.sin(star.angle)
+        )
+        trailGradient.addColorStop(0, `rgba(255, 255, 255, ${star.alpha})`)
+        trailGradient.addColorStop(0.3, `rgba(216, 177, 90, ${star.alpha * 0.8})`)
+        trailGradient.addColorStop(1, 'rgba(216, 177, 90, 0)')
+        
+        ctx.beginPath()
+        ctx.moveTo(star.x, star.y)
+        ctx.lineTo(
+          star.x - star.length * Math.cos(star.angle),
+          star.y - star.length * Math.sin(star.angle)
+        )
+        ctx.strokeStyle = trailGradient
+        ctx.lineWidth = star.thickness
+        ctx.lineCap = 'round'
+        ctx.stroke()
+        
+        ctx.beginPath()
+        ctx.arc(star.x, star.y, 3, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(255, 255, 255, ${star.alpha})`
+        ctx.fill()
+        
+        ctx.beginPath()
+        ctx.arc(star.x, star.y, 6, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(216, 177, 90, ${star.alpha * 0.5})`
+        ctx.fill()
+        
+        star.x += star.speed * Math.cos(star.angle)
+        star.y += star.speed * Math.sin(star.angle)
+        star.alpha -= 0.008
+        
+        if (star.alpha <= 0 || star.y > height + 50 || star.x > width + 50) {
+          shootingStars.splice(i, 1)
+        }
+      }
+      
+      requestAnimationFrame(animate)
+    }
+    
+    animate()
+  </script>
+  
+  <!-- Logique métier -->
+  <script>
+    const API_BASE = 'http://localhost:8000'
+    
+    // Charger les statistiques
+    async function loadStats() {
+      try {
+        // Simulation pour la démo
+        document.getElementById('totalCampaigns').textContent = '0'
+        document.getElementById('totalContent').textContent = '0'
+        document.getElementById('scheduledPosts').textContent = '0'
+        document.getElementById('publishedPosts').textContent = '0'
+      } catch (error) {
+        console.error('Erreur chargement stats:', error)
+      }
+    }
+    
+    // Charger les campagnes
+    async function loadCampaigns() {
+      try {
+        const response = await fetch(`${API_BASE}/campaigns/`)
+        const campaigns = await response.json()
+        
+        const select = document.getElementById('campaignSelect')
+        const list = document.getElementById('campaignsList')
+        
+        if (campaigns.length === 0) {
+          list.innerHTML = '<p style="color: rgba(255, 255, 255, 0.5); text-align: center; padding: 2rem;">Aucune campagne pour le moment.</p>'
+          return
+        }
+        
+        // Mettre à jour le select
+        select.innerHTML = '<option value="">-- Choisir une campagne --</option>'
+        campaigns.forEach(campaign => {
+          select.innerHTML += `<option value="${campaign.id}">${campaign.title}</option>`
+        })
+        
+        // Mettre à jour la liste
+        list.innerHTML = campaigns.map(campaign => `
+          <div class="nyxia-card" style="padding: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+              <h3 style="font-family: var(--font-title); font-size: 1.5rem; color: var(--nyxia-mystic-purple);">
+                ${campaign.title}
+              </h3>
+              <span class="nyxia-badge nyxia-badge-purple">${campaign.posts_per_day_reels} reels/jour</span>
+            </div>
+            <div class="nyxia-grid" style="grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1rem;">
+              <div>
+                <div style="color: rgba(255, 255, 255, 0.6); font-size: 0.9rem;">Images/jour</div>
+                <div style="font-size: 1.2rem; font-weight: 600;">${campaign.posts_per_day_images}</div>
+              </div>
+              <div>
+                <div style="color: rgba(255, 255, 255, 0.6); font-size: 0.9rem;">Durée</div>
+                <div style="font-size: 1.2rem; font-weight: 600;">${campaign.planning_days} jours</div>
+              </div>
+              <div>
+                <div style="color: rgba(255, 255, 255, 0.6); font-size: 0.9rem;">Statut</div>
+                <div style="font-size: 1.2rem; font-weight: 600;">
+                  <span class="nyxia-badge nyxia-badge-gold">Active</span>
+                </div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+              <button class="nyxia-btn nyxia-btn-primary" onclick="viewCampaign(${campaign.id})">
+                Voir les détails
+              </button>
+              <button class="nyxia-btn nyxia-btn-gold" onclick="addPage(${campaign.id})">
+                + Page Sociale
+              </button>
+            </div>
+          </div>
+        `).join('')
+        
+      } catch (error) {
+        console.error('Erreur chargement campagnes:', error)
+      }
+    }
+    
+    // Créer une campagne
+    document.getElementById('campaignForm').addEventListener('submit', async (e) => {
+      e.preventDefault()
+      
+      const data = {
+        title: document.getElementById('campaignTitle').value,
+        posts_per_day_reels: parseInt(document.getElementById('reelsPerDay').value),
+        posts_per_day_images: parseInt(document.getElementById('imagesPerDay').value),
+        planning_days: parseInt(document.getElementById('planningDays').value),
+        hashtags: document.getElementById('hashtags').value
+      }
+      
+      try {
+        const response = await fetch(`${API_BASE}/campaigns/`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        })
+        
+        if (response.ok) {
+          alert('✅ Campagne créée avec succès !')
+          document.getElementById('campaignForm').reset()
+          loadCampaigns()
+          loadStats()
+        } else {
+          alert('❌ Erreur lors de la création')
+        }
+      } catch (error) {
+        alert('❌ Erreur de connexion au serveur')
+      }
+    })
+    
+    // Générer le planning
+    document.getElementById('scheduleForm').addEventListener('submit', async (e) => {
+      e.preventDefault()
+      
+      const campaignId = document.getElementById('campaignSelect').value
+      const reelsTitles = document.getElementById('reelsTitles').value.split('\n').filter(t => t.trim())
+      const imagesTitles = document.getElementById('imagesTitles').value.split('\n').filter(t => t.trim())
+      
+      const data = {
+        reels_titles: reelsTitles,
+        images_titles: imagesTitles
+      }
+      
+      try {
+        const response = await fetch(`${API_BASE}/campaigns/${campaignId}/schedule/`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        })
+        
+        if (response.ok) {
+          const result = await response.json()
+          alert(`✨ ${result.total_scheduled} contenus planifiés sur 90 jours !`)
+          document.getElementById('scheduleForm').reset()
+          loadStats()
+        } else {
+          alert('❌ Erreur lors de la génération')
+        }
+      } catch (error) {
+        alert('❌ Erreur de connexion au serveur')
+      }
+    })
+    
+    // Fonctions utilitaires
+    function viewCampaign(id) {
+      window.location.href = `campaign.html?id=${id}`
+    }
+    
+    function addPage(id) {
+      window.location.href = `add-page.html?campaign_id=${id}`
+    }
+    
+    // Initialisation
+    loadStats()
+    loadCampaigns()
+  </script>
+</body>
+</html>

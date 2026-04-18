@@ -1,0 +1,22 @@
+{
+  "name": "nyxia-frontend",
+  "version": "1.0.0",
+  "description": "NyXia - Interface d'automatisation sociale avec design galactique",
+  "scripts": {
+    "deploy:cloudflare": "wrangler pages deploy . --project-name=nyxia-frontend",
+    "dev": "npx serve ."
+  },
+  "keywords": [
+    "nyxia",
+    "automation",
+    "social-media",
+    "cloudflare-pages",
+    "galactic-design"
+  ],
+  "author": "NyXia Team",
+  "license": "MIT",
+  "devDependencies": {
+    "wrangler": "^3.0.0",
+    "serve": "^14.0.0"
+  }
+}

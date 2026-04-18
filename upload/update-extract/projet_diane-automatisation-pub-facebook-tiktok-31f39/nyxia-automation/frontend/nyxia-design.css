@@ -1,0 +1,362 @@
+/* 
+  NyXia Design System
+  Identité: Intelligence + Mystère + Maîtrise
+  Ambiance: Cosmique, galactique, étoilé, silencieux, fluide
+*/
+
+:root {
+  /* Palette principale */
+  --nyxia-deep-blue: #0A1628;
+  --nyxia-night-blue: #0B1F3A;
+  --nyxia-mystic-purple: #7B5CFF;
+  --nyxia-electric-blue: #4FA3FF;
+  --nyxia-gold: #F4C842;
+  --nyxia-gold-soft: #D8B15A;
+  
+  /* Dégradés */
+  --gradient-primary: linear-gradient(135deg, #7B5CFF 0%, #4FA3FF 100%);
+  --gradient-mystic: linear-gradient(180deg, rgba(43, 15, 58, 0.5) 0%, rgba(11, 31, 58, 0) 100%);
+  --gradient-gold: linear-gradient(135deg, #F4C842 0%, #D8B15A 100%);
+  
+  /* Glassmorphism */
+  --glass-bg: rgba(10, 22, 40, 0.6);
+  --glass-border: rgba(123, 92, 255, 0.2);
+  --glass-blur: blur(12px);
+  
+  /* Glow effects */
+  --glow-purple: 0 0 20px rgba(123, 92, 255, 0.4);
+  --glow-blue: 0 0 20px rgba(79, 163, 255, 0.3);
+  --glow-gold: 0 0 15px rgba(244, 200, 66, 0.3);
+  
+  /* Typography */
+  --font-title: 'Cormorant Garamond', serif;
+  --font-body: 'Outfit', sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--nyxia-night-blue);
+  color: #FFFFFF;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Background animé */
+.starry-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+/* Container principal */
+.nyxia-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Glassmorphism Cards */
+.nyxia-card {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: var(--glow-purple);
+  transition: all 0.3s ease;
+}
+
+.nyxia-card:hover {
+  border-color: rgba(123, 92, 255, 0.4);
+  box-shadow: var(--glow-purple), var(--glow-blue);
+  transform: translateY(-2px);
+}
+
+/* Titres avec gradient */
+.nyxia-title {
+  font-family: var(--font-title);
+  font-size: 3rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #7B5CFF 0%, #4FA3FF 50%, #F4C842 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+
+.nyxia-subtitle {
+  font-family: var(--font-title);
+  font-size: 1.8rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0.5rem;
+}
+
+/* Boutons premium */
+.nyxia-btn {
+  font-family: var(--font-body);
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.nyxia-btn-primary {
+  background: var(--gradient-primary);
+  color: white;
+  box-shadow: var(--glow-purple);
+}
+
+.nyxia-btn-primary:hover {
+  box-shadow: var(--glow-purple), var(--glow-blue);
+  transform: translateY(-2px);
+}
+
+.nyxia-btn-gold {
+  background: var(--gradient-gold);
+  color: var(--nyxia-deep-blue);
+  box-shadow: var(--glow-gold);
+}
+
+.nyxia-btn-gold:hover {
+  box-shadow: var(--glow-gold), 0 0 25px rgba(244, 200, 66, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Inputs glassmorphism */
+.nyxia-input {
+  background: rgba(10, 22, 40, 0.8);
+  border: 1px solid rgba(123, 92, 255, 0.3);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  color: white;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.nyxia-input:focus {
+  outline: none;
+  border-color: var(--nyxia-mystic-purple);
+  box-shadow: var(--glow-purple);
+}
+
+.nyxia-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Labels */
+.nyxia-label {
+  display: block;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+/* Grille responsive */
+.nyxia-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+.nyxia-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.nyxia-glow-pulse {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* Halo doré subtil */
+.nyxia-halo {
+  position: relative;
+}
+
+.nyxia-halo::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, var(--nyxia-mystic-purple), var(--nyxia-gold), var(--nyxia-electric-blue));
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0.3;
+  filter: blur(10px);
+}
+
+/* Stats cards */
+.nyxia-stat {
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.nyxia-stat-value {
+  font-family: var(--font-title);
+  font-size: 3rem;
+  font-weight: 700;
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.nyxia-stat-label {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+/* Progress bar cosmique */
+.nyxia-progress {
+  width: 100%;
+  height: 8px;
+  background: rgba(123, 92, 255, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.nyxia-progress-bar {
+  height: 100%;
+  background: var(--gradient-primary);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+  position: relative;
+}
+
+.nyxia-progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: shimmer 2s infinite;
+}
+
+/* Tableaux élégants */
+.nyxia-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.nyxia-table th {
+  text-align: left;
+  padding: 1rem;
+  color: var(--nyxia-mystic-purple);
+  font-weight: 600;
+  border-bottom: 1px solid rgba(123, 92, 255, 0.3);
+}
+
+.nyxia-table td {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(123, 92, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.nyxia-table tr:hover td {
+  background: rgba(123, 92, 255, 0.1);
+}
+
+/* Badges */
+.nyxia-badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.nyxia-badge-purple {
+  background: rgba(123, 92, 255, 0.2);
+  color: var(--nyxia-mystic-purple);
+  border: 1px solid rgba(123, 92, 255, 0.3);
+}
+
+.nyxia-badge-gold {
+  background: rgba(244, 200, 66, 0.2);
+  color: var(--nyxia-gold);
+  border: 1px solid rgba(244, 200, 66, 0.3);
+}
+
+.nyxia-badge-blue {
+  background: rgba(79, 163, 255, 0.2);
+  color: var(--nyxia-electric-blue);
+  border: 1px solid rgba(79, 163, 255, 0.3);
+}
+
+/* Loading spinner cosmique */
+.nyxia-loader {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(123, 92, 255, 0.2);
+  border-top-color: var(--nyxia-mystic-purple);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 2rem auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nyxia-title {
+    font-size: 2rem;
+  }
+  
+  .nyxia-subtitle {
+    font-size: 1.4rem;
+  }
+  
+  .nyxia-grid {
+    grid-template-columns: 1fr;
+  }
+}

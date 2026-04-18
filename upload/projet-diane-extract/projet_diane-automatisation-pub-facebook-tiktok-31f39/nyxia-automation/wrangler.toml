@@ -1,0 +1,16 @@
+# Configuration Cloudflare Workers/Pages
+# Ce fichier est optionnel si vous déployez via le Dashboard
+
+name = "nyxia-frontend"
+compatibility_date = "2024-01-01"
+
+[site]
+bucket = "./frontend"
+
+[vars]
+# Variables d'environnement pour le frontend
+API_BASE_URL = "https://votre-backend.railway.app"
+
+# Pour la production
+[env.production.vars]
+API_BASE_URL = "https://api.nyxia.ai"
