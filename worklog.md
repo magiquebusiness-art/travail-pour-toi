@@ -30,3 +30,20 @@ Stage Summary:
 - Deployment requires CLOUDFLARE_API_TOKEN (not available in current environment)
 - Diane needs to deploy manually or provide CF token
 - Also needs PEXELS_KEY secret configured: `wrangler pages secret put PEXELS_KEY`
+
+---
+Task ID: 1
+Agent: Main Agent
+Task: Fix editor authentication - login loop issue
+
+Work Log:
+- Diagnosed editor auth issue: editor.html was sending GET request with X-Nyxia-Token header to /api/auth/check
+- Backend only supports POST (onRequestPost) with token in JSON body
+- GET request failed → .catch() → redirect to /login.html → login detects valid token → redirect to / (dashboard, not editor) = loop
+- Fixed editor.html auth check to use POST method with token in body, matching index.html and login.html pattern
+- Committed as 5d15e73 and pushed to GitHub
+
+Stage Summary:
+- Root cause: editor used GET + header, backend only accepts POST + body
+- Fix: Changed to POST + JSON body with {token: token}
+- Pushed to GitHub: 5d15e73
