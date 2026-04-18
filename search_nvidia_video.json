@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://forums.developer.nvidia.com/t/is-the-endpoint-https-integrate-api-nvidia-com-v1-still-active-for-deepseek-ai-api/327924",
+    "name": "Is the endpoint https://integrate.api.nvidia.com/v1 still active for",
+    "snippet": "It's still active on the build website. But I did notice it has changed from “preview” to “run anywhere”. Maybe get a new key? Missing: video generation WAN chat completions task",
+    "host_name": "forums.developer.nvidia.com",
+    "rank": 0,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://docs.api.nvidia.com",
+    "name": "NVIDIA API Documentation",
+    "snippet": "API Reference. Integrate NVIDIA APIs into your products with a few lines of code. NVIDIA NIM Cloud Functions Attestation NGC. Prototype with Cloud Endpoints. Missing: video generation WAN chat completions task 2025",
+    "host_name": "docs.api.nvidia.com",
+    "rank": 1,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://forums.developer.nvidia.com/t/api-url-not-working/359304",
+    "name": "Api url not working - Models - NVIDIA Developer Forums",
+    "snippet": "We are encountering errors when calling the NVIDIA Integrate API endpoint: POST https://integrate.api.nvidia.com/v1/chat/completions. The ... Missing: video generation WAN task",
+    "host_name": "forums.developer.nvidia.com",
+    "rank": 2,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://docs.nvidia.com/nemo/agent-toolkit/1.6/reference/rest-api/api-server-endpoints.html",
+    "name": "NVIDIA NeMo Agent Toolkit API Server Endpoints",
+    "snippet": "The NeMo Agent Toolkit provides full OpenAI Chat Completions API compatibility through a dedicated endpoint that enables seamless integration with existing ... Missing: video WAN task 2026",
+    "host_name": "docs.nvidia.com",
+    "rank": 3,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://build.nvidia.com/models",
+    "name": "Models - Try NVIDIA NIM APIs",
+    "snippet": "Deploy and scale models on your GPU infrastructure of choice with NVIDIA NIM inference microservices. Missing: WAN 2025",
+    "host_name": "build.nvidia.com",
+    "rank": 4,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://forums.developer.nvidia.com/t/not-connect-to-endpoint-https-integrate-api-nvidia-com-v1/324036",
+    "name": "Not connect to endpoint https://integrate.api.nvidia.com/v1 - Access",
+    "snippet": "The NVIDIA API catalog offers a no-cost trial experience of NVIDIA NIM, and you may experience extended wait times during periods of high load. Missing: video generation WAN task 2026",
+    "host_name": "forums.developer.nvidia.com",
+    "rank": 5,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=yV_lVG5gD5k",
+    "name": "How to Build an AI Animation Website with Free NVIDIA API +",
+    "snippet": "We will cover everything from setting up the NVIDIA developer endpoint to integrating Qwen3.5-397B into a real animation web app project ... Missing: v1 WAN completions task 2025",
+    "host_name": "www.youtube.com",
+    "rank": 6,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://docs.api.nvidia.com/nim/reference/create_chat_completion_v1_chat_completions_post",
+    "name": "Create a chat completion - NVIDIA API Documentation",
+    "snippet": "Create a chat completion. post. https://integrate.api.nvidia.com/v1/chat/completions. Given a list of messages comprising a conversation, the model will return ... Missing: WAN task endpoint 2025",
+    "host_name": "docs.api.nvidia.com",
+    "rank": 7,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.runpod.io/articles/guides/ai-model-serving-architecture-building-scalable-inference-apis-for-production-applications",
+    "name": "AI Model Serving Architecture: Building Scalable Inference APIs for",
+    "snippet": "Learn how to design high-performance model serving systems with the right inference engines, APIs, hardware, scaling, and monitoring for ...",
+    "host_name": "www.runpod.io",
+    "rank": 8,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://build.nvidia.com/nvidia",
+    "name": "AI Models by NVIDIA | Try NVIDIA NIM APIs",
+    "snippet": "Generates physics-aware video world states for physical AI development using text prompts and multiple spatial control inputs derived from real-world data ... Missing: WAN 2025",
+    "host_name": "build.nvidia.com",
+    "rank": 9,
+    "date": "",
+    "favicon": ""
+  }
+]

@@ -70,3 +70,27 @@ Stage Summary:
 - Editor is now fully integrated within the protected dashboard
 - No more separate page — all tools stay inside the dashboard
 - Lazy initialization prevents performance impact on other panels
+
+---
+Task ID: 1
+Agent: main
+Task: Remplacer NVIDIA par DashScope WAN dans NyXia_Z
+
+Work Log:
+- Lu les 3 fichiers backend existants (video.js, image.js, video-status.js) — tous pointaient vers NVIDIA NIM (integrate.api.nvidia.com) causant des 404
+- Lu le frontend index.html (section vidéo + JS functions)
+- Réécrit video.js: endpoint DashScope async, header X-DashScope-Async: enable, payload T2V avec size "1280*720"
+- Réécrit video-status.js: polling GET /tasks/{task_id} sur DashScope (plus de D1)
+- Réécrit image.js: endpoint DashScope synchrone multimodal-generation/generation, payload messages avec size "2K"
+- Ajouté sélecteur de format (16:9/9:16/1:1) dans le HTML + getVideoSize() pour conversion
+- Ajouté polling auto toutes les 8s avec startVidPolling() + reprise des taches en cours au reload
+- Modèles ajoutés: wan2.7-t2v, wan2.6-t2v, wan2.5-t2v-preview
+- Durée: 5s, 10s, 15s
+- Clé: DASHSCOPE_KEY (pas WAN_KEY ni NVIDIA)
+- Push GitHub commit 95985f8
+
+Stage Summary:
+- Backend complet avec vrais endpoints DashScope Alibaba (Singapour)
+- Frontend avec polling vidéo et sélecteur de format
+- Aucune dépendance D1 pour les tâches vidéo
+- Env var requise: DASHSCOPE_KEY (wrangler secret put DASHSCOPE_KEY)

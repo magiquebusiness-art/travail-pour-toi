@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://docs.nvidia.com/nim/visual-genai/1.4.1/api/openai-image-generation.html",
+    "name": "Image Generation API (OpenAI-Compatible) — NVIDIA NIM for",
+    "snippet": "NVIDIA Visual Generative AI NIM OpenAI Compatible Image Generation API 1.0.0. OAS 3.1 ../_static/_static/yaml/openai-image-generation.openapi. Missing: WAN wan2. 2025",
+    "host_name": "docs.nvidia.com",
+    "rank": 0,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://docs.nvidia.com/nim/visual-genai/1.4.0/api/index.html",
+    "name": "Visual Generative AI NIM API Reference",
+    "snippet": "Image Generation API. OpenAI-compatible endpoint for generating images from text prompts. Image Generation API (OpenAI-Compatible). Image Editing API. OpenAI ... Missing: WAN wan2. 2025",
+    "host_name": "docs.nvidia.com",
+    "rank": 1,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://github.com/Wan-Video/Wan2.1",
+    "name": "Wan-Video/Wan2.1 - GitHub",
+    "snippet": "May 14, 2025: We introduce Wan2.1 VACE, an all-in-one model for video creation and editing, along with its inference code, weights, and technical report! Missing: NIM endpoint",
+    "host_name": "github.com",
+    "rank": 2,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.nvidia.com/en-au/ai",
+    "name": "NVIDIA NIM: APIs to Deploy Generative AI Models Anywhere",
+    "snippet": "Join our AI ecosystem and accelerate deployment with NVIDIA NIM, complete with community-built generative AI models and NVIDIA-optimized APIs. Missing: WAN wan2. endpoint 2025",
+    "host_name": "www.nvidia.com",
+    "rank": 3,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.gmicloud.ai/blog/how-to-get-wan2-1-access-use-it-for-ai-video",
+    "name": "How to Get WAN2.1 Access & Use It for AI Video | 2025 Guide",
+    "snippet": "Get wan2.1 access for AI video. Guide: online platforms, local setup, or high-performance GPU clouds like GMI Cloud.",
+    "host_name": "www.gmicloud.ai",
+    "rank": 4,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://build.nvidia.com/models",
+    "name": "Models - Try NVIDIA NIM APIs",
+    "snippet": "Deploy and scale models on your GPU infrastructure of choice with NVIDIA NIM inference microservices. Missing: WAN wan2. 2025",
+    "host_name": "build.nvidia.com",
+    "rank": 5,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.nvidia.com/en-us/ai-data-science/foundation-models",
+    "name": "NVIDIA AI Foundation Models and API Endpoints",
+    "snippet": "NVIDIA AI Foundation models include community and NVIDIA built, pre-trained generative AI models that enable enterprises to create custom models faster.",
+    "host_name": "www.nvidia.com",
+    "rank": 6,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://docs.nvidia.com/nim/visual-genai/latest/api/openai-image-generation.html",
+    "name": "Image Generation API (OpenAI-Compatible) - NVIDIA Documentation",
+    "snippet": "NVIDIA NIM for Visual Generative AI (GenAI). Choose version. 1.3.41.3.31.3.21.3.11.3.01.2.01.1.11.1.01.0.11.0.0 ... Image Generation API ... Missing: WAN wan2. endpoint 2025",
+    "host_name": "docs.nvidia.com",
+    "rank": 7,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://build.nvidia.com/nvidia",
+    "name": "AI Models by NVIDIA | Try NVIDIA NIM APIs",
+    "snippet": "Generates physics-aware video world states for physical AI development using text prompts and multiple spatial control inputs derived from real-world data ... Missing: WAN wan2. 2025",
+    "host_name": "build.nvidia.com",
+    "rank": 8,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://docs.nvidia.com/nim/visual-genai/1.4.1/getting-started.html",
+    "name": "Getting Started — NVIDIA NIM for Visual Generative AI (GenAI)",
+    "snippet": "The seed parameter controls generation; set it to 0 to produce a new image on each call. For full parameter details, refer to the <api/flux.1- ... Missing: WAN wan2. endpoint 2025",
+    "host_name": "docs.nvidia.com",
+    "rank": 9,
+    "date": "",
+    "favicon": ""
+  }
+]

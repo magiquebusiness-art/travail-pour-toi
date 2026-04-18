@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://developer.nvidia.com/nim",
+    "name": "NVIDIA NIM for Developers",
+    "snippet": "NVIDIA NIM is a set of accelerated inference microservices that allow organizations to run AI models on NVIDIA GPUs anywhere.",
+    "host_name": "developer.nvidia.com",
+    "rank": 0,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://build.nvidia.com/models",
+    "name": "Models",
+    "snippet": "Deploy and scale models on your GPU infrastructure of choice with NVIDIA NIM inference microservices .\nMiniMax M2.7 is a 230B-parameter text-to-text AI model excelling in coding, reasoning, and office tasks. coding. Missing: WAN 2.1",
+    "host_name": "build.nvidia.com",
+    "rank": 1,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.nvidia.com/en-au/ai",
+    "name": "NVIDIA NIM: APIs to Deploy Generative AI Models Anywhere",
+    "snippet": "Join our AI ecosystem and accelerate deployment with NVIDIA NIM , complete with community-built generative AI models and NVIDIA-optimized APIs.\nJoin our AI ecosystem and accelerate deployment with NVIDIA NIM, complete with community-built generative AI models and NVIDIA-optimized APIs. Missing: WAN 2.1 image",
+    "host_name": "www.nvidia.com",
+    "rank": 2,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://docs.api.nvidia.com/nim/docs/introduction",
+    "name": "NIM Overview",
+    "snippet": "NIM provides a simplified way to integrate AI models into your applications by exposing industry standard APIs and abstracting away model inference internals ...",
+    "host_name": "docs.api.nvidia.com",
+    "rank": 3,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://docs.nvidia.com/nim/large-language-models/latest/api-reference.html",
+    "name": "API Reference — NVIDIA NIM for Large Language Models",
+    "snippet": "NIM LLM exposes an OpenAI-compatible inference API backed by vLLM, along with NIM -specific management endpoints . Inference Endpoints #. These endpoints are ...",
+    "host_name": "docs.nvidia.com",
+    "rank": 4,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://forums.developer.nvidia.com/t/api-url-not-working/359304",
+    "name": "Api url not working - Models",
+    "snippet": "2 Feb 2026 — We are encountering errors when calling the NVIDIA Integrate API endpoint : POST https:// integrate . api . nvidia .com/v1/chat/completions The ...",
+    "host_name": "forums.developer.nvidia.com",
+    "rank": 5,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://pub.towardsai.net/an-introduction-to-using-nvidias-nim-api-da653041b212",
+    "name": "An Introduction to Using NVIDIA's NIM API",
+    "snippet": "16 Jul 2024 — I'll show you how to use the NIM API for text generation, video generation, and visual question-answering tasks.",
+    "host_name": "pub.towardsai.net",
+    "rank": 6,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://build.nvidia.com/nvidia",
+    "name": "AI Models by NVIDIA | Try NVIDIA NIM APIs",
+    "snippet": "Generat es physics-aware video world states for physical AI development using text prompts and multiple spatial control inputs derived from real-world data ...\nGenerates physics-aware video world states for physical AI development using text prompts and multiple spatial control inputs derived from real-world data ... Missing: WAN 2.1",
+    "host_name": "build.nvidia.com",
+    "rank": 7,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://dev.writer.com/providers/nvidia-nim",
+    "name": "NVIDIA NIM",
+    "snippet": "This guide shows you how to configure NVIDIA NIM as an external model provider in AI Studio. After setting up this provider, you can use foundation models ...",
+    "host_name": "dev.writer.com",
+    "rank": 8,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://build.nvidia.com/nim?q=video-to-world",
+    "name": "Models - Try NVIDIA NIM APIs",
+    "snippet": "Generates physics-aware video world states for physical AI development using text prompts and multiple spatial control inputs derived from real-world data or ... Missing: API WAN 2.1",
+    "host_name": "build.nvidia.com",
+    "rank": 9,
+    "date": "",
+    "favicon": ""
+  }
+]

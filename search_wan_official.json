@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://docs.aimlapi.com/api-references/video-models/alibaba-cloud/wan-2.2-plus-text-to-video",
+    "name": "Wan 2.2 Plus (Text-to-Video) - AI/ML API Documentation",
+    "snippet": "A text-to-video (T2V) model that generates 480p and 1080p silent video at ~30 FPS . Setup your API Key. If you don't have an API key ...",
+    "host_name": "docs.aimlapi.com",
+    "rank": 0,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://novita.ai/docs/api-reference/model-apis-wan-t2v",
+    "name": "Novita AI Wan 2.1 Text to Video API | Generate videos from text",
+    "snippet": "A comprehensive and open suite of video foundation models that pushes the boundaries of video generation.",
+    "host_name": "novita.ai",
+    "rank": 1,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://wan.video/api",
+    "name": "Leading AI Video Generation Model - Wan AI",
+    "snippet": "Wan offers enterprise users and developers a comprehensive suite of API services, covering all major AI models. ... Text to Image. Inputs: Text. Outputs: Image. Missing: endpoint apiKey",
+    "host_name": "wan.video",
+    "rank": 2,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://fal.ai/models/fal-ai/wan-25-preview/text-to-video/api",
+    "name": "Wan 2.5 Text to Video - Fal.ai",
+    "snippet": "The API uses an API Key for authentication. It is recommended you set the FAL_KEY environment variable in your runtime when possible. API Key#. In case your ...",
+    "host_name": "fal.ai",
+    "rank": 3,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.segmind.com/models/wan-2.2-i2v-fast/api",
+    "name": "Wan 2.2 Image to Video Fast API Documentation - Segmind",
+    "snippet": "Complete API documentation for Wan 2.2 Image to Video Fast. Code examples in Python, JavaScript, and cURL. Integrate this AI model into your applications ...",
+    "host_name": "www.segmind.com",
+    "rank": 4,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://videogenapi.com/wan-25-api",
+    "name": "Wan 2.5 API - Most Affordable AI Video Generation - VideoGenAPI",
+    "snippet": "Wan 2.5 Video is an open-source AI model capable of automatically generating realistic videos with audio. The most affordable API on the market for Wan 2.5 ...",
+    "host_name": "videogenapi.com",
+    "rank": 5,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://old-docs.kie.ai/market/wan/2-6-text-to-video",
+    "name": "Wan 2.6 - Text to Video - KIE API",
+    "snippet": "Generate videos directly from text descriptions using the Wan 2.6 Text to Video model. This model creates dynamic video content from natural language prompts ...",
+    "host_name": "old-docs.kie.ai",
+    "rank": 6,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://docs.freepik.com/api-reference/text-to-video/wan-2-5-t2v-1080p",
+    "name": "WAN 2.5 1080p - Create video from text - Freepik API",
+    "snippet": "Be specific about scenes and visual details; Describe camera movements (zoom, pan, tilt); Mention lighting and atmosphere. Examples: Simple: \"a cat sitting on a ...",
+    "host_name": "docs.freepik.com",
+    "rank": 7,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://replicate.com/blog/wan-21-generate-videos-with-an-api",
+    "name": "Wan2.1: generate videos with an API – Replicate blog",
+    "snippet": "Wan2.1 is the most capable open-source video generation model, producing coherent and high-quality outputs. Learn how to run it in the cloud ... Missing: documentation endpoint apiKey",
+    "host_name": "replicate.com",
+    "rank": 8,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://pixeldojo.ai/api-platform/wan-2.7-i2v",
+    "name": "WAN 2.7 Image-to-Video API | Video Generation API Docs | PixelDojo",
+    "snippet": "Image-to-video and video continuation with optional last-frame control and audio sync Integrate this model via REST with endpoint docs, ...",
+    "host_name": "pixeldojo.ai",
+    "rank": 9,
+    "date": "Apr 18, 2026",
+    "favicon": ""
+  }
+]

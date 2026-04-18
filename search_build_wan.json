@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://huggingface.co/Wan-AI/Wan2.1-T2V-1.3B",
+    "name": "Wan-AI/Wan2.1-T2V-1.3B - Hugging Face",
+    "snippet": "This repository hosts our T2V-1.3B model, a versatile solution for video generation that is compatible with nearly all consumer-grade GPUs. Missing: build. curl",
+    "host_name": "huggingface.co",
+    "rank": 0,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://wavespeed.ai/docs-api/wavespeed-ai/wan-2.1-i2v-480p",
+    "name": "Best Wan 2.1 I2V 480p API Pricing & Speed - WaveSpeed AI",
+    "snippet": "For authentication details, please refer to the Authentication Guide. API Endpoints. Submit Task & Query Result. cURL. Python JavaScript. Missing: wan2. | Show results with: wan2.",
+    "host_name": "wavespeed.ai",
+    "rank": 1,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://github.com/Wan-Video/Wan2.1",
+    "name": "Wan-Video/Wan2.1 - GitHub",
+    "snippet": "In this repository, we present Wan2.1, a comprehensive and open suite of video foundation models that pushes the boundaries of video generation. Missing: curl | Show results with: curl",
+    "host_name": "github.com",
+    "rank": 2,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=Y3N54eFbDzg",
+    "name": "Generate AI Videos With Wan 2.1: The BEST FREE Model! - YouTube",
+    "snippet": "Wan 2.1 is one of the most powerful open-source AI video models available for free, capable of both text-to-video and image-to-video ... Missing: 480p API reference python curl invoke",
+    "host_name": "www.youtube.com",
+    "rank": 3,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://github.com/Wan-Video/Wan2.1/issues/504",
+    "name": "Inference example not working · Issue #504 · Wan-Video/Wan2.1",
+    "snippet": "... run some inferences for the (t2v) example, but without any luck. Has anyone been able to run it succesfully? I am using NVIDIA A10, with 23GB.",
+    "host_name": "github.com",
+    "rank": 4,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://replicate.com/blog/wan-21-generate-videos-with-an-api",
+    "name": "Wan2.1: generate videos with an API – Replicate blog",
+    "snippet": "Wan2.1 is the most capable open-source video generation model, producing coherent and high-quality outputs. Learn how to run it in the cloud ... Missing: nvidia. reference python curl",
+    "host_name": "replicate.com",
+    "rank": 5,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.vibedream.ai/models/generate?model=t2v-720p",
+    "name": "WAN 2.1 T2V 720P API - AI Video Generation - VibeDream.ai",
+    "snippet": "WAN 2.1 T2V 720P offers text-to-video 720p generation from prompts, enabling unlimited AI video creation for social and marketing.",
+    "host_name": "www.vibedream.ai",
+    "rank": 6,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://docs.api.pruna.ai/apis/models-api-0/versions/a80cf098-b7a8-4f6e-b1e0-43b06bfa4038/schemas/wan-t2v",
+    "name": "wan-t2v | Models API - Pruna API | Developer Portal",
+    "snippet": "P-API provides access to multiple AI models for image generation, video generation, and image-to-video transformation. The API supports both asynchronous",
+    "host_name": "docs.api.pruna.ai",
+    "rank": 7,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://fal.ai/models/fal-ai/wan-i2v",
+    "name": "wan-i2v - Image-to-Video AI generator - Fal.ai",
+    "snippet": "Wan-2.1 is a image-to-video model that generates high-quality videos with high visual quality and motion diversity from images. Missing: nvidia. t2v- curl",
+    "host_name": "fal.ai",
+    "rank": 8,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.patreon.com/posts/free-wan-2-1-low-133935043",
+    "name": "Free WAN 2.1 Low VRAM Text To Image - Patreon",
+    "snippet": "Generate high-resolution 1024 × 1024 images in under 30 seconds on just 6 GB VRAM using the WAN 2.1 video generation model.",
+    "host_name": "www.patreon.com",
+    "rank": 9,
+    "date": "",
+    "favicon": ""
+  }
+]

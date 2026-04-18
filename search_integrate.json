@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://www.alibabacloud.com/help/en/model-studio/image-to-video-api-reference",
+    "name": "Alibaba Cloud Model Studio:Wan - image-to-video API reference",
+    "snippet": "After the task is created, use the returned task_id to query the result. The task_id is valid for 24 hours. Do not create duplicate tasks. Missing: integrate. nvidia.",
+    "host_name": "www.alibabacloud.com",
+    "rank": 0,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://novita.ai/docs/api-reference/model-apis-wan-t2v",
+    "name": "Novita AI Wan 2.1 Text to Video API | Generate videos from text",
+    "snippet": "By default, the API will generate a video with 5 seconds. This is an asynchronous API; only the task_id will be returned. You should use the task_id to request ... Missing: integrate. polling",
+    "host_name": "novita.ai",
+    "rank": 1,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://medium.com/@marketing_novita.ai/wan2-6-on-novita-ai-cinematic-creation-model-with-role-playing-multi-shot-control-c9dce9a40cde",
+    "name": "Wan2.6 on Novita AI: Cinematic Creation Model with Role-Playing",
+    "snippet": "Receive Task ID: API returns a task_id immediately; Poll for Results: Use the task ID to check generation status; Retrieve Output: Download the ...\nReceive Task ID: API returns a task_id immediately ; Poll for Results: Use the task ID to check generation status; Retrieve Output: Download the ...",
+    "host_name": "medium.com",
+    "rank": 2,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://docs.nvidia.com/cloud-functions/current/latest/api.html",
+    "name": "API — NVIDIA Cloud Functions",
+    "snippet": "The NVCF API supports API key-based authorization. API keys can be generated using the CLI or directly via the API Keys service endpoint. Generate an API Key#.",
+    "host_name": "docs.nvidia.com",
+    "rank": 3,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://support.huaweicloud.com/intl/en-us/bestpractice-modelarts/modelarts_aigc_ascendx_video_5907.html",
+    "name": "Inference Guide for Wan Series Video Generation Models Adapted",
+    "snippet": "This section describes how to use NPUs to perform text-to-video inference, image-to-video inference, and text-to-image inference using ...",
+    "host_name": "support.huaweicloud.com",
+    "rank": 4,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://github.com/FurkanGozukara/Stable-Diffusion/wiki/Wan-21-AI-Video-Model-Ultimate-Step-by-Step-Tutorial-for-Windows-and-Affordable-Private-Cloud-Setup",
+    "name": "Wan 21 AI Video Model Ultimate Step by Step Tutorial for Windows",
+    "snippet": "Wan 2.1 AI Video Model: Ultimate Step-by-Step Tutorial for Windows & Affordable Private Cloud Setup. Full tutorial link > https://www.youtube.",
+    "host_name": "github.com",
+    "rank": 5,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://forums.developer.nvidia.com/t/is-it-possible-to-generate-videos-using-nvidia-api-and-text-prompts/318726",
+    "name": "Is it possible to generate videos using nvidia api and text prompts?",
+    "snippet": "Is it possible to generate videos using Nvidia apis? If yes could you share the python code snippet? Missing: integrate. wan task_id polling",
+    "host_name": "forums.developer.nvidia.com",
+    "rank": 6,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://docs.together.ai/docs/dedicated_containers_video",
+    "name": "Video Generation with Wan 2.1 - Together AI Docs",
+    "snippet": "This example demonstrates deploying a multi-GPU video generation model using Dedicated Containers. You'll build a Sprocket worker that uses torchrun for ... Missing: integrate. task_id",
+    "host_name": "docs.together.ai",
+    "rank": 7,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://medium.com/@furkangozukara/wan-2-1-ai-video-model-ultimate-step-by-step-tutorial-for-windows-affordable-private-cloud-setup-b27fd24a0e64",
+    "name": "Wan 2.1 AI Video Model: Ultimate Step-by-Step Tutorial for Windows",
+    "snippet": "14:13 How to start Gradio Wan AI APP on second GPU and Performance Comparison on RTX 3090 Ti ... 31:56 Generating Video on Massed Compute and ...",
+    "host_name": "medium.com",
+    "rank": 8,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://docs.api.nvidia.com/nim/reference/nvidia-cuopt-infer",
+    "name": "Submit to solver - NVIDIA API Documentation",
+    "snippet": "Note: This is for managed service. Takes all the data and options at once, solves the routing problem and returns result. This POST should be used in ...",
+    "host_name": "docs.api.nvidia.com",
+    "rank": 9,
+    "date": "",
+    "favicon": ""
+  }
+]

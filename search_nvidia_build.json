@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://build.nvidia.com/nvidia/ocdrnet/modelcard",
+    "name": "ocdrnet Model by NVIDIA",
+    "snippet": "OCDNet and OCRNet are pre-trained models designed for optical character detection and recognition respectively. Optical Character Detection. +8. Get API Key.",
+    "host_name": "build.nvidia.com",
+    "rank": 0,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://wan.video/api",
+    "name": "Wan AI: Leading AI Video Generation Model",
+    "snippet": "Wan offers enterprise users and developers a comprehensive suite of API services , covering all major AI models. Leverage our high-performance, stable, ... Read more",
+    "host_name": "wan.video",
+    "rank": 1,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://wan.video",
+    "name": "Wan AI: Leading AI Video Generation Model",
+    "snippet": "Wan is an AI creative platform . It aims to lower the barrier to creative work using artificial intelligence, offering features like text-to-image, ...",
+    "host_name": "wan.video",
+    "rank": 2,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://novita.ai/docs/api-reference/model-apis-wan-t2v",
+    "name": "Wan 2.1 Text to Video",
+    "snippet": "Accelerated inference for Wan 2.1 14B Text-to-Video , a comprehensive and open suite of video foundation models that pushes the boundaries of video ... Read more",
+    "host_name": "novita.ai",
+    "rank": 3,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://github.com/Wan-Video/Wan2.1",
+    "name": "Wan-Video/Wan2.1",
+    "snippet": "Multiple Tasks: Wan2.1 excels in Text-to-Video , Image-to-Video, Video Editing, Text-to-Image, and Video-to-Audio, advancing the field of video generation. Read more",
+    "host_name": "github.com",
+    "rank": 4,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.together.ai/models/wan-27",
+    "name": "Wan 2.7 Text-to-Video API",
+    "snippet": "Wan 2.7 Text-to-Video is a dedicated generation model for creating 720P or native 1080P video directly from text prompts. It features optional audio input, ... Read more",
+    "host_name": "www.together.ai",
+    "rank": 5,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://fal.ai/models/wan/v2.6/text-to-video/api",
+    "name": "Wan v2.6 Text to Video",
+    "snippet": "Generate a video from text using WAN 2.6 text-to-video model . WAN 2.6 T2V features: Multi-shot video generation with intelligent scene segmentation ... Read more",
+    "host_name": "fal.ai",
+    "rank": 6,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.alibabacloud.com/help/en/model-studio/use-video-generation",
+    "name": "Model Studio - Video generation",
+    "snippet": "23 Mar 2026 — Wan - Text-to-video . Generates videos from text prompts. It supports text and audio input to create cinematic, multi-shot videos. API ... Read more",
+    "host_name": "www.alibabacloud.com",
+    "rank": 7,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://huggingface.co/spaces/Wan-AI/Wan2.1",
+    "name": "Wan2.1 - a Hugging Face Space by Wan-AI",
+    "snippet": "This app lets you create short videos by typing a description or by uploading an image plus a description. Choose the resolution, set a seed if you like, ...",
+    "host_name": "huggingface.co",
+    "rank": 8,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://build.nvidia.com/spark/vss/instructions",
+    "name": "Build a Video Search and Summarization (VSS) Agent",
+    "snippet": "Run a basic test to verify the video analysis pipeline is functioning based on your deployment. The UI comes with a few example videos pre-populated for uploading and testing",
+    "host_name": "build.nvidia.com",
+    "rank": 9,
+    "date": "",
+    "favicon": ""
+  }
+]

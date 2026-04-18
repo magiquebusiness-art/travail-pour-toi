@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://github.com/ai-dynamo/aiperf/releases",
+    "name": "Releases · ai-dynamo/aiperf - GitHub",
+    "snippet": "SGLang Video Generation: SGLang /v1/video generation with polling support (#658). Multi-URL, Telemetry & Tooling. Multiple --url Endpoints: Support for ...",
+    "host_name": "github.com",
+    "rank": 0,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://pypi.org/project/massgen",
+    "name": "massgen - PyPI",
+    "snippet": "This is useful for integrating MassGen with existing tooling that expects POST /v1/chat/completions . # Start server (defaults: host 0.0.0.0, port 4000) massgen ...",
+    "host_name": "pypi.org",
+    "rank": 1,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://langfuse.com/changelog/2024-09-23-github-discussion-across-documentation",
+    "name": "Documentation now integrates with GitHub Discussions (Support",
+    "snippet": "... api/chatCompletion` to be a standard OpenAI proxy on `/api/v1/chat/completions`?Auth using Microsoft Entra IDAdd a metrics endpoint for ...",
+    "host_name": "langfuse.com",
+    "rank": 2,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://docs.crewai.com/llms-full.txt",
+    "name": "https://docs.crewai.com/llms-full.txt",
+    "snippet": "<Accordion title=\"Local NVIDIA NIM Deployed using WSL2\"> NVIDIA NIM ... v1/tasks` | Google API conventions | | **JSON-RPC** | Standard A2A JSON-RPC ...",
+    "host_name": "docs.crewai.com",
+    "rank": 3,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.linkedin.com/posts/nareshkumarhk_azureai-foundrylocal-azureaifoundry-activity-7408831653491593229-owTP",
+    "name": "Foundry Local: On-Device AI for Enterprise | Naresh Kumar HK",
+    "snippet": "... v1/chat/completions style API that runs fully local. ​ Multi-language SDKs: Python, JS, .NET, and more so existing services and agents integrate with ...",
+    "host_name": "www.linkedin.com",
+    "rank": 4,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://docs.haimaker.ai/release_notes",
+    "name": "Release Notes - haimaker API",
+    "snippet": "/v1/chat/completions , /v1/responses , /v1/messages, Built-in support for Zhipu AI GLM models. RAGFlow, /v1/chat/completions , /v1/responses ...",
+    "host_name": "docs.haimaker.ai",
+    "rank": 5,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.wisdominterface.com/wp-content/uploads/2026/02/cl-oreilly-generative-ai-kubernetes-analyst-material-3188555kr-202512-en.pdf",
+    "name": "[PDF] Generative AI on Kubernetes | WisdomInterface",
+    "snippet": "curl localhost:3000/v1/chat/completions \\. -H 'Content-Type ... NVIDIA NIM is a solution designed for Kubernetes provided by NVIDIA to ...",
+    "host_name": "www.wisdominterface.com",
+    "rank": 6,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.scribd.com/document/957591622/Peng-a-DeepSeek-in-Practice-From-Basics-to-Fine-tuning-Open-Source-LLM-2025",
+    "name": "DeepSeek: LLM Fine-Tuning Guide | PDF - Scribd",
+    "snippet": "Rating 5,0 (2) ... v1/chat/completions and /v1/ embeddings. Here's how you can set up Cloudflare Workers AI: 1. Go to [Link]. 2. Log in or create an account ...",
+    "host_name": "www.scribd.com",
+    "rank": 7,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://bjpcjp.github.io",
+    "name": "Raindrop Tag Browser",
+    "snippet": "... API from the terminal: curl https://api.openai.com/v1/chat/completions \\ -H \"Authorization: Bearer $OPENAI_API_KEY\" \\ -H \"Content-Type: application/json ...",
+    "host_name": "bjpcjp.github.io",
+    "rank": 8,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://github.com/OEvortex/Webscout/blob/main/changelog.md",
+    "name": "Webscout/changelog.md at main - GitHub",
+    "snippet": "feat: webscout/Provider/Nvidia.py - New standalone Nvidia NIM provider with dynamic model fetching and advanced stream sanitization. ... v1/chat/completions for ...",
+    "host_name": "github.com",
+    "rank": 9,
+    "date": "",
+    "favicon": ""
+  }
+]

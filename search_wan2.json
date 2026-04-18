@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://docs.nvidia.com/dynamo/user-guides/diffusion/v-llm-omni",
+    "name": "vLLM-Omni | NVIDIA Dynamo Documentation",
+    "snippet": "This integration exposes text-to-text, text-to-image, and text-to-video capabilities via OpenAI-compatible API endpoints. ... Wan-AI/Wan2.1-T2V-1.3B ... Read more",
+    "host_name": "docs.nvidia.com",
+    "rank": 0,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://novita.ai/docs/api-reference/model-apis-wan-t2v",
+    "name": "Wan 2.1 Text to Video",
+    "snippet": "Accelerated inference for Wan 2.1 14B Text-to-Video , a comprehensive and open suite of video foundation models that pushes the boundaries of video ... Read more\nAccelerated inference for Wan 2.1 14B Text-to-Video, a comprehensive and open suite of video foundation models that pushes the boundaries of video ...",
+    "host_name": "novita.ai",
+    "rank": 1,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://chutes.ai/docs/examples/video-generation",
+    "name": "Video Generation with Wan2.1",
+    "snippet": "This guide demonstrates how to build a sophisticated video generation service using Wan2 . 1 -14B from Alibaba, capable of generating high-quality videos from ...\nWan2.1-14B is a state-of-the-art video generation model that supports: Text-to-Video (T2V): Generate videos from text descriptions; Image-to-Video (I2V): ...",
+    "host_name": "chutes.ai",
+    "rank": 2,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://github.com/NVIDIA/TensorRT-LLM/blob/main/docs/source/models/visual-generation.md",
+    "name": "TensorRT-LLM/docs/source/models/visual-generation.md",
+    "snippet": "Apr 4, 2026 — TensorRT LLM provides users with an easy-to-use Python API to define Large Language Models (LLMs) and supports state-of-the-art ...",
+    "host_name": "github.com",
+    "rank": 3,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://wavespeed.ai/docs/docs-api/alibaba/alibaba-wan-2.6-text-to-video",
+    "name": "Alibaba Wan 2.6 Text To Video API",
+    "snippet": "Ready-to-use REST inference API , best performance, no cold starts, affordable pricing. Features. / WAN 2.6 — Text-to-Video (wan2.6-t2v). WAN 2.6 Text-to-Video ... Read more",
+    "host_name": "wavespeed.ai",
+    "rank": 4,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://medium.com/@jankammerath/tech-stack-deep-dive-into-ai-video-generator-apis-platforms-models-7e6ab63997e7",
+    "name": "Tech Stack Deep Dive Into AI Video Generator APIs",
+    "snippet": "These models support both Text-To-Video ( T2V ) as well as Image-To- Video (I2V). T2V workflows of these models support prompts to instruct the ... Read more",
+    "host_name": "medium.com",
+    "rank": 5,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.cloudclusters.io/cloud/wan",
+    "name": "Wan Hosting – Deploy Wan2.1 T2V, I2V, VACE Models on",
+    "snippet": "Host and deploy Wan-AI's powerful generative models — Wan2.1-T2V , I2V, VACE — on high-performance GPU servers. Ideal for text-to-video, image-to-video, ...\nRating 4,7 (4.306) Host and deploy Wan-AI's powerful generative models — Wan2.1-T2V, I2V, VACE — on high-performance GPU servers. Ideal for text-to-video, image-to-video, ...",
+    "host_name": "www.cloudclusters.io",
+    "rank": 6,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://huggingface.co/docs/diffusers/using-diffusers/text-img2vid",
+    "name": "Video generation",
+    "snippet": "This guide will cover video generation basics such as which parameters to configure and how to reduce their memory usage. Read more",
+    "host_name": "huggingface.co",
+    "rank": 7,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://mlcommons.org/2026/03/texttovideo-inference",
+    "name": "Bringing Text-to-Video to MLPerf Inference v6.0",
+    "snippet": "Mar 10, 2026 — MLCommons introduces the new Text-to-Video benchmark in MLPerf Inference v6.0, based on the Wan2 .2- T2V -A14B-Diffusers model and validated using",
+    "host_name": "mlcommons.org",
+    "rank": 8,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.linkedin.com/posts/manuelherranzpangeanic_wan-aiwan21-t2v-14b-hugging-face-activity-7300662170034278400-FR9r",
+    "name": "Manuel Herranz - Wan-AI/Wan2.1-T2V-14B · Hugging Face",
+    "snippet": "Alibaba Tongyi Lab has released a game-changer: Wan2 . 1 This is an open-source suite of video generation models that not only outperforms ...",
+    "host_name": "www.linkedin.com",
+    "rank": 9,
+    "date": "",
+    "favicon": ""
+  }
+]

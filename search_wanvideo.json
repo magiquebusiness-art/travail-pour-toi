@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://docs.aimlapi.com/api-references/video-models/alibaba-cloud/wan-2.2-plus-text-to-video",
+    "name": "Wan 2.2 Plus (Text-to-Video) - AI/ML API Documentation",
+    "snippet": "Jan 20, 2569 BE — Below, you can find two corresponding API schemas and examples for both endpoint calls. ... header ' Authorization : Bearer <YOUR_AIMLAPI_KEY>'.",
+    "host_name": "docs.aimlapi.com",
+    "rank": 0,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://novita.ai/docs/api-reference/model-apis-wan-t2v",
+    "name": "Wan 2.1 Text to Video",
+    "snippet": "Bearer authentication format, for example : Bearer {{ API Key }}. ​. Request ... Here is an example of how to use the Wan 2.1 Text to Video API . Generate a ...",
+    "host_name": "novita.ai",
+    "rank": 1,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.together.ai/models/wan-27",
+    "name": "Wan 2.7 Text-to-Video API",
+    "snippet": "Wan 2.7 Text-to-Video is a dedicated generation model for creating 720P or native 1080P video directly from text prompts. It features optional audio input, ...",
+    "host_name": "www.together.ai",
+    "rank": 2,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://docs.freepik.com/api-reference/text-to-video/wan-2-7/generate",
+    "name": "WAN 2.7 - Create video from text",
+    "snippet": "Generate a video from a text prompt using WAN 2.7 . Supports configurable aspect ratios (16:9, 9:16, 1:1, 4:3, 3:4), resolutions (720P, 1080P), ...",
+    "host_name": "docs.freepik.com",
+    "rank": 3,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.pixazo.ai/models/wan",
+    "name": "Wan 2.7 Pro API, Wan 2.6 API, Wan 2.5 API, Wan 2.2 API",
+    "snippet": "Wan 2.7 Pro API , developers can access multiple Wan versions (2.2, 2.5, 2.6) for text -to- video , image-to- video , speech-to- video , and image generation. The API ...",
+    "host_name": "www.pixazo.ai",
+    "rank": 4,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://wavespeed.ai/blog/posts/wan-2-5-api-quickstart-wavespeed",
+    "name": "WAN 2.5 API Quickstart on WaveSpeed: Auth, Parameters",
+    "snippet": "Jan 26, 2569 BE — Practical notes on using the WAN 2.5 API on WaveSpeed— auth setup, required params, async jobs, rate limits, and cost guardrails.",
+    "host_name": "wavespeed.ai",
+    "rank": 5,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://docs.aimlapi.com/api-references/video-models/alibaba-cloud/wan-2.1-turbo-text-to-video",
+    "name": "Wan 2.1 Turbo (Text-to-Video) | AI/ML API Documentation",
+    "snippet": "Jan 20, 2569 BE — Below, you can find two corresponding API schemas and examples for both endpoint calls. ... header ' Authorization : Bearer <YOUR_AIMLAPI_KEY>'.",
+    "host_name": "docs.aimlapi.com",
+    "rank": 6,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.alibabacloud.com/help/en/model-studio/image-to-video-by-first-and-last-frame-api-reference",
+    "name": "Wan - image-to-video - first and last frames API reference",
+    "snippet": "Mar 15, 2569 BE — Automate keyframe-to- video generation with the Wan kf2v model via asynchronous HTTP calls. This guide covers Python and Java SDK integration ...",
+    "host_name": "www.alibabacloud.com",
+    "rank": 7,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://docs.kie.ai/market/wan/2-6-text-to-video",
+    "name": "Wan 2.6 - Text to Video",
+    "snippet": "Generate videos directly from text descriptions using the Wan 2.6 Text to Video model . This model creates dynamic video content from natural language prompts ...",
+    "host_name": "docs.kie.ai",
+    "rank": 8,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://docs.api.pruna.ai/apis/models-api-0/versions/a80cf098-b7a8-4f6e-b1e0-43b06bfa4038/schemas/wan-t2v",
+    "name": "wan-t2v | Models API - Pruna API | Developer Portal",
+    "snippet": "For detailed model documentation, see: https://docs.api.pruna.ai/guides/models. All requests require API key authentication via the apikey header. API Base URL.",
+    "host_name": "docs.api.pruna.ai",
+    "rank": 9,
+    "date": "",
+    "favicon": ""
+  }
+]

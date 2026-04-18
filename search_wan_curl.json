@@ -1,0 +1,92 @@
+[
+  {
+    "url": "https://docs.nvidia.com/aistore/http_api",
+    "name": "curl examples | NVIDIA AIStore",
+    "snippet": "All API requests that operate on a bucket carry the bucket's specification in the URL query, including backend provider and namespace. An empty backend provider ...",
+    "host_name": "docs.nvidia.com",
+    "rank": 0,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://build.nvidia.com",
+    "name": "Try NVIDIA NIM APIs",
+    "snippet": "Build Your AI Application with a Blueprint. Get started with workflows and code samples to build AI applications from the ground up. Missing: Wan- wan2. t2v- 480p python curl example",
+    "host_name": "build.nvidia.com",
+    "rank": 1,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://github.com/Wan-Video/Wan2.1",
+    "name": "Wan-Video/Wan2.1 - GitHub",
+    "snippet": "In this repository, we present Wan2.1, a comprehensive and open suite of video foundation models that pushes the boundaries of video generation. Missing: curl | Show results with: curl",
+    "host_name": "github.com",
+    "rank": 2,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://forums.developer.nvidia.com/t/access-rag-project-endpoint-via-python-code/329308",
+    "name": "Access RAG project endpoint via Python code - NVIDIA AI Workbench",
+    "snippet": "I want to access that endpoint via Python code. But I am not able to figure out exactly which endpoint to infer and what parameters to pass. Missing: Wan- wan2. t2v- 480p curl",
+    "host_name": "forums.developer.nvidia.com",
+    "rank": 3,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.atlascloud.ai/models/atlascloud/wan-2.2-turbo-spicy/image-to-video",
+    "name": "Wan-2.2-turbo-spicy Image-to-video (I2V) API Video - Atlas Cloud",
+    "snippet": "Fast image-to-video generation powered by Wan 2.2 with rCM turbo acceleration. Supports 480p, 720p, and 1080p (via VSR upscaling) output with 5s or 8s duration. Missing: build. | Show results with: build.",
+    "host_name": "www.atlascloud.ai",
+    "rank": 4,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://builder.aws.com/content/2tnZnUNeHMSSm344vfiIJ1ataFJ/alibabas-wan-ai-video-generation-models-on-aws-ecs",
+    "name": "Alibaba's Wan AI video generation models on AWS ECS",
+    "snippet": "Alibaba has released four variants of Wan 2.1 - T2V-1.3B, T2V-14B, I2V-14B-720P and I2V-14B-480P - which generate images and videos from text and Missing: call example",
+    "host_name": "builder.aws.com",
+    "rank": 5,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://replicate.com/blog/wan-21-generate-videos-with-an-api",
+    "name": "Wan2.1: generate videos with an API – Replicate blog",
+    "snippet": "Wan2.1 is the most capable open-source video generation model, producing coherent and high-quality outputs. Learn how to run it in the cloud ... Missing: NVIDIA nvidia. python curl example",
+    "host_name": "replicate.com",
+    "rank": 6,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://github.com/Wan-Video/Wan2.1/issues/504",
+    "name": "Inference example not working · Issue #504 · Wan-Video/Wan2.1",
+    "snippet": "Dear authors, thank you so much for this resource! I have been trying to run some inferences for the (t2v) example ... make it fit into my GPU. Missing: 480p API curl",
+    "host_name": "github.com",
+    "rank": 7,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=4YGLxY5Zexo",
+    "name": "Install and Run Locally Wan2.1 -Best Open-Source and Free Text-to",
+    "snippet": "Install and Run Locally Wan2.1 -Best Open-Source and Free Text-to-Video and Image-to-Video AI Model. 2.9K views · 1 year ago. Missing: t2v- 480p API curl example",
+    "host_name": "www.youtube.com",
+    "rank": 8,
+    "date": "",
+    "favicon": ""
+  },
+  {
+    "url": "https://build.nvidia.com/nvidia",
+    "name": "AI Models by NVIDIA | Try NVIDIA NIM APIs",
+    "snippet": "Generates physics-aware video world states for physical AI development using text prompts and multiple spatial control inputs derived from real-world data or ... Missing: Wan- wan2. t2v- 480p curl",
+    "host_name": "build.nvidia.com",
+    "rank": 9,
+    "date": "",
+    "favicon": ""
+  }
+]
