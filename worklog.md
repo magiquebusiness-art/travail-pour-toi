@@ -47,3 +47,26 @@ Stage Summary:
 - Root cause: editor used GET + header, backend only accepts POST + body
 - Fix: Changed to POST + JSON body with {token: token}
 - Pushed to GitHub: 5d15e73
+
+---
+Task ID: 2
+Agent: Main Agent + Subagent
+Task: Integrate editor into dashboard (no more external page)
+
+Work Log:
+- Analyzed dashboard panel system (showPanel + panel-xxx pattern)
+- Identified editor.html as standalone page with own auth, layout, styles
+- Merged all editor CSS into index.html style block (avoided conflicts)
+- Added panel-editor as fullscreen panel within dashboard (padding:0, flex column)
+- Changed sidebar from window.open('/editor.html') to showPanel('editor')
+- Added lazy initEditorPanel() with _editorInitialized guard
+- Renamed escH() to editorEscH() to avoid dashboard conflict
+- Reused dashboard showToast() — no duplicate
+- Changed editor "🏠 Dashboard" button to showPanel('chat')
+- Escaped </script> inside exportCleanHTML template literal
+- Committed as 90c82d8 and pushed to GitHub
+
+Stage Summary:
+- Editor is now fully integrated within the protected dashboard
+- No more separate page — all tools stay inside the dashboard
+- Lazy initialization prevents performance impact on other panels
