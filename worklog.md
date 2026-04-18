@@ -1,23 +1,32 @@
+# NyXia Z — Worklog
+
 ---
 Task ID: 1
-Agent: Main Agent
-Task: Base de connaissance avec upload PDF + injection chat + corrections
+Agent: Main Agent (continuation from previous session)
+Task: Review existing codebase, add Banque vidéo, fix missing CSS
 
 Work Log:
-- Analysé le projet existant: dashboard index.html, APIs (knowledge, integrations, wan, media, auth, chat), schema D1
-- Confirmé que les 3 features (KB, Intégrations, Création IA) avaient déjà des UI et APIs de base
-- Identifié le besoin principal: upload PDF dans la KB + injection de la KB dans le chat
-- Ajouté colonnes D1: type, file_name, page_count à la table knowledge
-- Mis à jour l'API KB (knowledge/crud.js) pour supporter les nouveaux champs PDF
-- Mis à jour chat.js pour injecter toute la base de connaissance dans le system prompt
-- Ajouté au dashboard: zone upload PDF avec drag & drop, barre de progression, extraction pdf.js côté client
-- Ajouté modal de détail pour consulter une entrée KB complète
-- Ajouté boutons modifier/supprimer sur chaque carte KB
-- Nettoyé le CSS (doublons kb-grid/kb-card)
-- Commit + tentative de push (bloqué par auth GitHub)
+- Read all project files: index.html (1515 lines), all API endpoints, schema.sql, wrangler.json
+- Discovered ALL 3 requested features were already implemented in previous session:
+  - Knowledge Base with PDF upload (PDF.js client-side extraction, CRUD API, drag-drop, D1 storage)
+  - Integrations (6 services: Google, Facebook, TikTok, ManyChat, Zapier, Systeme.io - auto-seeded)
+  - Creation IA (Images via WAN, Videos via WAN, Image Bank via Pexels)
+- Diane reminded: **Banque vidéo** was missing from Creation IA
+- Added 4th tab "🎬 Banque vidéo" in Creation IA panel
+- Created searchVideoBank() function with Pexels video search
+- Added vbankHistory (localStorage) for video bank persistence
+- Added renderVBankHistory() with thumbnail grid and duration badges
+- Added playVBankHist() and clearVBankHistory() functions
+- Separated Banque d'images to only search photos (was mixed before)
+- Added bankPhotoHistory with localStorage persistence for photo bank
+- Improved Pexels API to return 5 videos with extraVideos array
+- Added playExtraVideo() for browsing extra video results
+- Added Enter key support for all creation search inputs
+- Fixed missing CSS @keyframes (spin, fadeUp) that were referenced but not defined
+- Added PEXELS_KEY env var requirement note
 
 Stage Summary:
-- Tous les fichiers modifiés et commités localement sur main
-- Diane doit push vers GitHub pour déclencher le déploiement Cloudflare Pages
-- Migration D1 nécessaire: les colonnes seront auto-créées par l'API (ALTER TABLE fallback)
-- Nouvelles capacités: upload PDF dans KB, drag & drop, extraction automatique, injection dans le chat
+- Files modified: /home/z/my-project/NyXia_Z/public/index.html, /home/z/my-project/NyXia_Z/functions/api/media/search.js
+- Deployment requires CLOUDFLARE_API_TOKEN (not available in current environment)
+- Diane needs to deploy manually or provide CF token
+- Also needs PEXELS_KEY secret configured: `wrangler pages secret put PEXELS_KEY`
