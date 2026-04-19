@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "main": ".open-next/worker.js",
-  "name": "nyxiamarketplace-formation",
+  "name": "travail-pour-toi",
   "compatibility_date": "2025-04-01",
   "compatibility_flags": [
     "nodejs_compat"
@@ -19,10 +19,6 @@
       "pattern": "www.travail-pour-toi.com/*",
       "zone_id": "d545b4ca9730294849690d25b4997233"
     },
-    {
-      "pattern": "*.travail-pour-toi.com/*",
-      "zone_id": "d545b4ca9730294849690d25b4997233"
-    }
   ],
   "assets": {
     "directory": ".open-next/assets",
