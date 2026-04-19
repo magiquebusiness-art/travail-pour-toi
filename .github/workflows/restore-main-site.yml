@@ -1,0 +1,45 @@
+name: Restore Main Site Routes
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/restore-main-site.yml'
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Restore travail-pour-toi.com routes
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          echo "=== Listing all workers ==="
+          curl -s "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/scripts" \
+            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" | python3 -m json.tool
+
+          echo "=== Deleting travail-pour-toi worker routes (clean slate) ==="
+          curl -s "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/scripts/travail-pour-toi/routes" \
+            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" | python3 -c "
+import sys,json
+d=json.load(sys.stdin)
+if d.get('result'):
+    for r in d['result']:
+        rid = r.get('id')
+        if rid:
+            print('Deleting route:', r.get('pattern'))
+" 
+
+          echo "=== Re-deploying travail-pour-toi worker via wrangler ==="
+          curl -s -X PUT "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/scripts/travail-pour-toi/routes" \
+            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '[
+              {"pattern": "travail-pour-toi.com", "zone_id": "d545b4ca9730294849690d25b4997233"},
+              {"pattern": "travail-pour-toi.com/*", "zone_id": "d545b4ca9730294849690d25b4997233"},
+              {"pattern": "www.travail-pour-toi.com/*", "zone_id": "d545b4ca9730294849690d25b4997233"}
+            ]' | python3 -m json.tool
+
+          echo "=== Verifying routes ==="
+          curl -s "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/scripts/travail-pour-toi/routes" \
+            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" | python3 -m json.tool
