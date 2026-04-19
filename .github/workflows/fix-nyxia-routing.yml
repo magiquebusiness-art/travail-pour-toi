@@ -1,0 +1,27 @@
+name: Fix NyXia Routing
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/fix-nyxia-routing.yml'
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete nyxiamarketplace-formation worker
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          echo "=== Listing all workers ==="
+          curl -s "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/scripts" \
+            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" | python3 -m json.tool
+
+          echo "=== Deleting nyxiamarketplace-formation worker (if exists) ==="
+          curl -s -X DELETE "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/scripts/nyxiamarketplace-formation" \
+            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" | python3 -m json.tool
+
+          echo "=== Checking routes on travail-pour-toi worker ==="
+          curl -s "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/scripts/travail-pour-toi/routes" \
+            -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" | python3 -m json.tool
